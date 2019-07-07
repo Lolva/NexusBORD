@@ -1,9 +1,9 @@
 CREATE TABLE courses (
-    Course_ID integer not null,
+    Course_ID NUMBER not null,
     Course_Name VARCHAR2(30) not null, 
     Course_Description VARCHAR2(30) not null,
     Course_Level VARCHAR2(30) not null,
-    CONSTRAINT course_pk PRIMARY KEY(course_id),
+    CONSTRAINT course_pk PRIMARY KEY(Course_ID),
     CONSTRAINT check_level CHECK(Course_level IN ('beginner', 'intermediate', 'advanced'))
 );
                                  
