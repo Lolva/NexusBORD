@@ -30,11 +30,13 @@ CREATE TABLE employee (
 );
                                  
 CREATE TABLE modules {
-  module_id NUMBER(4),
-  course_id NUMBER
+  module_id NUMBER(4) NOT NULL,
+  class_id NUMBER(4) NOT NULL,
+  CONSTRAINT modules_fk FOREIGN KEY(class_id) REFERENCES classes(class_id)
 };
 
 CREATE TABLE module_files {
-  file_name VARCHAR2(50) PRIMARY KEY,
-  module_id NUMBER(4) NOT NULL
+  file_name VARCHAR2(50),
+  module_id NUMBER(4) NOT NULL,
+  CONSTRAINT module_files_pk PRIMARY KEY(file_name)                               
 };
