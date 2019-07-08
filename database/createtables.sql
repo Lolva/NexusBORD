@@ -40,3 +40,26 @@ CREATE TABLE module_files {
   module_id NUMBER(4) NOT NULL,
   CONSTRAINT module_files_pk PRIMARY KEY(file_name)                               
 };
+
+CREATE TABLE assignments(
+  Assignment_ID Number not null,
+  Class_ID Number not null,
+  description varchar2(500),
+  Due_Date date not null, 
+  Max_Points Number not null,
+  attached_files varchar2(50),
+  CONSTRAINT ass_pk PRIMARY KEY(Assignment_ID),
+  CONSTRAINT ass_fk FOREIGN KEY(Class_ID) REFERENCES classes(Class_ID)
+);
+
+CREATE TABLE student_submissions(
+  Submission_ID number not null,
+  Assignment_ID number not null,
+  Student_ID number not null,
+  submission_date date,
+  grade number,
+  attached_files varchar2(50),
+  CONSTRAINT ss_pk PRIMARY KEY(Submission_ID),
+  CONSTRAINT ss_fk1 FOREIGN KEY(Assignment_ID) REFERENCES assignments(Assignment_ID),
+  CONSTRAINT ss_fk2 FOREIGN KEY(Student_ID) REFERENCES employee(Employee_Id)
+);
