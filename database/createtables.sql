@@ -31,8 +31,8 @@ CREATE TABLE employee (
                                  
 CREATE TABLE modules {
   module_id NUMBER(4) NOT NULL,
-  class_id NUMBER(4) NOT NULL,
-  CONSTRAINT modules_fk FOREIGN KEY(class_id) REFERENCES classes(class_id)
+  course_id NUMBER(4) NOT NULL,
+  CONSTRAINT modules_fk FOREIGN KEY(course_id) REFERENCES courses(course_id)
 };
 
 CREATE TABLE module_files {
