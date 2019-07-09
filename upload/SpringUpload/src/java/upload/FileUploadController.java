@@ -21,8 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 public class FileUploadController extends AbstractController {
-
-    private static final String destinationDir = "C:\\Users\\syntel\\Desktop\\Notes\\";
+    
+    boolean fileBool = new File("C:\\Users\\syntel\\Desktop\\Uploads").mkdir();
+    private static final String destinationDir = "C:\\Users\\syntel\\Desktop\\Uploads\\";
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest req,
