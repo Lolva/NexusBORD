@@ -1,3 +1,24 @@
+TRUNCATE TABLE student_submissions;
+DROP TABLE student_submissions;
+
+TRUNCATE TABLE assignments;
+DROP TABLE assignments;
+
+TRUNCATE TABLE module_files;
+DROP TABLE module_files;
+
+TRUNCATE TABLE modules;
+DROP TABLE modules;
+
+TRUNCATE TABLE classes;
+DROP TABLE classes;
+
+TRUNCATE TABLE courses;
+DROP TABLE courses;
+
+TRUNCATE TABLE employee;
+DROP TABLE employee;
+
 CREATE TABLE courses (
     Course_ID NUMBER not null,
     Course_Name VARCHAR2(30) not null, 
@@ -29,17 +50,17 @@ CREATE TABLE employee (
     CONSTRAINT emp_fk FOREIGN KEY(Class_ID) REFERENCES classes(Class_ID)
 );
                                  
-CREATE TABLE modules {
+CREATE TABLE modules(
   module_id NUMBER(4) NOT NULL,
   course_id NUMBER(4) NOT NULL,
   CONSTRAINT modules_fk FOREIGN KEY(course_id) REFERENCES courses(course_id)
-};
+);
 
-CREATE TABLE module_files {
+CREATE TABLE module_files(
   file_name VARCHAR2(50),
   module_id NUMBER(4) NOT NULL,
   CONSTRAINT module_files_pk PRIMARY KEY(file_name)                               
-};
+);
 
 CREATE TABLE assignments(
   Assignment_ID Number not null,
