@@ -1,0 +1,125 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 8, 2019, 4:55:03 PM
+    Author     : syntel
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+ font-family: Arial, Helvetica, sans-serif;
+ background-image: url(login_background.jpg);
+ color: antiquewhite;
+ margin-bottom: 10%;
+
+}
+
+
+header {
+  
+  padding: 1%;
+  text-align:right;
+  font-size: 35px;
+  color: white;
+  
+}
+
+nav {
+  float: left;
+  width: 120px;
+  height: 100%; 
+  background-color: gray;
+  padding: 20px;
+  
+}
+
+
+nav ul {
+  text-decoration: none;
+  list-style-type: none;
+  padding: 0;
+}
+
+
+section:after {
+  content: "";
+  display: block;
+}
+
+
+footer {
+  
+  
+
+  padding: 40px;
+  text-align: center;
+  color: white;
+}
+
+li a:hover {
+  font-color: white;
+  color: blue;
+}
+
+#btnlogoff {
+        height: 28px;
+        width: 89px;
+        margin-left: 0px;
+    }
+.modulebtn {
+        float: left;
+        margin-right: 30px;
+        
+    }
+
+textarea {
+       margin-left: 50px;
+    }
+    td {
+        padding:40px;
+    }
+.myButton {
+	-moz-box-shadow:inset 0px -3px 7px 0px #29bbff;
+	-webkit-box-shadow:inset 0px -3px 7px 0px #29bbff;
+	box-shadow:inset 0px -3px 7px 0px #29bbff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3498db), color-stop(1, #7fffd4));
+	background:-moz-linear-gradient(top, #3498db 5%, #7fffd4 100%);
+	background:-webkit-linear-gradient(top, #3498db 5%, #7fffd4 100%);
+	background:-o-linear-gradient(top, #3498db 5%, #7fffd4 100%);
+	background:-ms-linear-gradient(top, #3498db 5%, #7fffd4 100%);
+	background:linear-gradient(to bottom, #3498db 5%, #7fffd4 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3498db', endColorstr='#7fffd4',GradientType=0);
+	background-color:#3498db;
+	-moz-border-radius:13px;
+	-webkit-border-radius:13px;
+	border-radius:13px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7fffd4), color-stop(1, #3498db));
+	background:-moz-linear-gradient(top, #7fffd4 5%, #3498db 100%);
+	background:-webkit-linear-gradient(top, #7fffd4 5%, #3498db 100%);
+	background:-o-linear-gradient(top, #7fffd4 5%, #3498db 100%);
+	background:-ms-linear-gradient(top, #7fffd4 5%, #3498db 100%);
+	background:linear-gradient(to bottom, #7fffd4 5%, #3498db 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7fffd4', endColorstr='#3498db',GradientType=0);
+	background-color:#7fffd4;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
