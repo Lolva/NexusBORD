@@ -54,13 +54,15 @@ CREATE TABLE employee (
 CREATE TABLE modules(
   module_id NUMBER(4) NOT NULL,
   course_id NUMBER(4) NOT NULL,
+  CONSTRAINT module_pk PRIMARY KEY(module_id),
   CONSTRAINT modules_fk FOREIGN KEY(course_id) REFERENCES courses(course_id)
 );
 
 CREATE TABLE module_files(
   file_name VARCHAR2(50),
   module_id NUMBER(4) NOT NULL,
-  CONSTRAINT module_files_pk PRIMARY KEY(file_name)                               
+  CONSTRAINT module_files_pk PRIMARY KEY(file_name),
+  CONSTRAINT module_files_fk FOREIGN KEY(module_id) REFERENCES modules(module_id)
 );
 
 CREATE TABLE assignments(
