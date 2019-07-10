@@ -39,6 +39,7 @@ CREATE TABLE classes (
 
 CREATE TABLE employee ( 
     Employee_Id NUMBER not null,
+    Is_Instructor BOOLEAN not null,
     Class_ID NUMBER(4) not null,
     First_Name VARCHAR2(30) not null,
     Last_Name VARCHAR2(30) not null,
