@@ -34,7 +34,7 @@ CREATE TABLE classes (
     Capacity NUMBER,
     CONSTRAINT class_pk PRIMARY KEY(class_id),
     CONSTRAINT class_fk FOREIGN KEY(Course_ID) REFERENCES courses(Course_ID),
-    CONSTRAINT check_cap CHECK(Capacity > 30)
+    CONSTRAINT check_cap CHECK(Capacity <= 30)
 );
 
 CREATE TABLE employee ( 
