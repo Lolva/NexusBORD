@@ -65,3 +65,66 @@ UPDATE courses SET Course_Name = Co_Name, Course_Description = Co_Description, C
 COMMIT;
 END updateCourse;
 /
+
+CREATE OR REPLACE PROCEDURE INSERT_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
+IS
+BEGIN
+  INSERT INTO ASSIGNMENTS
+  VALUES(aID,cID,descrip,dateDue,mPoints,files);
+END;
+/
+CREATE OR REPLACE PROCEDURE UPDATE_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
+IS
+BEGIN
+  UPDATE ASSIGNMENTS
+  SET Class_ID = cID, Description = descrip, Due_Date = dateDue, Max_Points = mPoints, attached_files = files
+  WHERE Assignment_id = aID;
+END;
+/
+CREATE OR REPLACE PROCEDURE DELETE_ASSIGNMENT(aID in Number)
+IS
+BEGIN
+  DELETE 
+  FROM ASSIGNMENTS
+  WHERE Assignment_ID = aID;
+END;
+/
+CREATE OR REPLACE PROCEDURE INSERT_SUBMISSION(subID in number, aID in Number, stuID in Number, subDate in Date, newGrade in number, files in varchar2)
+IS
+BEGIN
+  INSERT INTO STUDENT_SUBMISSIONS
+  VALUES(subID,aID,stuID,subDate,newGrade,files); 
+END;
+/
+CREATE OR REPLACE PROCEDURE UPDATE_SUBMISSION(subID in number, aID in Number, stuID in Number, subDate in Date, newGrade in number, files in varchar2)
+IS
+BEGIN
+  UPDATE Student_Submissions
+  SET Assignment_ID = aID, Student_ID = stuID, submission_date = subDate, grade = grade, attached_files = files
+  WHERE Submission_ID = subID;
+END;
+/
+CREATE OR REPLACE PROCEDURE DELETE_SUBMISSION(subID in number)
+IS
+BEGIN
+  DELETE
+  FROM Student_submissions
+  WHERE Submission_ID = subID;
+END;
+/
+CREATE OR REPLACE FUNCTION GET_GRADE(aID in Number, stuID in Number) return number
+IS
+  maxPoints number;
+  actualGrade number;
+BEGIN
+  SELECT Max_Points INTO maxPoints
+  FROM Assignments
+  WHERE Assignment_ID = aID;
+  
+  SELECT grade INTO actualGrade
+  FROM STUDENT_SUBMISSIONS
+  WHERE Assignment_ID = aID and Student_ID = stuID;
+  
+  return actualGrade / maxPoints;
+END;
+/
