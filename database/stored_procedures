@@ -1,6 +1,5 @@
 
-//INSERT INTO CLASS
-
+-- Access procedures for class table
 CREATE OR REPLACE PROCEDURE insertClass(Cl_ID IN NUMBER, Co_ID IN Number, Cap IN Number)
 IS
 BEGIN
@@ -8,47 +7,6 @@ INSERT INTO classes VALUES(Cl_ID, Co_ID, Cap);
 END insertClass;
 /
 
-//INSERT INTO COURSE
-CREATE OR REPLACE PROCEDURE insertCourse(Co_ID IN NUMBER, Co_Name IN VARCHAR, Co_Description IN VARCHAR, Co_Level IN VARCHAR)
-IS
-BEGIN
-INSERT INTO courses VALUES (Co_ID, Co_Name, Co_Description, Co_Level);
-END insertCourse;
-/
-
-//INSERT INTO EMPLOYEE
-CREATE OR REPLACE PROCEDURE insertEmp(Emp_Id IN NUMBER, Is_Ins IN NUMBER, Cl_ID IN NUMBER, F_Name IN VARCHAR, L_Name IN VARCHAR, Email_Addr IN VARCHAR, Enrl_D IN DATE, End_D IN DATE, pswrd IN VARCHAR)
-IS
-BEGIN
-INSERT INTO employee VALUES(Emp_Id, Is_Ins, Cl_ID, F_Name, L_Name, Email_Addr, Enrl_D, End_D, pswrd);
-END insertEmp;
-/
-
-//DELETE FROM CLASSES
-CREATE OR REPLACE PROCEDURE deleteClass(Cl_ID IN NUMBER)
-IS
-BEGIN
-DELETE FROM classes WHERE Class_ID = Cl_ID;
-END deleteClass;
-/
-
-//DELETE FROM COURSES
-CREATE OR REPLACE PROCEDURE deleteCourse(Co_ID IN Number)
-IS
-BEGIN
-DELETE FROM courses WHERE Course_ID = Co_ID;
-END deleteCourse;
-/
-
-//DELETE FROM EMPLOYEE
-CREATE OR REPLACE PROCEDURE deleteEmployee(Emp_ID IN Number)
-IS
-BEGIN
-DELETE FROM employee WHERE Employee_ID = Emp_ID;
-END deleteEmployee;
-/
-
-//UPDATE CLASS
 CREATE OR REPLACE PROCEDURE updateClass(Cl_ID IN Number, Co_ID IN Number, Cap IN Number)
 IS
 BEGIN
@@ -57,7 +15,21 @@ COMMIT;
 END updateClass;
 /
 
-//UPDATE COURSE
+CREATE OR REPLACE PROCEDURE deleteClass(Cl_ID IN NUMBER)
+IS
+BEGIN
+DELETE FROM classes WHERE Class_ID = Cl_ID;
+END deleteClass;
+/
+
+-- Access procedures for course table
+CREATE OR REPLACE PROCEDURE insertCourse(Co_ID IN NUMBER, Co_Name IN VARCHAR, Co_Description IN VARCHAR, Co_Level IN VARCHAR)
+IS
+BEGIN
+INSERT INTO courses VALUES (Co_ID, Co_Name, Co_Description, Co_Level);
+END insertCourse;
+/
+
 CREATE OR REPLACE PROCEDURE updateCourse(Co_ID IN Number, Co_Name IN VARCHAR2, Co_Description IN VARCHAR2, Co_Level IN VARCHAR2)
 IS
 BEGIN
@@ -66,6 +38,29 @@ COMMIT;
 END updateCourse;
 /
 
+CREATE OR REPLACE PROCEDURE deleteCourse(Co_ID IN Number)
+IS
+BEGIN
+DELETE FROM courses WHERE Course_ID = Co_ID;
+END deleteCourse;
+/
+
+-- Access procedures for employee table
+CREATE OR REPLACE PROCEDURE insertEmp(Emp_Id IN NUMBER, Is_Ins IN NUMBER, Cl_ID IN NUMBER, F_Name IN VARCHAR, L_Name IN VARCHAR, Email_Addr IN VARCHAR, Enrl_D IN DATE, End_D IN DATE, pswrd IN VARCHAR)
+IS
+BEGIN
+INSERT INTO employee VALUES(Emp_Id, Is_Ins, Cl_ID, F_Name, L_Name, Email_Addr, Enrl_D, End_D, pswrd);
+END insertEmp;
+/
+
+CREATE OR REPLACE PROCEDURE deleteEmployee(Emp_ID IN Number)
+IS
+BEGIN
+DELETE FROM employee WHERE Employee_ID = Emp_ID;
+END deleteEmployee;
+/
+
+-- Access procedures for assignments table
 CREATE OR REPLACE PROCEDURE INSERT_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
 IS
 BEGIN
@@ -73,6 +68,7 @@ BEGIN
   VALUES(aID,cID,descrip,dateDue,mPoints,files);
 END;
 /
+
 CREATE OR REPLACE PROCEDURE UPDATE_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
 IS
 BEGIN
@@ -81,6 +77,7 @@ BEGIN
   WHERE Assignment_id = aID;
 END;
 /
+
 CREATE OR REPLACE PROCEDURE DELETE_ASSIGNMENT(aID in Number)
 IS
 BEGIN
@@ -89,6 +86,8 @@ BEGIN
   WHERE Assignment_ID = aID;
 END;
 /
+
+-- Access procedures for student_submissions table
 CREATE OR REPLACE PROCEDURE INSERT_SUBMISSION(subID in number, aID in Number, stuID in Number, subDate in Date, newGrade in number, files in varchar2)
 IS
 BEGIN
@@ -96,6 +95,7 @@ BEGIN
   VALUES(subID,aID,stuID,subDate,newGrade,files); 
 END;
 /
+
 CREATE OR REPLACE PROCEDURE UPDATE_SUBMISSION(subID in number, aID in Number, stuID in Number, subDate in Date, newGrade in number, files in varchar2)
 IS
 BEGIN
@@ -104,6 +104,7 @@ BEGIN
   WHERE Submission_ID = subID;
 END;
 /
+
 CREATE OR REPLACE PROCEDURE DELETE_SUBMISSION(subID in number)
 IS
 BEGIN
@@ -112,6 +113,23 @@ BEGIN
   WHERE Submission_ID = subID;
 END;
 /
+
+-- SPECIAL QUERIES
+-- Returns VARCHAR2 as 'TRUE' or 'FALSE' depending on whether or not the given employee_id is an instructor
+CREATE OR REPLACE FUNCTION isInstructor(emp_id IN NUMBER)
+RETURN VARCHAR2
+IS
+  instructor NUMBER(1);
+BEGIN
+  SELECT is_instructor INTO instructor FROM employee WHERE employee_id=emp_id;
+  IF instructor = 1 THEN
+    RETURN 'TRUE';
+  ELSE
+    RETURN 'FALSE';
+  END IF;
+END isInstructor;
+/
+
 CREATE OR REPLACE FUNCTION GET_GRADE(aID in Number, stuID in Number) return number
 IS
   maxPoints number;
