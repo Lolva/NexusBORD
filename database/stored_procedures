@@ -182,6 +182,36 @@ BEGIN
   FROM STUDENT_SUBMISSIONS
   WHERE Assignment_ID = aID and Student_ID = stuID;
   
-  return actualGrade / maxPoints;
+  return actualGrade * 100 / maxPoints;
+END;
+/
+CREATE OR REPLACE FUNCTION GET_TOTAL_GRADE(stuID in Number) return number
+IS
+  totalAssignments number;
+  sumOfGrades number := 0;
+  
+  CURSOR All_Assignments IS 
+  SELECT * 
+  FROM Student_Submissions
+  WHERE Student_Id = stuID and grade is not null;
+BEGIN
+    
+    SELECT Count(*) INTO totalAssignments
+    FROM Student_Submissions
+    WHERE Student_Id = stuID and grade is not null;
+    
+    IF totalAssignments <= 0 THEN
+      return 100;
+    ELSE
+      
+      FOR R IN All_Assignments
+      LOOP
+        sumOfGrades := sumOfGrades + GET_GRADE(R.Assignment_ID,stuID);
+      END LOOP;
+      
+      return sumOfGrades / totalAssignments;
+    END IF;
+    
+    
 END;
 /
