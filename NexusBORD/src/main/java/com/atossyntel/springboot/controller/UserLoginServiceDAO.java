@@ -1,43 +1,35 @@
-/*package com.atossyntel.springboot.controller;
+package com.atossyntel.springboot.controller;
 
-import java.util.ArrayList;
-
+//import com.atossyntel.springboot.DataSourceBean;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.JdbcTemplate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+
+@Repository
+@Transactional
 public class UserLoginServiceDAO implements UserLoginDAO{    
-    private DataSource dataSource;
-   // private JdbcTemplate jTemplate;
+	@Autowired
+    private JdbcTemplate jTemplate;
 
     public UserLoginServiceDAO() {
     }
-
-    public UserLoginServiceDAO(DataSource dataSource, JdbcTemplate jTemplate) {
-        this.dataSource = dataSource;
-        this.jTemplate = jTemplate;
-    }
-    
-
-    @Override
-    public void setDataSource(DataSource ds) {
-        this.dataSource = ds; 
-       jTemplate = new JdbcTemplate(ds);
-    }
-
     @Override
     public boolean checkPassword(UserLogin e) {
-        //Take in the userlogin object and bring back the password stored in database
+        //Take in the userlogin object and check if the username/password combination returns atleast 1 result
         boolean tf;
         int result;
-        String sqlQuery = "SELECT COUNT(password) FROM userlogins WHERE username = ? AND password = ?"; 
-        result = jTemplate.update(sqlQuery, e.getUsername(), e.getPassword());
-        if(result > 0)
-            tf = true;
-        else
-            tf = false;
-        return tf;
+        String sqlQuery = "SELECT COUNT(*) FROM userlogins WHERE username = ? AND password = ?"; 
+        List<Map<String, Object>> results = this.jTemplate.queryForList(sqlQuery, e.getUsername(), e.getPassword());
+        return Integer.parseInt(results.get(0).get("COUNT(*)").toString()) > 0;
     }
+	
     
    
 }
-*/
+
