@@ -52,14 +52,14 @@ CREATE TABLE employee (
 );
                                  
 CREATE TABLE modules(
-  module_id NUMBER(4) NOT NULL,
-  course_id NUMBER(4) NOT NULL,
+  module_id NUMBER NOT NULL,
+  course_id NUMBER NOT NULL,
   CONSTRAINT modules_fk FOREIGN KEY(course_id) REFERENCES courses(course_id)
 );
 
 CREATE TABLE module_files(
   file_name VARCHAR2(50),
-  module_id NUMBER(4) NOT NULL,
+  module_id NUMBER NOT NULL,
   CONSTRAINT module_files_pk PRIMARY KEY(file_name)
 );
 
@@ -79,7 +79,7 @@ CREATE TABLE assignments(
 CREATE TABLE student_submissions(
   Submission_ID number not null,
   Assignment_ID number not null,
-  Student_ID number not null,
+  Student_ID varchar2(10) not null,
   submission_date date,
   grade number,
   attached_files varchar2(50),
