@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>Grades</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="template.css">
-    </head>
-    
+<head>
+    <title>Grades</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="nexusbord.css">
+</head>
 
-    <body>
+<body>
     <header>
-        <input id="btnlogout" class="btn btn success pull-right" type="button" value="logout" onclick="confirm('Logout?');location.href = 'login.html';"/>
-    </header>
-        <section>
-            <nav>
-              <ul>
-
-                <li><a href="Modules.html">Modules</a><br>
-                  <br></li>
-
-                <li><a href="Assignments.html">Assignments</a><br>
-                  <br></li>
-
-                <li><a href="Grades.html">Grades</a><br>
-                  <br></li>
-
-                 <li><a href="Classes.html">Classes</a></li>
-              </ul>
-            </nav>
-        </section>
-        <div id="grades">
-            <table rows="5" columns="3" noborder="true">
-                <th><h1>Assignment Name</h1></th>
-                <tr>
-                    <td>Student 1</td>
-                    <td>Grade: 0/100</td>
-                    <td style="padding: 40px;"><a href="">Download files</a></td>
-                </tr>
-            </table>
+        <div class="navigation">
+            <ul class="topnavbar">
+                <li><a class="logout" onclick="confirm('Logout?');location.href = 'login.html';">Logout</a></li>
+                <li><a href="Nexus.html">Home</a></li>
+                <li><a href="Modules.html">Modules</a></li>
+                <li><a href="Assignments.html">Assignments</a></li>
+                <li><a class="active" href="Grades.html">Grades</a></li>
+                <li><a href="Classes.html">Classes</a></li>
+                <li class="left"><a class="nexus"><b>Nexus<font color="#04aad0">BORD</font></b></a></li>
+            </ul>
         </div>
+    </header>
+    <div id="grades">
+        <table rows="5" columns="3" noborder="true">
+            <th><h1>Assignment Name</h1></th>
+            <tr>
+                <td>Student 1</td>
+                <td>Grade: 0/100</td>
+                <td style="padding: 40px;"><a href="">Download files</a></td>
+            </tr>
+        </table>
+    </div>
     <footer>
         <p>Footer</p>
     </footer>
-    </body>
+</body>
 </html>
