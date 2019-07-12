@@ -1,0 +1,40 @@
+4 JUL 2019
+
+Happy Independence Day!
+
+Today I focused on setting up an environment to run servlets on my private laptop.
+
+I originally was going to setup without an IDE but after working on that I found 
+	an eclipse compatible version, below are the links in (I believe) correct
+	order for self-installation for anyone who wants to get this primitive up.
+
+SETUP ON WORK LAPTOP NOT TESTED YET! 
+	- Since I was originally working with system environment variables this was
+		entirely set up on my personal machine, I do not know what will and
+		won't work on our work laptops yet, plan to setup tomorrow and update 
+		this guide accordingly or drop this approach alltogether. 
+
+
+--- Starting Guide for Running Primitive Servlet WITH eclipse ---
+https://beginnersbook.com/2017/06/how-to-configure-apache-tomcat-server-in-eclipse-ide/
+
+--- Do These Two Together, Downloading Missing Content ---
+https://beginnersbook.com/2017/06/solution-no-apache-tomcat-adapter-option-in-eclipse-ide/
+https://beginnersbook.com/2017/06/how-to-fix-dynamic-web-project-missing-in-eclipse-issue/
+
+--- Correcting the file version mismatch as well as potential error handling ---
+https://stackoverflow.com/questions/37024876/how-to-use-tomcat-8-5-x-and-tomee-7-x-with-eclipse/39934345
+	- I followed one of the direct replies that used 7-zip to modify the tomcat distrib file.
+https://stackoverflow.com/questions/11577380/how-to-set-eclipse-to-ignore-the-classpath-dependency-validator-message-warnin
+
+
+
+--- Potentially Garbage --
+(Keepiing this for personal reference since it did have some interesting stuff but none of it should apply for the above setup)
+Eclipse :- 
+	-https://beginnersbook.com/2017/06/how-to-fix-dynamic-web-project-missing-in-eclipse-issue/
+	-https://www.studytonight.com/servlet/creating-servlet-in-eclipse.php
+		-Note: To include the web library package:
+			-right click project title, BUILD-PATH -> CONFIGURE BUILD PATH
+			-check all libraries preset (no testing which are mandated)
+			-add external JAR, go to tomcat directory -> bin -> find the file mentioned on site
