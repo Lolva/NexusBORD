@@ -234,3 +234,12 @@ BEGIN
 UPDATE employees2 SET Class_ID = Cl_ID WHERE Employee_ID = Emp_ID ;
 END addStudentToClass;
 /
+CREATE OR REPLACE FUNCTION buildEmail (empId IN NUMBER)
+RETURN VARCHAR2
+AS
+  emp employee%ROWTYPE;
+BEGIN
+  SELECT * INTO emp FROM employee WHERE employee_id=empId;
+  RETURN emp.first_name || '_' || emp.last_name || '@syntelinc.com';
+END buildEmail;
+/
