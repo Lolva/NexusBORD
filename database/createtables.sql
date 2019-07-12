@@ -10,14 +10,14 @@ DROP TABLE module_files;
 TRUNCATE TABLE modules;
 DROP TABLE modules;
 
+TRUNCATE TABLE employee;
+DROP TABLE employee;
+
 TRUNCATE TABLE classes;
 DROP TABLE classes;
 
 TRUNCATE TABLE courses;
 DROP TABLE courses;
-
-TRUNCATE TABLE employee;
-DROP TABLE employee;
 
 CREATE TABLE courses (
     Course_ID NUMBER not null,
@@ -29,7 +29,7 @@ CREATE TABLE courses (
 );
                                  
 CREATE TABLE classes (
-    Class_ID NUMBER(4) not null,
+    Class_ID NUMBER not null,
     Course_ID NUMBER not null,
     Capacity NUMBER,
     CONSTRAINT class_pk PRIMARY KEY(class_id),
@@ -38,7 +38,7 @@ CREATE TABLE classes (
 );
 
 CREATE TABLE employee ( 
-    Employee_Id NUMBER not null,
+    Employee_Id varchar2(10) not null,
     Is_Instructor Number(1) not null,
     Class_ID NUMBER(4) not null,
     First_Name VARCHAR2(30) not null,
@@ -60,7 +60,7 @@ CREATE TABLE modules(
 CREATE TABLE module_files(
   file_name VARCHAR2(50),
   module_id NUMBER(4) NOT NULL,
-  CONSTRAINT module_files_pk PRIMARY KEY(file_name),
+  CONSTRAINT module_files_pk PRIMARY KEY(file_name)
 );
 
 CREATE TABLE assignments(
