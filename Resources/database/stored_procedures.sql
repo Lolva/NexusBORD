@@ -234,8 +234,6 @@ BEGIN
 UPDATE employees2 SET Class_ID = Cl_ID WHERE Employee_ID = Emp_ID ;
 END addStudentToClass;
 /
-
--- Create emails from first name and last name matching syntel email standards
 CREATE OR REPLACE FUNCTION buildEmail (empId IN NUMBER)
 RETURN VARCHAR2
 AS

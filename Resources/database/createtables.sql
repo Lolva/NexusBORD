@@ -10,14 +10,14 @@ DROP TABLE module_files;
 TRUNCATE TABLE modules;
 DROP TABLE modules;
 
+TRUNCATE TABLE employee;
+DROP TABLE employee;
+
 TRUNCATE TABLE classes;
 DROP TABLE classes;
 
 TRUNCATE TABLE courses;
 DROP TABLE courses;
-
-TRUNCATE TABLE employee;
-DROP TABLE employee;
 
 CREATE TABLE courses (
     Course_ID NUMBER not null,
@@ -29,7 +29,7 @@ CREATE TABLE courses (
 );
                                  
 CREATE TABLE classes (
-    Class_ID NUMBER(4) not null,
+    Class_ID NUMBER not null,
     Course_ID NUMBER not null,
     Capacity NUMBER,
     CONSTRAINT class_pk PRIMARY KEY(class_id),
@@ -38,7 +38,7 @@ CREATE TABLE classes (
 );
 
 CREATE TABLE employee ( 
-    Employee_Id NUMBER not null,
+    Employee_Id varchar2(10) not null,
     Is_Instructor Number(1) not null,
     Class_ID NUMBER(4) not null,
     First_Name VARCHAR2(30) not null,
@@ -52,15 +52,15 @@ CREATE TABLE employee (
 );
                                  
 CREATE TABLE modules(
-  module_id NUMBER(4) NOT NULL,
-  course_id NUMBER(4) NOT NULL,
+  module_id NUMBER NOT NULL,
+  course_id NUMBER NOT NULL,
   CONSTRAINT modules_fk FOREIGN KEY(course_id) REFERENCES courses(course_id)
 );
 
 CREATE TABLE module_files(
   file_name VARCHAR2(50),
-  module_id NUMBER(4) NOT NULL,
-  CONSTRAINT module_files_pk PRIMARY KEY(file_name),
+  module_id NUMBER NOT NULL,
+  CONSTRAINT module_files_pk PRIMARY KEY(file_name)
 );
 
 CREATE TABLE assignments(
@@ -79,7 +79,7 @@ CREATE TABLE assignments(
 CREATE TABLE student_submissions(
   Submission_ID number not null,
   Assignment_ID number not null,
-  Student_ID number not null,
+  Student_ID varchar2(10) not null,
   submission_date date,
   grade number,
   attached_files varchar2(50),
