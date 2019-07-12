@@ -61,22 +61,20 @@ END deleteEmployee;
 /
 
 -- Access procedures for assignments table
-CREATE OR REPLACE PROCEDURE INSERT_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
+CREATE OR REPLACE PROCEDURE INSERT_ASSIGNMENT( aID in Number, aName in varchar2, cID in Number, mID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
 IS
 BEGIN
   INSERT INTO ASSIGNMENTS
-  VALUES(aID,cID,descrip,dateDue,mPoints,files);
+  VALUES(aID,aName,cID,mID,descrip,dateDue,mPoints,files);
 END;
 /
-
-CREATE OR REPLACE PROCEDURE UPDATE_ASSIGNMENT( aID in Number, cID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
+CREATE OR REPLACE PROCEDURE UPDATE_ASSIGNMENT( aID in Number, aName in varchar2, cID in Number,mID in Number, descrip in varchar2, dateDue in date, mPoints in number, files in varchar2)
 IS
 BEGIN
   UPDATE ASSIGNMENTS
-  SET Class_ID = cID, Description = descrip, Due_Date = dateDue, Max_Points = mPoints, attached_files = files
+  SET Assignment_Name = aName, Class_ID = cID, Module_id = mID,Description = descrip, Due_Date = dateDue, Max_Points = mPoints, attached_files = files
   WHERE Assignment_id = aID;
 END;
-/
 
 CREATE OR REPLACE PROCEDURE DELETE_ASSIGNMENT(aID in Number)
 IS
