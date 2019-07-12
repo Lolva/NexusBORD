@@ -215,3 +215,24 @@ BEGIN
     
 END;
 /
+
+--list all the students in a class given the class ID
+CREATE OR REPLACE FUNCTION listAllStudents(Cl_ID IN NUMBER)
+RETURN sys_refcursor
+IS
+l_rc sys_refcursor;
+BEGIN
+OPEN l_rc FOR
+SELECT First_Name||' '||Last_Name, Employee_ID FROM employee WHERE Class_ID = CL_ID;
+RETURN l_rc;
+END listAllStudents;
+/
+
+
+--add a student to a class
+CREATE OR REPLACE PROCEDURE addStudentToClass(Emp_ID IN NUMBER, Cl_ID IN NUMBER)
+IS
+BEGIN
+UPDATE employees2 SET Class_ID = Cl_ID WHERE Employee_ID = Emp_ID ;
+END addStudentToClass;
+/
