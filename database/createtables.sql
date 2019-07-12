@@ -65,7 +65,9 @@ CREATE TABLE module_files(
 
 CREATE TABLE assignments(
   Assignment_ID Number not null,
+  Assignment_Name varchar2(30) not null,
   Class_ID Number not null,
+  Module_ID Number not null,
   description varchar2(500),
   Due_Date date not null, 
   Max_Points Number not null,
