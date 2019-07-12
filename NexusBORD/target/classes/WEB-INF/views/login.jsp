@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/nexusbord.css">
+    <script language="Javascript">
+        function results() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            window.open("Nexus.html", "_self");
+            //change to return true once database works
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <form style="text-align: center;" class="box" onsubmit="return results();">
+        <h1>Nexus<font color="#04aad0">BORD</font></h1>
+        Username <input type="text" id="username" />
+        <br>
+        Password <input type="password" id="password" />
+        <br>
+        <input type="submit" value="Login" />
+        <!--style="margin-bottom: 10px;"-->
+    </form>
+</body>
+</html>
