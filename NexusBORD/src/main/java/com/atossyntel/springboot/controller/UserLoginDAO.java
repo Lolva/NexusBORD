@@ -1,4 +1,3 @@
-
 package com.atossyntel.springboot.controller;
 
 public interface UserLoginDAO {

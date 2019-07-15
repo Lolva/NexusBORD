@@ -11,6 +11,6 @@ public class DefaultController {
 
    @RequestMapping("/")
    public String index() {
-      return "login";
+      return "Nexus";
    }
 }
