@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="src/ojdbc14.jar"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -11,10 +12,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/webapp"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
-			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -30,30 +29,5 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
-=======
-	<classpathentry kind="src" path="target/generated-sources/annotations">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
-		<attributes>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-<<<<<<< Updated upstream
->>>>>>> c7ee2cd4a8f916ac98f7b0f6cff78a92d4aa15da
-	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
-=======
-	<classpathentry kind="lib" path="C:/Users/syntel/Documents/NexusBORD/NexusBORD/src/ojdbc14.jar"/>
->>>>>>> Stashed changes
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
