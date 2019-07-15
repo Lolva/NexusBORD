@@ -1,6 +1,7 @@
 package com.atossyntel.springemail;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SmtpMailSender {
 		
 		helper = new MimeMessageHelper(message, true); 
 		helper.setSubject(subject);
-		helper.setTo(to);
+		helper.setTo(InternetAddress.parse(to));
 		helper.setText(body, true); 
 		
 		javaMailSender.send(message);

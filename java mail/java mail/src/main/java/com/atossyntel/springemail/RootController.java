@@ -16,7 +16,7 @@ public class RootController {
 	public void sendMail() throws MessagingException {
 		
 		
-		smtpMailSender.send("atossyntel123@gmail.com", "Subject Test mail", "The message. Hello, Thank you for the email.");
+		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Subject Test mail", "The message. Hello, Thank you for the email.");
 		
 	}
 	
