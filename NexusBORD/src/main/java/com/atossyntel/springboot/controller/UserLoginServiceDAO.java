@@ -16,7 +16,7 @@ public class UserLoginServiceDAO implements UserLoginDAO{
     @Override
     public boolean checkPassword(UserLogin e) {
     	// Using UserLogin object, check username+password against employee table
-        String sqlQuery = "SELECT COUNT(*) FROM employee WHERE email=? AND password=?";
+        String sqlQuery = "SELECT COUNT(*) FROM employee WHERE employee_id=? AND password=?";
         List<Map<String, Object>> results = this.jTemplate.queryForList(sqlQuery, e.getUsername(), e.getPassword());
         return Integer.parseInt(results.get(0).get("COUNT(*)").toString()) > 0;
     }  
