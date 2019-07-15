@@ -152,17 +152,17 @@ END unlink_module;
 /
 
 -- SPECIAL QUERIES
--- Returns VARCHAR2 as 'TRUE' or 'FALSE' depending on whether or not the given employee_id is an instructor
-CREATE OR REPLACE FUNCTION isInstructor(emp_id IN NUMBER)
-RETURN VARCHAR2
+-- Returns NUMBER as 1 or 0 depending on whether or not the given employee_id is an instructor
+create or replace FUNCTION isInstructor(emp_id IN VARCHAR2)
+RETURN NUMBER
 IS
   instructor NUMBER(1);
 BEGIN
   SELECT is_instructor INTO instructor FROM employee WHERE employee_id=emp_id;
   IF instructor = 1 THEN
-    RETURN 'TRUE';
+    RETURN 1;
   ELSE
-    RETURN 'FALSE';
+    RETURN 0;
   END IF;
 END isInstructor;
 /
