@@ -7,3 +7,7 @@ function validate() {
 		return true;
 	}
 }
+
+function returnToMain(){
+	window.location = "/";
+}
