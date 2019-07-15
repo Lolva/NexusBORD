@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
+    <script src="/resources/js/app.js"></script>
     <script>
         function swap() {
             var teacher = document.getElementById("teacher");
@@ -33,7 +34,7 @@
                 <li><a class="active" href="Assignments.html">Assignments</a></li>
                 <li><a href="Grades.html">Grades</a></li>
                 <li><a href="Classes.html">Classes</a></li>
-                <li class="left"><a class="nexus"><b>Nexus<font color="#04aad0">BORD</font></b></a></li>
+                <li class="left" onClick="returnToMain()"><a class="nexus"><b>Nexus<font color="#04aad0">BORD</font></b></a></li>
                 <li class="left"><a onclick="return swap()">Swap View</a></li>
             </ul>
         </div>
