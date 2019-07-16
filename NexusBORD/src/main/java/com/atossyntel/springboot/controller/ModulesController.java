@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ModulesController {
- @RequestMapping(value = "/Modules", method = RequestMethod.GET)
-  public String init(Model model) {
-    return "Modules";
-  }
+	@RequestMapping(value = "/Modules", method = RequestMethod.GET)
+	public String init(Model model) {
+		return "Modules";
+	}
 }
