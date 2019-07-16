@@ -47,12 +47,12 @@
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
-        <button class="accordion">Section 1</button>
+        <button class="accordion">Section 1: ${classId0}</button>
 			<div class="panel">
  			 <p>Name</p>
 			</div>
 
-		<button class="accordion">Section 2</button>
+		<button class="accordion">Section 2: ${classId1}</button>
 			<div class="panel">
  			 <p>Name 2</p>
 			</div>

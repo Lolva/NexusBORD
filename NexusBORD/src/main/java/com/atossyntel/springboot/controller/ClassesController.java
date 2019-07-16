@@ -16,18 +16,24 @@ public class ClassesController {
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
 		List<Map<String, Object>> classIds = classdao.getClasses();
+		int i=0;
+		int j=0;
 		for(Map<String, Object> id: classIds) {
+			 model.addAttribute("classId"+j, classIds.get(j).get("class_id"));
+			 System.out.println(id.toString());
 			for (Map.Entry<String, Object> entry : id.entrySet()) {
 				List<Map<String, Object>> students = classdao.getStudents(entry.getValue().toString());
-				int i =0;
+				
 				for(Map<String, Object> r: students) {
 					 model.addAttribute("first_name"+i, students.get(i).get("first_name"));
 					 model.addAttribute("last_name"+i, students.get(i).get("last_name"));
 					 model.addAttribute("email"+i, students.get(i).get("email"));
-					 System.out.println(r.toString());
-					 i++;
+					 System.out.println(r.toString());					 
 				 }
+				i++;
 		    }
+			j++;
+			
 		}
 	    return "Classes";
 	  }
