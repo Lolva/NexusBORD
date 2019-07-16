@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: syntel
-Build-Jdk: 1.8.0_161
+Built-By: Tatsuya
+Build-Jdk: 1.8.0_201
 Created-By: Maven Integration for Eclipse
 Main-Class: com.atossyntel.springemail.EmailApplication
 
