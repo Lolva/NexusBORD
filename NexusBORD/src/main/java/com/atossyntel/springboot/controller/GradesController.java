@@ -32,7 +32,7 @@ public class GradesController {
     }
     
     @RequestMapping(value = "/student.do", method = RequestMethod.POST)
-  public String doActions(@ModelAttribute Student student,BindingResult result,@RequestParam String action,Map<String, Object>map) {
+    public String doActions(@ModelAttribute Student student,BindingResult result,@RequestParam String action,Map<String, Object>map) {
     Student studentResult=new Student();
     switch(action.toLowerCase()){
         case "add":
