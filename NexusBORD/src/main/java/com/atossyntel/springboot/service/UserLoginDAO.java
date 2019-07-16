@@ -4,4 +4,5 @@ import com.atossyntel.springboot.model.UserLogin;
 
 public interface UserLoginDAO {
 	public boolean checkPassword(UserLogin e);
+	public boolean isInstructor(UserLogin e);
 }

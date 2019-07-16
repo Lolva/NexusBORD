@@ -9,24 +9,11 @@
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
 </head>
 	<body>
-		<%
-	    Cookie cookie = null;
-	    Cookie[] cookies = null;
-	    cookies = request.getCookies();
-	    if(cookies != null) { // check to make sure the user has cookies
-	        for (int i = 0; i < cookies.length; i++){ // if so, iterate through until you get username
-	            if(cookies[i].getName().equals("username"))
-	                request.setAttribute("user", cookies[i].getValue()); // you can access this attribute with ${user}
-	        }
-	   	}
-	    if(request.getAttribute("user") == null || request.getAttribute("user") == ""){ // if user cookie is unassigned, send to login page
-	    %>
-	    <script>
-			window.location.href="/login";
-	    </script>
-	    <% 
-	    } else { // otherwise, display the page normally, here will be the normal body of the page:
-	   	%>
+	<%
+	System.out.println(session.getAttribute("username"));
+	System.out.println(session.getAttribute("instructor"));
+	%>
+		<!-- TODO: Redirect in JS -->
 	   	<header>
 	        <div class="navigation">
 	            <ul class="topnavbar">
@@ -45,8 +32,5 @@
        		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Welcome to NexusBORD</h2>
      	</div>
      	</fieldset>
-	   	<%
-	    } // don't forget to close the if-else statement
-	    %>
 	</body>
 </html>
