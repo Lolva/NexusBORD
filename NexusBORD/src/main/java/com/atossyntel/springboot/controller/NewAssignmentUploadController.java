@@ -11,8 +11,8 @@ public class NewAssignmentUploadController {
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.GET)
 	  public String init(Model model) {
 	    return "NewAssignmentUpload";
-	  }
-	@RequestMapping(method = RequestMethod.POST)
+	  }	
+	@RequestMapping(value="/NewAssignmentUpload", method = RequestMethod.POST)
 	public String submit(Model model, @ModelAttribute("assignmentBean") AssignmentBean assignmentBean) {
 	  if (assignmentBean != null /*&& assignmentBean.getAssignmentName() != null & assignmentBean.getDue_date() != null & 
 			   assignmentBean.getMax_points() != null*/) {
