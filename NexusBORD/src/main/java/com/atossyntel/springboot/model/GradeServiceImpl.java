@@ -33,7 +33,7 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Student getStudent(int studentId) {
+    public Student getStudent(String studentId) {
         return gradeDAO.getStudent(studentId);
     }
 

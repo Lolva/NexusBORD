@@ -4,13 +4,13 @@ public class Student {
 	   // @Id
 	    //@Column
 	    //@GeneratedValue(strategy=GenerationType.AUTO)        
-	    int studentId;
+	    String studentId;
 	    String firstname;
 	    String lastname;
 	    String password;
 	    int grade;
 
-	    public Student(int studentId, String firstname, String lastname, String password, int grade) {
+	    public Student(String studentId, String firstname, String lastname, String password, int grade) {
 	        this.studentId = studentId;
 	        this.firstname = firstname;
 	        this.lastname = lastname;
@@ -56,11 +56,11 @@ public class Student {
 	        this.password = password;
 	    }
 
-	    public int getStudentId() {
+	    public String getStudentId() {
 	        return studentId;
 	    }
 
-	    public void setStudentId(int studentId) {
+	    public void setStudentId(String studentId) {
 	        this.studentId = studentId;
 	    }
 

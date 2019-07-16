@@ -53,7 +53,7 @@ public class GradeDAOImp implements GradeDAO{
 		   Student student = new Student();
 		   student.setFirstname((String)row.get("First_Name"));
 		   student.setLastname((String)row.get("Last_Name"));
-		   student.setStudentId((Integer)row.get("Student_ID"));
+		   student.setStudentId((String)row.get("Student_ID"));
 		   student.setGrade((Integer)row.get("Grade"));
 		   student.setPassword((String)row.get("Password"));
 	   }

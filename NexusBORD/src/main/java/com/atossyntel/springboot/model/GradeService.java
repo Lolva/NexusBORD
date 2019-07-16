@@ -11,7 +11,7 @@ public interface GradeService {
     public void add(GradeBean gradeBean);
     public void edit(GradeBean gradeBean);
     public void delete(GradeBean gradeBean);
-    public Student getStudent(int studentId);
+    public Student getStudent(String studentId);
     public List<Student> getAllStudent(int assignmentID);
     
 }

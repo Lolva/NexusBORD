@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.GradeService;
 import com.atossyntel.springboot.model.Student;
 
@@ -22,12 +23,15 @@ public class GradesController {
     @Autowired
     private GradeService gradeService;
     
+    @Autowired 
+    private GradeBean gradeBean;
+    
     
     @RequestMapping("/index")
     public String setupForm(Map<String, Object>map){
         Student student= new Student();
         map.put("student",student);
-        map.put("studentList",gradeService.getAllStudent());
+        map.put("studentList",gradeService.getAllStudent(gradeBean.getAssignment_id()));
         return "student";
     }
     
@@ -36,21 +40,21 @@ public class GradesController {
     Student studentResult=new Student();
     switch(action.toLowerCase()){
         case "add":
-            gradeService.add(student);
+            gradeService.add(gradeBean);
             studentResult=student;
             break;
         case "edit" :
-            gradeService.edit(student);
+            gradeService.edit(gradeBean);
             studentResult=student;
             break;
         case "delete":
-            gradeService.delete(student.getStudentId());
+            gradeService.delete(gradeBean.getStudent_id());
             studentResult=new Student();
             break;
             
     }
     map.put("student",studentResult);
-    map.put("studentList",gradeService.getAllStudent());
+    map.put("studentList",gradeService.getAllStudent(gradeBean.getAssignment_id()));
       return "student";
   }
     

@@ -14,7 +14,13 @@ public class GradeDAOBean  {
         GradeDAO gradeDAO = new GradeDAOImp();
         return gradeDAO;
 
- }
+	}
+	
+	@Bean 
+	public GradeBean gradeBean() {
+		GradeBean gradeBean = new GradeBean();
+		return gradeBean;
+	}
 }
 
 
