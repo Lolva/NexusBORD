@@ -130,7 +130,7 @@ ul.topnavbar {
   transition: 0.4s;
 }
 
-.active, .accordion:hover {
+.active.accordion:hover {
   background-color: #ccc;
 }
 
@@ -143,7 +143,7 @@ ul.topnavbar {
   margin-left: 5px;
 }
 
-.active:after {
+accordion.active:after {
   content: "\2212";
 }
 
