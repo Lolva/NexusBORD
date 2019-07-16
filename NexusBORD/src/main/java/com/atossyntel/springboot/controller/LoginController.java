@@ -1,6 +1,6 @@
 package com.atossyntel.springboot.controller;
 
-import javax.servlet.http.Cookie;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,6 @@ public class LoginController {
 	public String submit(Model model, @ModelAttribute("login") UserLogin login, HttpServletResponse response) {
 		if (login != null && login.getUsername() != null & login.getPassword() != null) {
 			if (dao.checkPassword(login)) {
-				// after the DAO checks the user's input, set two cookies:
-				// "username" maps to the employee's employee_id, "password" maps to the
-				// employee's password
-				// to see these cookies in action and how to use them in .jsp, refer to
-				// Nexus.jsp
-				response.addCookie(new Cookie("username", login.getUsername()));
-				response.addCookie(new Cookie("password", login.getPassword()));
-
 				return "Nexus"; // after successful login, go to page <return value without quotes>.jsp
 			} else {
 				model.addAttribute("error", "Invalid Username or Password");
