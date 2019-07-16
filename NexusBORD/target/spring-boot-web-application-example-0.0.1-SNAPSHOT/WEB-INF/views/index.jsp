@@ -11,18 +11,16 @@
 <title>Spring Boot</title>
 </head>
 <body>
-  <h1>Spring Boot - MVC Web Application Example</h1>
+  <h1>Spring Boot - MVC web application example</h1>
   <hr>
 
   <div class="form">
     <form action="hello" method="post" onsubmit="return validate()">
       <table>
         <tr>
-          <td>Enter Your Name</td>
+          <td>Enter Your name</td>
           <td><input id="name" name="name"></td>
           <td><input type="submit" value="Submit"></td>
-          <br>
-          <a href="login.htm">Click here to login to NexusBORD</a>
         </tr>
       </table>
     </form>

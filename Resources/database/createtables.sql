@@ -40,7 +40,7 @@ CREATE TABLE classes (
 CREATE TABLE employee ( 
     Employee_Id varchar2(10) not null,
     Is_Instructor Number(1) not null,
-    Class_ID NUMBER not null,
+    Class_ID NUMBER,
     First_Name VARCHAR2(30) not null,
     Last_Name VARCHAR2(30) not null,
     Email VARCHAR2(30) not null,
