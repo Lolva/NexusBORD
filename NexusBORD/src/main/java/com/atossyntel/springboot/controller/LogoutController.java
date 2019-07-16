@@ -11,6 +11,7 @@ public class LogoutController {
    public String index(Model model, HttpServletResponse response) {
 	   response.addCookie(new Cookie("username", ""));
 	   response.addCookie(new Cookie("password", ""));
+	   response.addCookie(new Cookie("instructor", ""));
 	   return "login";
    }
 }

@@ -30,6 +30,9 @@ public class LoginController {
                 response.addCookie(new Cookie("username", login.getUsername()));
                 response.addCookie(new Cookie("password", login.getPassword()));
                 
+                login.updateInst(dao);
+                response.addCookie(new Cookie("instructor", login.getInstructor() ? "true" : "false"));
+                
                 return "Nexus"; // after successful login, go to page <return value without quotes>.jsp
             } else {
                 model.addAttribute("error", "Invalid Username or Password");
