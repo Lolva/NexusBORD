@@ -55,7 +55,7 @@
                          </tr>
                     </tbody>
                 </table>
-                <a style="text-decoration: none; margin-left: 10px;" href = "Upload.html">Upload New Assignment</a>
+                <a style="text-decoration: none; margin-left: 10px;" href = "NewAssignmentUpload.html">Upload New Assignment</a>
             </fieldset>
             
         </div>
