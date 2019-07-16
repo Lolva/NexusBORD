@@ -11,24 +11,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SmtpMailSender {
-	
+
 	@Autowired
-	private JavaMailSender javaMailSender;	
-	
+	private JavaMailSender javaMailSender;
+
 	public void send(String to, String subject, String body) throws MessagingException {
-		
+
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
-		
-		helper = new MimeMessageHelper(message, true); 
+
+		helper = new MimeMessageHelper(message, true);
 		helper.setSubject(subject);
 		helper.setTo(InternetAddress.parse(to));
-		//helper.setTo
-		helper.setText(body, true); 
-		
+		// helper.setTo
+		helper.setText(body, true);
+
 		javaMailSender.send(message);
-		
-		
+
 	}
 
 }

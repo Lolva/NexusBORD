@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MailController {
-	
+
 	@Autowired
 	private SmtpMailSender smtpMailSender;
-	
+
 	@RequestMapping(value = "/mail", method = RequestMethod.GET)
-	  public String init(Model model) {
+	public String init(Model model) {
 		System.out.println("Request completed");
-	    return "mail";
-	  }
-	
+		return "mail";
+	}
+
 	@PostMapping("/mail")
-	public String submit(Model model) throws MessagingException{
+	public String submit(Model model) throws MessagingException {
 		System.out.print("going to new page");
-		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Subject Test mail", "The message. Hello, Thank you for the email.");
+		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Subject Test mail",
+				"The message. Hello, Thank you for the email.");
 		return "mail";
 	}
 }

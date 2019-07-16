@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: spring-boot-web-application-example
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: user
+Built-By: syntel
 Implementation-Vendor-Id: com.atossyntel.springboot
 Build-Jdk: 1.8.0_144
 Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
