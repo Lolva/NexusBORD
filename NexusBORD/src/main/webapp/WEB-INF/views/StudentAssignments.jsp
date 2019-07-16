@@ -24,8 +24,8 @@
             <ul class="topnavbar">
 	            <li><a class="logout" onclick="confirm('Logout?'); location.href = '/logout.htm';">Logout</a></li>
                 <li><a href="Nexus.html">Home</a></li>
-                <li><a class="active" href="Modules.html">Modules</a></li>
-                <li><a href="InstructorAssignments.html">Assignments</a></li>
+                <li><a href="Modules.html">Modules</a></li>
+                <li><a class="active" href="InstructorAssignments.html">Assignments</a></li>
                 <li><a href="Grades.html">Grades</a></li>
                 <li><a href="Classes.html">Classes</a></li>
                 <li><a href="InstructorAssignments.html">Swap View</a></li>
@@ -51,28 +51,28 @@
             <td id= dueDate>${dueDate0}</td>
             <td id="submissionStatus">${submissionStatus0}</td>
             <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="uploadAssignments.html">Upload</a></td>
+            <td><a href="SubmitAssignment.html">Upload</a></td>
         </tr>
     	<tr>
             <td id= assignmentName>${assignmentName1}</td>
             <td id= dueDate>${dueDate1}</td>
             <td id="submissionStatus">${submissionStatus1}</td>
             <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="uploadAssignments.html">Upload</a></td>
+            <td><a href="SubmitAssignment.html">Upload</a></td>
         </tr>
         <tr>
             <td id= assignmentName>${assignmentName2}</td>
             <td id= dueDate>${dueDate2}</td>
             <td id="submissionStatus">${submissionStatus2}</td>
             <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="uploadAssignments.html">Upload</a></td>
+            <td><a href="SubmitAssignment.html">Upload</a></td>
         </tr>
          <tr>
             <td id= assignmentName>${assignmentName3}</td>
             <td id= dueDate>${dueDate3}</td>
             <td id="submissionStatus">${submissionStatus3}</td>
             <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="uploadAssignments.html">Upload</a></td>
+            <td><a href="SubmitAssignment.html">Upload</a></td>
         </tr>
     </table>
     </fieldset>
