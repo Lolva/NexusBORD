@@ -15,7 +15,7 @@ public interface GradeDAO {
     public int getGrade(GradeBean gradeBean);
     //sets grade to null
     public void deleteGrade(GradeBean gradeBean);
-    //public Student getStudent(int studentId);
+    public Student getStudent(String studentId, int assignmentID);
     //public List getAllStudent();
     public List<Student> getAllStudents(int assignmentID);
     

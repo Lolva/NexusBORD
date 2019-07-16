@@ -46,9 +46,9 @@ public class GradeDAOImp implements GradeDAO{
    @Override
    public List<Student> getAllStudents(int assignmentID) {
 	   String SQLQuery = "SELECT SS.grade AS Grade, SS.Student_ID as Student_ID, E.First_Name as First_Name, E.Last_Name as Last_Name," +
-       " E.Password as Password FROM Student_Submissions SS, Employee E  WHERE assignmentID = assID AND E.Employee_ID =SS.Student_ID";
+       " E.Password as Password FROM Student_Submissions SS, Employee E  WHERE assignment_ID = assID AND E.Employee_ID =SS.Student_ID";
 	   List<Student> students = new ArrayList<Student>();
-	   List<Map<String,Object>> rows = jTemplate.queryForList(SQLQuery);
+	   List<Map<String,Object>> rows = jTemplate.queryForList(SQLQuery,assignmentID);
 	   for(Map row: rows) {
 		   Student student = new Student();
 		   student.setFirstname((String)row.get("First_Name"));
@@ -60,6 +60,20 @@ public class GradeDAOImp implements GradeDAO{
 	   
 	   return students;
    }
+   @Override
+    public Student getStudent(String studentID, int assignmentID) {
+        String SQLQuery = "SELECT SS.grade AS Grade, SS.Student_ID as Student_ID, E.First_Name as First_Name, E.Last_Name as Last_Name," +
+    " E.Password as Password FROM Student_Submissions SS, Employee E WHERE E.Employee_ID = SS.Student_ID AND SS.Student_ID = studentID AND assignment_ID = assignmentID";
+        List<Map<String, Object>> studentMap = this.jTemplate.queryForList(SQLQuery,studentID,assignmentID);
+        Student student = new Student();
+        Map row = studentMap.get(0);
+        student.setFirstname((String)row.get("First_Name"));
+        student.setLastname((String)row.get("Last_Name"));
+        student.setStudentId((String)row.get("Student_ID"));
+        student.setGrade((Integer)row.get("Grade"));
+        student.setPassword((String)row.get("Password"));
+        return student;
+    }
     
    /*
     @Override

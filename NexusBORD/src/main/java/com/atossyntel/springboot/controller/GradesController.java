@@ -48,7 +48,7 @@ public class GradesController {
             studentResult=student;
             break;
         case "delete":
-            gradeService.delete(gradeBean.getStudent_id());
+            gradeService.delete(gradeBean);
             studentResult=new Student();
             break;
             
