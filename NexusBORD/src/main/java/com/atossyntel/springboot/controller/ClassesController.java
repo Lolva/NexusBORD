@@ -15,17 +15,20 @@ public class ClassesController {
 	ClassesDAO classdao;
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
-//		List<Map<String, Object>> sassigns = classdao.getStudent();
-//		int i =0;
-//		 
-//		 for(Map<String, Object> r: sassigns) {
-//			 model.addAttribute("title"+i, sassigns.get(i).get("assignment_name"));
-//			 model.addAttribute("due_date"+i, sassigns.get(i).get("DUE_DATE"));
-//			 model.addAttribute("max_points"+i, sassigns.get(i).get("max_points"));
-//			 model.addAttribute("file"+i, sassigns.get(i).get("attached_files"));
-//			 System.out.println(r.toString());
-//			 i++;
-//		 }
+		List<Map<String, Object>> classIds = classdao.getClasses();
+		for(Map<String, Object> id: classIds) {
+			for (Map.Entry<String, Object> entry : id.entrySet()) {
+				List<Map<String, Object>> students = classdao.getStudents(entry.getValue().toString());
+				int i =0;
+				for(Map<String, Object> r: students) {
+					 model.addAttribute("first_name"+i, students.get(i).get("first_name"));
+					 model.addAttribute("last_name"+i, students.get(i).get("last_name"));
+					 model.addAttribute("email"+i, students.get(i).get("email"));
+					 System.out.println(r.toString());
+					 i++;
+				 }
+		    }
+		}
 	    return "Classes";
 	  }
 }

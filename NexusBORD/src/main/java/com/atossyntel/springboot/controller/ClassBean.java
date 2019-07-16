@@ -1,4 +1,4 @@
-package classes;
+package com.atossyntel.springboot.controller;
 
 public class ClassBean {
 	int class_Id;
