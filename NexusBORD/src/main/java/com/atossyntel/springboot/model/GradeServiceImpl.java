@@ -23,13 +23,13 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Transactional
-    public void edit(Student student) {
-        gradeDAO.edit(student);
+    public void edit(GradeBean gradeBean) {
+        gradeDAO.updateGrade(gradeBean);
     }
 
     @Transactional
-    public void delete(int studentId) {
-        gradeDAO.delete(studentId);
+    public void delete(GradeBean gradeBean) {
+        gradeDAO.deleteGrade(gradeBean);
     }
 
     @Override
