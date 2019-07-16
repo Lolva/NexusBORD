@@ -38,7 +38,7 @@
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/user/Documents/Spring Tool Suite Workspace/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/Documents/GitHub/NexusBORD/NexusBORD/src/ojdbc14.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>

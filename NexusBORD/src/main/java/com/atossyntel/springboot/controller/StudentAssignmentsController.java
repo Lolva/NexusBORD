@@ -3,6 +3,9 @@ package com.atossyntel.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +18,21 @@ public class StudentAssignmentsController {
 @Autowired
 StudentAssignmentsDAO assigndao;
 @GetMapping(value = "/StudentAssignments")
-   public String init(Model model) {
- 	
- 	List<Map<String, Object>> sassigns = assigndao.getAssignment("DG5061505");
+   public String init(Model model, HttpServletRequest request) {
+ 	String usr = null; 
+ 	Cookie cookie = null;
+ 	Cookie[] cookies = null;
+ 	cookies = request.getCookies();
+ 	if(cookies != null) {
+ 	    for (int j = 0; j < cookies.length; j++){
+ 	        if(cookies[j].getName().equals("username")) {
+ 	            request.setAttribute("user", cookies[j].getValue());
+ 	        	usr = cookies[j].getValue();
+ 	        	String[] lines = usr.split("\\n");
+ 	        	System.out.println(lines[0]);
+ 	    }
+ 	    }}
+ 	List<Map<String, Object>> sassigns = assigndao.getAssignment(usr);
  	
  	//System.out.println(bean.get(0).toString());
  	int i = 0;
@@ -34,6 +49,7 @@ StudentAssignmentsDAO assigndao;
  		System.out.println(r.toString());
  		i++;
  	}
+ 	
      return "StudentAssignments";
    }
 }
