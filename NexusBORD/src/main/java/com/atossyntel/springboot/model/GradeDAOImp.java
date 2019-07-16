@@ -33,6 +33,12 @@ public class GradeDAOImp implements GradeDAO{
        this.jTemplate.update(SQLQuery, gradeBean.getSub_id());
        //session.getCurrentSession().delete(getStudent(studentId));
    }
+   
+   @Override
+   public void addGrade(GradeBean gradeBean) {
+	   String SQLQuery = "INSERT INTO Student_Submissions Values(subID,assID,stuID,subDate,subGrade,files)";
+	   this.jTemplate.update(SQLQuery,gradeBean.getSub_id(), gradeBean.getAssignment_id(),gradeBean.getStudent_id(), gradeBean.getSubmission_date(), gradeBean.getSub_grade(), gradeBean.getAttached_files());
+   }
     
    /*
     @Override

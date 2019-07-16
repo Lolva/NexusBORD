@@ -18,8 +18,8 @@ public class GradeServiceImpl implements GradeService {
     private GradeDAO gradeDAO;
 
     @Transactional
-    public void add(Student student) {
-         gradeDAO.add(student);
+    public void add(GradeBean gradeBean) {
+         gradeDAO.addGrade(gradeBean);
     }
 
     @Transactional

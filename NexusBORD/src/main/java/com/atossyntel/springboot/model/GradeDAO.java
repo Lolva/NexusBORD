@@ -8,6 +8,7 @@ import java.util.List;
  * @author syntel
  */
 public interface GradeDAO {
+	public void addGrade(GradeBean gradeBean);
 	//set new grade or alter a grade if needed
     public void updateGrade(GradeBean gradeBean);
     //returns a grade from database

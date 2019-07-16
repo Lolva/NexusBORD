@@ -6,6 +6,7 @@ public class GradeBean {
 	private int sub_grade;
 	private int sub_id;
 	private String student_id;
+	private String assignment_id;
 	private Date submission_date;
 	private String attached_files;
 	
@@ -26,13 +27,21 @@ public class GradeBean {
 		this.attached_files = "";
 	}
 	
-	public GradeBean(int sub_grade, int sub_id, String student_id, Date submission_date, String attached_files) {
+	public GradeBean(int sub_grade, int sub_id, String student_id, String assignment_id, Date submission_date,
+			String attached_files) {
 		super();
 		this.sub_grade = sub_grade;
 		this.sub_id = sub_id;
 		this.student_id = student_id;
+		this.assignment_id = assignment_id;
 		this.submission_date = submission_date;
 		this.attached_files = attached_files;
+	}
+	public String getAssignment_id() {
+		return assignment_id;
+	}
+	public void setAssignment_id(String assignment_id) {
+		this.assignment_id = assignment_id;
 	}
 	public String getStudent_id() {
 		return student_id;
