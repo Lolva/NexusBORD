@@ -11,18 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class StudentAssignmentsDAOService implements StudentAssignmentsDAO {
+public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO {
 	@Autowired
     private JdbcTemplate jTemplate;
 	
 	
 	@Override
-	public List<Map<String,Object>> getAssignment(String id) {
-		String sql = "Select assignments.assignment_name, assignments.due_date, student_submissions.submission_date from assignments \r\n" + 
-				"INNER JOIN student_submissions ON student_submissions.assignment_id = assignments.ASSIGNMENT_ID WHERE student_submissions.student_id = ?";
+	public List<Map<String,Object>> getAssignment() {
+		String sql = "SELECT ASSIGNMENT_NAME, DUE_DATE, MAX_POINTS, ATTACHED_FILES From Assignments";
 		
 		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sql, id);
+		results = jTemplate.queryForList(sql);
 		List<StudentAssignmentsBean> list;
 		for(Map<String, Object> m: results) {
 			//System.out.println(m.toString());
