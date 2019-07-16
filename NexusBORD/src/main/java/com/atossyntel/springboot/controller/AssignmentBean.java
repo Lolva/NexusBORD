@@ -4,6 +4,7 @@ public class AssignmentBean {
 	private String assignmentName;
 	private String due_date;
 	private String max_points;
+	private String submissionStatus;
 	private String fileName;
 
 
@@ -45,4 +46,16 @@ public class AssignmentBean {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+
+
+	public String getSubmissionStatus() {
+		return submissionStatus;
+	}
+
+
+	public void setSubmissionStatus(String submissionStatus) {
+		this.submissionStatus = submissionStatus;
+	}
+	
+	
 }

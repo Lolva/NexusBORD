@@ -48,7 +48,7 @@
             <td id= dueDate>${dueDate}</td>
             <td id="submissionStatus">${submissionStatus}</td>
             <td id="fileName">${fileName}</td>
-            <td><a href="uploadAssignments.html">Upload</a></td>
+            <td><a href="SubmitAssignment.html">Upload</a></td>
         </tr>
     
     </table>
