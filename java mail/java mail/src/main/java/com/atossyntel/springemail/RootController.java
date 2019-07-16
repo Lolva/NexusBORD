@@ -15,8 +15,6 @@ public class RootController {
 	@RequestMapping("/mail")
 	public void sendMail() throws MessagingException {
 		
-		
 		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Subject Test mail", "The message. Hello, Thank you for the email.");
-		
 	}
 }
