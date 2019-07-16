@@ -8,13 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
     <script type="text/javascript">
-        function ex() {
-            var vals = document.getElementById("val");
-            var win = window.open('', 'window', 'resizable=yes,scrollbars=no,status=yes');
-            win.document.write()
-            win.document.write("<table id='vals'><tr>Student 1<br></tr><tr>Student 2<br></tr>\n\
-                       <tr>Student 3<br></tr></table>");
-            win.document.write("<br><br><input type='button' value='Add More'>");
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            /* Toggle between adding and removing the "active" class,
+            to highlight the button that controls the panel */
+            this.classList.toggle("active");
+
+            /* Toggle between hiding and showing the active panel */
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+              panel.style.display = "none";
+            } else {
+              panel.style.display = "block";
+            }
+          });
         }
     </script>
 </head>
@@ -37,12 +47,37 @@
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
-    <table>
-        <tr><input type="button" id="course1" value="Course 1/Name" onclick="ex()"><br><br></tr>
-        <tr><input type="button" id="course2" value="Course 2/Name" onclick="ex()"><br><br></tr>
-        <tr><input type="button" id="course3" value="Course 3/Name" onclick="ex()"><br><br></tr>
-        <tr><input type="button" id="course4" value="Course 4/Name" onclick="ex()"><br><br></tr>
-    </table>
+        <button class="accordion">Section 1</button>
+			<div class="panel">
+ 			 <p>Name</p>
+			</div>
+
+		<button class="accordion">Section 2</button>
+			<div class="panel">
+ 			 <p>Name 2</p>
+			</div>
+
+		<button class="accordion">Section 3</button>
+			<div class="panel">
+ 			 <p>Name 3</p>
+			</div>
+   		
     </fieldset>
+    <script type ="text/javascript">
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+ 		 acc[i].addEventListener("click", function() {
+   	 this.classList.toggle("active");
+   	 var panel = this.nextElementSibling;
+   	 	if (panel.style.maxHeight){
+   	 	  panel.style.maxHeight = null;
+   	 } else {
+   		   panel.style.maxHeight = panel.scrollHeight + "px";
+   			 } 
+ 		 });
+	}
+</script>
 </body>
 </html>
