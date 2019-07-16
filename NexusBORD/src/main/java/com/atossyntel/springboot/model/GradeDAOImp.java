@@ -1,30 +1,40 @@
 package com.atossyntel.springboot.model;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author syntel
  */
-
+@Transactional
 @Repository
-public abstract class GradeDAOImp implements GradeDAO{
-    @Autowired
-    private SessionFactory session;
+public class GradeDAOImp implements GradeDAO{
+	private JdbcTemplate jTemplate;
+    
+   //private SessionFactory session;
    
-   public void add(Student student){
-       session.getCurrentSession().save(student);
+   public void updateGrade(GradeBean gradeBean){
+    	String SQLQuery = "UPDATE Student_Submissions SET grade = sub_grade WHERE Submission_ID = sub_id ";
+        this.jTemplate.update(SQLQuery, gradeBean.getSub_grade(), gradeBean.getSub_id());
+       //session.getCurrentSession().save(student);
    } 
-   public void edit(Student student){
-       session.getCurrentSession().update(student);
+   public int getGrade(GradeBean gradeBean){
+	   String SQLQuery = "SELECT Grade FROM Student_Submissions WHERE Submission_ID= sub_id";
+       int grade = this.jTemplate.queryForObject(SQLQuery, new Object[] {gradeBean.getSub_id()}, Integer.class);
+       return grade;
+       //session.getCurrentSession().update(student);
    }
-   public void delete(int studentId){
-       session.getCurrentSession().delete(getStudent(studentId));
+   public void deleteGrade(GradeBean gradeBean){
+	   String SQLQuery = "UPDATE Student_Submissions SET grade = null WHERE Submission_ID = sub_id ";
+       this.jTemplate.update(SQLQuery, gradeBean.getSub_id());
+       //session.getCurrentSession().delete(getStudent(studentId));
    }
-
+    
+   /*
     @Override
     public Student getStudent(int studentId) {
        return (Student)session.getCurrentSession().get(Student.class,studentId);
@@ -34,7 +44,7 @@ public abstract class GradeDAOImp implements GradeDAO{
     public List getAllStudent() {
        return session.getCurrentSession().createQuery("from Student").list();
     }
-
+  */
    
     
     }

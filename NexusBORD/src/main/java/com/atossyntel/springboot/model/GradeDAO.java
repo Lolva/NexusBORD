@@ -8,11 +8,14 @@ import java.util.List;
  * @author syntel
  */
 public interface GradeDAO {
-    public void add(Student student);
-    public void edit(Student student);
-    public void delete(int studentId);
-    public Student getStudent(int studentId);
-    public List getAllStudent();
+	//set new grade or alter a grade if needed
+    public void updateGrade(GradeBean gradeBean);
+    //returns a grade from database
+    public int getGrade(GradeBean gradeBean);
+    //sets grade to null
+    public void deleteGrade(GradeBean gradeBean);
+    //public Student getStudent(int studentId);
+    //public List getAllStudent();
 
  
     
