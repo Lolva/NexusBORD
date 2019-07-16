@@ -12,7 +12,7 @@ public interface GradeService {
     public void edit(GradeBean gradeBean);
     public void delete(GradeBean gradeBean);
     public Student getStudent(int studentId);
-    public List getAllStudent();
+    public List<Student> getAllStudent(int assignmentID);
     
 }
 

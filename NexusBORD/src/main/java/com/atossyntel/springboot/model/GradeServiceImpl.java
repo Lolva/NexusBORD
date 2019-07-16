@@ -37,10 +37,12 @@ public class GradeServiceImpl implements GradeService {
         return gradeDAO.getStudent(studentId);
     }
 
-    @Override
-    public List getAllStudent() {
-       return gradeDAO.getAllStudent();
-    }
+	@Override
+	public List<Student> getAllStudent(int assignmentID) {
+		return gradeDAO.getAllStudents(assignmentID);
+	}
+    
+    
 
   
     
