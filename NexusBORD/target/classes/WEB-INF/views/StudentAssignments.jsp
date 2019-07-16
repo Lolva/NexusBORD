@@ -22,7 +22,7 @@
 	<header>
         <div class="navigation">
             <ul class="topnavbar">
-                <li><a class="logout" onclick="confirm('Logout?');location.href = 'login.html';">Logout</a></li>
+	            <li><a class="logout" onclick="confirm('Logout?'); location.href = '/logout.htm';">Logout</a></li>
                 <li><a href="Nexus.html">Home</a></li>
                 <li><a class="active" href="Modules.html">Modules</a></li>
                 <li><a href="InstructorAssignments.html">Assignments</a></li>
