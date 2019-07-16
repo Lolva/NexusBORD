@@ -114,3 +114,22 @@ ul.topnavbar {
         .box input[type="submit"]:hover {
             background: #04aad0;
         }
+
+   .backgroundfield {
+   	  width: 90%; 
+   	  margin:auto; 
+   	  height: 500px; 
+   	  background-color: white;
+   }
+   
+   .titleBackground {
+   	  color:white; 
+   	  margin: 10px; 
+   	  margin-top: 1%;
+   }
+   
+   .title {
+   	  color:white; 
+   	  margin: 10px; 
+   	  margin-top: 1%;
+   }
