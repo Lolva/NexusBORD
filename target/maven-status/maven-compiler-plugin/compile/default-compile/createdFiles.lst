@@ -1,0 +1,13 @@
+com\atossyntel\springboot\controller\DAOBean.class
+com\atossyntel\springboot\controller\LoginController.class
+com\atossyntel\springboot\controller\UserLoginDAO.class
+com\atossyntel\springboot\controller\LogoutController.class
+com\atossyntel\springboot\controller\NexusController.class
+com\atossyntel\springboot\controller\AssignmentsController.class
+com\atossyntel\springboot\controller\DefaultController.class
+com\atossyntel\springboot\controller\GradesController.class
+com\atossyntel\springboot\controller\UserLogin.class
+com\atossyntel\springboot\controller\UserLoginServiceDAO.class
+com\atossyntel\springboot\MainApp.class
+com\atossyntel\springboot\controller\ClassesController.class
+com\atossyntel\springboot\controller\ModulesController.class
