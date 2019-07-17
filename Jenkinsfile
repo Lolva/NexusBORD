@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Compile Stage') {
       steps {
-        withMaven() {
+        withMaven(maven: 'maven-3.6.1') {
           sh 'mvn clean compile'
         }
 
@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Deployment Stage') {
       steps {
-        withMaven() {
+        withMaven(maven: 'maven-3.6.1') {
           sh 'mvn spring-boot:run'
         }
 
