@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DefaultController {
 
-   @RequestMapping("/")
-   public String index() {
-      return "Nexus";
-   }
+	@RequestMapping("/")
+	public String index() {
+		return "Nexus";
+	}
 }
