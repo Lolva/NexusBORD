@@ -15,7 +15,7 @@ public class NewAssignmentUploadController {
 		return "NewAssignmentUpload";
 	}
 
-	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String submit(Model model, @ModelAttribute("assignmentBean") InstructorAssignmentsBean assignmentBean) {
 		if (assignmentBean != null /*
 									 * && assignmentBean.getAssignmentName() != null & assignmentBean.getDue_date()
@@ -31,5 +31,4 @@ public class NewAssignmentUploadController {
 			return "NewAssignmentUpload";
 		}
 	}
-
 }

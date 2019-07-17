@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 
 public class InstructorAssignmentsBean {
 	private String assignmentName;
+	private String fileName;
 	private String due_date;
 	private String max_points;
-	private String fileName;
 
 	public InstructorAssignmentsBean() {
 

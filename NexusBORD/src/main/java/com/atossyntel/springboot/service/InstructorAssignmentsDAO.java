@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface InstructorAssignmentsDAO {
 	public List<Map<String, Object>> getAssignment();
+	public int sendAssignment();
 }
