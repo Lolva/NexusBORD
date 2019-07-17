@@ -1,5 +1,7 @@
 package com.atossyntel.springboot.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,7 +18,7 @@ public class NewAssignmentUploadController {
 	}
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
-	public String submit(Model model, @ModelAttribute("assignmentBean") InstructorAssignmentsBean assignmentBean) {
+	public String submit(Model model, @ModelAttribute("assignmentBean") InstructorAssignmentsBean assignmentBean, HttpSession session) {
 		if (assignmentBean != null /*
 									 * && assignmentBean.getAssignmentName() != null & assignmentBean.getDue_date()
 									 * != null & assignmentBean.getMax_points() != null
@@ -25,7 +27,8 @@ public class NewAssignmentUploadController {
 			model.addAttribute("due_date", assignmentBean.getDue_date());
 			model.addAttribute("max_points", assignmentBean.getMax_points());
 			model.addAttribute("file", assignmentBean.getFileName());
-			return "InstructorAssignments";
+			System.out.println(session.getAttribute("username"));
+			return "redirect:InstructorAssignments";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
 			return "NewAssignmentUpload";

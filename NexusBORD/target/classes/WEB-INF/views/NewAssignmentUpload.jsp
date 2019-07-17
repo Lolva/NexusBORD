@@ -41,7 +41,7 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Create
 				Assignment</h2>
 		</div>
-		<form style="color: black;" action="InstructorAssignments.html">
+		<form style="color: black;" action="/NewAssignmentUpload" method="post">
 			Title: <input type="text" name="assignmentName"
 				placeholder="Enter Name of Assignment"> <br>
 			<br> File: <input type="file" name="fileName"> <br>

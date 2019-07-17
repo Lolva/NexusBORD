@@ -26,6 +26,7 @@ public class InstructorAssignmentsController {
 		}
 		//verify user is an instructor
 		if((Boolean) session.getAttribute("instructor")) {
+			System.out.println("Inside InstructorAssignmentCOntroller");
 			List<Map<String, Object>> sassigns = assigndao.getAssignment();
 			model.addAttribute("sassigns", sassigns);
 			return "InstructorAssignments";
