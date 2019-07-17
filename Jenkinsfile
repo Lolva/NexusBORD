@@ -1,21 +1,21 @@
 pipeline {
-    agent any
-
-    stages {
-        stage ('Compile Stage') {
-            steps {
-                withMaven(maven : 'maven-3.6.1') {
-                    sh 'mvn clean compile'
-                }
-            }
+  agent any
+  stages {
+    stage('Compile Stage') {
+      steps {
+        withMaven() {
+          sh 'mvn clean compile'
         }
 
-        stage ('Deployment Stage') {
-            steps {
-                withMaven(maven : 'maven-3.6.1') {
-                    sh 'mvn spring-boot:run'
-                }
-            }
-        }
+      }
     }
+    stage('Deployment Stage') {
+      steps {
+        withMaven() {
+          sh 'mvn spring-boot:run'
+        }
+
+      }
+    }
+  }
 }
