@@ -7,6 +7,7 @@ pipeline {
           sh 'mvn clean compile'
         }
 
+        junit(testResults: 'reports/*.xml', allowEmptyResults: true)
       }
     }
     stage('Deployment Stage') {
