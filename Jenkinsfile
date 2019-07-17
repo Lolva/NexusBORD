@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('JUnit Test Suite') {
       steps {
-        junit '**/build/test-results/TEST-*.xml'
+        junit 'NexusBord/target/surefire-reports/TEST-*.xml.'
       }
     }
   }
