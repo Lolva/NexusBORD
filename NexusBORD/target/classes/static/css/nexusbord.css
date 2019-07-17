@@ -7,7 +7,7 @@ body {
     background-image: url(/resources/pictures/test.png);
     background-repeat: no-repeat;
     background-size: 100%, 100%;
-    color: antiquewhite;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -120,7 +120,7 @@ ul.topnavbar {
 /* Accordion menu panel */
 .accordion {
   background-color: #eee;
-  color: #444;
+  color: black;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -141,6 +141,7 @@ ul.topnavbar {
   font-weight: bold;
   float: right;
   margin-left: 5px;
+  color: black;
 }
 
 accordion.active:after {

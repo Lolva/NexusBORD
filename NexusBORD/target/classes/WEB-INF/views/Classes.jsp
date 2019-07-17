@@ -7,26 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
-    <script type="text/javascript">
-        var acc = document.getElementsByClassName("accordion");
-        var i;
 
-        for (i = 0; i < acc.length; i++) {
-          acc[i].addEventListener("click", function() {
-            /* Toggle between adding and removing the "active" class,
-            to highlight the button that controls the panel */
-            this.classList.toggle("active");
-
-            /* Toggle between hiding and showing the active panel */
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-              panel.style.display = "none";
-            } else {
-              panel.style.display = "block";
-            }
-          });
-        }
-    </script>
+   	</script>
 </head>
 
 <body>
@@ -47,9 +29,9 @@
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
-        <button class="accordion">Section 1: ${classId0}</button>
+        <button value="button" class="accordion">Section 1: ${classId0}</button>
 			<div class="panel">
- 			 <p>Name</p>
+ 			 <p>First Name: ${first_name0}</p>
 			</div>
 
 		<button class="accordion">Section 2: ${classId1}</button>
@@ -61,9 +43,14 @@
 			<div class="panel">
  			 <p>Name 3</p>
 			</div>
+			
+			
+
+   
+		<p id="createClassLink"><a href="CreateClass.html">Create New Class</a></p>
    		
     </fieldset>
-    <script type ="text/javascript">
+   <script type ="text/javascript">
 	var acc = document.getElementsByClassName("accordion");
 	var i;
 
