@@ -7,7 +7,7 @@ body {
     background-image: url(/resources/pictures/test.png);
     background-repeat: no-repeat;
     background-size: 100%, 100%;
-    color: antiquewhite;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -114,3 +114,44 @@ ul.topnavbar {
         .box input[type="submit"]:hover {
             background: #04aad0;
         }
+        
+    /* Classes View  */
+    
+/* Accordion menu panel */
+.accordion {
+  background-color: #eee;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+.active.accordion:hover {
+  background-color: #ccc;
+}
+
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+  color: black;
+}
+
+accordion.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
