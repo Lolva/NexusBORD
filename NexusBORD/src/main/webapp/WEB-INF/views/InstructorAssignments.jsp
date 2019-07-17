@@ -47,42 +47,14 @@
                         <th>File Name</th>                        
                     </thead>
                     <tbody>
-                        <tr >
-                            <td id = title> ${title0}</td>
-                            <td id= due_date> ${due_date0}</td> 
-                            <td id= points> ${max_points0}</td> 
-                            <td id= file> ${file0}</td> 
-                         </tr>
-                         <tr >
-                            <td id = title> ${title1}</td>
-                            <td id= due_date> ${due_date1}</td> 
-                            <td id= points> ${max_points1}</td> 
-                            <td id= file> ${file1}</td> 
-                         </tr>
-                         <tr >
-                            <td id = title> ${title2}</td>
-                            <td id= due_date> ${due_date2}</td> 
-                            <td id= points> ${max_points2}</td> 
-                            <td id= file> ${file2}</td> 
-                         </tr>
-                         <tr >
-                            <td id = title> ${title3}</td>
-                            <td id= due_date> ${due_date3}</td> 
-                            <td id= points> ${max_points3}</td> 
-                            <td id= file> ${file3}</td> 
-                         </tr>
-                         <tr >
-                            <td id = title> ${title4}</td>
-                            <td id= due_date> ${due_date4}</td> 
-                            <td id= points> ${max_points4}</td> 
-                            <td id= file> ${file4}</td> 
-                         </tr>
-                         <tr >
-                            <td id = title> ${title5}</td>
-                            <td id= due_date> ${due_date5}</td> 
-                            <td id= points> ${max_points5}</td> 
-                            <td id= file> ${file5}</td> 
-                         </tr>
+						<c:forEach items="${sassigns}" var="obj">
+						    <tr>
+						       <td>${obj.assignment_name}</td>
+						       <td>${obj.due_date}</td>
+						       <td>${obj.max_points}</td>
+						       <td>${obj.attached_files}</td>
+						    </tr>
+						</c:forEach>
                     </tbody>
                 </table>
                 <a style="text-decoration: none; margin-left: 10px;" href = "NewAssignmentUpload.html">Upload New Assignment</a>

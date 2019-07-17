@@ -42,38 +42,18 @@
             <th>Assignment</th>
             <th>Due Date</th>
             <th>Submission Status</th>
-            <!--  <th>File Name</th>-->
+            <th>File Name</th>
             <th>Options</th>
         </tr>
-        
-        <tr>
-            <td id= assignmentName>${assignmentName0}</td>
-            <td id= dueDate>${dueDate0}</td>
-            <td id="submissionStatus">${submissionStatus0}</td>
-            <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="SubmitAssignment.html">Upload</a></td>
-        </tr>
-    	<tr>
-            <td id= assignmentName>${assignmentName1}</td>
-            <td id= dueDate>${dueDate1}</td>
-            <td id="submissionStatus">${submissionStatus1}</td>
-            <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="SubmitAssignment.html">Upload</a></td>
-        </tr>
-        <tr>
-            <td id= assignmentName>${assignmentName2}</td>
-            <td id= dueDate>${dueDate2}</td>
-            <td id="submissionStatus">${submissionStatus2}</td>
-            <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="SubmitAssignment.html">Upload</a></td>
-        </tr>
-         <tr>
-            <td id= assignmentName>${assignmentName3}</td>
-            <td id= dueDate>${dueDate3}</td>
-            <td id="submissionStatus">${submissionStatus3}</td>
-            <!-- <td id="fileName">${fileName}</td>-->
-            <td><a href="SubmitAssignment.html">Upload</a></td>
-        </tr>
+        <c:forEach items="${sassigns}" var="obj">
+	        <tr>
+	            <td id= assignmentName>${obj.assignment_name}</td>
+	            <td id= dueDate>${obj.due_date}</td>
+	            <td id="submissionStatus">${obj.submission_status}</td>
+	            <td id="fileName">${obj.attached_files}</td>
+	            <td><a href="SubmitAssignment.html">Upload</a></td>
+	        </tr>
+        </c:forEach>
     </table>
     </fieldset>
     <footer>
