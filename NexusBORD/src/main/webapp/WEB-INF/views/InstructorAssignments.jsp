@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,6 @@ td, th {
 				<li><a class="active" href="assignments">Assignments</a></li>
 				<li><a href="Grades.html">Grades</a></li>
 				<li><a href="Classes.html">Classes</a></li>
-				<li><a href="StudentAssignments.html">Swap View</a></li>
 				<li class="left"><a class="nexus"><b>Nexus<font
 							color="#04aad0">BORD</font></b></a></li>
 			</ul>

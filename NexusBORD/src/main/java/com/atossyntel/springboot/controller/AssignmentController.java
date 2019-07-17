@@ -17,9 +17,12 @@ public class AssignmentController {
 
 	@GetMapping(value = "/assignments")
 	public String init(Model model, HttpSession session) {
-		if((Boolean) session.getAttribute("instructor")) {
-			return "redirect:InstructorAssignments";
+		if(session.getAttribute("instructor") != null) {
+			if((Boolean) session.getAttribute("instructor")) {
+				return "redirect:InstructorAssignments";
+			}
+			return "redirect:StudentAssignments";
 		}
-		return "redirect:StudentAssignments";
+		return "redirect:login";
 	}
 }

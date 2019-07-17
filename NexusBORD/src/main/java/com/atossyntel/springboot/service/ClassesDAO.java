@@ -1,4 +1,4 @@
-package com.atossyntel.springboot.controller;
+package com.atossyntel.springboot.service;
 
 import java.util.List;
 import java.util.Map;

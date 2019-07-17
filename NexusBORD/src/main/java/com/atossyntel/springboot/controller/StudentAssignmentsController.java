@@ -23,11 +23,15 @@ public class StudentAssignmentsController {
 
 	@GetMapping(value = "/StudentAssignments")
 	public String init(Model model, HttpSession session) {
-		System.out.println(session.getAttribute("username"));
-		List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
-		model.addAttribute("sassigns", sassigns);
-		
-
-		return "StudentAssignments";
+		if(session.getAttribute("username")==null) {
+			return "redirect:login";
+		}
+		if(!(Boolean) session.getAttribute("instructor")) {
+			List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
+			model.addAttribute("sassigns", sassigns);
+			
+			return "StudentAssignments";
+		}
+		return "redirect:assignemts";
 	}
 }
