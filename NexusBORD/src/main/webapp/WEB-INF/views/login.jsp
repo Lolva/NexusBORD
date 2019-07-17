@@ -10,6 +10,7 @@
 	</head>
 	<body>
 	<% 
+	//User is already logged in
 	if(session.getAttribute("username") != null){
 		%>
 		<script>

@@ -23,17 +23,9 @@ public class StudentAssignmentsDAOService implements StudentAssignmentsDAO {
 
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, id);
-		List<StudentAssignmentsBean> list;
-		for (Map<String, Object> m : results) {
-			System.out.println(m.toString());
-		}
+
 		return results;
 
-	} /*
-		 * public List<AssignmentBean> getAssignment(){ List<AssignmentBean>
-		 * employeeslist = jTemplate.query("SELECT * FROM assignments", new
-		 * AssignmentRowMapper()); for(AssignmentBean r: employeeslist) {
-		 * System.out.println(r.toString()); } return employeeslist; }
-		 */
+	} 
 
 }

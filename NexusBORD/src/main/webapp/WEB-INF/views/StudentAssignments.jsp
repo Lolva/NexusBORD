@@ -20,6 +20,7 @@ td, th {
 </head>
 <body>
 	<%
+	//User is not logged in
 		if (session.getAttribute("username") == null) {
 	%>
 	<script>

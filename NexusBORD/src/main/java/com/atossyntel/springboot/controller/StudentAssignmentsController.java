@@ -23,15 +23,18 @@ public class StudentAssignmentsController {
 
 	@GetMapping(value = "/StudentAssignments")
 	public String init(Model model, HttpSession session) {
+		//verify user is logged in
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
+		//user is a student
 		if(!(Boolean) session.getAttribute("instructor")) {
 			List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
 			model.addAttribute("sassigns", sassigns);
 			
 			return "StudentAssignments";
 		}
+		//user is not a student redirect 
 		return "redirect:assignemts";
 	}
 }
