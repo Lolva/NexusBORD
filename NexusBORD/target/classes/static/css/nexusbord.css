@@ -114,3 +114,13 @@ ul.topnavbar {
         .box input[type="submit"]:hover {
             background: #04aad0;
         }
+
+        
+    <!-- style for module table in Modules.jsp-->
+    
+   .moduletable{
+      border: 1px solid black;
+      width: 100%;
+      height: 50px;
+      background-color: coral;
+   }
