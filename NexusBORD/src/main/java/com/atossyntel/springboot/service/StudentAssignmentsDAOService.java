@@ -19,7 +19,7 @@ public class StudentAssignmentsDAOService implements StudentAssignmentsDAO {
 
 	@Override
 	public List<Map<String, Object>> getAssignment(String id) {
-		String sql = "Select assignments.assignment_name, assignments.due_date, student_submissions.submission_date from assignments \r\n"
+		String sql = "Select assignments.assignment_name, assignments.due_date, student_submissions.submission_date, student_submissions.attached_files from assignments "
 				+ "INNER JOIN student_submissions ON student_submissions.assignment_id = assignments.ASSIGNMENT_ID WHERE student_submissions.student_id = ?";
 
 		List<Map<String, Object>> results;

@@ -49,7 +49,7 @@
 	        <tr>
 	            <td id= assignmentName>${obj.assignment_name}</td>
 	            <td id= dueDate>${obj.due_date}</td>
-	            <td id="submissionStatus">${obj.submission_status}</td>
+	            <td id="submissionStatus">${obj.submission_date}</td>
 	            <td id="fileName">${obj.attached_files}</td>
 	            <td><a href="SubmitAssignment.html">Upload</a></td>
 	        </tr>
