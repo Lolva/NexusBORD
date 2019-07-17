@@ -7,8 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
-
-   	</script>
 </head>
 
 <body>
@@ -29,28 +27,35 @@
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
-        <button value="button" class="accordion">Section 1: ${classId0}</button>
+		<c:forEach items="${classIds}" var="o">
+			<button value="button" class="accordion">${o.class_id} </button>
 			<div class="panel">
- 			 <p>First Name: ${first_name0}</p>
+			<c:forEach items="${allStudents}" var="j">
+				<c:choose>
+		    		<c:when test="${o.class_id==j.class_id}">
+		    			<table>
+							<tr>
+								<td style="color:black;">${j.class_id}</td>
+								<td style="color:black;">${j.first_name}</td>
+								<td style="color:black;">${j.last_name}</td>
+								<td style="color:black;">${j.email}</td>
+							</tr>
+						</table>
+		    		</c:when>    
+		    		<c:otherwise>
+		        	 
+		    		</c:otherwise>
+				</c:choose>
+			</c:forEach>
 			</div>
+		</c:forEach>
 
-		<button class="accordion">Section 2: ${classId1}</button>
-			<div class="panel">
- 			 <p>Name 2</p>
-			</div>
-
-		<button class="accordion">Section 3</button>
-			<div class="panel">
- 			 <p>Name 3</p>
-			</div>
-			
-			
-
-   
+   	
 		<p id="createClassLink"><a href="CreateClass.html">Create New Class</a></p>
    		
     </fieldset>
    <script type ="text/javascript">
+   
 	var acc = document.getElementsByClassName("accordion");
 	var i;
 
