@@ -3,6 +3,8 @@ package com.atossyntel.springboot.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +19,18 @@ public class InstructorAssignmentsController {
 	InstructorAssignmentsDAO assigndao;
 
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
-	public String init(Model model) {
-		List<Map<String, Object>> sassigns = assigndao.getAssignment();
-		int i = 0;
-
-		for (Map<String, Object> r : sassigns) {
-			model.addAttribute("title" + i, sassigns.get(i).get("assignment_name"));
-			model.addAttribute("due_date" + i, sassigns.get(i).get("DUE_DATE"));
-			model.addAttribute("max_points" + i, sassigns.get(i).get("max_points"));
-			model.addAttribute("file" + i, sassigns.get(i).get("attached_files"));
-			System.out.println(r.toString());
-			i++;
+	public String init(Model model, HttpSession session) {
+		//user hasnt logged in yet, redirect to login page
+		if(session.getAttribute("username")==null) {
+			return "redirect:login";
 		}
-		return "InstructorAssignments";
+		//verify user is an instructor
+		if((Boolean) session.getAttribute("instructor")) {
+			List<Map<String, Object>> sassigns = assigndao.getAssignment();
+			model.addAttribute("sassigns", sassigns);
+			return "InstructorAssignments";
+		}
+		//user is not an instructor redirect to assignments
+		return "redirect:assignments";
 	}
 }

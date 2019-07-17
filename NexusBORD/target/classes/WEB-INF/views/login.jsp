@@ -9,24 +9,16 @@
 	    <link rel="stylesheet" href="/resources/css/nexusbord.css">
 	</head>
 	<body>
+	<% 
+	//User is already logged in
+	if(session.getAttribute("username") != null){
+		%>
+		<script>
+		window.location.href="/";
+		</script>
 		<%
-	    Cookie cookie = null;
-	    Cookie[] cookies = null;
-	    cookies = request.getCookies();
-	    if(cookies != null) { // check to make sure the user has cookies
-	        for (int i = 0; i < cookies.length; i++){ // if so, iterate through until you get username
-	            if(cookies[i].getName().equals("username"))
-	                request.setAttribute("user", cookies[i].getValue()); // you can access this attribute with ${user}
-	        }
-	   	}
-	    if(request.getAttribute("user") != null && request.getAttribute("user") != ""){ // if user cookie is unassigned, send to login page
-	    %>
-	    <script>
-			window.location.href="/";
-	    </script>
-	    <% 
-	    }
-	    %>
+	}
+	%>
 	    <form style="text-align: center;" class="box" method=POST>
 	        <h1>Nexus<font color="#04aad0">BORD</font></h1>
 	        Username <input type="text" id="username" name="username"/>
@@ -37,7 +29,6 @@
 	        <div style="color: red">
 	        	${error}
 	        </div>
-	        <!--style="margin-bottom: 10px;"-->
 	    </form>
 	</body>
 </html>

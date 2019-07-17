@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,39 +22,19 @@ public class StudentAssignmentsController {
 	StudentAssignmentsDAO assigndao;
 
 	@GetMapping(value = "/StudentAssignments")
-	public String init(Model model, HttpServletRequest request) {
-		String usr = null;
-		Cookie cookie = null;
-		Cookie[] cookies = null;
-		cookies = request.getCookies();
-		if (cookies != null) {
-			for (int j = 0; j < cookies.length; j++) {
-				if (cookies[j].getName().equals("username")) {
-					request.setAttribute("user", cookies[j].getValue());
-					usr = cookies[j].getValue();
-					String[] lines = usr.split("\\n");
-					System.out.println(lines[0]);
-				}
-			}
+	public String init(Model model, HttpSession session) {
+		//verify user is logged in
+		if(session.getAttribute("username")==null) {
+			return "redirect:login";
 		}
-		List<Map<String, Object>> sassigns = assigndao.getAssignment(usr);
-
-		// System.out.println(bean.get(0).toString());
-		int i = 0;
-		model.addAllAttributes(sassigns);
-		for (Map<String, Object> r : sassigns) {
-			String status = "Not turned in";
-			if (sassigns.get(i).get("submission_date") != null) {
-				status = "Turned in";
-			}
-			model.addAllAttributes(r);
-			model.addAttribute("assignmentName" + i, sassigns.get(i).get("assignment_name"));
-			model.addAttribute("dueDate" + i, sassigns.get(i).get("due_date"));
-			model.addAttribute("submissionStatus" + i, status);
-			System.out.println(r.toString());
-			i++;
+		//user is a student
+		if(!(Boolean) session.getAttribute("instructor")) {
+			List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
+			model.addAttribute("sassigns", sassigns);
+			
+			return "StudentAssignments";
 		}
-
-		return "StudentAssignments";
+		//user is not a student redirect 
+		return "redirect:assignemts";
 	}
 }

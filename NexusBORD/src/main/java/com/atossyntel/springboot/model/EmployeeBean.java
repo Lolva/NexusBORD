@@ -1,4 +1,4 @@
-package com.atossyntel.springboot.controller;
+package com.atossyntel.springboot.model;
 
 
 public class EmployeeBean {
