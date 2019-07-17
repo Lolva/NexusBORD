@@ -9,6 +9,15 @@
 	    <link rel="stylesheet" href="/resources/css/nexusbord.css">
 	</head>
 	<body>
+	<% 
+	if(session.getAttribute("username") != null){
+		%>
+		<script>
+		window.location.href="/";
+		</script>
+		<%
+	}
+	%>
 	    <form style="text-align: center;" class="box" method=POST>
 	        <h1>Nexus<font color="#04aad0">BORD</font></h1>
 	        Username <input type="text" id="username" name="username"/>

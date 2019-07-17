@@ -25,9 +25,6 @@ public class StudentAssignmentsController {
 	public String init(Model model, HttpSession session) {
 		System.out.println(session.getAttribute("username"));
 		List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
-
-		// System.out.println(bean.get(0).toString());
-		int i = 0;
 		model.addAttribute("sassigns", sassigns);
 		
 

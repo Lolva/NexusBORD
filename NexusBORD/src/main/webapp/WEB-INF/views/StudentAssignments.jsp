@@ -13,20 +13,28 @@
 <style>
 td, th {
 	border: 1px solid black;
-	text-align: left;
+	text-align: center;
 	padding: 8px;
 	color: black;
 }
 </style>
 <body>
+	<%
+		if (session.getAttribute("username") == null) {
+	%>
+	<script>
+		window.location.href = "/login";
+	</script>
+	<%
+		}
+	%>
 	<header>
 		<div class="navigation">
 			<ul class="topnavbar">
-				<li><a class="logout"
-					onclick="confirm('Logout?'); location.href = '/logout.htm';">Logout</a></li>
+				<li><a href="logout" onclick="return confirm('Logout?');">Logout</a></li>
 				<li><a href="Nexus.html">Home</a></li>
 				<li><a href="Modules.html">Modules</a></li>
-				<li><a class="active" href="InstructorAssignments.html">Assignments</a></li>
+				<li><a class="active" href="assignments">Assignments</a></li>
 				<li><a href="Grades.html">Grades</a></li>
 				<li><a href="Classes.html">Classes</a></li>
 				<li><a href="InstructorAssignments.html">Swap View</a></li>
@@ -53,13 +61,15 @@ td, th {
 				<tr>
 					<td id=assignmentName>${obj.assignment_name}</td>
 					<td id=dueDate>${obj.due_date}</td>
+					<!-- If statement to determine if assignment has been turned in -->
 					<c:choose>
 						<c:when test="${empty obj.submission_date}">
-      	  				<td style=color:red; id="submissionStatus">Not Submitted</td>
-    					</c:when>
+							<!-- submission date is null -->
+							<td style="color: red;" id="submissionStatus">Not Submitted</td>
+						</c:when>
 						<c:otherwise>
-        				<td style=color:green id="submissionStatus">Submitted</td>
-    					</c:otherwise>
+							<td style="color: green;" id="submissionStatus">Submitted</td>
+						</c:otherwise>
 					</c:choose>
 					<td id="fileName">${obj.attached_files}</td>
 					<td><a href="SubmitAssignment.html">Upload</a></td>

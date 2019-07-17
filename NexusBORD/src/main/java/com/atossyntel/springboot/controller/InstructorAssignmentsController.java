@@ -19,16 +19,7 @@ public class InstructorAssignmentsController {
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model) {
 		List<Map<String, Object>> sassigns = assigndao.getAssignment();
-		int i = 0;
 		model.addAttribute("sassigns", sassigns);
-		/*for (Map<String, Object> r : sassigns) {
-			model.addAttribute("title" + i, sassigns.get(i).get("assignment_name"));
-			model.addAttribute("due_date" + i, sassigns.get(i).get("DUE_DATE"));
-			model.addAttribute("max_points" + i, sassigns.get(i).get("max_points"));
-			model.addAttribute("file" + i, sassigns.get(i).get("attached_files"));
-			System.out.println(r.toString());
-			i++;
-		} */
 		return "InstructorAssignments";
 	}
 }
