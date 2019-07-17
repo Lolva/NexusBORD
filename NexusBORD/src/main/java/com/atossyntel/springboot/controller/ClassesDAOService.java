@@ -45,4 +45,13 @@ public class ClassesDAOService implements ClassesDAO {
 		results = jTemplate.queryForList(sql);
 		return results;
 	}
+
+
+	@Override
+	public List<Map<String, Object>> changeClassId(String employeeId, String classId) {
+		String sql = "Update Employee SET class_id = classId WHERE employee_id = empId";	
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sql);
+		return results;
+	}
 }
