@@ -28,25 +28,28 @@
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
 		<c:forEach items="${classIds}" var="o">
-			<button value="button" class="accordion">${o.class_id} </button>
+			<button value="button" class="accordion"> Class ${o.class_id} </button>
 			<div class="panel">
+			<table>
+				<tr style="color:black;">
+				    <th> Class Id</th>
+				    <th> First Name</th>
+				    <th> Last Name</th>
+				    <th> Email</th>
+			   	</tr>
 			<c:forEach items="${allStudents}" var="j">
 				<c:choose>
 		    		<c:when test="${o.class_id==j.class_id}">
-		    			<table>
 							<tr>
 								<td style="color:black;">${j.class_id}</td>
 								<td style="color:black;">${j.first_name}</td>
 								<td style="color:black;">${j.last_name}</td>
 								<td style="color:black;">${j.email}</td>
 							</tr>
-						</table>
 		    		</c:when>    
-		    		<c:otherwise>
-		        	 
-		    		</c:otherwise>
 				</c:choose>
 			</c:forEach>
+			</table>
 			</div>
 		</c:forEach>
 
