@@ -23,7 +23,7 @@
             </ul>
         </div>
     </header>
-    <fieldset style="width: 90%; margin:auto; height: 520px; background-color: white;">
+    <fieldset style="width: 90%; margin:auto; height: 700px; background-color: white;">
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
@@ -55,10 +55,17 @@
 
    	
 		<p id="createClassLink"><a href="CreateClass.html">Create New Class</a></p>
+		<form style="color: black;" method=POST>
+		<h4>Add Employee to Class:</h4>
+			Enter Employee Id: <input type="text" name="Employee_Id"/>
+			<br><br>
+			Enter Class Id: <input type="text" name="Class_id"/>
+			<br><br>
+			<input type="submit" value="Add"/>
+		</form>
    		
     </fieldset>
    <script type ="text/javascript">
-   
 	var acc = document.getElementsByClassName("accordion");
 	var i;
 

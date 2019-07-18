@@ -5,16 +5,8 @@ public class EmployeeBean {
     private String First_Name;
     private String Last_Name;
     private String Email;
-    private int Employee_Id;
+    private String Employee_Id;
     private String class_id;
-
-    public EmployeeBean(String First_Name, String Last_Name, String Email, int Employee_Id, String class_id) {
-        this.First_Name = First_Name;
-        this.Last_Name = Last_Name;
-        this.Email = Email;
-        this.Employee_Id = Employee_Id;
-        this.class_id = class_id;
-    }
 
     public String getFirst_Name() {
         return First_Name;
@@ -40,11 +32,11 @@ public class EmployeeBean {
         this.Email = Email;
     }
 
-    public int getEmployee_Id() {
+    public String getEmployee_Id() {
         return Employee_Id;
     }
 
-    public void setEmployee_Id(int Employee_Id) {
+    public void setEmployee_Id(String Employee_Id) {
         this.Employee_Id = Employee_Id;
     }
 

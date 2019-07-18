@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,5 +24,21 @@ public class ClassesController {
 		model.addAttribute("classIds", classIds);
 	    return "Classes";
 	  }
+	
+
+	 @RequestMapping(value = "/Classes", method = RequestMethod.POST)
+	    public String submit(Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) {
+	        if (EmployeeBean != null) {
+	        	 classdao.changeClassId(EmployeeBean.getEmployee_Id(), 
+	                        EmployeeBean.getClass_id()); 
+
+	                return "redirect:Classes.htm";
+	        	
+	        } else {
+	        	return "Classes";
+	        }
+	   }
+	
+	
 
 }

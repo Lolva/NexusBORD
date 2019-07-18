@@ -48,10 +48,8 @@ public class ClassesDAOService implements ClassesDAO {
 
 
 	@Override
-	public List<Map<String, Object>> changeClassId(String employeeId, String classId) {
-		String sql = "Update Employee SET class_id = classId WHERE employee_id = empId";	
-		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sql);
-		return results;
+	public void changeClassId(String EmpId, String classId) {
+		String sqlQuery = "UPDATE employee SET class_id=? WHERE employee_id=?";	
+		this.jTemplate.update(sqlQuery, classId, EmpId);
 	}
 }
