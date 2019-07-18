@@ -23,7 +23,7 @@
             </ul>
         </div>
     </header>
-    <fieldset style="width: 90%; margin:auto; height: 700px; background-color: white;">
+    <fieldset style="width: 90%; margin:auto; height: 660px; background-color: white;">
     	<div style ="background-color:#2E2E7F; padding: 2px;">
      		<h2 style="color:white; margin: 10px; margin-top: 1%;"> Classes</h2>
         </div>
