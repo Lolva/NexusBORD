@@ -9,16 +9,15 @@
 	    <link rel="stylesheet" href="/resources/css/nexusbord.css">
 	</head>
 	<body>
-	<% 
-	//User is already logged in
-	if(session.getAttribute("username") != null){
+		<% 
+		// If user is already logged in, redirect them to the main page
+		if(session.getAttribute("username") != null){
 		%>
 		<script>
-		window.location.href="/";
+			window.location.href="/";
 		</script>
-		<%
-	}
-	%>
+		<% } %>
+		
 	    <form style="text-align: center;" class="box" method=POST>
 	        <h1>Nexus<font color="#04aad0">BORD</font></h1>
 	        Username <input type="text" id="username" name="username"/>
@@ -27,6 +26,7 @@
 	        <br>
 	        <input type="submit" value="Login" />
 	        <div style="color: red">
+	        	<br>
 	        	${error}
 	        </div>
 	    </form>
