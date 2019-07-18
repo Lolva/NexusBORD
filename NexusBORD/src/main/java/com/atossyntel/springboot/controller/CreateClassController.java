@@ -20,8 +20,8 @@ public class CreateClassController {
    public String submit(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
 	  if (ClassBean != null) {
 		  System.out.println("Controller");
-		  createclassdao.addClass(ClassBean.getClass_Id(),ClassBean.getCourse_Id(),
-				  ClassBean.getCapacity());
+//		  createclassdao.addClass(ClassBean.getClass_Id(),ClassBean.getCourse_Id(),
+//				  ClassBean.getCapacity());
 		  
 		  return "redirect:CreateClasses.htm";
 	  }else {

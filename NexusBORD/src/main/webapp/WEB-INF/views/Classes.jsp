@@ -10,6 +10,16 @@
 </head>
 
 <body>
+	<%
+	//User is not logged in
+		if (session.getAttribute("username") == null) {
+	%>
+	<script>
+		window.location.href = "/login";
+	</script>
+	<%
+		}
+	%>
     <header>
         <div class="navigation">
             <ul class="topnavbar">
