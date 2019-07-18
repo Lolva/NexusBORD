@@ -22,7 +22,7 @@ public class NewAssignmentUploadController {
 	// Instance of the storage location/object
     private final StorageService storageService;
     
-    // object to handle sending of emails
+    // object to handle sending of email(s)
     @Autowired
     private SmtpMailSender sms;
 
