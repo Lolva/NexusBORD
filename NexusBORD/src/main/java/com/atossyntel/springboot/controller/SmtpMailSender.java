@@ -15,6 +15,17 @@ public class SmtpMailSender {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
+	/******
+	 * function send(String recipient(s),String subject,String msg)
+	 * -Sends email to recipient(s) based on parameters
+	 * -String recipient(s) is comma delimited
+	 *  
+	 * 1st parameter: String to
+	 * 		One recipient: "[email]"
+	 * 		Multiple     : "[email1],[email2]..."
+	 * 2nd parameter: String subject
+	 * 3rd parameter: String body
+	 ******/
 	public void send(String to, String subject, String body) throws MessagingException {
 
 		MimeMessage message = javaMailSender.createMimeMessage();

@@ -22,6 +22,7 @@ public class NewAssignmentUploadController {
 	// Instance of the storage location/object
     private final StorageService storageService;
     
+    // object to handle sending of emails
     @Autowired
     private SmtpMailSender sms;
 
@@ -46,21 +47,31 @@ public class NewAssignmentUploadController {
 			//Test case as proof of concept for dynamic folder building
 			StringBuilder modFolder = new StringBuilder();
 			switch(sName) {
+				//if the stream name is "1"
 				case "1":
+					//set the string to folder1
 					modFolder.append("/folder1/");
 					break;
+				//if the stream name is "1"
 				case "2":
+					//set the string to folder2
 					modFolder.append("/folder2/");
 					break;
 				default:
+					//set an empty folder(aka directly under the root folder)
 					modFolder.append("");
 			}
+			
+			//println() for debugging purposes
 			System.out.println(aName);
 			System.out.println(sName);
 			
 			String filename = file.getOriginalFilename();
 			
+			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
+			
+			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");
 			return "redirect:InstructorAssignments";
