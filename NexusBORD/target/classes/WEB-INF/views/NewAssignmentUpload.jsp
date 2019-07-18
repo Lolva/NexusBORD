@@ -49,7 +49,7 @@
 				placeholder="Enter Due Date"> <br>
 			<br> Total Points: <input type="number" name="max_points"
 				placeholder="Enter Maximum Points"> <br>
-			<br> Steam: <input type="text" name="streamInput" placeholder="Stream ID"><br>
+			<br> Stream: <input type="text" name="streamInput" placeholder="Stream ID"><br>
 			<br> Module: <input type="text" name="moduleInput" placeholder="Module ID"><br>
 			<br> Class: <input type="text" name="classInput" placeholder="Class ID"><br>
 			<br> <input type="submit" value="Upload">
