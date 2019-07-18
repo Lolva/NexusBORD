@@ -1,5 +1,6 @@
 package com.atossyntel.springboot.controller;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +21,9 @@ public class NewAssignmentUploadController {
 	
 	// Instance of the storage location/object
     private final StorageService storageService;
+    
+    @Autowired
+    private SmtpMailSender sms;
 
     @Autowired
     public NewAssignmentUploadController(StorageService storageService) {
@@ -33,18 +37,32 @@ public class NewAssignmentUploadController {
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
 	public String submit(Model model, HttpServletRequest request, HttpSession session,
-			@RequestParam("fileName") MultipartFile file) {
+			@RequestParam("fileName") MultipartFile file) throws MessagingException{
 		if (true) {
 			
 			String aName = request.getParameter("assignmentName");
 			String sName = request.getParameter("streamInput");
+			
+			//Test case as proof of concept for dynamic folder building
+			StringBuilder modFolder = new StringBuilder();
+			switch(sName) {
+				case "1":
+					modFolder.append("/folder1/");
+					break;
+				case "2":
+					modFolder.append("/folder2/");
+					break;
+				default:
+					modFolder.append("");
+			}
 			System.out.println(aName);
 			System.out.println(sName);
 			
 			String filename = file.getOriginalFilename();
 			
-			storageService.store(file);
-			
+			storageService.store(file, modFolder.toString());
+			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
+					"Our work is done. Maybe?");
 			return "redirect:InstructorAssignments";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
