@@ -41,7 +41,7 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Create
 				Assignment</h2>
 		</div>
-		<form style="color: black;" action="/NewAssignmentUpload" method="post">
+		<form style="color: black;" enctype="multipart/form-data" action="/NewAssignmentUpload" method="post">
 			Title: <input type="text" name="assignmentName"
 				placeholder="Enter Name of Assignment"> <br>
 			<br> File: <input type="file" name="fileName"> <br>
@@ -49,6 +49,9 @@
 				placeholder="Enter Due Date"> <br>
 			<br> Total Points: <input type="number" name="max_points"
 				placeholder="Enter Maximum Points"> <br>
+			<br> Steam: <input type="text" name="streamInput" placeholder="Stream ID"><br>
+			<br> Module: <input type="text" name="moduleInput" placeholder="Module ID"><br>
+			<br> Class: <input type="text" name="classInput" placeholder="Class ID"><br>
 			<br> <input type="submit" value="Upload">
 			<div style="color: red">${error}</div>
 		</form>
