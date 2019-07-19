@@ -17,18 +17,34 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+/******
+ * NOTICE:
+ * 		The init() process found in com.atossyntel.springboot.MainApp.java
+ * 		can be found here, for duration of server existence storage will 
+ * 		be handled from here
+ ******/
 @Service
 public class FileSystemStorageService implements StorageService {
 
+	// Variables for defining file path relatively based on project location
     private Path rootLocation;
     private StorageProperties props;
 
+    //Constructor with StorageProperties parameter
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
         this.props = properties;
     }
 
+	/******
+	 * function store(MultipartFile file, String modules)
+	 * -Saves a given 'file' to path defined by root + module directory
+	 *  
+	 * 1st parameter: Object containing the submitted file
+	 * 2nd parameter: String modules, from front-end, defines 
+	 * 		save file directory for the file
+	 ******/
     @Override
     public void store(MultipartFile file, String modules) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
@@ -54,6 +70,11 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+	/****** AS OF 18 JUL 2019, SPRINT 2, NOT IN USE
+	 * function loadAll()
+	 * -Handles the grabbing of ALL files in a given directory
+	 * 		
+	 ******/
     @Override
     public Stream<Path> loadAll() {
         try {
@@ -66,11 +87,23 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+	/****** AS OF 18 JUL 2019, SPRINT 2, NOT IN USE
+	 * function load(String filename)
+	 * -(?) Isolates location + filename of a given String
+	 *  
+	 * 1st parameter: String to specify filename
+	 ******/
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
 
+	/****** AS OF 18 JUL 2019, SPRINT 2, NOT IN USE
+	 * function loadAsResource(String filename)
+	 * -(?) Potentially for checking file integrity
+	 *  
+	 * 1st parameter: String for a given filename
+	 ******/
     @Override
     public Resource loadAsResource(String filename) {
         try {
@@ -90,11 +123,21 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
+	/****** AS OF 18 JUL 2019, SPRINT 2, NOT IN USE
+	 * function deleteAll()
+	 * -Deletes ALL files present in the rootLocation folder
+	 * -Note: This doesn't seek any file other than the root
+	 ******/
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
+	/******
+	 * function init()
+	 * -Initializer for the storage container, creates root directory
+	 * 		(Present in the main.java)
+	 ******/
     @Override
     public void init() {
         try {
