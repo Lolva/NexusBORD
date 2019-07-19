@@ -17,7 +17,7 @@ import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
 public class InstructorAssignmentsController {
 	@Autowired
 	InstructorAssignmentsDAO assigndao;
-
+	private String username = null;
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
 		/*//user hasnt logged in yet, redirect to login page
@@ -31,6 +31,55 @@ public class InstructorAssignmentsController {
 			return "InstructorAssignments";
 		}*/
 		//user is not an instructor redirect to assignments
+		username = session.getAttribute("username").toString();
+		
+		List<Map<String, Object>> classes = assigndao.getClasses(username);
+		for(Map<String, Object> r: classes) {
+			System.out.println(r.toString());
+		}
+		model.addAttribute("classes", classes);
 		return "InstructorAssignments";
+	}
+	public List<Map<String, Object>> doneInstructor(String classID) {
+		
+		//List<Map<String, Object>> doneQuery = assigndao.getActiveAssignments(classID, username);
+		
+		//return doneQuery;
+		return null;
+	}
+	public List<Map<String, Object>> togradeInstructor(String classID) {
+		
+		//List<Map<String, Object>> togradeQuery = assigndao.getToGrade(classID, username);
+		
+		//return togradeQuery;
+		return null;
+	}
+	public List<Map<String, Object>> overdueInstructor(String classID) {
+		
+		//List<Map<String, Object>> overdueQuery = assigndao.getOverdue(classID, username);
+		
+		//return overdueQuery;
+		return null;
+	}
+	public List<Map<String, Object>> allStudent(String classID) {
+		
+		//List<Map<String, Object>> allQuery = assigndao.getstudentAssignments(classID, username);
+		
+		//return allQuery;
+		return null;
+	}
+	public List<Map<String, Object>> gradeSubmitted(String classID) {
+		
+		//List<Map<String, Object>> gradeQuery = assigndao.getstudentGrade(classID, username);
+		
+		//return gradeQuery;
+		return null;
+	}
+	public List<Map<String, Object>> todoStudent(String classID) {
+		
+		//List<Map<String, Object>> todoQuery = assigndao.getstudentTodo(classID, username);
+		
+		//return todoQuery;
+		return null;
 	}
 }

@@ -1,3 +1,7 @@
+var roleId = null;
+var classId  = null;
+var moduleId = null;
+
 function navBar(currentPage, activePage, student ){
 	currentPage.document.getElementById("navDiv").innerHTML = "<ul class='topnavbar'>" +
 			"<li><a class='logout' id ='logout' href='logout' onclick=\"return confirm('Logout?');\">Logout</a></li>" +

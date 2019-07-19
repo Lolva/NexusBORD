@@ -57,17 +57,26 @@ td, th {
 		style="width: 90%; margin: auto; height: 520px; background-color: white;">
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#instructor" class="nav-link">My Class</a></li>
-				<li><a href="#class1" class="nav-link">Enrolled In Class1</a></li>
-				<li><a href="#class2" class="nav-link">Enrolled In Class2</a></li>
+				<!--  change #instructor to #classID, update JS classID, inject className  -->
+				<c:forEach items="${classes}" var="cl">
+					<li><a href="#\${cl.CLASS_ID}" class="nav-link">${cl.stream_name}
+							${cl.role_id}</a></li>
+					<!--  change href to #classID, inject className. update classID in JS  -->
+				</c:forEach>
 			</ul>
 			<div class="tab-content">
+				<!--  change to class ID from first model -->
 				<div class="tab-pane fade active in" id="instructor">
 					<div class="tabbable">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#sub11" class="nav-link">To Grade</a></li>
+							
+							<!--  hrefs will have to be named for the results  -->
+
+							<li class="active"><a href="#sub11" class="nav-link">To
+									Grade</a></li>
 							<li><a href="#sub12" class="nav-link">OverDue</a></li>
 							<li><a href="#sub13" class="nav-link">All Assignments</a></li>
+							
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane fade active in" id="sub11">
@@ -85,7 +94,8 @@ td, th {
 				<div class="tab-pane fade" id="class1">
 					<div class="tabbable">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#sub21" class="nav-link">To Do</a></li>
+							<li class="active"><a href="#sub21" class="nav-link">To
+									Do</a></li>
 							<li><a href="#sub22" class="nav-link">All Assignments</a></li>
 							<li><a href="#sub23" class="nav-link">Grades</a></li>
 						</ul>
@@ -97,7 +107,8 @@ td, th {
 								<p>all assignments including already submitted ones</p>
 							</div>
 							<div class="tab-pane fade" id="sub23">
-								<p>all submitted assignments with their grade value displayed</p>
+								<p>all submitted assignments with their grade value
+									displayed</p>
 							</div>
 						</div>
 					</div>
@@ -105,7 +116,8 @@ td, th {
 				<div class="tab-pane fade" id="class2">
 					<div class="tabbable">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#sub31" class="nav-link">To Do</a></li>
+							<li class="active"><a href="#sub31" class="nav-link">To
+									Do</a></li>
 							<li><a href="#sub32" class="nav-link">All Assignments</a></li>
 							<li><a href="#sub33" class="nav-link">Grades</a></li>
 						</ul>
@@ -117,12 +129,17 @@ td, th {
 								<p>all assignments including already submitted ones - 2</p>
 							</div>
 							<div class="tab-pane fade" id="sub33">
-								<p>all submitted assignments with their grade value displayed - 2</p>
+								<p>all submitted assignments with their grade value
+									displayed - 2</p>
 							</div>
 						</div>
+
 					</div>
+
 				</div>
+
 			</div>
+
 		</div>
 	</fieldset>
 	<script js>
