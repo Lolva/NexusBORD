@@ -20,7 +20,7 @@ public class InstructorAssignmentsController {
 
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-		//user hasnt logged in yet, redirect to login page
+		/*//user hasnt logged in yet, redirect to login page
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
@@ -29,8 +29,8 @@ public class InstructorAssignmentsController {
 			List<Map<String, Object>> sassigns = assigndao.getAssignment();
 			model.addAttribute("sassigns", sassigns);
 			return "InstructorAssignments";
-		}
+		}*/
 		//user is not an instructor redirect to assignments
-		return "redirect:assignments";
+		return "InstructorAssignments";
 	}
 }
