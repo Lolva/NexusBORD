@@ -24,7 +24,7 @@ public class LoginDAOService implements LoginDAO {
 	@Override
 	public boolean checkPassword(UserLogin e) {
 		// Using UserLogin object, check username+password against employee table
-		String sqlQuery = "SELECT COUNT(*) FROM employee WHERE employee_id=? AND password=?";
+		String sqlQuery = "SELECT COUNT(*) FROM employees WHERE employee_id=? AND password=?";
 		if(jTemplate.queryForObject(sqlQuery, new Object[]{e.getUsername(), e.getPassword()}, Integer.class) > 0) {
 			return true;
 		}
@@ -33,10 +33,9 @@ public class LoginDAOService implements LoginDAO {
 		}
 	}
 
-	@Override
-    public boolean isInstructor(UserLogin e) {
-        SimpleJdbcCall result = new SimpleJdbcCall(this.jTemplate).withFunctionName("isInstructor");
-        SqlParameterSource params = new MapSqlParameterSource().addValue("emp_id", e.getUsername());
-        return result.executeFunction(BigDecimal.class, params).intValue() == 1 ? true : false;
-    }
+	@Override // Returns whether or not the given UserLogin's username corresponds to an entry in the Enrollments table
+    public boolean isEnrolled(UserLogin e) {
+		String sqlQuery = "SELECT COUNT(*) FROM enrollments WHERE employee_id=?";
+		return (jTemplate.queryForObject(sqlQuery, new Object[]{e.getUsername()}, Integer.class) > 0);
+	}
 }
