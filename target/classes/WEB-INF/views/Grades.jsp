@@ -42,31 +42,35 @@ td, th {
 			<div style="background-color: #2E2E7F; padding: 2px;">
 				<h2 style="color: white; margin: 10px; margin-top: 1%;">Grade Assignment: </h2>
 			</div>
+			<form method="POST" modelAttribute="grades">
 			<table width="100%" class="gradeTable">
+
 				<tr>
 					<th>Student Name</th>
 					<th>Submission_Date</th>
 					<th>File Name</th>
 					<th>Grade</th>
 				</tr>
-				<c:forEach items="${igrades}" var="obj">
+				<c:forEach items="${grades.submissions}" var="obj" varStatus="gradeIndex">
 					<tr>
-						<td id=studentName>%{obj.student_name}</td>
+						<td id=studentName >${obj.student_name}</td>
 						<c:choose>
 							<c:when test="${empty obj.submission_date}">
 								<!-- Submission date is null -->
 								<td style="color:red;" id="submissionDate">Not Submitted</td>
 							</c:when>
 							<c:otherwise>
-								<td style="color:green;" id="submissionDate">%{obj.submission_date}</td>
+								<td style="color:green;" id="submissionDate">${obj.submission_date}</td>
 							</c:otherwise>
 						</c:choose>
-						<td id=fileName>%{obj.file_name}</td>
-						<td id=grade><div contenteditable=true>%{obj.grade}</div>%</td>
+						<td id=fileName>${obj.file_name}</td>
+						<td id=grade><input path="submissions[${gradeIndex.count}].grade" type="number" name="grade" value="${obj.grade}">%</td>
 					</tr>
 				</c:forEach>
 			</table>
-			<button type="button">Submit!</button>
+			<input type="submit" name="submit">
+			</form>
+			
 		</fieldset>
 	</div>
 

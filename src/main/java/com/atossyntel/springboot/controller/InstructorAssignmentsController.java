@@ -25,7 +25,7 @@ public class InstructorAssignmentsController {
 			return "redirect:login";
 		}
 		//verify user is an instructor
-		if((Boolean) session.getAttribute("instructor")) {
+		if(session.getAttribute("instructor") != null) {
 			List<Map<String, Object>> sassigns = assigndao.getAssignment();
 			model.addAttribute("sassigns", sassigns);
 			return "InstructorAssignments";

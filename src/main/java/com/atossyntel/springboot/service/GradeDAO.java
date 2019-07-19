@@ -4,5 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface GradeDAO {
+	
 	public List<Map<String, Object>> getAssignments(String id);
+	public Boolean updateAssignments(String id, List<Map<String, Object>> grades);
 }
