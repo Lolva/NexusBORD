@@ -24,26 +24,29 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String submit(Model model, @ModelAttribute("login") UserLogin login, HttpSession session) {
+		// First, check that the input isn't null
 		if (login != null && login.getUsername() != null & login.getPassword() != null) {
-			//check if the user exists in the DB and the password is correct
+
+			// Next, check that the user exists in the database
 			if (dao.checkPassword(login)) {
-				//if user has instructor role set session values for instructor
-				if(dao.isInstructor(login)) { 
-					session.setAttribute("username", login.getUsername());
-					session.setAttribute("instructor", true);
-					return "Nexus"; // after successful login, go to page <return value without quotes>.jsp
-				} else {	
-					//user is NOT instructor, set session values
-					session.setAttribute("username", login.getUsername());
-					session.setAttribute("instructor", false);
-					return "Nexus";
+
+				// Finally, check that the user is enrolled in a class
+				if (dao.isEnrolled(login)) {
+					session.setAttribute("username", login.getUsername()); // Store the user's username in the session
+					return "Nexus"; // Send the user to the main page
+
+				} else { // Username has no entry in the Enrollments table
+					model.addAttribute("error", "You are not enrolled in any classes");
+					return "login";
 				}
-			} else {
+
+			} else { // Username and password are not a combination in the database
 				model.addAttribute("error", "Invalid Username or Password");
 				return "login";
 			}
-		} else {
-			model.addAttribute("error", "Please enter Details");
+
+		} else { // User has not entered any input
+			model.addAttribute("error", "Please enter your information");
 			return "login";
 		}
 	}
