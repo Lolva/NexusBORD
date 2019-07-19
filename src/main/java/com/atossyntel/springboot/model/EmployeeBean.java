@@ -5,15 +5,9 @@ public class EmployeeBean {
     private String First_Name;
     private String Last_Name;
     private String Email;
-    private int Employee_Id;
-
-    public EmployeeBean(String First_Name, String Last_Name, String Email, int Employee_Id) {
-        this.First_Name = First_Name;
-        this.Last_Name = Last_Name;
-        this.Email = Email;
-        this.Employee_Id = Employee_Id;
-    }
-
+    private String Employee_Id;
+    private String class_id;
+    
     public String getFirst_Name() {
         return First_Name;
     }
@@ -38,20 +32,25 @@ public class EmployeeBean {
         this.Email = Email;
     }
 
-    public int getEmployee_Id() {
+    public String getEmployee_Id() {
         return Employee_Id;
     }
 
-    public void setEmployee_Id(int Employee_Id) {
+    public void setEmployee_Id(String Employee_Id) {
         this.Employee_Id = Employee_Id;
     }
 
-    @Override
+    
+    public String getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(String class_id) {
+		this.class_id = class_id;
+	}
+
+	@Override
     public String toString() {
         return "EmployeeBean{" + "First_Name=" + First_Name + ", Last_Name=" + Last_Name + ", Email=" + Email + ", Employee_Id=" + Employee_Id + '}';
     }
-    
-    
-    
-    
 }

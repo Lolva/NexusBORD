@@ -7,30 +7,16 @@
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
+    <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+    
     
 </head>
-<body>
-	<%
-	//User is not logged in
-		if (session.getAttribute("username") == null) {
-	%>
-	<script>
-		window.location.href = "/login";
-	</script>
-	<%
-		}
-	%>
+
+<!-- Dynamically create nav bar based on current page and role -->
+<body onload="navBar(this, 'classes', 'student')">
   <header>
-        <div class="navigation">
-            <ul class="topnavbar">
-				<li><a href="logout" onclick="return confirm('Logout?');">Logout</a></li>
-                <li><a href="Nexus.html">Home</a></li>
-                <li><a href="Modules.html">Modules</a></li>
-                <li><a href="assignments">Assignments</a></li>
-                <li><a href="Grades.html">Grades</a></li>
-                <li><a class="active" href="Classes.html">Classes</a></li>
-                <li class="left"><a class="nexus"><b>Nexus<font color="#04aad0">BORD</font></b></a></li>
-            </ul>
+        <!-- div for nav bar to be created in -->
+        <div id="navDiv" class="navigation">
         </div>
     </header>
     <fieldset style="width: 90%; margin:auto; height: 520px; background-color: white;">
