@@ -15,6 +15,7 @@ import com.atossyntel.springboot.service.ClassesDAO;
 public class ClassesController {
 	@Autowired
 	ClassesDAO classdao;
+	
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
 		List<Map<String, Object>> classIds = classdao.getClasses();

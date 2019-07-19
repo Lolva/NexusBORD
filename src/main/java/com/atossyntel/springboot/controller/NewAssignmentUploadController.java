@@ -27,7 +27,7 @@ public class NewAssignmentUploadController {
     private SmtpMailSender sms;
 
     @Autowired
-    public NewAssignmentUploadController(StorageService storageService) {
+    public NewAssignmentUploadController(StorageService storageService, HttpSession session) {
         this.storageService = storageService;
     }
 	

@@ -20,6 +20,7 @@ public class InstructorAssignmentsController {
 
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
+		System.out.println("Inside teacherAssignments:InstructorAssignmentsCOntroller");
 		//user hasnt logged in yet, redirect to login page
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";

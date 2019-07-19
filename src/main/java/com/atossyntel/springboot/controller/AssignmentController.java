@@ -17,12 +17,16 @@ public class AssignmentController {
 
 	@GetMapping(value = "/assignments")
 	public String init(Model model, HttpSession session) {
+		System.out.println("Outside if statement");
 		if(session.getAttribute("instructor") != null) {
 			if((Boolean) session.getAttribute("instructor")) {
+				System.out.println("In Instructor");
 				return "redirect:InstructorAssignments";
 			}
+			System.out.println("In student");
 			return "redirect:StudentAssignments";
 		}
+		System.out.println("need to login");
 		return "redirect:login";
 	}
 }

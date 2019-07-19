@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class NexusController {
 	@RequestMapping(value = "/Nexus", method = RequestMethod.GET)
 	public String init(Model model) {
+		System.out.println("Hitting Nexus: NexusController");
 		return "Nexus";
 	}
 }
