@@ -7,7 +7,7 @@ body {
     background-image: url(/resources/pictures/test.png);
     background-repeat: no-repeat;
     background-size: 100%, 100%;
-    color: antiquewhite;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -74,6 +74,7 @@ ul.topnavbar {
     position: absolute;
     top: 50%;
     left: 75%;
+    color: antiquewhite;
     transform: translate(-50%,-50%);
     text-align: center;
     background-color: #2b2b2b;
@@ -91,13 +92,13 @@ ul.topnavbar {
         width: 200px;
         outline: none;
         border-radius: 24px;
-        color:antiquewhite
+        color: antiquewhite;
     }
 
         .box input[type = "text"]:focus, .box input[type = "password"]:focus {
             width: 200px;
             border-color: #04aad0;
-            color: antiquewhite
+            color: antiquewhite;
         }
 
     .box input[type="submit"] {

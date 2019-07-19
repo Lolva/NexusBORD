@@ -56,7 +56,7 @@ td, th {
 					<th>File Name</th>
 					<th>Grade</th>
 				</tr>
-				<c:forEach items="${igrades}" var="">
+				<c:forEach items="${igrades}" var="obj">
 					<tr>
 						<td id=studentName>%{obj.student_name}</td>
 						<c:choose>
@@ -68,12 +68,12 @@ td, th {
 								<td style="color:green;" id="submissionDate">%{obj.submission_date}</td>
 							</c:otherwise>
 						</c:choose>
-						<td id=fileName>%{obj.attached_files}</td>
+						<td id=fileName>%{obj.file_name}</td>
 						<td id=grade><div contenteditable=true>%{obj.grade}</div>%</td>
 					</tr>
 				</c:forEach>
 			</table>
-			<button type="button">Click Me!</button>
+			<button type="button">Submit!</button>
 		</fieldset>
 	</div>
 
