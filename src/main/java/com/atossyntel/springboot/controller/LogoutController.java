@@ -1,6 +1,5 @@
 package com.atossyntel.springboot.controller;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
