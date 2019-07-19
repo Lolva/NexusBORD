@@ -19,7 +19,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		System.out.println("Time to log in:LoginController");
 		return "login";
 	}
 
@@ -27,8 +26,6 @@ public class LoginController {
 	public String submit(Model model, @ModelAttribute("login") UserLogin login, HttpSession session) {
 		// First, check that the input isn't null
 		if (login.getUsername() != "" & login.getPassword() != "") {
-			System.out.println("Username: " + login.getUsername());
-			System.out.println("Password: " + login.getPassword());
 			// Next, check that the user exists in the database
 			if (dao.checkPassword(login)) {
 

@@ -23,7 +23,6 @@ public class StudentAssignmentsController {
 
 	@GetMapping(value = "/StudentAssignments")
 	public String init(Model model, HttpSession session) {
-		System.out.println("Inside student assignments:StudentAssignmentsCOntroller");
 		//verify user is logged in
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";

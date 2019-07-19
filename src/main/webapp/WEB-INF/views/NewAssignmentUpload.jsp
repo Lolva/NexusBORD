@@ -24,9 +24,9 @@
 		}
 	%>
 	<header>
-		<!-- div for nav bar to be created in -->
+		<!-- div for nav bar to be created in 
         <div id="navDiv" class="navigation">
-        </div>
+        </div>-->
 	</header>
 	<fieldset
 		style="width: 90%; margin: auto; height: 500px; background-color: white;">
@@ -37,16 +37,33 @@
 		</div>
 		<form style="color: black;" enctype="multipart/form-data" action="/NewAssignmentUpload" method="post">
 			Title: <input type="text" name="assignmentName"
-				placeholder="Enter Name of Assignment"> <br>
-			<br> File: <input type="file" name="fileName"> <br>
-			<br> Due Date: <input type="date" name="due_date"
-				placeholder="Enter Due Date"> <br>
-			<br> Total Points: <input type="number" name="max_points"
-				placeholder="Enter Maximum Points"> <br>
-			<br> Stream: <input type="text" name="streamInput" placeholder="Stream ID"><br>
-			<br> Module: <input type="text" name="moduleInput" placeholder="Module ID"><br>
-			<br> Class: <input type="text" name="classInput" placeholder="Class ID"><br>
-			<br> <input type="submit" value="Upload">
+				placeholder="Enter Name of Assignment"> 
+			<br>
+			<br> 
+			File: <input type="file" name="fileName"> 
+			<br>
+			<br> 
+			Due Date: <input type="date" name="due_date"
+				placeholder="Enter Due Date"> 	
+			<br>
+			<br> 
+			Total Points: <input type="number" name="max_points"
+				placeholder="Enter Maximum Points"> 
+			<br>
+			<br> 
+			Stream: <input type="text" name="streamInput" placeholder="Stream ID">
+			<br>
+			<br> 
+			Module: <input type="text" name="moduleInput" placeholder="Module ID">
+			<br>
+			<br> 
+			Class: <input type="text" name="classInput" placeholder="Class ID">
+			<br>
+			<br> 
+			Description:
+			<br>
+			<textarea rows="2" cols="30" name="desc"></textarea>
+			<input type="submit" value="Upload">
 			<div style="color: red">${error}</div>
 		</form>
 	</fieldset>

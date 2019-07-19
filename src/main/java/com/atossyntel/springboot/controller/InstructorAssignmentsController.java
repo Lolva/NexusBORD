@@ -20,14 +20,12 @@ public class InstructorAssignmentsController {
 
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-		System.out.println("Inside teacherAssignments:InstructorAssignmentsCOntroller");
 		//user hasnt logged in yet, redirect to login page
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
 		//verify user is an instructor
 		if((Boolean) session.getAttribute("instructor")) {
-			System.out.println("Inside InstructorAssignmentCOntroller");
 			List<Map<String, Object>> sassigns = assigndao.getAssignment();
 			model.addAttribute("sassigns", sassigns);
 			return "InstructorAssignments";
