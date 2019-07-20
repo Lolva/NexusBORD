@@ -36,19 +36,20 @@ public class InstructorAssignmentsController {
 		
 		List<Map<String, Object>> classes = assigndao.getClasses(username);
 		model.addAttribute("classes", classes);
-		List<List<Map<String,Object>>> list = new ArrayList<>();
+		List<List<Map<String,Object>>> list1 = new ArrayList<>();
+		List<List<Map<String,Object>>> list2 = new ArrayList<>();
 		for(Map<String,Object> m : classes) {
-			list.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
-			model.addAttribute("odList", assigndao.getOverdue(m.get("class_Id").toString(), username));
+			list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
+			 list2.add(assigndao.getOverdue(m.get("class_Id").toString()));
 			model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
 		}
-		for(List<Map<String, Object>> l : list) {
+		for(List<Map<String, Object>> l : list1) {
 			for(Map<String, Object> r: l) {
 				System.out.println("active " + r.toString());
-			}
-		}
-		model.addAttribute("daList", list);
+			}}
 		
+		model.addAttribute("daList", list1);
+		model.addAttribute("odList", list2);
 		
 		return "InstructorAssignments";
 	}

@@ -119,8 +119,8 @@ td, th {
 												<th>Due Date</th>
 											</tr>
 
-
-											<c:forEach items="${odList}" var="in">
+										<c:forEach items="${odList}" var="dl">
+											<c:forEach items="${dl}" var="in">
 
 												<tr>
 													<td>${in.employee_id}</td>
@@ -128,7 +128,7 @@ td, th {
 													<td>${in.due_date}</td>
 												</tr>
 											</c:forEach>
-
+										</c:forEach>
 
 										</table>
 									</div>
