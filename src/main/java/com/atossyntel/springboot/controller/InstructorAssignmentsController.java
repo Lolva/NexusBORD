@@ -1,5 +1,6 @@
 package com.atossyntel.springboot.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,10 +35,20 @@ public class InstructorAssignmentsController {
 		username = session.getAttribute("username").toString();
 		
 		List<Map<String, Object>> classes = assigndao.getClasses(username);
-		for(Map<String, Object> r: classes) {
-			System.out.println(r.toString());
-		}
 		model.addAttribute("classes", classes);
+		List<List<Map<String,Object>>> list = new ArrayList<>();
+		for(Map<String,Object> m : classes) {
+			list.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
+			model.addAttribute("odList", assigndao.getOverdue(m.get("class_Id").toString(), username));
+		}
+		for(List<Map<String, Object>> l : list) {
+			for(Map<String, Object> r: l) {
+				System.out.println("active " + r.toString());
+			}
+		}
+		model.addAttribute("daList", list);
+		
+		
 		return "InstructorAssignments";
 	}
 	public List<Map<String, Object>> doneInstructor(String classID) {
