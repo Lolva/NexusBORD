@@ -51,6 +51,16 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		}
 		return results;
 	}
+	@Override
+	public List<Map<String, Object>> getToGrade(String class_id, String username) {
+		String sql = "SELECT DISTINCT * FROM assignments a, submissions s WHERE a.ASSIGNMENT_ID = s.ASSIGNMENT_ID AND a.status != 'inactive' AND s.grade IS NULL";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql);
+		for(Map<String, Object> r: results) {
+			System.out.println("to Grade " + r.toString());
+		}
+		return results;
+	}
 	
 
 }

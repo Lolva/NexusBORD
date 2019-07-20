@@ -112,7 +112,7 @@ td, th {
 							</div>
 							<div class="tab-pane fade" id="sub1">
 								<div><table>
-									<tr><th>Status</th><th>Assignment Name</th><th>Due Date</th></tr>
+									<tr><th>Employee</th><th>Assignment Name</th><th>Due Date</th></tr>
 
 
 									<c:forEach items="${odList}" var="in">
@@ -131,7 +131,31 @@ td, th {
 									</table></div>
 							</div>
 							<div class="tab-pane fade" id="sub2">
-								<p>all assignments grouped by current status</p>
+								<div><table>
+									<tr><th>Assignment Name</th><th>Employee</th><th>Due Date</th>
+									<th>Submission Date</th><th>File name</th><th>Enter Grade</th></tr>
+
+
+									<c:forEach items="${tgList}" var="in">
+									
+										<tr>
+											<td> ${in.assignment_name}
+											</td>
+											<td> ${in.employee_id}
+											</td>
+											<td> ${in.due_date}
+											</td>
+											<td> ${in.submission_date}
+											</td>
+											<td> ${in.file_name}
+											</td>
+											<td> <input type="text" placeholder="${in.grade}"/><input type="submit" value="submit"/>
+											</td>
+											</tr>
+											</c:forEach>
+										
+									
+									</table></div>
 							</div>
 							<div class="tab-pane fade active in" id="sub4">
 								<p>to add</p>
