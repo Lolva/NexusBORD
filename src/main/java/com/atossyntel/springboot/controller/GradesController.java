@@ -1,5 +1,6 @@
 package com.atossyntel.springboot.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
+import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.GradeModel;
 import com.atossyntel.springboot.service.GradeDAO;
 
 @Controller
+@SessionAttributes("finishedGrades")
 public class GradesController {
 	@Autowired
 	GradeDAO gradeDAO;
@@ -30,16 +35,20 @@ public class GradesController {
 		
 		//if(!(Boolean) session.getAttribute("instructor")) 
 		if(true){
-			List<Map<String, Object>> igrades = gradeDAO.getAssignments("55556");
+			List<GradeBean> igrades = gradeDAO.getAssignments("55556");
 			model.addAttribute("grades",new GradeModel(igrades));
+			List<GradeBean> ngrades= new ArrayList<GradeBean>(igrades);
+			model.addAttribute("finishedGrades",new GradeModel(ngrades));
 			
 			return "Grades";
 		}
 		return "redirect:assignments";
 	}
 	@RequestMapping(value = "/Grades", method = RequestMethod.POST)
-	public String update(Model model, @ModelAttribute("grades") GradeModel grades) {
+	public String submit(@ModelAttribute("grades") GradeModel grades, SessionStatus sessionStatus) {
+		System.out.println(grades.getSubmissions());
 		gradeDAO.updateAssignments("55556", grades.getSubmissions());
-		return "assignments";
+		sessionStatus.setComplete();
+		return "redirect:login";
 	}
 }

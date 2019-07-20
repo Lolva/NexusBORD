@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,7 @@ td, th {
 			<div style="background-color: #2E2E7F; padding: 2px;">
 				<h2 style="color: white; margin: 10px; margin-top: 1%;">Grade Assignment: </h2>
 			</div>
-			<form method="POST" modelAttribute="grades">
+			<form:form method="POST" modelAttribute="finishedGrades">
 			<table width="100%" class="gradeTable">
 
 				<tr>
@@ -53,7 +54,7 @@ td, th {
 				</tr>
 				<c:forEach items="${grades.submissions}" var="obj" varStatus="gradeIndex">
 					<tr>
-						<td id=studentName >${obj.student_name}</td>
+						<td id=studentName >${obj.studentName}</td>
 						<c:choose>
 							<c:when test="${empty obj.submission_date}">
 								<!-- Submission date is null -->
@@ -64,12 +65,16 @@ td, th {
 							</c:otherwise>
 						</c:choose>
 						<td id=fileName>${obj.file_name}</td>
-						<td id=grade><input path="submissions[${gradeIndex.count}].grade" type="number" name="grade" value="${obj.grade}">%</td>
+						<form:hidden path="submissions[${gradeIndex.count}].studentName" value="${obj.studentName}"/>
+						<form:hidden path="submissions[${gradeIndex.count}].submission_date" value="${obj.submission_date}"/>
+						<form:hidden path="submissions[${gradeIndex.count}].employee_id" value="${obj.employee_id}"/>
+						<form:hidden path="submissions[${gradeIndex.count}].file_name" value="${obj.file_name}"/>
+						<td id=grade><form:input path="submissions[${gradeIndex.count}].grade" type="number" name="grade" value="${obj.grade}" min="0" max="100"/>%</td>
 					</tr>
 				</c:forEach>
 			</table>
 			<input type="submit" name="submit">
-			</form>
+			</form:form>
 			
 		</fieldset>
 	</div>

@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GradeModel {
-	List<Map<String, Object>> submissions;
+	List<GradeBean> submissions;
+	
 	
 
 	public GradeModel() {
@@ -12,16 +13,16 @@ public class GradeModel {
 		this.submissions = null;
 	}
 
-	public GradeModel(List<Map<String, Object>> submissions) {
+	public GradeModel(List<GradeBean> submissions) {
 		super();
 		this.submissions = submissions;
 	}
 
-	public List<Map<String, Object>> getSubmissions() {
+	public List<GradeBean> getSubmissions() {
 		return submissions;
 	}
 
-	public void setSubmissions(List<Map<String, Object>> submissions) {
+	public void setSubmissions(List<GradeBean> submissions) {
 		this.submissions = submissions;
 	}
 	
