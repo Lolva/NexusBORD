@@ -64,29 +64,31 @@ public class NewAssignmentUploadController {
 			System.out.println(filename);
 			
 			//Test case as proof of concept for dynamic folder building
-			StringBuilder modFolder = new StringBuilder();
-			switch(sId) {
-				//if the stream name is "1"
-				case "1":
-					//set the string to folder1
-					modFolder.append("/folder1/");
-					break;
-				//if the stream name is "1"
-				case "2":
-					//set the string to folder2
-					modFolder.append("/folder2/");
-					break;
-				default:
-					//set an empty folder(aka directly under the root folder)
-					modFolder.append("");
-			}					
-		
+			StringBuilder modFolder = new StringBuilder("/"+sId+"/"+cId+"/"+mId+"/");
+//			switch(sId) {
+//				//if the stream name is "1"
+//				case "1":
+//					//set the string to folder1
+//					modFolder.append("/folder1/");
+//					break;
+//				//if the stream name is "1"
+//				case "2":
+//					//set the string to folder2
+//					modFolder.append("/folder2/");
+//					break;
+//				default:
+//					//set an empty folder(aka directly under the root folder)
+//					modFolder.append("");
+//			}					
+			
+			
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");
+			//System.out.print(file.getOriginalFilename());
 			return "redirect:InstructorAssignments";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
