@@ -59,120 +59,141 @@ td, th {
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
-					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}" class="nav-link">${cl.stream_name}
-							${cl.role_id}</a></li>
+					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
-					
+
 				</c:forEach>
 			</ul>
-			
-				<!--  change to class ID from first model -->
-				<c:set var="count" value="0" scope="page" />
-				<c:set var="county" value="100" scope="page" />
 
-				<div class="tab-content">
+			<!--  change to class ID from first model -->
+			<c:set var="count" value="0" scope="page" />
+			<c:set var="county" value="100" scope="page" />
+
+			<div class="tab-content">
 				<c:forEach items="${classes}" var="cl">
-				<div class="tab-pane fade active in" id="class${cl.class_id}">
-					<div class="tabbable">
-						<ul class="nav nav-tabs" id="${cl.stream_name}">
-							<c:choose>
-							<c:when test="${cl.role_id == 1}">
+				<c:choose>
+					<c:when test="${cl.role_id == 1}">
+					<div class="tab-pane fade active in" id="class${cl.class_id}">
+						<div class="tabbable">
+							<ul class="nav nav-tabs" id="${cl.stream_name}">
+								
 									Instructor View
-									<li class="active"><a href="#sub0" class="nav-link">All Assignments</a></li>
-									<li><a href="#sub1" class="nav-link">Assignments OverDue</a></li>
-									<li><a href="#sub2" class="nav-link">Assignments To Grade</a></li>
-								</c:when>
-							<c:otherwise>
-									<li class="active"><a href="#sub4" class="nav-link"> All Assignments</a></li>
-									<li><a href="#sub5" class="nav-link">Assignments To Do</a></li>
-									<li><a href="#sub6" class="nav-link">Graded Assignments</a></li>
-							</c:otherwise>
-							</c:choose>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="sub0">
-								<div><table>
-									<tr><th>Status</th><th>Assignment Name</th><th>Due Date</th></tr>
-
-
-									<c:forEach items="${daList}" var="dl">
-									<c:forEach items="${dl}" var="in">
-										<tr>
-											<td> ${in.STATUS}
-											</td>
-											<td> ${in.assignment_name}
-											</td>
-											<td> ${in.due_date}
-											</td>
+									<li class="active"><a href="#sub0" class="nav-link">All
+												Assignments</a></li>
+										<li><a href="#sub1" class="nav-link">Assignments
+												OverDue</a></li>
+										<li><a href="#sub2" class="nav-link">Assignments To
+												Grade</a></li>
+									</ul>
+									<div class="tab-content">
+								<div class="tab-pane fade active in" id="sub0">
+									<div>
+										<table>
+											<tr>
+												<th>Status</th>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
 											</tr>
+
+
+											<c:forEach items="${daList}" var="dl">
+												<c:forEach items="${dl}" var="in">
+													<tr>
+														<td>${in.STATUS}</td>
+														<td>${in.assignment_name}</td>
+														<td>${in.due_date}</td>
+													</tr>
+												</c:forEach>
+
 											</c:forEach>
-										
-									</c:forEach>
-									</table></div>
-							</div>
-							<div class="tab-pane fade" id="sub1">
-								<div><table>
-									<tr><th>Employee</th><th>Assignment Name</th><th>Due Date</th></tr>
-
-
-									<c:forEach items="${odList}" var="in">
-									
-										<tr>
-											<td> ${in.employee_id}
-											</td>
-											<td> ${in.assignment_name}
-											</td>
-											<td> ${in.due_date}
-											</td>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub1">
+									<div>
+										<table>
+											<tr>
+												<th>Employee</th>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
 											</tr>
+
+
+											<c:forEach items="${odList}" var="in">
+
+												<tr>
+													<td>${in.employee_id}</td>
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+												</tr>
 											</c:forEach>
-										
-									
-									</table></div>
-							</div>
-							<div class="tab-pane fade" id="sub2">
-								<div><table>
-									<tr><th>Assignment Name</th><th>Employee</th><th>Due Date</th>
-									<th>Submission Date</th><th>File name</th><th>Enter Grade</th></tr>
 
 
-									<c:forEach items="${tgList}" var="in">
-									
-										<tr>
-											<td> ${in.assignment_name}
-											</td>
-											<td> ${in.employee_id}
-											</td>
-											<td> ${in.due_date}
-											</td>
-											<td> ${in.submission_date}
-											</td>
-											<td> ${in.file_name}
-											</td>
-											<td> <input type="text" placeholder="${in.grade}"/><input type="submit" value="submit"/>
-											</td>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub2">
+									<div>
+										<table>
+											<tr>
+												<th>Assignment Name</th>
+												<th>Employee</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+												<th>File name</th>
+												<th>Enter Grade</th>
 											</tr>
+
+											<c:forEach items="${tgList}" var="in">
+
+												<tr>
+													<td>${in.assignment_name}</td>
+													<td>${in.employee_id}</td>
+													<td>${in.due_date}</td>
+													<td>${in.submission_date}</td>
+													<td>${in.file_name}</td>
+													<td><input type="text" placeholder="${in.grade}" /><input
+														type="submit" value="submit" /></td>
+												</tr>
 											</c:forEach>
-										
-									
-									</table></div>
-							</div>
-							<div class="tab-pane fade active in" id="sub4">
-								<p>to add</p>
-							</div>
-							<div class="tab-pane fade" id="sub5">
-								<p>list of employees with overdue assignments</p>
-							</div>
-							<div class="tab-pane fade" id="sub6">
-								<p>all assignments grouped by current status</p>
+
+
+										</table>
+									</div>
+								</div>
+								</div></div></div>
+					</c:when>
+					<c:otherwise>
+									<div class="tab-pane fade active in" id="class${cl.class_id}">
+									<div class="tabbable">
+									<ul class="nav nav-tabs" id="${cl.stream_name}">
+										<li class="active"><a href="#sub4" class="nav-link">
+												All Assignments</a></li>
+										<li><a href="#sub5" class="nav-link">Assignments To
+												Do</a></li>
+										<li><a href="#sub6" class="nav-link">Graded
+												Assignments</a></li>
+												</ul>
+								<div class="tab-content">
+								<div class="tab-pane fade" id="sub4">
+									<p>to add</p>
+								</div>
+								<div class="tab-pane fade" id="sub5">
+									<p>list of employees with overdue assignments</p>
+								</div>
+								<div class="tab-pane fade" id="sub6">
+									<p>all assignments grouped by current status</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-
-			</c:forEach>
+				</c:otherwise>
+											
+				</c:choose>
+				</c:forEach>
 			</div>
-			
+
 		</div>
 	</fieldset>
 	<script js>
