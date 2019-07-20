@@ -47,10 +47,6 @@
 				placeholder="Enter Due Date"> 	
 			<br>
 			<br> 
-			Total Points: <input type="number" name="max_points"
-				placeholder="Enter Maximum Points"> 
-			<br>
-			<br> 
 			Stream: <input type="text" name="streamInput" placeholder="Stream ID">
 			<br>
 			<br> 

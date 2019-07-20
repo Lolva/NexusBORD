@@ -47,7 +47,6 @@ public class NewAssignmentUploadController {
 			String date = request.getParameter("due_date");
 			//String desc = descBean.getDescriptionInput();
 			String desc = request.getParameter("desc");
-			String maxPoints = request.getParameter("max_points");
 			String sId = request.getParameter("streamInput");
 			String mId = request.getParameter("moduleInput");
 			String cId = request.getParameter("classInput");
@@ -57,7 +56,6 @@ public class NewAssignmentUploadController {
 			System.out.println(aName);
 			System.out.println(date);
 			System.out.println(desc);
-			System.out.println(maxPoints);
 			System.out.println(sId);
 			System.out.println(mId);
 			System.out.println(cId);
