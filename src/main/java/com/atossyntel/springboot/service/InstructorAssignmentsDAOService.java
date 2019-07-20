@@ -61,6 +61,17 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		}
 		return results;
 	}
+
+	@Override
+	public List<Map<String, Object>> overdueInstructor(String class_id) {
+		String SQLQuery = "SELECT sub.*, a.* FROM submissions sub, assignments a, modules m, lessons l, streams str, classes c WHERE c.class_id = ? AND c.stream_id = str.stream_id AND str.stream_id = l.stream_id AND l.module_id = m.module_id AND m.module_id = a.module_id AND sub.assignment_id = a.assignment_id AND a.due_date < SYSDATE AND sub.submission_date IS NULL";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(SQLQuery, class_id);
+		for(Map<String, Object> r : results) {
+			System.out.println("Submission: " + r.toString());
+		}
+		return results;
+	}
 	
 
 }
