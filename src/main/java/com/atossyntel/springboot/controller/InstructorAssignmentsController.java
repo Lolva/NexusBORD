@@ -40,7 +40,7 @@ public class InstructorAssignmentsController {
 		List<List<Map<String,Object>>> list2 = new ArrayList<>();
 		for(Map<String,Object> m : classes) {
 			list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
-			 list2.add(assigndao.getOverdue(m.get("class_Id").toString()));
+			 list2.add(assigndao.overdueInstructor(m.get("class_Id").toString()));
 			model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
 		}
 		for(List<Map<String, Object>> l : list1) {
