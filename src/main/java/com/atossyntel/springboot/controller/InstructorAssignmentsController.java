@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.atossyntel.springboot.model.GradeBean;
+import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
 
 @Controller
@@ -40,7 +41,7 @@ public class InstructorAssignmentsController {
 		model.addAttribute("classes", classes);
 		
 		List<List<Map<String,Object>>> activesI = new ArrayList<>();
-		List<List<Map<String,Object>>> overdueI = new ArrayList<>();
+		//List<List<Map<String,Object>>> overdueI = new ArrayList<>();
 		List<List<Map<String,Object>>> assignsS = new ArrayList<>();
 		List<List<Map<String,Object>>> gradesS = new ArrayList<>();
 		List<List<Map<String,Object>>> todoS = new ArrayList<>();
@@ -75,17 +76,30 @@ public class InstructorAssignmentsController {
 			//}}
 		
 		model.addAttribute("daList", activesI);
-		model.addAttribute("odList", overdueI);
+		//model.addAttribute("odList", overdueI);
 		model.addAttribute("asList", assignsS);
 		model.addAttribute("sgList", gradesS);
 		model.addAttribute("tsList", todoS);
 		return "InstructorAssignments";
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
-	public String submit(Model model, @ModelAttribute("grades") GradeBean grade) {
-		System.out.println(assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade()));
-		return "InstructorAssignments";
+	@RequestMapping(value = "/InstructorAssignments", params="grades")
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
+		System.out.println(grade.toString());
+		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
+		return "redirect:InstructorAssignments";
 		
+	}
+	
+	@RequestMapping(value = "/InstructorAssignments", params = "assignment")
+	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
+		System.out.println(assignment.toString());
+		model.addAttribute("assignment_id", assignment.getAssignment_id());
+		model.addAttribute("class_id", assignment.getClass_id());
+		model.addAttribute("module_id", assignment.getModule_id());
+		model.addAttribute("stream_id", assignment.getStream_id());
+		model.addAttribute("employee_id", username);
+		
+		return "SubmitAssignment";		
 	}
 }

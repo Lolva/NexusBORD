@@ -17,7 +17,7 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 
 	@Override
 	public List<Map<String, Object>> getClasses(String username) {
-		String sql = "SELECT e.class_id, e.role_id, s.stream_name from enrollments e, classes c, streams s WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND e.employee_id = ? order by e.role_id";
+		String sql = "SELECT e.class_id, e.role_id, s.stream_name, s.stream_id from enrollments e, classes c, streams s WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND e.employee_id = ? order by e.role_id";
 
 		List<Map<String, Object>> results;
 		

@@ -121,13 +121,11 @@ td, th {
 											</tr>
 
 										<c:forEach items="${olist}" var="in">
-
 												<tr>
 													<td>${in.employee_id}</td>
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
 												</tr>
-
 										</c:forEach>
 
 										</table>
@@ -153,7 +151,9 @@ td, th {
 													<td>${in.due_date}</td>
 													<td>${in.submission_date}</td>
 													<td>${in.file_name}</td>
-													<td><form name="grades" method=POST>
+
+													<td><form name="grades" action="?grades" method="POST">
+
 													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
 													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
 													<input type="text" name="grade" placeholder="${in.grade}" />
@@ -233,14 +233,16 @@ td, th {
 								</div>
 								<div class="tab-pane fade" id="sub6">
 									<div>
+									
 										<table>
 											<tr>
 												<th>Assignment Name</th>
 												<th>Due Date</th>
+												<th>Submit Assignment</th>
 												
 												
 											</tr>
-
+										
 										<c:forEach items="${tsList}" var="dl">
 											<c:forEach items="${dl}" var="in">
 
@@ -248,6 +250,15 @@ td, th {
 													
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
+													
+													<!--  assignment_id, stream_id, module_id, and class_id -->
+													<td><form name="assignment" action="?assignment" method="POST">
+													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
+													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
+													<input type="hidden" name="stream_id" value="${cl.stream_id}" />
+													<input type="hidden" name="module_id" value="${in.module_id}" />
+													<input type="hidden" name="class_id" value="${cl.class_id}" />
+													<input type="submit" value="submit" /></form></td>
 													
 												</tr>
 											</c:forEach>
