@@ -112,7 +112,7 @@ public class NewAssignmentUploadController {
 			//System.out.print(file.getOriginalFilename());
 			
 			//return "redirect:InstructorAssignments";
-			return "redirect:NewAssignmentUpload";
+			return "redirect:InstructorAssignments";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
 			//return "NewAssignmentUpload";
