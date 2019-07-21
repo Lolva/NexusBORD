@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
@@ -92,15 +93,16 @@ public class InstructorAssignmentsController {
 	}
 	
 	@RequestMapping(value = "/InstructorAssignments", params = "assignment")
-	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
+	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes) {
 		System.out.println(assignment.toString());
 		model.addAttribute("assignment_id", assignment.getAssignment_id());
 		model.addAttribute("class_id", assignment.getClass_id());
 		model.addAttribute("module_id", assignment.getModule_id());
 		model.addAttribute("stream_id", assignment.getStream_id());
-		model.addAttribute("employee_id", username);
-		
-		return "SubmitAssignment";
+		assignment.setEmployee_id(username);
+		model.addAttribute("employee_id", assignment.getEmployee_id());
+		redirectAttributes.addFlashAttribute("assignment", assignment);
+		return "redirect:SubmitAssignment";
 		
 	}
 }
