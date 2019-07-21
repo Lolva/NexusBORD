@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.atossyntel.springboot.model.DescriptionBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
+import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
 import com.atossyntel.springboot.storage.StorageService;
 
 @Controller
@@ -27,6 +28,9 @@ public class NewAssignmentUploadController {
     // object to handle sending of email(s)
     @Autowired
     private SmtpMailSender sms;
+    
+    @Autowired
+    private InstructorAssignmentsDAOService instructDAO;
 
     @Autowired
     public NewAssignmentUploadController(StorageService storageService) {
@@ -43,6 +47,7 @@ public class NewAssignmentUploadController {
 			@RequestParam("fileName") MultipartFile file) throws MessagingException{
 		if (true) {
 			
+			String aId = request.getParameter("assignmentId");
 			String aName = request.getParameter("assignmentName");
 			String date = request.getParameter("due_date");
 			//String desc = descBean.getDescriptionInput();
@@ -54,12 +59,21 @@ public class NewAssignmentUploadController {
 			
 			//println() for debugging purposes
 			System.out.println(aName);
+			System.out.println(filename);
 			System.out.println(date);
 			System.out.println(desc);
 			System.out.println(sId);
 			System.out.println(mId);
 			System.out.println(cId);
-			System.out.println(filename);
+			
+			//More debugging
+//			String fullFile = file.getOriginalFilename();
+//	        int index = fullFile.lastIndexOf(".");
+//	        String fileName = fullFile.substring(0, index);
+//	        String fileType = fullFile.substring(index+1, fullFile.length());
+//	        
+//	        System.out.println(fileName);
+//	        System.out.println(fileType);
 			
 			//Test case as proof of concept for dynamic folder building
 			StringBuilder modFolder = new StringBuilder("/"+sId+"/"+cId+"/"+mId+"/");
@@ -83,6 +97,7 @@ public class NewAssignmentUploadController {
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
+			instructDAO.setAssignment(aName, file, date, mId, cId, desc, "1", aId);
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");

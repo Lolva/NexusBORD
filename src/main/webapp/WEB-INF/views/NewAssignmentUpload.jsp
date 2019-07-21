@@ -68,7 +68,11 @@
 			<br> 
 			Class: <input type="text" name="classInput" placeholder="Class ID">
 			<br>
-			<br> 
+			<br>
+			
+			Assignment: <input type="text" name="assignmentId" placeholder="Assignment ID">
+			<br>
+			<br>  
 			Description:
 			<br>
 			<textarea rows="2" cols="30" name="desc"></textarea>
