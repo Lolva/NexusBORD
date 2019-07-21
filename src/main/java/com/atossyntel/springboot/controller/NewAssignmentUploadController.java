@@ -102,8 +102,8 @@ public class NewAssignmentUploadController {
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
-			instructDAO.setAssignment(aName, file, date, mId, cId, desc, "1", aId);
-			instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", "2", aId);
+			instructDAO.setAssignment(aName, file, date, mId, cId, desc, option, aId);
+			instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
 			instructDAO.deleteAssignment(aId);
 
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
