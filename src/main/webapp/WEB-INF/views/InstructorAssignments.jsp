@@ -54,8 +54,8 @@ td, th {
 	</header>
 
 
-	<fieldset
-		style="width: 90%; margin: auto; height: 520px; background-color: white;">
+	<fieldset class="container"
+		style="width: 90%; margin: auto; background-color: white;">
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
@@ -90,7 +90,7 @@ td, th {
 									<div class="tab-content">
 								<div class="tab-pane fade active in" id="sub0">
 									<div>
-										<table>
+										<table class="table">
 											<tr>
 												<th>Status</th>
 												<th>Assignment Name</th>
@@ -113,7 +113,7 @@ td, th {
 								</div>
 								<div class="tab-pane fade" id="sub1">
 									<div>
-										<table>
+										<table class="table">
 											<tr>
 												<th>Employee</th>
 												<th>Assignment Name</th>
@@ -133,7 +133,7 @@ td, th {
 								</div>
 								<div class="tab-pane fade" id="sub2">
 									<div>
-										<table>
+										<table class="table">
 											<tr>
 												<th>Assignment Name</th>
 												<th>Employee</th>
@@ -157,7 +157,7 @@ td, th {
 													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
 													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
 													<input type="text" name="grade" placeholder="${in.grade}" />
-													<input type="submit" value="submit" /></form></td>
+													<input class="btn btn-primary" type="submit" value="submit" /></form></td>
 												</tr>
 											</c:forEach>
 
@@ -181,7 +181,7 @@ td, th {
 								<div class="tab-content">
 								<div class="tab-pane fade" id="sub4">
 									<div>
-										<table>
+										<table class="table">
 											<tr>
 												<th>Assignment Name</th>
 												<th>Due Date</th>
@@ -206,7 +206,7 @@ td, th {
 								</div>
 								<div class="tab-pane fade" id="sub5">
 									<div>
-										<table>
+										<table class="table">
 											<tr>
 												<th>Assignment Name</th>
 												<th>Due Date</th>
@@ -235,7 +235,7 @@ td, th {
 								<div class="tab-pane fade" id="sub6">
 									<div>
 									
-										<table>
+										<table class="table">
 											<tr>
 												<th>Assignment Name</th>
 												<th>Due Date</th>
@@ -256,7 +256,7 @@ td, th {
 													<input type="hidden" name="stream_id" value="${cl.stream_id}" />
 													<input type="hidden" name="module_id" value="${in.module_id}" />
 													<input type="hidden" name="class_id" value="${cl.class_id}" />
-													<input type="submit" value="submit" /></form></td>
+													<input class="btn btn-primary" type="submit" value="submit" /></form></td>
 													
 												</tr>
 											</c:forEach>
