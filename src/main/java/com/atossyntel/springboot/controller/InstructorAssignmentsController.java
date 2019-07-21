@@ -49,7 +49,7 @@ public class InstructorAssignmentsController {
 			if(t.get("role_id").equals("1")) {
 				System.out.println("Instructor");
 				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
-				overdueI.add(assigndao.overdueInstructor(t.get("class_Id").toString()));
+				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
 				System.out.println("Student");
@@ -83,7 +83,7 @@ public class InstructorAssignmentsController {
 	}
 	
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
-	public String submit(Model model, @ModelAttribute("grade") GradeBean grade) {
+	public String submit(Model model, @ModelAttribute("grades") GradeBean grade) {
 		System.out.println(assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade()));
 		return "InstructorAssignments";
 		
