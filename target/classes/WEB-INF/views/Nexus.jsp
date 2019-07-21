@@ -30,7 +30,7 @@
         </div>
 	</header>
 	<fieldset
-		style="width: 90%; margin: auto; height: 100%; background-color: white; padding-bottom: 5%">
+		style="width: 90%; margin: auto; height: 100%; background-color: white; margin-bottom: 5%">
 		<div style="background-color: #2E2E7F; padding: 2px;">
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Welcome
 				to NexusBORD</h2>
