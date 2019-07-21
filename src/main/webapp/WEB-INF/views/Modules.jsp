@@ -24,30 +24,31 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 </head>
 
 <body onload="navBar(this, 'modules', 'student')">
-	<%
-		//User is not logged in
-		if (session.getAttribute("username") == null) {
-	%>
-	<script>
-		window.location.href = "/login";
-	</script>
-	<%
-		}
-	%>
-	<header>
-		<!-- div for nav bar to be created in -->
-		<div id="navDiv" class="navigation"></div>
-	</header>
-	<fieldset class="container"
-		style="width: 90%; margin: auto; background-color: white;">
+    <%
+        //User is not logged in
+        if (session.getAttribute("username") == null) {
+    %>
+    <script>
+        window.location.href = "/login";
+    </script>
+    <%
+        }
+    %>
+    <header>
+        <!-- div for nav bar to be created in -->
+        <div id="navDiv" class="navigation"></div>
+    </header>
+    <fieldset class="container"
+        style="width: 90%; margin: auto; background-color: white;">
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
-					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+					<li class="active"><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
 						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 				</c:forEach>
@@ -55,8 +56,10 @@
 			<!--  change to class ID from first model -->
 			<c:set var="count" value="0" scope="page" />
 			<c:set var="county" value="100" scope="page" />
-			<div class="tab-content">
+		
 				<c:forEach items="${classes}" var="o">
+				<div class="tab-content">
+				<div class="tab-pane fade" id="class${o.class_id}">
 					<button value="button" class="accordion">Module
 						${cl.CLASS_ID}</button>
 					<div class="panel">
@@ -75,8 +78,10 @@
 							</c:forEach>
 						</table>
 					</div>
+					</div>
+					</div>
 				</c:forEach>
-			</div>
+			
 		</div>
 	</fieldset>
 	<script type="text/javascript">
@@ -94,5 +99,10 @@
 			});
 		}
 	</script>
+	<script js>
+	$("ul.nav-tabs a").click(function (e) {
+		  e.preventDefault();  
+		    $(this).tab('show');
+		});</script>
 </body>
 </html>

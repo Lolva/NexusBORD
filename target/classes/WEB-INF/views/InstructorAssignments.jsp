@@ -58,7 +58,7 @@ td, th {
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
-					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+					<li class="active">><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
 						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 				</c:forEach>
