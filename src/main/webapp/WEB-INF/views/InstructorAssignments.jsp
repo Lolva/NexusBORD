@@ -119,15 +119,15 @@ td, th {
 												<th>Due Date</th>
 											</tr>
 
-										<c:forEach items="${odList}" var="dl">
-											<c:forEach items="${dl}" var="in">
-
+										<c:forEach items="${olist}" var="in">
+											
+												
 												<tr>
 													<td>${in.employee_id}</td>
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
 												</tr>
-											</c:forEach>
+											
 										</c:forEach>
 
 										</table>
@@ -237,6 +237,7 @@ td, th {
 											<tr>
 												<th>Assignment Name</th>
 												<th>Due Date</th>
+												<th>Submit Assignment</th>
 												
 												
 											</tr>
@@ -248,6 +249,14 @@ td, th {
 													
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
+													<!--  assignment_id, stream_id, module_id, and class_id -->
+													<td><form name="assignment" method="POST">
+													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
+													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
+													<input type="hidden" name="stream_id" placeholder="${cl.stream_id}" />
+													<input type="hidden" name="module_id" placeholder="${in.module_id}" />
+													<input type="hidden" name="class_id" placeholder="${cl.class_id}" />
+													<input type="submit" value="submit" /></form></td>
 													
 												</tr>
 											</c:forEach>

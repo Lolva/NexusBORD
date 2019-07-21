@@ -2,13 +2,17 @@ package com.atossyntel.springboot.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.atossyntel.springboot.model.StudentSubmissionBean;
 
 @Controller
 public class SubmitAssignmentController {
 	@RequestMapping(value = "/SubmitAssignment", method = RequestMethod.GET)
-	public String init(Model model) {
+	public String init(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
+		model.addAttribute("assignmentID", assignment.getAssignment_id());
 		return "SubmitAssignment";
 	}
 }

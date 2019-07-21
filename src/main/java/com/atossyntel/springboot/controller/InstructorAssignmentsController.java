@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.atossyntel.springboot.model.GradeBean;
+import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
 
 @Controller
@@ -49,7 +50,7 @@ public class InstructorAssignmentsController {
 			if(t.get("role_id").equals("1")) {
 				System.out.println("Instructor");
 				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
-				overdueI.add(assigndao.overdueInstructor(t.get("class_Id").toString()));
+				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
 				System.out.println("Student");
@@ -75,7 +76,7 @@ public class InstructorAssignmentsController {
 			//}}
 		
 		model.addAttribute("daList", activesI);
-		model.addAttribute("odList", overdueI);
+		//model.addAttribute("odList", overdueI);
 		model.addAttribute("asList", assignsS);
 		model.addAttribute("sgList", gradesS);
 		model.addAttribute("tsList", todoS);
@@ -83,10 +84,17 @@ public class InstructorAssignmentsController {
 	}
 	
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
-	public String submit(Model model, @ModelAttribute("grades") GradeBean grade) {
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
 		System.out.println(grade.toString());
-		System.out.println(assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade()));
+		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
 		return "redirect:InstructorAssignments";
+		
+	}
+	
+	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
+	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
+		System.out.println(assignment.toString());
+		return "SubmitAssignment";
 		
 	}
 }

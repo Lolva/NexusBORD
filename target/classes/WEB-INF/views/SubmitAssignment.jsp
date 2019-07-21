@@ -34,6 +34,7 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Upload
 				Assignments</h2>
 		</div>
+		<h2>${assignmentID }</h2>
 
 		<form style="color: black;" action="InstructorAssignments.html">
 			<input type="file" id="uploadFile">
