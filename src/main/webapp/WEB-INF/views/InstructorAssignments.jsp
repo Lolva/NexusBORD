@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 <style>
 td, th {
 	border: 1px solid black;
@@ -23,7 +39,7 @@ td, th {
 <!-- Dynamically create nav bar based on current page and role -->
 <body onload="navBar(this, 'assignments', 'student')">
 	<%
-	//User is not logged in
+		//User is not logged in
 		if (session.getAttribute("username") == null) {
 	%>
 	<script>
@@ -34,41 +50,237 @@ td, th {
 	%>
 	<header>
 		<!-- div for nav bar to be created in -->
-        <div id="navDiv" class="navigation">
-        </div>
+		<div id="navDiv" class="navigation"></div>
 	</header>
 
 
-	<div id="teacher">
-		<fieldset
-			style="width: 90%; margin: auto; height: 500px; background-color: white;">
-			<div style="background-color: #2E2E7F; padding: 2px;">
-				<h2 style="color: white; margin: 10px; margin-top: 1%;">
-					Instructor Assignments</h2>
-			</div>
-			<table border="1"
-				style="column-count: 3; column-fill: auto; border-collapse: collapse; color: black; margin-left: 5%; width: 100%; margin: 10px;">
-				<thead style="border-bottom: black;">
-					<th>Name</th>
-					<th>Due date</th>
-					<th>Max Points</th>
-					<th>File Name</th>
-				</thead>
-				<tbody>
-					<c:forEach items="${sassigns}" var="obj">
-						<tr>
-							<td>${obj.assignment_name}</td>
-							<td>${obj.due_date}</td>
-							<td>${obj.max_points}</td>
-							<td>${obj.attached_files}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<a style="text-decoration: none; margin-left: 10px;"
-				href="NewAssignmentUpload.html">Upload New Assignment</a>
-		</fieldset>
+	<fieldset class="container"
+		style="width: 90%; margin: auto; background-color: white;">
+		<div class="tabbable boxed parentTabs p-4">
+			<ul class="nav nav-tabs">
+				<!--  change #instructor to #classID, update JS classID, inject className  -->
+				<c:forEach items="${classes}" var="cl">
+					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
+					<!--  change href to #classID, inject className. update classID in JS  -->
 
-	</div>
+				</c:forEach>
+			</ul>
+
+			<!--  change to class ID from first model -->
+			<c:set var="count" value="0" scope="page" />
+			<c:set var="county" value="100" scope="page" />
+
+			<div class="tab-content">
+				<c:forEach items="${classes}" var="cl">
+				<c:choose>
+					<c:when test="${cl.role_id == 1}">
+					<div class="tab-pane fade active in" id="class${cl.class_id}">
+						<div class="tabbable">
+							<ul class="nav nav-tabs" id="${cl.stream_name}">
+								
+									Instructor View
+									<li class="active"><a href="#sub0" class="nav-link">All
+												Assignments </a></li>
+										<li><a href="#sub1" class="nav-link">Assignments
+												OverDue <span class="badge badge-danger">${fn:length(olist)}</span></a></li>
+										<li><a href="#sub2" class="nav-link">Assignments To
+												Grade <span class="badge badge-danger">${fn:length(tgList)}</span></a></li>
+									</ul>
+									<div class="tab-content">
+								<div class="tab-pane fade active in" id="sub0">
+									<div>
+										<table class="table">
+											<tr>
+												<th>Status</th>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+											</tr>
+
+
+											<c:forEach items="${daList}" var="dl">
+												<c:forEach items="${dl}" var="in">
+													<tr>
+														<td>${in.STATUS}</td>
+														<td>${in.assignment_name}</td>
+														<td>${in.due_date}</td>
+													</tr>
+												</c:forEach>
+
+											</c:forEach>
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub1">
+									<div>
+										<table class="table">
+											<tr>
+												<th>Employee</th>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+											</tr>
+
+										<c:forEach items="${olist}" var="in">
+												<tr>
+													<td>${in.employee_id}</td>
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+												</tr>
+										</c:forEach>
+
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub2">
+									<div>
+										<table class="table">
+											<tr>
+												<th>Assignment Name</th>
+												<th>Employee</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+												<th>File name</th>
+												<th>Enter Grade</th>
+											</tr>
+
+											<c:forEach items="${tgList}" var="in">
+
+												<tr>
+													<td>${in.assignment_name}</td>
+													<td>${in.employee_id}</td>
+													<td>${in.due_date}</td>
+													<td>${in.submission_date}</td>
+													<td>${in.file_name}</td>
+
+													<td><form name="grades" action="?grades" method="POST">
+
+													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
+													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
+													<input type="text" name="grade" placeholder="${in.grade}" />
+													<input class="btn btn-primary" type="submit" value="submit" /></form></td>
+												</tr>
+											</c:forEach>
+
+
+										</table>
+									</div>
+								</div>
+								</div></div></div>
+					</c:when>
+					<c:otherwise>
+									<div class="tab-pane fade active in" id="class${cl.class_id}">
+									<div class="tabbable">
+									<ul class="nav nav-tabs" id="${cl.stream_name}">
+										<li class="active"><a href="#sub4" class="nav-link">
+												All Assignments</a></li>
+										<li><a href="#sub5" class="nav-link">Graded Assignments</a></li>
+										<li><a href="#sub6" class="nav-link">Assignments To Do 
+										<span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												</a></li>
+												</ul>
+								<div class="tab-content">
+								<div class="tab-pane fade" id="sub4">
+									<div>
+										<table class="table">
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+											</tr>
+
+										<c:forEach items="${asList}" var="dl">
+											<c:forEach items="${dl}" var="in">
+
+												<tr>
+													
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													<td> ${in.submission_date} </td>
+													
+												</tr>
+											</c:forEach>
+										</c:forEach>
+
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub5">
+									<div>
+										<table class="table">
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+												<th>File Name</th>
+												<th>Grade</th>
+											</tr>
+
+										<c:forEach items="${sgList}" var="dl">
+											<c:forEach items="${dl}" var="in">
+
+												<tr>
+													
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													<td> ${in.submission_date} </td>
+													<td>${in.file_name }</td>
+													<td> ${in.grade }</td>
+												</tr>
+											</c:forEach>
+										</c:forEach>
+
+										</table>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="sub6">
+									<div>
+									
+										<table class="table">
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												<th>Submit Assignment</th>
+												
+												
+											</tr>
+										
+											<c:forEach items="${todoAssignments}" var="in">
+												<tr>
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													
+													<!--  assignment_id, stream_id, module_id, and class_id -->
+													<td><form name="assignment" action="?assignment" method="POST">
+													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
+													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
+													<input type="hidden" name="stream_id" value="${cl.stream_id}" />
+													<input type="hidden" name="module_id" value="${in.module_id}" />
+													<input type="hidden" name="class_id" value="${cl.class_id}" />
+													<input class="btn btn-primary" type="submit" value="submit" /></form></td>
+													
+												</tr>
+											</c:forEach>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+											
+				</c:choose>
+				</c:forEach>
+			</div>
+
+		</div>
+	</fieldset>
+	<script js>
+		$("ul.nav-tabs a").click(function(e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
+	</script>
+
+
 </body>
 </html>
