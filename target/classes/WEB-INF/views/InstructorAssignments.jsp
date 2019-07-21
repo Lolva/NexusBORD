@@ -153,7 +153,7 @@ td, th {
 													<td>${in.due_date}</td>
 													<td>${in.submission_date}</td>
 													<td>${in.file_name}</td>
-													<td><form name="grades">
+													<td><form name="grades" method="POST">
 													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
 													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
 													<input type="text" name="grade" placeholder="${in.grade}" />

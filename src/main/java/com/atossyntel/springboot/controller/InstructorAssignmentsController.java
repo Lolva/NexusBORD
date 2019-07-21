@@ -83,9 +83,10 @@ public class InstructorAssignmentsController {
 	}
 	
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
-	public String submit(Model model, @ModelAttribute("grade") GradeBean grade) {
+	public String submit(Model model, @ModelAttribute("grades") GradeBean grade) {
+		System.out.println(grade.toString());
 		System.out.println(assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade()));
-		return "InstructorAssignments";
+		return "redirect:InstructorAssignments";
 		
 	}
 }
