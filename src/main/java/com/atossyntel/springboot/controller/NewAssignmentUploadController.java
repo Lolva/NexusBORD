@@ -53,6 +53,7 @@ public class NewAssignmentUploadController {
 			String aId = request.getParameter("assignmentId");
 			String aName = request.getParameter("assignmentName");
 			String date = request.getParameter("due_date");
+			String option = request.getParameter("options");
 			//String desc = descBean.getDescriptionInput();
 			String desc = request.getParameter("desc");
 			String sId = request.getParameter("streamInput");
@@ -64,6 +65,7 @@ public class NewAssignmentUploadController {
 			System.out.println(aName);
 			System.out.println(filename);
 			System.out.println(date);
+			System.out.println(option);
 			System.out.println(desc);
 			System.out.println(sId);
 			System.out.println(mId);
@@ -100,7 +102,7 @@ public class NewAssignmentUploadController {
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
-			instructDAO.setAssignment(aName, file, date, mId, cId, desc, "1", aId);
+			instructDAO.setAssignment(aName, file, date, mId, cId, desc,option, aId);
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");

@@ -44,12 +44,12 @@
 				placeholder="Enter Due Date"> <br> <br> Status:
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active"> <input type="radio"
-					name="options" id="option1" autocomplete="off" checked>
+					name="options" value="0" autocomplete="off" checked>
 					Active
 				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="option2" autocomplete="off"> Inactive
+					name="options" value="1" autocomplete="off"> Inactive
 				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="option3" autocomplete="off"> Completed
+					name="options" value="2" autocomplete="off"> Completed
 				</label>
 			</div>
 			<br> <br> Stream: <input type="text" name="streamInput"
