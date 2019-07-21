@@ -38,8 +38,8 @@ public class NewAssignmentUploadController {
     }
 	
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.GET)
-	public String init(Model model) {
-		return"NewAssignmentUpload";
+	public String init(Model model, HttpSession session) {
+			return"NewAssignmentUpload";
 	}
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
