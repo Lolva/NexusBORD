@@ -23,7 +23,7 @@ public class ModulesController {
 	public String init(Model model, HttpSession session) {
 		List<Map<String, Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
 
-		model.addAttribute("classes", classes);
+		model.addAttribute("classes2", classes);
 
 		for (Map<String, Object> m : classes) {
 			model.addAttribute("moduleIds", moduledao.getModuleList(m.get("class_id").toString()));

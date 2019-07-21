@@ -44,48 +44,27 @@
     </header>
     <fieldset class="container"
         style="width: 90%; margin: auto; background-color: white;">
-		<div class="tabbable boxed parentTabs p-4">
-			<ul class="nav nav-tabs">
-				<!--  change #instructor to #classID, update JS classID, inject className  -->
-				<c:set var="count" value="0" scope="page" />
-				<c:forEach items="${classes}" var="cl">
-					<li class="active"><a href="#class${cl.CLASS_ID}sub${count}" id="${cl.role_id}"
-						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
-					<!--  change href to #classID, inject className. update classID in JS  -->
-				<c:set var="count" value="${count + 1}" scope="page" />
-				</c:forEach>
-			</ul>
-			<!--  change to class ID from first model -->
-			
-			<c:set var="county" value="0" scope="page" />
-		
-				<c:forEach items="${classes}" var="o">
-				<div class="tab-content">
-				<div class="tab-pane fade" id="class${o.class_id}sub${county}">
-					<button value="button" class="accordion">Module
-						${cl.CLASS_ID}</button>
-					<div class="panel">
-						<table>
-							<c:forEach items="${assignments}" var="j">
-								<c:choose>
-									<c:when test="${o.assignment_id==j.assignment_id}">
-										<tr>
-											<td></td>
-											<td style="color: black;">${j.assignment_name}</td>
-											<td style="color: black;">${j.due_date}</td>
-											<td style="color: black;">${j.submission_date}</td>
-										</tr>
-									</c:when>
-								</c:choose>
-							</c:forEach>
-						</table>
-					</div>
-					</div>
-					</div>
-					<c:set var="count" value="${county + 1}" scope="page" />
-				</c:forEach>
-			
-		</div>
+		<div class="bs-example">
+    <ul class="nav nav-tabs">
+    <c:set var="count" value="0" scope="page" />
+    	<c:forEach items="${classes2}" items="ca">
+	        <li class="nav-item">
+	            <a href="#${ca.class_id}sub${count }" class="nav-link active" data-toggle="tab">Home</a>
+	        </li>
+	        <c:set var="count" value="${count + 1}" scope="page" />
+        </c:forEach>
+    </ul>
+    <div class="tab-content">
+    <c:set var="county" value="0" scope="page" />
+    	<c:forEach items="${classes2}" items="cj">
+        <div class="tab-pane fade show active" id="${cj.class_id}sub${count}">
+            <h4 class="mt-2">Home tab content</h4>
+            <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+        </div>
+         <c:set var="county" value="${count + 1}" scope="page" />
+        </c:forEach>
+    </div>
+</div>
 	</fieldset>
 	<script type="text/javascript">
 		var acc = document.getElementsByClassName("accordion");
