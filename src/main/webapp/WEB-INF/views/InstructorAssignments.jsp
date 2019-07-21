@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -80,11 +81,11 @@ td, th {
 								
 									Instructor View
 									<li class="active"><a href="#sub0" class="nav-link">All
-												Assignments</a></li>
+												Assignments </a></li>
 										<li><a href="#sub1" class="nav-link">Assignments
-												OverDue</a></li>
+												OverDue <span class="badge badge-danger">${fn:length(olist)}</span></a></li>
 										<li><a href="#sub2" class="nav-link">Assignments To
-												Grade</a></li>
+												Grade <span class="badge badge-danger">${fn:length(tgList)}</span></a></li>
 									</ul>
 									<div class="tab-content">
 								<div class="tab-pane fade active in" id="sub0">
@@ -120,14 +121,11 @@ td, th {
 											</tr>
 
 										<c:forEach items="${olist}" var="in">
-											
-												
 												<tr>
 													<td>${in.employee_id}</td>
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
 												</tr>
-											
 										</c:forEach>
 
 										</table>
@@ -153,7 +151,9 @@ td, th {
 													<td>${in.due_date}</td>
 													<td>${in.submission_date}</td>
 													<td>${in.file_name}</td>
+
 													<td><form name="grades" action="?grades" method="POST">
+
 													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
 													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
 													<input type="text" name="grade" placeholder="${in.grade}" />
@@ -174,8 +174,9 @@ td, th {
 										<li class="active"><a href="#sub4" class="nav-link">
 												All Assignments</a></li>
 										<li><a href="#sub5" class="nav-link">Graded Assignments</a></li>
-										<li><a href="#sub6" class="nav-link">Assignments To
-												Do</a></li>
+										<li><a href="#sub6" class="nav-link">Assignments To Do 
+										<span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												</a></li>
 												</ul>
 								<div class="tab-content">
 								<div class="tab-pane fade" id="sub4">
@@ -243,11 +244,8 @@ td, th {
 												
 											</tr>
 										
-										<c:forEach items="${tsList}" var="dl">
-											<c:forEach items="${dl}" var="in">
-
+											<c:forEach items="${todoAssignments}" var="in">
 												<tr>
-													
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
 													
@@ -262,8 +260,6 @@ td, th {
 													
 												</tr>
 											</c:forEach>
-										</c:forEach>
-
 										</table>
 									</div>
 								</div>

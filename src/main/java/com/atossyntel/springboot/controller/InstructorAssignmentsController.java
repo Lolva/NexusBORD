@@ -57,7 +57,7 @@ public class InstructorAssignmentsController {
 				System.out.println("Student");
 				assignsS.add(assigndao.getStudentAssignments(username, t.get("class_Id").toString()));
 				gradesS.add(assigndao.studentGraded(username, t.get("class_Id").toString()));
-				todoS.add(assigndao.studentTodo(username, t.get("class_Id").toString()));
+				model.addAttribute("todoAssignments",assigndao.studentTodo(username, t.get("class_Id").toString()));
 			}
 		}
 		
@@ -104,5 +104,6 @@ public class InstructorAssignmentsController {
 		redirectAttributes.addFlashAttribute("assignment", assignment);
 		return "redirect:SubmitAssignment";
 		
+
 	}
 }
