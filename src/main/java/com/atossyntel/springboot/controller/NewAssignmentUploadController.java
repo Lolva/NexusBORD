@@ -39,7 +39,10 @@ public class NewAssignmentUploadController {
 	
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-			return"NewAssignmentUpload";
+		if(session.getAttribute("username")==null) {
+			return "redirect:login";
+		}
+			return "NewAssignmentUpload";
 	}
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
