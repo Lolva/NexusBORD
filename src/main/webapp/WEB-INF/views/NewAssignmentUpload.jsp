@@ -46,7 +46,20 @@
 			Due Date: <input type="date" name="due_date"
 				placeholder="Enter Due Date"> 	
 			<br>
-			<br> 
+			<br>
+			Status:
+			<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-secondary active"> <input type="radio"
+					name="options" id="option1" autocomplete="off" checked>
+					Active
+				</label> <label class="btn btn-secondary"> <input type="radio"
+					name="options" id="option2" autocomplete="off"> Inactive
+				</label> <label class="btn btn-secondary"> <input type="radio"
+					name="options" id="option3" autocomplete="off"> Completed
+				</label>
+			</div>
+			<br>
+			<br>
 			Stream: <input type="text" name="streamInput" placeholder="Stream ID">
 			<br>
 			<br> 
@@ -59,6 +72,7 @@
 			Description:
 			<br>
 			<textarea rows="2" cols="30" name="desc"></textarea>
+			<br>
 			<input type="submit" value="Upload">
 			<div style="color: red">${error}</div>
 		</form>
