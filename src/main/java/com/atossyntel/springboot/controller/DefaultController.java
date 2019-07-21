@@ -11,6 +11,7 @@ public class DefaultController {
 
 	@RequestMapping("/")
 	public String index() {
+		System.out.println("Are we hitting here?");
 		return "Nexus";
 	}
 }

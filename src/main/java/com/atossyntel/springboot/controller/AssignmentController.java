@@ -17,7 +17,6 @@ public class AssignmentController {
 
 	@GetMapping(value = "/assignments")
 	public String init(Model model, HttpSession session) {
-		System.out.println("Outside if statement");
 		if(session.getAttribute("instructor") != null) {
 			if((Boolean) session.getAttribute("instructor")) {
 				return "redirect:InstructorAssignments";
