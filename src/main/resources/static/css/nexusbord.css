@@ -6,7 +6,8 @@ body {
     font-family: sans-serif;
     background-image: url(/resources/pictures/test.png);
     background-repeat: no-repeat;
-    background-size: 100%, 100%;
+    background-attachment: fixed;
+    background-size: cover;
     color: black;
     margin: 0;
     padding: 0;
