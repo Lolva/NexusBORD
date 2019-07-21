@@ -47,19 +47,21 @@
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
+				<c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
-					<li class="active"><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+					<li class="active"><a href="#class${cl.CLASS_ID}sub${count}" id="${cl.role_id}"
 						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
+				<c:set var="count" value="${count + 1}" scope="page" />
 				</c:forEach>
 			</ul>
 			<!--  change to class ID from first model -->
-			<c:set var="count" value="0" scope="page" />
-			<c:set var="county" value="100" scope="page" />
+			
+			<c:set var="county" value="0" scope="page" />
 		
 				<c:forEach items="${classes}" var="o">
 				<div class="tab-content">
-				<div class="tab-pane fade" id="class${o.class_id}">
+				<div class="tab-pane fade" id="class${o.class_id}sub${county}">
 					<button value="button" class="accordion">Module
 						${cl.CLASS_ID}</button>
 					<div class="panel">
@@ -80,6 +82,7 @@
 					</div>
 					</div>
 					</div>
+					<c:set var="count" value="${county + 1}" scope="page" />
 				</c:forEach>
 			
 		</div>
