@@ -110,5 +110,11 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		}
 		return results;
 	}
+	@Override
+	public int updateGrade(String username, String assignmentId, int grade){
+		String sql = "UPDATE SUBMISSIONS SET GRADE=? WHERE EMPLOYEE_ID=? AND ASSIGNMENT_ID=?";
+		
+		return jTemplate.update(sql, grade, username, assignmentId);
+	}
 
 }

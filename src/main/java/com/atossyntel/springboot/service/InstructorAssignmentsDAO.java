@@ -12,4 +12,5 @@ public interface InstructorAssignmentsDAO {
 	public List<Map<String, Object>> getStudentAssignments(String username, String class_id);
 	public List<Map<String, Object>> studentGraded(String username, String class_id);
 	public List<Map<String, Object>> studentTodo(String username, String class_id);
+	public int updateGrade(String username, String assignmentId, int grade);
 }

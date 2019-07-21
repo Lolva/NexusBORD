@@ -153,8 +153,11 @@ td, th {
 													<td>${in.due_date}</td>
 													<td>${in.submission_date}</td>
 													<td>${in.file_name}</td>
-													<td><input type="text" placeholder="${in.grade}" /><input
-														type="submit" value="submit" /></td>
+													<td><form name="grades">
+													<input type="hidden" name="employee_id" value="${in.employee_id }"/>
+													<input type="hidden" name="assignment_id" value="${in.assignment_id }"/>
+													<input type="text" name="grade" placeholder="${in.grade}" />
+													<input type="submit" value="submit" /></form></td>
 												</tr>
 											</c:forEach>
 
