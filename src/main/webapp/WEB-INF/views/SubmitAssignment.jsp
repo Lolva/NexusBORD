@@ -34,7 +34,8 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Upload
 				Assignments</h2>
 		</div>
-		<h2>${assignmentID }</h2>
+		<!--  assignment_id, stream_id, module_id, and class_id -->
+		<h2>AssignmentID: ${assignment_id}</h2><h2>StreamId: ${stream_id}</h2> <h2>Module ID: ${module_id}</h2><h2> Class ID: ${class_id}</h2><h2>Employee ID: ${employee_id} </h2>
 
 		<form style="color: black;" action="InstructorAssignments.html">
 			<input type="file" id="uploadFile">

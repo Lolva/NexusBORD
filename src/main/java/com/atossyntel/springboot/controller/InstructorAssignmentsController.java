@@ -41,7 +41,7 @@ public class InstructorAssignmentsController {
 		model.addAttribute("classes", classes);
 		
 		List<List<Map<String,Object>>> activesI = new ArrayList<>();
-		List<List<Map<String,Object>>> overdueI = new ArrayList<>();
+		//List<List<Map<String,Object>>> overdueI = new ArrayList<>();
 		List<List<Map<String,Object>>> assignsS = new ArrayList<>();
 		List<List<Map<String,Object>>> gradesS = new ArrayList<>();
 		List<List<Map<String,Object>>> todoS = new ArrayList<>();
@@ -83,7 +83,7 @@ public class InstructorAssignmentsController {
 		return "InstructorAssignments";
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
+	@RequestMapping(value = "/InstructorAssignments", params="grades")
 	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
 		System.out.println(grade.toString());
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
@@ -91,9 +91,15 @@ public class InstructorAssignmentsController {
 		
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.POST)
+	@RequestMapping(value = "/InstructorAssignments", params = "assignment")
 	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
 		System.out.println(assignment.toString());
+		model.addAttribute("assignment_id", assignment.getAssignment_id());
+		model.addAttribute("class_id", assignment.getClass_id());
+		model.addAttribute("module_id", assignment.getModule_id());
+		model.addAttribute("stream_id", assignment.getStream_id());
+		model.addAttribute("employee_id", username);
+		
 		return "SubmitAssignment";
 		
 	}

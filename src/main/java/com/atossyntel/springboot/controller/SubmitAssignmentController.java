@@ -12,7 +12,7 @@ import com.atossyntel.springboot.model.StudentSubmissionBean;
 public class SubmitAssignmentController {
 	@RequestMapping(value = "/SubmitAssignment", method = RequestMethod.GET)
 	public String init(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
-		model.addAttribute("assignmentID", assignment.getAssignment_id());
+		
 		return "SubmitAssignment";
 	}
 }
