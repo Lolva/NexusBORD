@@ -49,7 +49,7 @@
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				 <c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
-					<li class="active"><a href="#d${cl.CLASS_ID}sub${count}" id="${cl.role_id}"
+					<li class="active"><a href="#d${cl.CLASS_ID}" id="${cl.role_id}"
 						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 					<c:set var="count" value="${count + 1}" scope="page" />
@@ -57,13 +57,18 @@
 			</ul>
     <div class="tab-content">
     <c:set var="county" value="0" scope="page" />
-    	<c:forEach items="${classes2}" var="ccc">
-        <div class="tab-pane fade" id="d${ccc.class_id }sub${county}">
-            <h4 class="mt-2">Home tab content</h4>
+    	<c:forEach items="${modules.map}" var="md">
+        <div class="tab-pane fade" id="d${md.key}">
+        	
+        		
+            <h4 class="mt-2">${md.value}</h4>
             <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
-        </div>
+        	</div>
+        </c:forEach>
+        
+        
          <c:set var="county" value="${county + 1}" scope="page" />
-         </c:forEach>
+         
     </div>
 </div>
 	</fieldset>

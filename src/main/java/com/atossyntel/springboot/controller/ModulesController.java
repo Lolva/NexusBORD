@@ -1,5 +1,6 @@
 package com.atossyntel.springboot.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +23,15 @@ public class ModulesController {
 	@RequestMapping(value = "/Modules", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
 		List<Map<String, Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
-
+		Map<String, Object> res = new HashMap<String, Object>();
 		model.addAttribute("classes", classes);
-		model.addAttribute("classes2", classes);
+		
 		for (Map<String, Object> m : classes) {
-			model.addAttribute("moduleIds", moduledao.getModuleList(m.get("class_id").toString()));
+			res.put(m.get("class_id").toString(), moduledao.getModuleList(m.get("class_id").toString()));
 		}
-
+		System.out.println(res.toString());
+		
+		model.addAttribute("modules", res);
 		return "Modules";
 	}
 }
