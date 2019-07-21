@@ -38,8 +38,11 @@ public class NewAssignmentUploadController {
     }
 	
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.GET)
-	public String init(Model model) {
-		return"NewAssignmentUpload";
+	public String init(Model model, HttpSession session) {
+		if(session.getAttribute("username")==null) {
+			return "redirect:login";
+		}
+			return "NewAssignmentUpload";
 	}
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
@@ -102,10 +105,13 @@ public class NewAssignmentUploadController {
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");
 			//System.out.print(file.getOriginalFilename());
-			return "redirect:InstructorAssignments";
+			
+			//return "redirect:InstructorAssignments";
+			return "redirect:NewAssignmentUpload";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
-			return "NewAssignmentUpload";
+			//return "NewAssignmentUpload";
+			return "redirect:NewAssignmentUpload";
 		}
 	}
 

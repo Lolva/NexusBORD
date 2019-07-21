@@ -35,19 +35,13 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Create
 				Assignment</h2>
 		</div>
-		<form style="color: black;" enctype="multipart/form-data" action="/NewAssignmentUpload" method="post">
+		<form style="color: black;" enctype="multipart/form-data"
+			action="/NewAssignmentUpload" method="post">
 			Title: <input type="text" name="assignmentName"
-				placeholder="Enter Name of Assignment"> 
-			<br>
-			<br> 
-			File: <input type="file" name="fileName"> 
-			<br>
-			<br> 
-			Due Date: <input type="date" name="due_date"
-				placeholder="Enter Due Date"> 	
-			<br>
-			<br>
-			Status:
+				placeholder="Enter Name of Assignment"> <br> <br>
+			File: <input type="file" name="fileName"> <br> <br>
+			Due Date: <input type="date" name="due_date" required
+				placeholder="Enter Due Date"> <br> <br> Status:
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active"> <input type="radio"
 					name="options" id="option1" autocomplete="off" checked>
@@ -58,26 +52,17 @@
 					name="options" id="option3" autocomplete="off"> Completed
 				</label>
 			</div>
-			<br>
-			<br>
-			Stream: <input type="text" name="streamInput" placeholder="Stream ID">
-			<br>
-			<br> 
-			Module: <input type="text" name="moduleInput" placeholder="Module ID">
-			<br>
-			<br> 
-			Class: <input type="text" name="classInput" placeholder="Class ID">
-			<br>
-			<br>
-			
-			Assignment: <input type="text" name="assignmentId" placeholder="Assignment ID">
-			<br>
-			<br>  
-			Description:
-			<br>
+			<br> <br> Stream: <input type="text" name="streamInput"
+				required placeholder="Stream ID"> <br> <br> 
+				Module: <input
+				type="text" name="moduleInput" required placeholder="Module ID"> <br>
+			<br> Class: <input type="text" name="classInput"
+				required placeholder="Class ID"> <br> <br>
+				 Assignment: <input
+				type="text" name="assignmentId" placeholder="Assignment ID">
+			<br> <br> Description: <br>
 			<textarea rows="2" cols="30" name="desc"></textarea>
-			<br>
-			<input type="submit" value="Upload">
+			<br> <input type="submit" class="btn btn-primary" value="Upload">
 			<div style="color: red">${error}</div>
 		</form>
 	</fieldset>
