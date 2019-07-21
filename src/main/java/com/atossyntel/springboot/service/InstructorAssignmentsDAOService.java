@@ -72,6 +72,43 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		}
 		return results;
 	}
+	@Override
+	public List<Map<String, Object>> getStudentAssignments(String username, String class_id){
+		String sql = "SELECT DISTINCT e.employee_id, a.assignment_name, a.due_date, sub.submission_date\r\n" + 
+				"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr\r\n" + 
+				"WHERE e.employee_id = ? AND c.class_id = ? AND a.status != 'inactive' \r\n" + 
+				"    AND c.stream_id = l.stream_id AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, username, class_id);
+		for(Map<String, Object> r : results) {
+			System.out.println("studentAssignments: " + r.toString());
+		}
+		return results;
+	}
 	
+	
+	@Override
+	public List<Map<String, Object>> studentGraded(String username, String class_id){
+		String sql = "SELECT sub.*, a.* FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr WHERE e.employee_id = ? AND c.class_id = ? AND a.status != 'inactive' AND sub.submission_date IS NOT NULL AND c.stream_id = l.stream_id AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id AND e.employee_id = sub.employee_id AND enr.employee_id = e.employee_id AND enr.class_id = c.class_id";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, username, class_id);
+		for(Map<String, Object> r : results) {
+			System.out.println("gradedStudents: " + r.toString());
+		}
+		return results;
+	}
+	@Override
+	public List<Map<String, Object>> studentTodo(String username, String class_id){
+		String sql = "SELECT a.*\r\n" + 
+				"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr\r\n" + 
+				"WHERE e.employee_id = ? AND c.class_id = ? AND a.status != 'inactive' AND sub.submission_date IS NULL\r\n" + 
+				"    AND c.stream_id = l.stream_id AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id AND e.employee_id = sub.employee_id AND enr.employee_id = e.employee_id AND enr.class_id = c.class_id";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, username, class_id);
+		for(Map<String, Object> r : results) {
+			System.out.println("todoStudents: " + r.toString());
+		}
+		return results;
+	}
 
 }

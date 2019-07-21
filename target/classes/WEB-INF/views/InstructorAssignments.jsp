@@ -170,20 +170,88 @@ td, th {
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
 										<li class="active"><a href="#sub4" class="nav-link">
 												All Assignments</a></li>
-										<li><a href="#sub5" class="nav-link">Assignments To
+										<li><a href="#sub5" class="nav-link">Graded Assignments</a></li>
+										<li><a href="#sub6" class="nav-link">Assignments To
 												Do</a></li>
-										<li><a href="#sub6" class="nav-link">Graded
-												Assignments</a></li>
 												</ul>
 								<div class="tab-content">
 								<div class="tab-pane fade" id="sub4">
-									<p>to add</p>
+									<div>
+										<table>
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+											</tr>
+
+										<c:forEach items="${asList}" var="dl">
+											<c:forEach items="${dl}" var="in">
+
+												<tr>
+													
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													<td> ${in.submission_date} </td>
+													
+												</tr>
+											</c:forEach>
+										</c:forEach>
+
+										</table>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="sub5">
-									<p>list of employees with overdue assignments</p>
+									<div>
+										<table>
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												<th>Submission Date</th>
+												<th>File Name</th>
+												<th>Grade</th>
+											</tr>
+
+										<c:forEach items="${sgList}" var="dl">
+											<c:forEach items="${dl}" var="in">
+
+												<tr>
+													
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													<td> ${in.submission_date} </td>
+													<td>${in.file_name }</td>
+													<td> ${in.grade }</td>
+												</tr>
+											</c:forEach>
+										</c:forEach>
+
+										</table>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="sub6">
-									<p>all assignments grouped by current status</p>
+									<div>
+										<table>
+											<tr>
+												<th>Assignment Name</th>
+												<th>Due Date</th>
+												
+												
+											</tr>
+
+										<c:forEach items="${tsList}" var="dl">
+											<c:forEach items="${dl}" var="in">
+
+												<tr>
+													
+													<td>${in.assignment_name}</td>
+													<td>${in.due_date}</td>
+													
+												</tr>
+											</c:forEach>
+										</c:forEach>
+
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

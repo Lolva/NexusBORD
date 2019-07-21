@@ -36,21 +36,47 @@ public class InstructorAssignmentsController {
 		
 		List<Map<String, Object>> classes = assigndao.getClasses(username);
 		model.addAttribute("classes", classes);
-		List<List<Map<String,Object>>> list1 = new ArrayList<>();
-		List<List<Map<String,Object>>> list2 = new ArrayList<>();
-		for(Map<String,Object> m : classes) {
-			list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
-			 list2.add(assigndao.overdueInstructor(m.get("class_Id").toString()));
-			model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
+		
+		List<List<Map<String,Object>>> activesI = new ArrayList<>();
+		List<List<Map<String,Object>>> overdueI = new ArrayList<>();
+		List<List<Map<String,Object>>> assignsS = new ArrayList<>();
+		List<List<Map<String,Object>>> gradesS = new ArrayList<>();
+		List<List<Map<String,Object>>> todoS = new ArrayList<>();
+		for(Map<String, Object> t:classes) {
+			System.out.println("da classes " + t.toString());
+			if(t.get("role_id").equals("1")) {
+				System.out.println("Instructor");
+				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
+				overdueI.add(assigndao.overdueInstructor(t.get("class_Id").toString()));
+				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
+			} else {
+				System.out.println("Student");
+				assignsS.add(assigndao.getStudentAssignments(username, t.get("class_Id").toString()));
+				gradesS.add(assigndao.studentGraded(username, t.get("class_Id").toString()));
+				todoS.add(assigndao.studentTodo(username, t.get("class_Id").toString()));
+			}
 		}
-		for(List<Map<String, Object>> l : list1) {
-			for(Map<String, Object> r: l) {
-				System.out.println("active " + r.toString());
-			}}
 		
-		model.addAttribute("daList", list1);
-		model.addAttribute("odList", list2);
 		
+	
+		//for(Map<String,Object> m : classes) {
+			//list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
+			// list2.add(assigndao.overdueInstructor(m.get("class_Id").toString()));
+			//model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
+			
+			//Student
+			//list3.add(assigndao.getStudentAssignments(username, m.get("class_Id").toString()));
+		//}
+		//for(List<Map<String, Object>> l : list1) {
+			//for(Map<String, Object> r: l) {
+			//	System.out.println("active " + r.toString());
+			//}}
+		
+		model.addAttribute("daList", activesI);
+		model.addAttribute("odList", overdueI);
+		model.addAttribute("asList", assignsS);
+		model.addAttribute("sgList", gradesS);
+		model.addAttribute("tsList", todoS);
 		return "InstructorAssignments";
 	}
 	public List<Map<String, Object>> doneInstructor(String classID) {
