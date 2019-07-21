@@ -174,8 +174,9 @@ td, th {
 										<li class="active"><a href="#sub4" class="nav-link">
 												All Assignments</a></li>
 										<li><a href="#sub5" class="nav-link">Graded Assignments</a></li>
-										<li><a href="#sub6" class="nav-link">Assignments To
-												Do</a></li>
+										<li><a href="#sub6" class="nav-link">Assignments To Do 
+										<span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												</a></li>
 												</ul>
 								<div class="tab-content">
 								<div class="tab-pane fade" id="sub4">
@@ -243,11 +244,8 @@ td, th {
 												
 											</tr>
 										
-										<c:forEach items="${tsList}" var="dl">
-											<c:forEach items="${dl}" var="in">
-
+											<c:forEach items="${todoAssignments}" var="in">
 												<tr>
-													
 													<td>${in.assignment_name}</td>
 													<td>${in.due_date}</td>
 													
@@ -262,8 +260,6 @@ td, th {
 													
 												</tr>
 											</c:forEach>
-										</c:forEach>
-
 										</table>
 									</div>
 								</div>
