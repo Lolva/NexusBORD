@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
+<script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -25,21 +26,20 @@
 	crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="navBar(this, 'modules', 'student')">
+	<%
+		//User is not logged in
+		if (session.getAttribute("username") == null) {
+	%>
+	<script>
+		window.location.href = "/login";
+	</script>
+	<%
+		}
+	%>
 	<header>
-		<div class="navigation">
-			<ul class="topnavbar">
-				<li><a class="logout"
-					onclick="confirm('Logout?'); location.href = '/logout.htm';">Logout</a></li>
-				<li><a href="Nexus.html">Home</a></li>
-				<li><a href="Modules.html">Modules</a></li>
-				<li><a href="InstructorAssignments.html">Assignments</a></li>
-				<li><a href="Grades.html">Grades</a></li>
-				<li><a class="active" href="Classes.html">Classes</a></li>
-				<li class="left"><a class="nexus"><b>Nexus<font
-							color="#04aad0">BORD</font></b></a></li>
-			</ul>
-		</div>
+		<!-- div for nav bar to be created in -->
+		<div id="navDiv" class="navigation"></div>
 	</header>
 	<fieldset class="container"
 		style="width: 90%; margin: auto; background-color: white;">
@@ -58,7 +58,7 @@
 			<div class="tab-content">
 				<c:forEach items="${classes}" var="o">
 					<button value="button" class="accordion">Module
-						${o.module_id}</button>
+						${cl.CLASS_ID}</button>
 					<div class="panel">
 						<table>
 							<c:forEach items="${assignments}" var="j">
