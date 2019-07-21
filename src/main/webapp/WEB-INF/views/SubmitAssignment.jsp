@@ -34,6 +34,7 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Upload
 				Assignments</h2>
 		</div>
+		<!--  assignment_id, stream_id, module_id, and class_id -->
 
 		<form style="color: black;" action="InstructorAssignments.html">
 			<input type="file" id="uploadFile">
