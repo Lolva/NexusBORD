@@ -101,6 +101,8 @@ public class NewAssignmentUploadController {
 			storageService.store(file, modFolder.toString());
 			
 			instructDAO.setAssignment(aName, file, date, mId, cId, desc, "1", aId);
+			instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", "2", aId);
+			instructDAO.deleteAssignment(aId);
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");

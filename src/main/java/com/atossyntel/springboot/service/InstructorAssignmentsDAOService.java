@@ -40,4 +40,34 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
         jTemplate.update(sqlQuery, assignmentIdPlaceholder, name, moduleId, desc, dueDate, status, fileName, fileType);
     } 
 
+	
+	// Does not change Assignment ID
+	@Override
+    public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number) {
+        String fullFile = file.getOriginalFilename();
+        int index = fullFile.lastIndexOf(".");
+        String fileName = fullFile.substring(0, index);
+        String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "UPDATE assignments SET assignment_name = ?, module_id = ?, "
+                + "description = ?, due_date = TO_DATE(?,'YYYY-MM-DD'), status = ?, file_name = ?, file_type = ? "
+        		+ "WHERE assignment_id = ?";
+        jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType, assignmentIdPlaceholder);
+    } 
+
+	
+	@Override
+    public void deleteAssignment(String number) {
+        //String fullFile = file.getOriginalFilename();
+        //int index = fullFile.lastIndexOf(".");
+        //String fileName = fullFile.substring(0, index);
+        //String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "DELETE FROM assignments WHERE assignment_id = ?";
+        jTemplate.update(sqlQuery, assignmentIdPlaceholder);
+    }
 }
