@@ -24,54 +24,56 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-	<script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+<script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 </head>
 
 <body onload="navBar(this, 'modules', 'student')">
-    <%
-        //User is not logged in
-        if (session.getAttribute("username") == null) {
-    %>
-    <script>
-        window.location.href = "/login";
-    </script>
-    <%
-        }
-    %>
-    <header>
-        <!-- div for nav bar to be created in -->
-        <div id="navDiv" class="navigation"></div>
-    </header>
-    <fieldset class="container"
-        style="width: 90%; margin: auto; background-color: white;">
-		<div class="bs-example">
-    <ul class="nav nav-tabs">
+	<%
+		//User is not logged in
+		if (session.getAttribute("username") == null) {
+	%>
+	<script>
+		window.location.href = "/login";
+	</script>
+	<%
+		}
+	%>
+	<header>
+		<!-- div for nav bar to be created in -->
+		<div id="navDiv" class="navigation"></div>
+	</header>
+	<fieldset class="container"
+		style="width: 90%; margin: auto; background-color: white;">
+		<div class="tabbable boxed parentTabs p-4">
+			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
-				 <c:set var="count" value="0" scope="page" />
+				<c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
-					<li class="active"><a href="#d${cl.CLASS_ID}" id="${cl.role_id}"
-						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
+					<li class="active"><a href="#d${cl.CLASS_ID}"
+						id="${cl.role_id}" class="nav-link">${cl.stream_name}
+							${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 					<c:set var="count" value="${count + 1}" scope="page" />
 				</c:forEach>
 			</ul>
-    <div class="tab-content">
-    <c:set var="county" value="0" scope="page" />
-    	<c:forEach items="${modules}" var="md">
-        <div class="tab-pane fade" id="d${md.key}">
-        	
-        	<c:forEach items="${md.value}" var="poo">
-            <h4 class="mt-2">${poo.module_name }</h4>
-            <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
-        	</c:forEach>
-        	</div>
-        </c:forEach>
-        
-        
-         <c:set var="county" value="${county + 1}" scope="page" />
-         
-    </div>
-</div>
+			<div class="tab-content">
+				<c:set var="county" value="0" scope="page" />
+				<c:forEach items="${modules}" var="md">
+					<div class="tab-pane fade" id="d${md.key}">
+						<c:forEach items="${md.value}" var="poo">
+							<h4 class="mt-2">${poo.module_name }</h4>
+							<p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis
+								cardigan american apparel, butcher voluptate nisi qui. Raw denim
+								you probably haven't heard of them jean shorts Austin. Nesciunt
+								tofu stumptown aliqua, retro synth master cleanse. Mustache
+								cliche tempor, williamsburg carles vegan helvetica.
+								Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+						</c:forEach>
+					</div>
+				</c:forEach>
+				<c:set var="county" value="${county + 1}" scope="page" />
+			</div>
+		</div>
 	</fieldset>
 	<script type="text/javascript">
 		var acc = document.getElementsByClassName("accordion");
@@ -89,9 +91,10 @@
 		}
 	</script>
 	<script js>
-	$("ul.nav-tabs a").click(function (e) {
-		  e.preventDefault();  
-		    $(this).tab('show');
-		});</script>
+		$("ul.nav-tabs a").click(function(e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
+	</script>
 </body>
 </html>

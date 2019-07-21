@@ -58,7 +58,7 @@ td, th {
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
-					<li class="active"><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
+					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
 						class="nav-link">${cl.stream_name} ${cl.role_id}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 				</c:forEach>
@@ -70,7 +70,7 @@ td, th {
 				<c:forEach items="${classes}" var="cl">
 					<c:choose>
 						<c:when test="${cl.role_id == 1}">
-							<div class="tab-pane fade active in" id="class${cl.class_id}">
+							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
 										Instructor View
@@ -84,7 +84,7 @@ td, th {
 										</a></li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade active in" id="sub${count }">
+										<div class="tab-pane fade" id="sub${count }">
 											<div>
 												<table class="table">
 													<tr>
@@ -104,7 +104,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="class${cl.CLASS_ID}">
+										<div class="tab-pane fade" id="sub${count +1 }">
 											<div>
 												<table class="table">
 													<tr>
@@ -140,15 +140,16 @@ td, th {
 															<td>${in.due_date}</td>
 															<td>${in.submission_date}</td>
 															<td>${in.file_name}</td>
-															<td><form name="grades" action="?grades"
-																	method="POST">
+															<td>
+																<form name="grades" action="?grades" method="POST">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
 																	<input type="text" name="grade"
 																		placeholder="${in.grade}" /> <input
 																		class="btn btn-primary" type="submit" value="submit" />
-																</form></td>
+																</form>
+															</td>
 														</tr>
 													</c:forEach>
 												</table>
@@ -159,7 +160,7 @@ td, th {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div class="tab-pane fade active in" id="class${cl.class_id}">
+							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
 										<li class="active"><a href="#sub${count +3}"
@@ -263,7 +264,5 @@ td, th {
 			$(this).tab('show');
 		});
 	</script>
-
-
 </body>
 </html>
