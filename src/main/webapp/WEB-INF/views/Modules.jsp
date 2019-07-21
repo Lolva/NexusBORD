@@ -57,12 +57,13 @@
 			</ul>
     <div class="tab-content">
     <c:set var="county" value="0" scope="page" />
-    	<c:forEach items="${modules.map}" var="md">
+    	<c:forEach items="${modules}" var="md">
         <div class="tab-pane fade" id="d${md.key}">
         	
-        		
-            <h4 class="mt-2">${md.value}</h4>
+        	<c:forEach items="${md.value}" var="poo">
+            <h4 class="mt-2">${poo.module_name }</h4>
             <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+        	</c:forEach>
         	</div>
         </c:forEach>
         
