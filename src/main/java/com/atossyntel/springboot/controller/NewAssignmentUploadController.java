@@ -1,5 +1,8 @@
 package com.atossyntel.springboot.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.atossyntel.springboot.model.DescriptionBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
+import com.atossyntel.springboot.service.EmailDAOService;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
 import com.atossyntel.springboot.storage.StorageService;
 
@@ -31,6 +35,9 @@ public class NewAssignmentUploadController {
     
     @Autowired
     private InstructorAssignmentsDAOService instructDAO;
+    
+    @Autowired
+    private EmailDAOService emailDAO;
 
     @Autowired
     public NewAssignmentUploadController(StorageService storageService) {
@@ -80,8 +87,11 @@ public class NewAssignmentUploadController {
 			instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
 			instructDAO.deleteAssignment(aId);
 
-			//within com.atossyntel.springboot.controller.SmtpMailSender.java
-			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
+			//retrieve emails of necessary participants
+			String emailee = emailDAO.getEmailNewAssignment("1111");
+			
+			//within com.atossyntel.springboot.controller.SmtpMailSender.java		
+			sms.send(emailee, "Proof of Concept files",
 					"Our work is done. Maybe?");
 			
 			return "redirect:InstructorAssignments";
