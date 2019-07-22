@@ -60,16 +60,12 @@
 				<c:forEach items="${modules}" var="md">
 					<div class="tab-pane fade" id="d${md.key}">
 						<c:forEach items="${md.value}" var="poo">
-							<h4 class="mt-2">${poo.key }</h4>
 							<c:forEach items="${poo.value}" var="pee">
 								<c:forEach items="${pee}" var="done">
-									<h2>${done.assignment_name }</h2>
-							<p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis
-								cardigan american apparel, butcher voluptate nisi qui. Raw denim
-								you probably haven't heard of them jean shorts Austin. Nesciunt
-								tofu stumptown aliqua, retro synth master cleanse. Mustache
-								cliche tempor, williamsburg carles vegan helvetica.
-								Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+									<h2>${done.module_name }</h2>
+									<h5>${done.assignment_name }</h4>
+									<h6>${done.file_name}</h5>
+							
 							</c:forEach>
 						</c:forEach>
 						</c:forEach>

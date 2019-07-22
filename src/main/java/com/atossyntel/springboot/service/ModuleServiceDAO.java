@@ -42,8 +42,21 @@ public class ModuleServiceDAO implements ModuleDAO {
 		results = jTemplate.queryForList(sql, class_id);
 		return results;
 	}
+	@Override
+	public List<Map<String, Object>>getModuleFiles(String module_id) {
+		String sql = "SELECT * FROM module_files WHERE MODULE_ID = ?";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, module_id);
+		return results;
+	}
 	
-	
+	@Override
+	public List<Map<String, Object>>getModuleName(String module_id) {
+		String sql = "Select module_name from modules where module_id =?";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, module_id);
+		return results;
+	}
 	}
 
 	

@@ -34,14 +34,15 @@ public class ModulesController {
 			modules.add(moduledao.getModuleList(m.get("class_id").toString()));
 			Map<String, Object> modulemap = new HashMap<String, Object>();
 			for(List<Map<String,Object>> a : modules) {
-				
 				//List<List<List<Map<String, Object>>>> assigns= new ArrayList<List<List<Map<String,Object>>>>();
 				for(Map<String, Object> z: a) {
 					List<List<Map<String, Object>>> assigns = new ArrayList<List<Map<String, Object>>>();
-
 					String moduleid = z.get("module_id").toString();
 					System.out.println(moduleid);
+					assigns.add(moduledao.getModuleName(moduleid));
+					assigns.add(moduledao.getModuleFiles(moduleid));
 					assigns.add(moduledao.getAssignments(moduleid));
+					
 					modulemap.put(moduleid, assigns);
 				}
 			}
