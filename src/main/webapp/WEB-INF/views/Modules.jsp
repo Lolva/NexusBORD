@@ -65,6 +65,7 @@
 								<c:if test="${not empty done.module_name}">
 								<button value="button" class="accordion">${done.module_name }</button>
            							</c:if>
+           							<c:if test="${empty done.module_name}">
            							<div class="panel">
            							 <table>
            							<c:if test="${empty done.assignment_id && not empty done.module_file_id}">
@@ -87,6 +88,7 @@
                             		 </c:if>
                             </table>
 							</div>
+							</c:if>
 							</c:forEach>
 						</c:forEach>
 						</c:forEach>
