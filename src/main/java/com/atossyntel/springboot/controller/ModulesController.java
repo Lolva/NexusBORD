@@ -22,16 +22,21 @@ public class ModulesController {
 
 	@RequestMapping(value = "/Modules", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-		List<Map<String, Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
-		Map<String, Object> res = new HashMap<String, Object>();
+		List<Map<String,Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
 		model.addAttribute("classes", classes);
-		
-		for (Map<String, Object> m : classes) {
-			res.put(m.get("class_id").toString(), moduledao.getModuleList(m.get("class_id").toString()));
+
+		int b = 1;
+		for (Map<String, Object> a : classes) {
+			System.out.println(moduledao.getModuleIDList(classes.get(b).toString()));
+			List<Map<String,Object>> modules = moduledao.getModuleIDList(classes.toString());
+			model.addAttribute("modules", modules);
+			b+=1;
 		}
-		System.out.println(res.toString());
 		
-		model.addAttribute("modules", res);
+		List<Map<String, Object>> assignments = moduledao.getModuleAssignments(null);
+		model.addAttribute("assignments", assignments);
+		List<Map<String, Object>> modulefiles = moduledao.getModuleFiles(null);
+		model.addAttribute("modulefiles", modulefiles);
 		return "Modules";
 	}
 }

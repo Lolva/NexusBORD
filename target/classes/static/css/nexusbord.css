@@ -70,17 +70,16 @@ ul.topnavbar {
                 opacity: 0.85;
             }
 
-
             ul.topnavbar li a.logout {
                 background-color: #04aad0;
                 opacity: 0.85;
             }
 
-
             ul.topnavbar li a.nexus {
                 opacity: 0.85;
                 font-size: 16px;
                 margin-left: 0;
+                pointer-events: none;
             }
 
 .box {
