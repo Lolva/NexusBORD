@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO {
+public class AssignmentsDAOService implements AssignmentsDAO {
 	@Autowired
 	private JdbcTemplate jTemplate;
 

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,14 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
-import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
+import com.atossyntel.springboot.service.AssignmentsDAO;
 
 @Controller
-public class InstructorAssignmentsController {
+public class AssignmentsController {
 	@Autowired
-	InstructorAssignmentsDAO assigndao;
+	AssignmentsDAO assigndao;
 	private String username = null;
-	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
+	@RequestMapping(value = "/Assignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
 	
 		if(session.getAttribute("username")==null) {
@@ -66,18 +65,18 @@ public class InstructorAssignmentsController {
 		model.addAttribute("asList", assignsS);
 		model.addAttribute("sgList", gradesS);
 		model.addAttribute("tsList", todoS);
-		return "InstructorAssignments";
+		return "Assignments";
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", params="grades")
+	@RequestMapping(value = "/Assignments", params="grades")
 	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
 		System.out.println(grade.toString());
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
-		return "redirect:InstructorAssignments";
+		return "redirect:Assignments";
 		
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", params = "assignment")
+	@RequestMapping(value = "/Assignments", params = "assignment")
 	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes) {
 		System.out.println(assignment.toString());
 		model.addAttribute("assignment_id", assignment.getAssignment_id());
@@ -91,7 +90,7 @@ public class InstructorAssignmentsController {
 		
 
 	}
-	@RequestMapping(value = "/InstructorAssignments", params = "newassignment")
+	@RequestMapping(value = "/Assignments", params = "newassignment")
 	public String newAssignment(Model model, @ModelAttribute("newassignment") InstructorAssignmentsBean assignment, RedirectAttributes redirectAttributes, HttpServletRequest result) {
 		System.out.println(assignment.toString());
 		//assignment.setModule_id(result.getParameter("module"));

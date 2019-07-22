@@ -49,8 +49,7 @@
 				<c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
 					<li class="active"><a href="#d${cl.CLASS_ID}"
-						id="${cl.role_id}" class="nav-link">${cl.stream_name}
-							${cl.role_id}</a></li>
+						id="${cl.role_id}" class="nav-link">${cl.stream_name}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
 					<c:set var="count" value="${count + 1}" scope="page" />
 				</c:forEach>
