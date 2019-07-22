@@ -62,10 +62,31 @@
 						<c:forEach items="${md.value}" var="poo">
 							<c:forEach items="${poo.value}" var="pee">
 								<c:forEach items="${pee}" var="done">
-									<h2>${done.module_name }</h2>
-									<h5>${done.assignment_name }</h4>
-									<h6>${done.file_name}</h5>
-							
+								<c:if test="${not empty done.module_name}">
+								<button value="button" class="accordion">${done.module_name }</button>
+           							</c:if>
+           							<div class="panel">
+           							 <table>
+           							<c:if test="${empty done.assignment_id && not empty done.module_file_id}">
+           								
+           								<tr>
+           								<td>Module file:</td>
+           								
+           								<td style="color:black;">${done.file_name }</td>
+           								</tr>
+           							</c:if>
+           								<c:if test="${empty done.module_file_id && not empty done.assignment_id}">
+           								
+									<tr>
+										<td>Assignment file:</td>
+		                                <td style="color:black;">${done.assignment_name}</td>
+		                                <td style="color:black;">${done.due_date}</td>
+		                                <td style="color:black;">${done.submission_date}</td>
+		                                <td style="color:black;">${done.file_name }</td>
+                            		</tr>
+                            		 </c:if>
+                            </table>
+							</div>
 							</c:forEach>
 						</c:forEach>
 						</c:forEach>
