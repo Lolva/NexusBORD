@@ -11,6 +11,8 @@ public class InstructorAssignmentsBean {
 	private String file_type;
 	private String status;
 	private String description;
+	private String stream_id;
+	private String class_id;
 	
 	
 	
@@ -18,20 +20,22 @@ public class InstructorAssignmentsBean {
 		super();
 		this.assignment_name = null;
 		this.module_id = null;
-
+		this.stream_id = null;
 		this.due_date = null;
 		this.fileName = null;
 		this.file_type = null;
 		this.status = null;
 		this.description = null;
+		this.class_id = null;
 	}
 
 	public InstructorAssignmentsBean(String assignment_name, String module_id,  String due_date,
-			String fileName, String file_type, String status, String description) {
+			String fileName, String file_type, String status, String description, String class_id, String stream_id) {
 		super();
 		this.assignment_name = assignment_name;
 		this.module_id = module_id;
-	
+		this.stream_id = null;
+		this.class_id = null;
 		this.due_date = due_date;
 		this.fileName = fileName;
 		this.file_type = file_type;
@@ -97,11 +101,30 @@ public class InstructorAssignmentsBean {
 		this.description = description;
 	}
 
+	public String getStream_id() {
+		return stream_id;
+	}
+
+	public void setStream_id(String stream_id) {
+		this.stream_id = stream_id;
+	}
+
+	public String getClass_id() {
+		return class_id;
+	}
+
+	public void setClass_id(String class_id) {
+		this.class_id = class_id;
+	}
+
 	@Override
 	public String toString() {
-		return "InstructorAssignmentsBean [assignment_name=" + assignment_name + ", module_id=" + module_id  + ", due_date=" + due_date + ", fileName=" + fileName + ", file_type=" + file_type + ", status="
-				+ status + ", description=" + description + "]";
+		return "InstructorAssignmentsBean [assignment_name=" + assignment_name + ", module_id=" + module_id
+				+ ", due_date=" + due_date + ", fileName=" + fileName + ", file_type=" + file_type + ", status="
+				+ status + ", description=" + description + ", stream_id=" + stream_id + ", class_id=" + class_id + "]";
 	}
+
+	
 	
 	
 	

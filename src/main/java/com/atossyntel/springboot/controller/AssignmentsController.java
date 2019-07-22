@@ -96,7 +96,8 @@ public class AssignmentsController {
 		//assignment.setModule_id(result.getParameter("module"));
 		model.addAttribute("module_id", assignment.getModule_id());
 		model.addAttribute("moduleS", assignment);
-		
+		model.addAttribute("stream_id", assignment.getStream_id());
+		model.addAttribute("class_id", assignment.getClass_id());
 		
 		redirectAttributes.addFlashAttribute("newassignment", assignment);
 		return "redirect:NewAssignmentUpload";
