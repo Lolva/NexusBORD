@@ -35,6 +35,7 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Create
 				Assignment</h2>
 		</div>
+		 <h1>${module_id }</h1>
 		<form style="color: black;" action="InstructorAssignments.html">
 			Title: <input type="text" name="assignmentName"
 				placeholder="Enter Name of Assignment"> <br>

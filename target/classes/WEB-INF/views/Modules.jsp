@@ -4,17 +4,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Modules</title>
+<title>Classes</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+	
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 </head>
 
-<!-- Dynamically create nav bar based on current page and role -->
 <body onload="navBar(this, 'modules', 'student')">
 	<%
-	//User is not logged in
+		//User is not logged in
 		if (session.getAttribute("username") == null) {
 	%>
 	<script>
@@ -25,22 +40,97 @@
 	%>
 	<header>
 		<!-- div for nav bar to be created in -->
-        <div id="navDiv" class="navigation">
-        </div>
+		<div id="navDiv" class="navigation"></div>
 	</header>
-	<fieldset
-		style="width: 90%; margin: auto; height: 520px; background-color: white;">
-		<div style="background-color: #2E2E7F; padding: 2px;">
-			<h2 style="color: white; margin: 10px; margin-top: 1%;">Modules</h2>
+	<fieldset class="container">
+		<div class="tabbable boxed parentTabs p-4">
+			<ul class="nav nav-tabs">
+				<!--  change #instructor to #classID, update JS classID, inject className  -->
+				<c:set var="count" value="0" scope="page" />
+				<c:forEach items="${classes}" var="cl">
+					<li class="active"><a href="#d${cl.CLASS_ID}"
+						id="${cl.role_id}" class="nav-link">${cl.stream_name}</a></li>
+					<!--  change href to #classID, inject className. update classID in JS  -->
+					<c:set var="count" value="${count + 1}" scope="page" />
+				</c:forEach>
+			</ul>
+			<div class="tab-content">
+				<c:set var="county" value="0" scope="page" />
+				<c:forEach items="${modules}" var="md">
+					<div class="tab-pane fade" id="d${md.key}">
+						<c:forEach items="${md.value}" var="poo">
+							<c:forEach items="${poo.value}" var="pee">
+								<c:forEach items="${pee}" var="done">
+								<c:if test="${not empty done.module_name}">
+								<button value="button" class="accordion">${done.module_name }</button>
+           							</c:if>
+           							
+           							   
+           							
+           							
+           							 <c:choose>
+           							 <c:when test="${empty done.module_name}">
+           								<div class="panel"><table>
+           							 <c:choose>
+           							<c:when test="${empty done.assignment_id && not empty done.module_file_id}">
+           								
+           								<tr>
+           								<td>Module file:</td>
+           								
+           								<td style="color:black;">${done.file_name }</td>
+           								</tr>
+           							</c:when>
+           								<c:when test="${empty done.module_file_id && not empty done.assignment_id}">
+           								
+									<tr>
+										<td>Assignment file:</td>
+		                                <td style="color:black;">${done.assignment_name}</td>
+		                                <td style="color:black;">${done.due_date}</td>
+		                                <td style="color:black;">${done.submission_date}</td>
+		                                <td style="color:black;">${done.file_name }</td>
+                            		</tr>
+                            		
+                            		</c:when>
+                            		
+                            		</c:choose>
+                            		
+           								</table></div>
+                            		</c:when>
+                            		 </c:choose>
+                            
+							
+							</c:forEach>
+						</c:forEach>
+						</c:forEach>
+					</div>
+				</c:forEach>
+				<c:set var="county" value="${county + 1}" scope="page" />
+			</div>
 		</div>
-		<input id="link1" class="modulebtn" type="button"
-			value="Link 1 for module use"> <input id="link2"
-			class="modulebtn" type="button" value="Link 2 for module use">
-		<input id="link3" class="modulebtn" type="button"
-			value="Link 3 for module use">
-		<div id="module"></div>
-		<footer>
-			<p>Footer</p>
-		</footer>
+	</fieldset>
+	<script type="text/javascript">
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+		for (i = 0; i < acc.length; i++) {
+			acc[i].addEventListener("click", function() {
+				this.classList.toggle("active");
+				
+				var x = document.getElementsByClassName("panel");
+				var i;
+				for (i = 0; i < x.length; i++) {
+				if (x[i].style.maxHeight) {
+					x[i].style.maxHeight = null;
+				} else {
+					x[i].style.maxHeight = x[i].scrollHeight + "px";
+				}}
+			});
+		}
+	</script>
+	<script js>
+		$("ul.nav-tabs a").click(function(e) {
+			e.preventDefault();
+			$(this).tab('show');
+		});
+	</script>
 </body>
 </html>
