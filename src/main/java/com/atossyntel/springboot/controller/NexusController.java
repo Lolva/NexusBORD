@@ -12,6 +12,7 @@ import com.atossyntel.springboot.service.NexusHomeDAO;
 import com.atossyntel.springboot.service.NexusHomeServiceDAO;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 @Controller
 public class NexusController {
@@ -25,6 +26,9 @@ public class NexusController {
 			List<Map<String, Object>> overdue = homedao.overdueAssignments(employeeId);
 			List<Map<String, Object>> todo = homedao.toDoAssignments(employeeId);
 			List<Map<String, Object>> changelog = homedao.changelog(employeeId);
+			Stack<Map<String, Object>> changelogDesc = new Stack<Map<String, Object>>();
+			for(Map<String, Object> change : changelog)
+                changelogDesc.push(change);
 			
 			model.addAttribute("overdue",overdue);
 			model.addAttribute("todo",todo);

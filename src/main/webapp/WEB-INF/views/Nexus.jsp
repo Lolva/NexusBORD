@@ -87,7 +87,7 @@
 			<div class="row" style="padding-left: 10px"><h4>Changelog</h4></div>
 			<div class="row" style="padding-left: 20px">
 				<c:forEach items="${changelog}" var="obj">
-				<p>(Instructor Name) added (Assignment/File Name) to your (Class Name). See the Assignment <a href="/"> Here.</a></p><br>
+				<p>${obj.assignment_name} to your ${obj.session_name}. See the Assignment <a href="/"> Here.</a></p><br>
 				</c:forEach>
 			</div>
 		</div>
