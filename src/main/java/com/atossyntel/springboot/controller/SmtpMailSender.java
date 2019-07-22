@@ -53,6 +53,5 @@ public class SmtpMailSender {
 			helper.setText(body, true);
 
 			javaMailSender.send(message);
-
 		}
 }

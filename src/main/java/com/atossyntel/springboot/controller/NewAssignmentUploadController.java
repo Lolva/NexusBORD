@@ -81,7 +81,9 @@ public class NewAssignmentUploadController {
 			instructDAO.deleteAssignment(aId);
 
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
-			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
+			//String[] emails = {"umezaki.tatsuya@gmail.com","alfabenojar@yahoo.com","jacob-gp@hotmail.com"};
+			String emailString = "umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com";
+			sms.send(emailString, "Proof of Concept files",
 					"Our work is done. Maybe?");
 			
 			return "redirect:InstructorAssignments";
