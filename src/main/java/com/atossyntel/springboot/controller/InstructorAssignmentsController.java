@@ -28,16 +28,11 @@ public class InstructorAssignmentsController {
 	private String username = null;
 	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-		/*//user hasnt logged in yet, redirect to login page
+	
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
-		//verify user is an instructor
-		if((Boolean) session.getAttribute("instructor")) {
-			List<Map<String, Object>> sassigns = assigndao.getAssignment();
-			model.addAttribute("sassigns", sassigns);
-			return "InstructorAssignments";
-		}*/
+	
 		//user is not an instructor redirect to assignments
 		username = session.getAttribute("username").toString();
 		
@@ -65,19 +60,6 @@ public class InstructorAssignmentsController {
 		}
 		
 		
-	
-		//for(Map<String,Object> m : classes) {
-			//list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
-			// list2.add(assigndao.overdueInstructor(m.get("class_Id").toString()));
-			//model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
-			
-			//Student
-			//list3.add(assigndao.getStudentAssignments(username, m.get("class_Id").toString()));
-		//}
-		//for(List<Map<String, Object>> l : list1) {
-			//for(Map<String, Object> r: l) {
-			//	System.out.println("active " + r.toString());
-			//}}
 		
 		model.addAttribute("daList", activesI);
 		//model.addAttribute("odList", overdueI);
