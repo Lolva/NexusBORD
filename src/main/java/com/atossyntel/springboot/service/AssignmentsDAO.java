@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface InstructorAssignmentsDAO {
+public interface AssignmentsDAO {
 	// READ
 	public List<Map<String, Object>> getAssignment();
 	// CREATE
@@ -24,4 +24,5 @@ public interface InstructorAssignmentsDAO {
 	public List<Map<String, Object>> studentGraded(String username, String class_id);
 	public List<Map<String, Object>> studentTodo(String username, String class_id);
 	public int updateGrade(String username, String assignmentId, int grade);
+	public List<Map<String, Object>> getModules(String username);
 }

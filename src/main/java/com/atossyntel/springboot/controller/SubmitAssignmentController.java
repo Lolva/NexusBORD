@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.atossyntel.springboot.model.StudentSubmissionBean;
-import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
+import com.atossyntel.springboot.service.AssignmentsDAOService;
 import com.atossyntel.springboot.service.StudentAssignmentsDAOService;
 import com.atossyntel.springboot.storage.StorageService;
 
@@ -63,7 +63,6 @@ public class SubmitAssignmentController {
 		if (true) {
 			
 
-			
 			String assignID = studsub.getAssignment_id();
 			String empID = studsub.getEmployee_id();
 			String filename = file.getOriginalFilename();
