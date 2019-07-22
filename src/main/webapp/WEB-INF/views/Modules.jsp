@@ -65,9 +65,13 @@
 								<c:if test="${not empty done.module_name}">
 								<button value="button" class="accordion">${done.module_name }</button>
            							</c:if>
-           							<c:if test="${empty done.module_name}">
            							
-           							 <table>
+           							   
+           							
+           							
+           							 <c:choose>
+           							 <c:when test="${empty done.module_name}">
+           								<div class="panel"><table>
            							 <c:choose>
            							<c:when test="${empty done.assignment_id && not empty done.module_file_id}">
            								
@@ -86,10 +90,16 @@
 		                                <td style="color:black;">${done.submission_date}</td>
 		                                <td style="color:black;">${done.file_name }</td>
                             		</tr>
+                            		
+                            		</c:when>
+                            		
+                            		</c:choose>
+                            		
+           								</table></div>
                             		</c:when>
                             		 </c:choose>
-                            </table>
-							</c:if>
+                            
+							
 							</c:forEach>
 						</c:forEach>
 						</c:forEach>
@@ -105,12 +115,15 @@
 		for (i = 0; i < acc.length; i++) {
 			acc[i].addEventListener("click", function() {
 				this.classList.toggle("active");
-				var panel = this.nextElementSibling;
-				if (panel.style.maxHeight) {
-					panel.style.maxHeight = null;
+				
+				var x = document.getElementsByClassName("panel");
+				var i;
+				for (i = 0; i < x.length; i++) {
+				if (x[i].style.maxHeight) {
+					x[i].style.maxHeight = null;
 				} else {
-					panel.style.maxHeight = panel.scrollHeight + "px";
-				}
+					x[i].style.maxHeight = x[i].scrollHeight + "px";
+				}}
 			});
 		}
 	</script>
