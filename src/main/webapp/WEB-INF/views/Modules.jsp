@@ -7,12 +7,12 @@
 <title>Classes</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/resources/css/nexusbord.css">
-<script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+	
+<link rel="stylesheet" href="/resources/css/nexusbord.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous"></script>
@@ -42,8 +42,7 @@
 		<!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>
 	</header>
-	<fieldset class="container"
-		style="width: 90%; margin: auto; background-color: white;">
+	<fieldset class="container">
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->

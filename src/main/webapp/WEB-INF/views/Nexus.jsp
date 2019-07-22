@@ -28,8 +28,10 @@
         <div id="navDiv" class="navigation">
         </div>
 	</header>
-	<fieldset
-		style="width: 90%; margin: auto; height: 520px; background-color: white;">
+	<fieldset class="container"; style="padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto; max-width: 720px;">
 		<div style="background-color: #2E2E7F; padding: 2px;">
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Welcome
 				to NexusBORD</h2>

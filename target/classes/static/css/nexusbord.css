@@ -1,6 +1,7 @@
 header {
     margin: 0;
     padding: 0;
+    line-height: 1.5;
 }
 body {
     font-family: sans-serif;
@@ -18,12 +19,17 @@ div.navigation {
     padding: 0;
     background-color: #323639;
     opacity: 0.85;
+    height: 48px;
 }
 
 ul.topnavbar {
     list-style-type: none;
     overflow: hidden;
     margin-top: 0;
+    padding: 0;
+    height: 100%;
+    margin-bottom: 0;
+    height: 48px;
 }
 
     ul.topnavbar li {
@@ -44,6 +50,7 @@ ul.topnavbar {
             font-family: sans-serif;
             font-size: 16px;
             margin: 0;
+            height: 48px
         }
 
             ul.topnavbar li a:hover:not(.active):not(.logout):not(.nexus) {
@@ -78,7 +85,7 @@ ul.topnavbar {
     position: absolute;
     top: 50%;
     left: 75%;
-    color: antiquewhite;
+    color: white;
     transform: translate(-50%,-50%);
     text-align: center;
     background-color: #2b2b2b;
@@ -102,7 +109,7 @@ ul.topnavbar {
         .box input[type = "text"]:focus, .box input[type = "password"]:focus {
             width: 200px;
             border-color: #04aad0;
-            color: antiquewhite;
+            color: white;
         }
 
     .box input[type="submit"] {
@@ -110,7 +117,7 @@ ul.topnavbar {
         padding: 14px 40px;
         outline: none;
         background: none;
-        color: antiquewhite;
+        color: white;
         border-radius: 24px;
         font-size: 15px;
         background: #616161;
@@ -156,7 +163,12 @@ accordion.active:after {
 .panel {
   padding: 0 18px;
   background-color: white;
+  color: black;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+
+fieldset.container {
+	width: 90%; margin-top: 20px; background-color: white;
 }
