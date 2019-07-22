@@ -2,6 +2,8 @@ package com.atossyntel.springboot.model;
 
 
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ClassBean {
@@ -9,23 +11,29 @@ public class ClassBean {
 	
 	
 	
-	int class_Id;
-	int stream_Id;
-	String start_date;
-	String end_date;
+	String class_Id;
+	String stream_Id;
+	Date start_date;
+	Date end_date;
 	
 	
 	
 	
+	
+
+
+
 	public ClassBean() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
 
 
 
-	public ClassBean(int class_Id, int stream_Id, String start_date, String end_date) {
+
+
+
+
+	public ClassBean(String class_Id, String stream_Id, Date start_date, Date end_date) {
 		super();
 		this.class_Id = class_Id;
 		this.stream_Id = stream_Id;
@@ -34,33 +42,84 @@ public class ClassBean {
 	}
 
 
-	public String getStart_date() {
+	
+	
+
+
+
+
+	public String getClass_Id() {
+		return class_Id;
+	}
+
+
+
+
+
+	public void setClass_Id(String class_Id) {
+		this.class_Id = class_Id;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public String getStream_Id() {
+		return stream_Id;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public void setStream_Id(String stream_Id) {
+		this.stream_Id = stream_Id;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	public Date getStart_date() {
 		return start_date;
 	}
 
 
-	public void setStart_date(String start_date) {
+
+
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 
 
-	public int getClass_Id() {
-		return class_Id;
-	}
-	public void setClass_Id(int class_Id) {
-		this.class_Id = class_Id;
-	}
-	public int getStream_Id() {
-		return stream_Id;
-	}
-	public void setStream_Id(int stream_Id) {
-		this.stream_Id = stream_Id;
-	}
-	
-	public String getEnd_date() {
+
+
+	public Date getEnd_date() {
 		return end_date;
 	}
-	public void setEnd_date(String end_date) {
+
+
+
+
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 
@@ -78,5 +137,3 @@ public class ClassBean {
 
 	
 }
-	
-	
