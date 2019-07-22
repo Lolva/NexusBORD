@@ -66,17 +66,18 @@
 								<button value="button" class="accordion">${done.module_name }</button>
            							</c:if>
            							<c:if test="${empty done.module_name}">
-           							<div class="panel">
+           							
            							 <table>
-           							<c:if test="${empty done.assignment_id && not empty done.module_file_id}">
+           							 <c:choose>
+           							<c:when test="${empty done.assignment_id && not empty done.module_file_id}">
            								
            								<tr>
            								<td>Module file:</td>
            								
            								<td style="color:black;">${done.file_name }</td>
            								</tr>
-           							</c:if>
-           								<c:if test="${empty done.module_file_id && not empty done.assignment_id}">
+           							</c:when>
+           								<c:when test="${empty done.module_file_id && not empty done.assignment_id}">
            								
 									<tr>
 										<td>Assignment file:</td>
@@ -85,9 +86,9 @@
 		                                <td style="color:black;">${done.submission_date}</td>
 		                                <td style="color:black;">${done.file_name }</td>
                             		</tr>
-                            		 </c:if>
+                            		</c:when>
+                            		 </c:choose>
                             </table>
-							</div>
 							</c:if>
 							</c:forEach>
 						</c:forEach>
