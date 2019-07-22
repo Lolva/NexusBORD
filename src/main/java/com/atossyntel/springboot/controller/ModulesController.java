@@ -24,13 +24,14 @@ public class ModulesController {
 	public String init(Model model, HttpSession session) {
 		List<Map<String,Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
 		model.addAttribute("classes", classes);
-
-		int b = 1;
+		
 		for (Map<String, Object> a : classes) {
-			System.out.println(moduledao.getModuleIDList(classes.get(b).toString()));
+		System.out.println(a.toString());
+		}
+		for (Map<String, Object> a : classes) {
+			System.out.println(moduledao.getModuleIDList(a.get("class_id").toString()));
 			List<Map<String,Object>> modules = moduledao.getModuleIDList(classes.toString());
 			model.addAttribute("modules", modules);
-			b+=1;
 		}
 		
 		List<Map<String, Object>> assignments = moduledao.getModuleAssignments(null);

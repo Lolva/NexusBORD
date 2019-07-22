@@ -30,7 +30,7 @@ public class ModuleServiceDAO implements ModuleDAO {
 
 	@Override
 	public List<Map<String, Object>>getModuleList(String class_id) {
-		String sql = "SELECT m.module_id, s.stream_name FROM classes c, streams s, lessons l, modules m, assignments a WHERE c.STREAM_ID = s.STREAM_ID AND s.STREAM_ID =l.STREAM_ID AND m.MODULE_ID = l.MODULE_ID AND l.MODULE_ID = a.MODULE_ID AND c.class_id = ?";
+		String sql = "SELECT m.MODULE_ID, m.MODULE_NAME From modules m, classes c, streams s, lessons l WHERE c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND c.class_id= ?";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, class_id);
 		return results;
