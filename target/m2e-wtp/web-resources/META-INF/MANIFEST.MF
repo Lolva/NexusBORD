@@ -3,7 +3,11 @@ Implementation-Title: spring-boot-web-application-example
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: syntel
 Implementation-Vendor-Id: com.atossyntel.springboot
+<<<<<<< HEAD
 Build-Jdk: 1.8.0_144
+=======
+Build-Jdk: 1.8.0_161
+>>>>>>> aae9a44b13d9d8efaf72f4dc6fff28e94d63319e
 Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
  web-application-example/
 Created-By: Maven Integration for Eclipse
