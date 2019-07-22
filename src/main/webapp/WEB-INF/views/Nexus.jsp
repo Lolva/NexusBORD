@@ -85,12 +85,11 @@
 			
 			<!-- Changelog --><hr>
 			<div class="row" style="padding-left: 10px"><h4>Changelog</h4></div>
-			<div class="row" style="padding-left: 20px">
-				<c:forEach items="${changelog}" var="obj">
-					<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/InstructorAssignments">Here</a>.</p>
-					<br>
-				</c:forEach>
-			</div>
+			<c:forEach items="${changelog}" var="obj">
+				<div class="row" style="padding-left: 20px">
+				<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/InstructorAssignments">Here</a>.</p>
+				</div>
+			</c:forEach>
 		</div>
 	</fieldset>
 </body>
