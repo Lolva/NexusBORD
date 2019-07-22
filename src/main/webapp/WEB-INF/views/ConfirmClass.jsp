@@ -27,26 +27,32 @@
     <fieldset style="width: 90%; margin:auto; height: 520px; background-color: white;">
    	<a href="Classes.html">Back to Classes</a>
 
-<form:form modelAttribute="newProduct" action="ConfirmClass.html" method="post">
+<form:form modelAttribute="ClassBean" action="ConfirmClass.html" method="post">
         <h2>Class To Be Added</h2>
         
         <table border="1">
                <tr>
                 <th>CLASS ID</th>
+                <th>STREAM ID</th>
                 <th>START DATE</th>
                   <th>END DATE</th>
                   <th>ACTION</th>
                </tr>
              <tr>
-              <td>${classToBeAdded.class_Id}</td>
-              <td>${classToBeAdded.start_date }</td>
-              <td>${classToBeAdded.end_date }</td>
-              <th><a href="CreateClass.htm"><button id="submitclassbtn" path="submit" type="submit" value="Submit" >Submit</a></button>
+              <td>${ClassBean.class_Id}</td>
+              <td>${ClassBean.stream_Id}</td>
+              <td>${ClassBean.start_date }</td>
+              <td>${ClassBean.end_date }</td>
+        
+              <th><a href="CreateClass.htm"><button id="submitclassbtn" path="submit" type="submit" value="Submit" >Edit</a></button>
                  <a href="CreateClass.htm"> <button id="deleteclassbtn" path="delete" type="delete" value="Delete" >Delete</a></button></th>
               
              </tr>
         </table>
+  
+ 
  
 </form:form>
+</fieldset>
 </body>
 </html>
