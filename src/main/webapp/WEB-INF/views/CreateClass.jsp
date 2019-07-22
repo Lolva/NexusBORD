@@ -27,17 +27,20 @@
     <fieldset style="width: 90%; margin:auto; height: 520px; background-color: white;">
    	<a href="Classes.html">Back to Classes</a>
    	
-   	<form:form modelAttribute="newProduct" method="post">
+   <form:form modelAttribute="ClassBean" method="post">
+   	<table>
    		Class ID:<form:input type="text" name="class_Id" path="class_Id" placeholder="Class ID"/>
    		<br>
-   		Start Date:<form:input type="text" name="start_date" path="start_date" placeholder="Enter start_date"/>
+   	   Stream ID:<form:input type="text" name="stream_Id" path="stream_Id" placeholder="stream ID"/>
+   	   <br>
+   		Start Date:<form:input type="date" name="start_date" path="start_date" placeholder="Enter start_date"/>
    		<br>
-   		End Date:<form:input type="text" name="end_date" path="end_date" placeholder="Enter end_date"/>
+   		End Date:<form:input type="date" name="end_date" path="end_date" placeholder="Enter end_date"/>
    		<br>
-   		<button id="addclassbtn" path="submit" type="submit" value="Add" >Add</button>
+   		<button id="addclassbtn" path="submit" type="submit" value="Add" >Submit</button>
    		<button type="reset">Clear Form</button>
    	
-	
+	</table>
    	</form:form>
    	
    	</fieldset>
