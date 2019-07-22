@@ -40,22 +40,24 @@
 			<!-- Overdue Assignment Cards -->
 			<div class="row" style="padding-left: 10px"><h4>Overdue Assignments</h4></div>
 			<div class="row">
-				<div class="col-sm">
-					<div class="card">
-						<div class="card-body">
-							<div class="card-header">
-								<h5 class="card-title">Class Name</h5>
-								<h6 class="card-subtitle mb-2 text-muted">Assignment Name</h6>
+				<c:forEach items="${overdue}" var="obj">
+					<div class="col-sm">
+						<div class="card">
+							<div class="card-body">
+								<div class="card-header">
+									<h5 class="card-title">${obj.STREAM_NAME}</h5>
+									<h6 class="card-subtitle mb-2 text-muted">${obj.ASSIGNMENT_NAME}</h6>
+								</div>
+								<p class="card-text">
+									${obj.DESCRIPTION}
+								</p>
+								<p class="card-footer text-white bg-danger">
+									${obj.DUE_DATE}
+								</p>
 							</div>
-							<p class="card-text">
-								Description
-							</p>
-							<p class="card-footer text-white bg-danger">
-								Due Date
-							</p>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 			</div>
 			
 			<!-- Todo (within a week) Assignment Cards --><hr>

@@ -11,15 +11,15 @@ public class NexusHomeServiceDAO implements NexusHomeDAO {
 	@Override
 	public List<Map<String, Object>> overdueAssignments(String employeeId) {
 		List<Map<String, Object>> results;
-		String SQLQuery = "SELECT DISTINCT str.stream_name, a.assignment_name, a.description, a.due_date "+ 
+		String SQLQuery = "SELECT DISTINCT str.stream_name as stream_name, a.assignment_name as assignment_name, a.description as description, a.due_date as due_date "+ 
 							"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr, streams str "+ 
-							"WHERE e.employee_id = ? AND SYSDATE >= a.due_date AND a.status = 'active' "+ 
+							"WHERE e.employee_id = ? AND SYSDATE >= a.due_date "+ 
 								"AND e.employee_id = enr.employee_id AND enr.class_id = c.class_id "+ 
 								"AND c.stream_id = l.stream_id AND str.stream_id = l.stream_id "+ 
 								"AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id "+ 
 								"AND sub.submission_date IS NULL";
-		
 		results = jTemplate.queryForList(SQLQuery, employeeId);
+		System.out.println("inside the service: " + results);
 		
 		return results;
 	}
