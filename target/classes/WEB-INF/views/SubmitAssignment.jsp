@@ -24,9 +24,9 @@
 		}
 	%>
 	<header>
-		<!-- div for nav bar to be created in -->
+		<!-- div for nav bar to be created in 
         <div id="navDiv" class="navigation">
-        </div>
+        </div>-->
 	</header>
 	<fieldset
 		style="width: 90%; margin: auto; height: 500px; background-color: white;">
@@ -34,10 +34,11 @@
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Upload
 				Assignments</h2>
 		</div>
-		<!--  assignment_id, stream_id, module_id, and class_id -->
 
-		<form style="color: black;" action="InstructorAssignments.html">
-			<input type="file" id="uploadFile">
+		<form style="color: black;" enctype="multipart/form-data" method="POST">
+			<input type="file" id="uploadFile" name="fileName">
+			<br>
+			<br>
 			<button type="submit" id="uploadbtn" onclick="upload">Upload</button>
 			<script>
 				function upload(uploadFile) {

@@ -29,8 +29,8 @@ public class StudentAssignmentsController {
 		}
 		//user is a student
 		if(!(Boolean) session.getAttribute("instructor")) {
-			List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
-			model.addAttribute("sassigns", sassigns);
+			//List<Map<String, Object>> sassigns = assigndao.getAssignment(session.getAttribute("username").toString());
+			//model.addAttribute("sassigns", sassigns);
 			
 			return "StudentAssignments";
 		}
