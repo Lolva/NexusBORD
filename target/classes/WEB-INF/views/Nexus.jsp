@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 </head>
 
@@ -31,10 +31,19 @@
 	</header>
 	<fieldset
 		style="width: 90%; margin: auto; height: 100%; background-color: white; margin-bottom: 5%">
+		<div class="jumbotron jumbotron-fluid" style="background-color: #2E2E7F; padding: 5px;">
+		  <div class="container">
+		    <h1 class="display-5" style="color: white; margin: 1%;">Welcome to Nexus<i><b>BORD</b></i></h1>
+		  </div>
+		</div>
+		
+		<!--  
 		<div style="background-color: #2E2E7F; padding: 2px;">
 			<h2 style="color: white; margin: 10px; margin-top: 1%;">Welcome
 				to NexusBORD</h2>
 		</div>
+		-->
+		
 		<div class="container-fluid">
 		
 			<!-- Overdue Assignment Cards -->
@@ -43,7 +52,7 @@
 				<c:choose>
 					<c:when test="${overdueSize > 0}">
 						<c:forEach items="${overdue}" var="obj">
-							<div class="col-sm">
+							<div class="col-sm-3 mb-4">
 								<div class="card">
 									<div class="card-body">
 										<div class="card-header">
@@ -75,7 +84,7 @@
 				<c:choose>
 					<c:when test="${todoSize > 0}">
 						<c:forEach items="${todo}" var="obj">
-							<div class="col-sm">
+							<div class="col-sm-3 mb-4">
 								<div class="card">
 									<div class="card-body">
 										<div class="card-header">
@@ -107,7 +116,7 @@
 				<c:when test="${changelogSize > 0}">
 					<c:forEach items="${changelog}" var="obj">
 						<div class="row" style="padding-left: 20px">
-						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/InstructorAssignments">Here</a>.</p>
+						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/Assignments">Here</a>.</p>
 						</div>
 					</c:forEach>
 				</c:when>
