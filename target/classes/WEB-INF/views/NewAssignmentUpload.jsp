@@ -24,9 +24,9 @@
 		}
 	%>
 	<header>
-		<!-- div for nav bar to be created in 
+		<!-- div for nav bar to be created in -->
         <div id="navDiv" class="navigation">
-        </div>-->
+        </div>
 	</header>
 	<fieldset
 		style="width: 90%; margin: auto; height: 500px; background-color: white;">

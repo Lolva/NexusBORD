@@ -36,8 +36,8 @@
 		</div>
 		<!--  assignment_id, stream_id, module_id, and class_id -->
 
-		<form style="color: black;" action="InstructorAssignments.html">
-			<input type="file" id="uploadFile">
+		<form style="color: black;" method="post" enctype="multipart/form-data">
+			<input type="file" id="uploadFile" name="fileName">
 			<button type="submit" id="uploadbtn" onclick="upload">Upload</button>
 			<script>
 				function upload(uploadFile) {

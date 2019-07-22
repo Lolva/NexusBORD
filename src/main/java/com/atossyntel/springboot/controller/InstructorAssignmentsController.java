@@ -49,12 +49,12 @@ public class InstructorAssignmentsController {
 		for(Map<String, Object> t:classes) {
 			System.out.println("da classes " + t.toString());
 			if(t.get("role_id").equals("1")) {
-				System.out.println("Instructor");
+				//System.out.println("Instructor");
 				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
 				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
-				System.out.println("Student");
+				//System.out.println("Student");
 				assignsS.add(assigndao.getStudentAssignments(username, t.get("class_Id").toString()));
 				gradesS.add(assigndao.studentGraded(username, t.get("class_Id").toString()));
 				model.addAttribute("todoAssignments",assigndao.studentTodo(username, t.get("class_Id").toString()));
