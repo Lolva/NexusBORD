@@ -89,10 +89,9 @@ public class NewAssignmentUploadController {
 
 			//retrieve emails of necessary participants
 			String emailee = emailDAO.getEmailNewAssignment("1111");
-			
+
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java		
-			sms.send(emailee, "Proof of Concept files",
-					"Our work is done. Maybe?");
+			sms.send(emailee, 0);
 			
 			return "redirect:InstructorAssignments";
 		} else {

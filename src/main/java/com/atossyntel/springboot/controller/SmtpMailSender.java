@@ -41,17 +41,32 @@ public class SmtpMailSender {
 		 * 2nd parameter: String subject
 		 * 3rd parameter: String body
 		 ******/
-		public void send(String to, String subject, String body) throws MessagingException {
+		public void send(String to, int msg) throws MessagingException {
 
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper;
+			int error = 0;
 
-			helper = new MimeMessageHelper(message, true);
-			helper.setSubject(subject);
-			helper.setTo(InternetAddress.parse(to));
 			// helper.setTo
-			helper.setText(body, true);
+			helper = new MimeMessageHelper(message, true);
+			helper.setTo(InternetAddress.parse(to));
 
-			javaMailSender.send(message);
+			switch(msg) {
+				case 0:
+					helper.setSubject(subjectTeacherAssignment);
+					helper.setText(bodyTeacherAssignment, true);
+					break;
+				case 1:
+					helper.setSubject(subjectStudentAssignment);
+					helper.setText(bodyStudentAssignment, true);
+					break;
+				default:
+					System.out.println("Oh no my email broke");
+					error = 1;
+			}
+			
+			if(error == 0) {
+				javaMailSender.send(message);
+			}
 		}
 }

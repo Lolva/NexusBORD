@@ -84,8 +84,7 @@ public class SubmitAssignmentController {
 			studentDAO.submitAssignment("2019-07-21", 90, file, assignID, empID);
 			
 			
-			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Student Side",
-					"Student Submission Complete?");
+			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 1);
 			
 			System.out.println("Sent to DB");
 		
@@ -93,8 +92,6 @@ public class SubmitAssignmentController {
 	
 		}else {
 			System.out.println("error");
-			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Did not Submit",
-					"Student Submission Failure");
 			
 			model.addAttribute("error","Please Upload a File");
 			return "redirect:SubmitAssignment";

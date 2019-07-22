@@ -24,8 +24,7 @@ public class MailController {
 	@PostMapping("/mail")
 	public String submit(Model model) throws MessagingException {
 		System.out.print("going to new page");
-		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Subject Test mail",
-				"The message. Hello, Thank you for the email.");
+		smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
 		return "mail";
 	}
 }
