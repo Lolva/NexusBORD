@@ -31,7 +31,7 @@
         </div>
 	</header>
 	<fieldset
-		style="width: 90%; margin: auto; height: 100%; background-color: white; margin-bottom: 5%">
+		style="width: 90%; margin: auto; height: 100%; background-color: white; margin-bottom: 5%; margin-top:20px;">
 		<div class="jumbotron jumbotron-fluid" style="background-color: #2E2E7F; padding: 5px;">
 		  <div class="container">
 		    <h1 class="display-5" style="color: white; margin: 1%;">Welcome to Nexus<i><b>BORD</b></i></h1>
@@ -48,7 +48,7 @@
 		<div class="container-fluid">
 		
 			<!-- Overdue Assignment Cards -->
-			<div class="row" style="padding-left: 10px"><h4>Overdue Assignments</h4></div>
+			<div class="row" style="padding-left: 10px; color: #0168aa;"><h4>Overdue Assignments</h4></div>
 			<div class="row">
 				<c:choose>
 					<c:when test="${overdueSize > 0}">
@@ -80,7 +80,7 @@
 			</div>
 			
 			<!-- Todo (within a week) Assignment Cards --><hr>
-			<div class="row" style="padding-left: 10px"><h4>To Do This Week</h4></div>
+			<div class="row" style="padding-left: 10px; color: #0168aa;"><h4>To Do This Week</h4></div>
 			<div class="row">
 				<c:choose>
 					<c:when test="${todoSize > 0}">
@@ -112,7 +112,7 @@
 			</div>
 			
 			<!-- Changelog --><hr>
-			<div class="row" style="padding-left: 10px"><h4>Changelog</h4></div>
+			<div class="row" style="padding-left: 10px; color: #0168aa;"><h4>Changelog</h4></div>
 			<c:choose>
 				<c:when test="${changelogSize > 0}">
 					<c:forEach items="${changelog}" var="obj">
