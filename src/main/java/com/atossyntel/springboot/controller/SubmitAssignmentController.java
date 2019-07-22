@@ -1,6 +1,9 @@
 package com.atossyntel.springboot.controller;
 
+<<<<<<< HEAD
 import javax.mail.MessagingException;
+=======
+>>>>>>> 4fee44a07381a8f1cb92f8614eddc340d6024f17
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,8 +24,6 @@ import com.atossyntel.springboot.storage.StorageService;
 @Controller
 public class SubmitAssignmentController {
 	
-
-	
 	// object to handle sending of email(s)
     @Autowired
     private SmtpMailSender sms;
@@ -39,9 +40,11 @@ public class SubmitAssignmentController {
 		
 		
 		studsub=assignment;
+
 		System.out.println(assignment.toString());
 		System.out.println(studsub.getAssignment_id());
 		System.out.println(assignment.getAssignment_id());
+		studsub=assignment;
 		return "SubmitAssignment";
 	}
 	

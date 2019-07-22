@@ -35,10 +35,12 @@
 				Assignments</h2>
 		</div>
 
+
 		<form style="color: black;" enctype="multipart/form-data" method="POST">
 			<input type="file" id="uploadFile" name="fileName">
 			<br>
 			<br>
+
 			<button type="submit" id="uploadbtn" onclick="upload">Upload</button>
 			<script>
 				function upload(uploadFile) {
