@@ -1,0 +1,10 @@
+	<ul class="nav nav-tabs">
+				<!--  change #instructor to #classID, update JS classID, inject className  -->
+				<c:forEach items="${classes}" var="cl">
+					<li><a href="#\${cl.CLASS_ID}" class="nav-link">${cl.stream_name}
+							${cl.role_id}</a></li>
+					<!--  change href to #classID, inject className. update classID in JS  -->
+				</c:forEach>
+			</ul>
+
+

@@ -116,5 +116,11 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		
 		return jTemplate.update(sql, grade, username, assignmentId);
 	}
-
+	@Override
+	public List<Map<String, Object>> getModules(String username){
+		String sql = "SELECT DISTINCT m.MODULE_name, m.module_id From modules m, classes c, lessons l, enrollments e WHERE c.STREAM_ID=l.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.EMPLOYEE_ID = ?";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, username);
+		return results;
+	}
 }

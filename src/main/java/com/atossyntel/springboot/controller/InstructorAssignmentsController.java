@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atossyntel.springboot.model.GradeBean;
+import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
 
@@ -105,5 +108,23 @@ public class InstructorAssignmentsController {
 		return "redirect:SubmitAssignment";
 		
 
+	}
+	@RequestMapping(value = "/InstructorAssignments", params = "newassignment")
+	public String newAssignment(Model model, @ModelAttribute("newassignment") InstructorAssignmentsBean assignment, RedirectAttributes redirectAttributes, HttpServletRequest result) {
+		System.out.println(assignment.toString());
+		//assignment.setModule_id(result.getParameter("module"));
+		model.addAttribute("module_id", assignment.getModule_id());
+		model.addAttribute("moduleS", assignment);
+		
+		
+		redirectAttributes.addFlashAttribute("newassignment", assignment);
+		return "redirect:NewAssignmentUpload";
+		
+
+	}
+	@ModelAttribute("modules")
+	public List<Map<String, Object>> getModules(HttpSession session){
+		
+		return assigndao.getModules(session.getAttribute("username").toString());
 	}
 }

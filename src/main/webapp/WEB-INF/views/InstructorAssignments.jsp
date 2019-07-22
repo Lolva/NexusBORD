@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +82,17 @@ td, th {
 										<li><a href="#sub${count + 2 }" class="nav-link">Assignments
 												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
 										</a></li>
+										<li>
+										<form name="newassignment" action="?newassignment"
+																	method="POST">
+																	<select name="module_id">
+																		<c:forEach items="${modules}" var ="module">
+																		<option value="${module.module_id}">${module.module_name }</option>
+																	</c:forEach>
+																	</select>
+																	<input class="btn btn-primary" type="submit"
+																		name="submit" value="New Assignment" /></form>
+										</li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane fade" id="sub${count }">
