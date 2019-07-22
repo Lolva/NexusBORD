@@ -12,7 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SmtpMailSender {
 
-	//Teacher email subjects
+	
+		private String assignId;
+		private String empId;
+		private String classId;
+		
+		//Teacher email subjects
 		private final String subjectTeacherFile = "NexusBORD - Teacher File Upload";
 		private final String subjectTeacherAssignment = "NexusBORD - Teacher Assignment Upload";
 		
@@ -25,8 +30,10 @@ public class SmtpMailSender {
 		private final String bodyTeacherAssignment = "Your instructor has uploaded an assignment for you to complete";
 		
 		//Student email body
-		private final String bodyStudentAssignment = "A student has uploaded an assignment for you to review and grade";
-		private final String bodyStudentGrade = "An assignment has been graded.";
+		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
+		private String bodyStudentGrade1 = "Your assignment for assignment ID ";
+		private String bodyStudentGrade2 = " has been graded.";
+		
 		
 		@Autowired
 		private JavaMailSender javaMailSender;
@@ -53,17 +60,20 @@ public class SmtpMailSender {
 			helper.setTo(InternetAddress.parse(to));
 
 			switch(msg) {
+				//teacher creating an assignment
 				case 0:
 					helper.setSubject(subjectTeacherAssignment);
 					helper.setText(bodyTeacherAssignment, true);
 					break;
+				//student submitting an assignment to instructor
 				case 1:
 					helper.setSubject(subjectStudentAssignment);
-					helper.setText(bodyStudentAssignment, true);
+					helper.setText(empId+bodyStudentAssignment+classId, true);
 					break;
+				//teacher grading an assignment
 				case 2:
 					helper.setSubject(subjectStudentGrade);
-					helper.setText(bodyStudentGrade, true);
+					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2, true);
 					break;
 				default:
 					System.out.println("Oh no my email broke");
@@ -74,4 +84,29 @@ public class SmtpMailSender {
 				javaMailSender.send(message);
 			}
 		}
+
+		public String getEmpId() {
+			return empId;
+		}
+
+		public void setEmpId(String empId) {
+			this.empId = empId;
+		}
+
+		public String getClassId() {
+			return classId;
+		}
+
+		public void setClassId(String classId) {
+			this.classId = classId;
+		}
+
+		public String getAssignId() {
+			return assignId;
+		}
+
+		public void setAssignId(String assignId) {
+			this.assignId = assignId;
+		}
+		
 }

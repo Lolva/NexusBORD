@@ -91,6 +91,8 @@ public class SubmitAssignmentController {
 			//Get emailee list
 			String emailee = emailDAO.getEmailStudentSubmission(classId);
 			
+			sms.setEmpId(empID);
+			sms.setClassId(classId);
 			sms.send(emailee, 1);
 			
 			System.out.println("Sent to DB");
