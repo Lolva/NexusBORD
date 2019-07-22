@@ -32,7 +32,7 @@ public class LoginController {
 				// Finally, check that the user is enrolled in a class
 				if (dao.isEnrolled(login)) {
 					session.setAttribute("username", login.getUsername()); // Store the user's username in the session
-					return "Nexus"; // Send the user to the main page
+					return "redirect:Nexus"; // Send the user to the main page
 
 				} else { // Username has no entry in the Enrollments table
 					model.addAttribute("error", "You are not enrolled in any classes");

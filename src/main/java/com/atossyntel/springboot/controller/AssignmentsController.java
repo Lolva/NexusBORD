@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,35 +17,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atossyntel.springboot.model.GradeBean;
+import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.EmailDAOService;
-import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
-import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
+import com.atossyntel.springboot.service.AssignmentsDAO;
 
 @Controller
-public class InstructorAssignmentsController {
+public class AssignmentsController {
 	
     @Autowired
     private SmtpMailSender sms;
     
     @Autowired
     private EmailDAOService emailDAO;
-	
+
+
 	@Autowired
-	InstructorAssignmentsDAO assigndao;
+	AssignmentsDAO assigndao;
+	
 	private String username = null;
-	@RequestMapping(value = "/InstructorAssignments", method = RequestMethod.GET)
+	@RequestMapping(value = "/Assignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
-		/*//user hasnt logged in yet, redirect to login page
+	
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
-		//verify user is an instructor
-		if((Boolean) session.getAttribute("instructor")) {
-			List<Map<String, Object>> sassigns = assigndao.getAssignment();
-			model.addAttribute("sassigns", sassigns);
-			return "InstructorAssignments";
-		}*/
+	
 		//user is not an instructor redirect to assignments
 		username = session.getAttribute("username").toString();
 		
@@ -72,30 +70,17 @@ public class InstructorAssignmentsController {
 		}
 		
 		
-	
-		//for(Map<String,Object> m : classes) {
-			//list1.add(assigndao.getActiveAssignments(m.get("class_Id").toString(), username));
-			// list2.add(assigndao.overdueInstructor(m.get("class_Id").toString()));
-			//model.addAttribute("tgList", assigndao.getToGrade(m.get("class_Id").toString(), username));
-			
-			//Student
-			//list3.add(assigndao.getStudentAssignments(username, m.get("class_Id").toString()));
-		//}
-		//for(List<Map<String, Object>> l : list1) {
-			//for(Map<String, Object> r: l) {
-			//	System.out.println("active " + r.toString());
-			//}}
 		
 		model.addAttribute("daList", activesI);
 		//model.addAttribute("odList", overdueI);
 		model.addAttribute("asList", assignsS);
 		model.addAttribute("sgList", gradesS);
 		model.addAttribute("tsList", todoS);
-		return "InstructorAssignments";
+		return "Assignments";
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", params="grades")
-	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException {
+	@RequestMapping(value = "/Assignments", params="grades")
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException{
 		System.out.println(grade.toString());
 		
 		//emailee list
@@ -104,13 +89,12 @@ public class InstructorAssignmentsController {
 		//within com.atossyntel.springboot.controller.SmtpMailSender.java		
 		sms.send(emailee, 2);
 		
-		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
-		return "redirect:InstructorAssignments";
+		return "redirect:Assignments";
 		
 	}
 	
-	@RequestMapping(value = "/InstructorAssignments", params = "assignment")
+	@RequestMapping(value = "/Assignments", params = "assignment")
 	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes) {
 		System.out.println(assignment.toString());
 		model.addAttribute("assignment_id", assignment.getAssignment_id());
@@ -123,5 +107,22 @@ public class InstructorAssignmentsController {
 		return "redirect:SubmitAssignment";
 		
 
+	}
+	@RequestMapping(value = "/Assignments", params = "newassignment")
+	public String newAssignment(Model model, @ModelAttribute("newassignment") InstructorAssignmentsBean assignment, RedirectAttributes redirectAttributes, HttpServletRequest result) {
+		System.out.println(assignment.toString());
+		//assignment.setModule_id(result.getParameter("module"));
+		model.addAttribute("module_id", assignment.getModule_id());
+		model.addAttribute("moduleS", assignment);
+		
+		redirectAttributes.addFlashAttribute("newassignment", assignment);
+		return "redirect:NewAssignmentUpload";
+		
+
+	}
+	@ModelAttribute("modules")
+	public List<Map<String, Object>> getModules(HttpSession session){
+		
+		return assigndao.getModules(session.getAttribute("username").toString());
 	}
 }
