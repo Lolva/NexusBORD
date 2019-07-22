@@ -32,11 +32,12 @@ public class EmailDAOService implements EmailDAO {
 		concat = concat.replaceAll("\\}", "");
 		concat = concat.substring(0, concat.length() - 1);
 
+		/*
 		// TESTING PURPOSES ONLY
 		concat = concat.replaceAll("domgianatassio@gmail.com", "jacob-gp@hotmail.com");
 		concat = concat.replaceAll("Hunter_Klieber@syntelinc.com", "umezaki.tatsuya@gmail.com");
 		concat = concat.replace("Spencer_Bacon@syntelinc.com", "alfabenojar@yahoo.com");
-		
+		*/
 		
 		System.out.println(concat);
 		return concat;
@@ -71,9 +72,10 @@ public class EmailDAOService implements EmailDAO {
 		String sql = "SELECT email \r\n" + 
 				"FROM employees\r\n" + 
 				"INNER JOIN enrollments ON employees.employee_id = enrollments.employee_id\r\n" + 
+				"INNER JOIN submissions ON employees.employee_id = submissions.employee_id\r\n" +
 				"WHERE enrollments.role_id = 2 \r\n" + 
 				"	AND assignment_id = ?" +
-				"	AND employee_id = ?";
+				"	AND employees.employee_id = ?";
 
 
 		List<Map<String, Object>> results;

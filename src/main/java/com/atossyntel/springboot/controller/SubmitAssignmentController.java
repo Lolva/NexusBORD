@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.atossyntel.springboot.model.StudentSubmissionBean;
+import com.atossyntel.springboot.service.EmailDAOService;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
 import com.atossyntel.springboot.service.StudentAssignmentsDAOService;
 import com.atossyntel.springboot.storage.StorageService;
@@ -32,6 +33,9 @@ public class SubmitAssignmentController {
     }
 	
 	// object to handle sending of email(s)
+    @Autowired
+    private EmailDAOService emailDAO;
+    
     @Autowired
     private SmtpMailSender sms;
     
@@ -84,7 +88,10 @@ public class SubmitAssignmentController {
 			studentDAO.submitAssignment("2019-07-21",file,assignID,empID);
 			
 			
-			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 1);
+			//Get emailee list
+			String emailee = emailDAO.getEmailStudentSubmission(classId);
+			
+			sms.send(emailee, 1);
 			
 			System.out.println("Sent to DB");
 		

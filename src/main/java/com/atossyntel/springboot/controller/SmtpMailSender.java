@@ -18,6 +18,7 @@ public class SmtpMailSender {
 		
 		//Student email subjects
 		private final String subjectStudentAssignment = "NexusBORD - Student Assignment Upload";
+		private final String subjectStudentGrade = "NexusBORD - Student Assignment Graded";
 		
 		//Teacher email body
 		private final String bodyTeacherFile = "Your instructor has uploaded a file in the module.";
@@ -25,7 +26,7 @@ public class SmtpMailSender {
 		
 		//Student email body
 		private final String bodyStudentAssignment = "A student has uploaded an assignment for you to review and grade";
-		
+		private final String bodyStudentGrade = "An assignment has been graded.";
 		
 		@Autowired
 		private JavaMailSender javaMailSender;
@@ -59,6 +60,10 @@ public class SmtpMailSender {
 				case 1:
 					helper.setSubject(subjectStudentAssignment);
 					helper.setText(bodyStudentAssignment, true);
+					break;
+				case 2:
+					helper.setSubject(subjectStudentGrade);
+					helper.setText(bodyStudentGrade, true);
 					break;
 				default:
 					System.out.println("Oh no my email broke");

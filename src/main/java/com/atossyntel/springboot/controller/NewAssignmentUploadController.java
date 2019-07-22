@@ -84,11 +84,11 @@ public class NewAssignmentUploadController {
 			storageService.store(file, modFolder.toString());
 			
 			instructDAO.setAssignment(aName, file, date, mId, cId, desc, option, aId);
-			instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
-			instructDAO.deleteAssignment(aId);
+			//instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
+			//instructDAO.deleteAssignment(aId);
 
 			//retrieve emails of necessary participants
-			String emailee = emailDAO.getEmailNewAssignment("1111");
+			String emailee = emailDAO.getEmailNewAssignment(cId);
 
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java		
 			sms.send(emailee, 0);

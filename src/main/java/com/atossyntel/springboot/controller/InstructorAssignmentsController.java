@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
+import com.atossyntel.springboot.service.EmailDAOService;
 import com.atossyntel.springboot.service.InstructorAssignmentsDAO;
+import com.atossyntel.springboot.service.InstructorAssignmentsDAOService;
 
 @Controller
 public class InstructorAssignmentsController {
+	
+    @Autowired
+    private SmtpMailSender sms;
+    
+    @Autowired
+    private EmailDAOService emailDAO;
+	
 	@Autowired
 	InstructorAssignmentsDAO assigndao;
 	private String username = null;
@@ -85,8 +95,16 @@ public class InstructorAssignmentsController {
 	}
 	
 	@RequestMapping(value = "/InstructorAssignments", params="grades")
-	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException {
 		System.out.println(grade.toString());
+		
+		//emailee list
+		String emailee = emailDAO.getEmailNewGrade(grade.getAssignment_id(), grade.getEmployee_id());
+
+		//within com.atossyntel.springboot.controller.SmtpMailSender.java		
+		sms.send(emailee, 2);
+		
+		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
 		return "redirect:InstructorAssignments";
 		
