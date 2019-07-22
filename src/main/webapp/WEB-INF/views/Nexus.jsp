@@ -23,11 +23,13 @@
 	<%
 		}
 	%>
+	
 	<header>
 		<!-- div for nav bar to be created in -->
         <div id="navDiv" class="navigation">
         </div>
 	</header>
+	<!-- this should be changed whenever the Home Page team merges their page -->
 	<fieldset class="container"; style="padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
