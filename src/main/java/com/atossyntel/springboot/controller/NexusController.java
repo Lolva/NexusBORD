@@ -32,8 +32,11 @@ public class NexusController {
                 changelogDesc.push(change);
 			
 			model.addAttribute("overdue",overdue);
+			model.addAttribute("overdueSize", overdue.size());
 			model.addAttribute("todo",todo);
+			model.addAttribute("todoSize", todo.size());
 			model.addAttribute("changelog",changelog);
+			model.addAttribute("changelogSize", changelog.size());
 
 			return "Nexus";
 		} else {

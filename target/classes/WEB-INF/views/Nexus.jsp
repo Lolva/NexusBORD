@@ -40,57 +40,83 @@
 			<!-- Overdue Assignment Cards -->
 			<div class="row" style="padding-left: 10px"><h4>Overdue Assignments</h4></div>
 			<div class="row">
-				<c:forEach items="${overdue}" var="obj">
-					<div class="col-sm">
-						<div class="card">
-							<div class="card-body">
-								<div class="card-header">
-									<h5 class="card-title">${obj.STREAM_NAME}</h5>
-									<h6 class="card-subtitle mb-2 text-muted">${obj.ASSIGNMENT_NAME}</h6>
+				<c:choose>
+					<c:when test="${overdueSize > 0}">
+						<c:forEach items="${overdue}" var="obj">
+							<div class="col-sm">
+								<div class="card">
+									<div class="card-body">
+										<div class="card-header">
+											<h5 class="card-title">${obj.STREAM_NAME}</h5>
+											<h6 class="card-subtitle mb-2 text-muted">${obj.ASSIGNMENT_NAME}</h6>
+										</div>
+										<p class="card-text">
+											${obj.DESCRIPTION}
+										</p>
+										<p class="card-footer text-white bg-danger">
+											${obj.DUE_DATE}
+										</p>
+									</div>
 								</div>
-								<p class="card-text">
-									${obj.DESCRIPTION}
-								</p>
-								<p class="card-footer text-white bg-danger">
-									${obj.DUE_DATE}
-								</p>
 							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="row" style="padding-left: 35px">
+							<p>No overdue assignments!</p>
 						</div>
-					</div>
-				</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<!-- Todo (within a week) Assignment Cards --><hr>
 			<div class="row" style="padding-left: 10px"><h4>To Do This Week</h4></div>
 			<div class="row">
-				<c:forEach items="${todo}" var="obj">
-					<div class="col-sm">
-						<div class="card">
-							<div class="card-body">
-								<div class="card-header">
-									<h5 class="card-title">${obj.stream_name} </h5>
-									<h6 class="card-subtitle mb-2 text-muted">${obj.assignment_name}</h6>
+				<c:choose>
+					<c:when test="${todoSize > 0}">
+						<c:forEach items="${todo}" var="obj">
+							<div class="col-sm">
+								<div class="card">
+									<div class="card-body">
+										<div class="card-header">
+											<h5 class="card-title">${obj.stream_name} </h5>
+											<h6 class="card-subtitle mb-2 text-muted">${obj.assignment_name}</h6>
+										</div>
+										<p class="card-text">
+											${obj.description}
+										</p>
+										<p class="card-footer text-white bg-warning">
+											${obj.due_date}
+										</p>
+									</div>
 								</div>
-								<p class="card-text">
-									${obj.description}
-								</p>
-								<p class="card-footer text-white bg-warning">
-									${obj.due_date}
-								</p>
 							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="row" style="padding-left: 35px">
+							<p>No assignments due this week!</p>
 						</div>
-					</div>
-				</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<!-- Changelog --><hr>
 			<div class="row" style="padding-left: 10px"><h4>Changelog</h4></div>
-			<div class="row" style="padding-left: 20px">
-				<c:forEach items="${changelog}" var="obj">
-					<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/InstructorAssignments">Here</a>.</p>
-					<br>
-				</c:forEach>
-			</div>
+			<c:choose>
+				<c:when test="${changelogSize > 0}">
+					<c:forEach items="${changelog}" var="obj">
+						<div class="row" style="padding-left: 20px">
+						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/InstructorAssignments">Here</a>.</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<div class="row" style="padding-left: 35px">
+						<p>No recent changes</p>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</fieldset>
 </body>
