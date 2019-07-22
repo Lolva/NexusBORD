@@ -7,5 +7,6 @@ import java.util.Map;
 public interface ModuleDAO {
 	
 	public List<Map<String, Object>>getModuleList(String class_id);
-	public List<Map<String, Object>> getClasses(String username); 
+	public List<Map<String, Object>> getClasses(String username);
+	public List<Map<String, Object>> getAssignments(String module_id); 
 }
