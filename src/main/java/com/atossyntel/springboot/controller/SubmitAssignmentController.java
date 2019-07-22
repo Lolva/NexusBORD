@@ -80,8 +80,8 @@ public class SubmitAssignmentController {
 
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
-
-			studentDAO.submitAssignment("2019-07-21", 90, file, assignID, empID);
+			
+			studentDAO.submitAssignment("2019-07-21",file,assignID,empID);
 			
 			
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 1);
