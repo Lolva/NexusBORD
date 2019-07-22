@@ -1,9 +1,8 @@
 package com.atossyntel.springboot.controller;
 
-<<<<<<< HEAD
+
 import javax.mail.MessagingException;
-=======
->>>>>>> 4fee44a07381a8f1cb92f8614eddc340d6024f17
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
