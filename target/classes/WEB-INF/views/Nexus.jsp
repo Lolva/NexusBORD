@@ -63,29 +63,32 @@
 			<!-- Todo (within a week) Assignment Cards --><hr>
 			<div class="row" style="padding-left: 10px"><h4>To Do This Week</h4></div>
 			<div class="row">
-				<div class="col-sm">
-					<div class="card">
-						<div class="card-body">
-							<div class="card-header">
-								<h5 class="card-title">Class Name</h5>
-								<h6 class="card-subtitle mb-2 text-muted">Assignment Name</h6>
+				<c:forEach items="${todo}" var="obj">
+					<div class="col-sm">
+						<div class="card">
+							<div class="card-body">
+								<div class="card-header">
+									<h5 class="card-title">${obj.stream_name} </h5>
+									<h6 class="card-subtitle mb-2 text-muted">${obj.assignment_name}</h6>
+								</div>
+								<p class="card-text">
+									${obj.description}
+								</p>
+								<p class="card-footer text-white bg-warning">
+									${obj.due_date}
+								</p>
 							</div>
-							<p class="card-text">
-								Description
-							</p>
-							<p class="card-footer text-white bg-warning">
-								Due Date
-							</p>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 			</div>
 			
 			<!-- Changelog --><hr>
 			<div class="row" style="padding-left: 10px"><h4>Changelog</h4></div>
 			<div class="row" style="padding-left: 20px">
+				<c:forEach items="${changelog}" var="obj">
 				<p>(Instructor Name) added (Assignment/File Name) to your (Class Name). See the Assignment <a href="/"> Here.</a></p><br>
-				
+				</c:forEach>
 			</div>
 		</div>
 	</fieldset>

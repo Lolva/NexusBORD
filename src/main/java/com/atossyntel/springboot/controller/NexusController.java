@@ -27,9 +27,8 @@ public class NexusController {
 			List<Map<String, Object>> changelog = homedao.changelog(employeeId);
 			
 			model.addAttribute("overdue",overdue);
-			model.addAttribute(todo);
-			model.addAttribute(changelog);
-			System.out.println(model);
+			model.addAttribute("todo",todo);
+			model.addAttribute("changelog",changelog);
 
 			return "Nexus";
 		} else {
