@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 public class InstructorAssignmentsBean {
 	private String assignment_name;
 	private String module_id;
-
 	private String due_date;
 	private String fileName;
 	private String file_type;
