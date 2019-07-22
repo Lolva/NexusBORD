@@ -24,6 +24,7 @@
 	<%
 		}
 	%>
+	
 	<header>
 		<!-- div for nav bar to be created in -->
         <div id="navDiv" class="navigation">

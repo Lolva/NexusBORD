@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO {
+public class AssignmentsDAOService implements AssignmentsDAO {
 	@Autowired
 	private JdbcTemplate jTemplate;
 
@@ -74,7 +74,7 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 	}
 	@Override
 	public List<Map<String, Object>> getStudentAssignments(String username, String class_id){
-		String sql = "SELECT DISTINCT e.employee_id, a.assignment_name, a.due_date, sub.submission_date\r\n" + 
+		String sql = "SELECT DISTINCT e.employee_id, a.assignment_name, a.due_date, sub.submission_date, c.class_id\r\n" + 
 				"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr\r\n" + 
 				"WHERE e.employee_id = ? AND c.class_id = ? AND a.status != 'inactive' \r\n" + 
 				"    AND c.stream_id = l.stream_id AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id";
@@ -116,5 +116,11 @@ public class InstructorAssignmentsDAOService implements InstructorAssignmentsDAO
 		
 		return jTemplate.update(sql, grade, username, assignmentId);
 	}
-
+	@Override
+	public List<Map<String, Object>> getModules(String username){
+		String sql = "SELECT DISTINCT m.MODULE_name, m.module_id From modules m, classes c, lessons l, enrollments e WHERE c.STREAM_ID=l.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.EMPLOYEE_ID = ?";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, username);
+		return results;
+	}
 }
