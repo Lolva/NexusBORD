@@ -6,9 +6,13 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface InstructorAssignmentsDAO {
+	// READ
 	public List<Map<String, Object>> getAssignment();
+	// CREATE
 	public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number);
+	// UPDATE
 	public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number);
+	// DELETE
 	public void deleteAssignment(String number);
 
 	public List<Map<String, Object>> getClasses(String username);

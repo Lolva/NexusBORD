@@ -54,7 +54,6 @@ public class NewAssignmentUploadController {
 			String aName = request.getParameter("assignmentName");
 			String date = request.getParameter("due_date");
 			String option = request.getParameter("options");
-			//String desc = descBean.getDescriptionInput();
 			String desc = request.getParameter("desc");
 			String sId = request.getParameter("streamInput");
 			String mId = request.getParameter("moduleInput");
@@ -71,34 +70,9 @@ public class NewAssignmentUploadController {
 			System.out.println(mId);
 			System.out.println(cId);
 			
-			//More debugging
-//			String fullFile = file.getOriginalFilename();
-//	        int index = fullFile.lastIndexOf(".");
-//	        String fileName = fullFile.substring(0, index);
-//	        String fileType = fullFile.substring(index+1, fullFile.length());
-//	        
-//	        System.out.println(fileName);
-//	        System.out.println(fileType);
-			
 			//Test case as proof of concept for dynamic folder building
 			StringBuilder modFolder = new StringBuilder("/"+sId+"/"+cId+"/"+mId+"/");
-//			switch(sId) {
-//				//if the stream name is "1"
-//				case "1":
-//					//set the string to folder1
-//					modFolder.append("/folder1/");
-//					break;
-//				//if the stream name is "1"
-//				case "2":
-//					//set the string to folder2
-//					modFolder.append("/folder2/");
-//					break;
-//				default:
-//					//set an empty folder(aka directly under the root folder)
-//					modFolder.append("");
-//			}					
-			
-			
+
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
@@ -109,13 +83,10 @@ public class NewAssignmentUploadController {
 			//within com.atossyntel.springboot.controller.SmtpMailSender.java
 			sms.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", "Proof of Concept files",
 					"Our work is done. Maybe?");
-			//System.out.print(file.getOriginalFilename());
 			
-			//return "redirect:InstructorAssignments";
 			return "redirect:InstructorAssignments";
 		} else {
 			model.addAttribute("error", "Please Fill All Fields");
-			//return "NewAssignmentUpload";
 			return "redirect:NewAssignmentUpload";
 		}
 	}
