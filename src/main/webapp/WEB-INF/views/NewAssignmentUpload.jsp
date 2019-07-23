@@ -44,11 +44,13 @@
 				placeholder="Enter Due Date"> <br> <br> Status:
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active"> <input type="radio"
-					name="options" value="0" autocomplete="off" checked>
+					name="options" value="1" autocomplete="off" checked>
 					Active
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" value="1" autocomplete="off"> Inactive
-				</label> <label class="btn btn-secondary"> <input type="radio"
+				</label> 
+				<label class="btn btn-secondary"> <input type="radio"
+					name="options" value="0" autocomplete="off"> Inactive
+				</label> 
+				<label class="btn btn-secondary"> <input type="radio"
 					name="options" value="2" autocomplete="off"> Completed
 				</label>
 			</div>
@@ -58,8 +60,8 @@
 				type="text" name="moduleInput" required placeholder="Module ID" value = "${moduleId}" disabled> <br>
 			<br> Class: <input type="text" name="classInput"
 				required placeholder="Class ID" value = "${classId}"disabled> <br> <br>
-				 Assignment: <input
-				type="text" name="assignmentId" placeholder="Assignment ID">
+				<!--   Assignment: <input
+				type="text" name="assignmentId" placeholder="Assignment ID">-->
 			<br> <br> Description: <br>
 			<textarea rows="2" cols="30" name="desc"></textarea>
 			<br> <input type="submit" class="btn btn-primary" value="Upload">

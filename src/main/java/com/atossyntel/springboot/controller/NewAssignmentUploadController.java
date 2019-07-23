@@ -70,7 +70,7 @@ public class NewAssignmentUploadController {
 			@RequestParam("classInput") String cId*/) throws MessagingException{
 		if (true) {
 			
-			String aId = request.getParameter("assignmentId");
+			//String aId = request.getParameter("assignmentId");
 			String aName = request.getParameter("assignmentName");
 			String date = request.getParameter("due_date");
 			String option = request.getParameter("options");
@@ -96,7 +96,7 @@ public class NewAssignmentUploadController {
 			//within com.atossyntel.springboot.storage.FileSystemStorageService.java
 			storageService.store(file, modFolder.toString());
 			
-			instructDAO.setAssignment(aName, file, date, mId, cId, desc, option, aId);
+			instructDAO.setAssignment(aName, file, date, mId, cId, desc, option);
 			//instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
 			//instructDAO.deleteAssignment(aId);
 

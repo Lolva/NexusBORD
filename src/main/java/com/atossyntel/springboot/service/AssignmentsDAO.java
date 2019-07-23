@@ -9,7 +9,7 @@ public interface AssignmentsDAO {
 	// READ
 	public List<Map<String, Object>> getAssignment();
 	// CREATE
-	public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number);
+	public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status);
 	// UPDATE
 	public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number);
 	// DELETE

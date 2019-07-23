@@ -98,7 +98,7 @@ public class SubmitAssignmentController {
 			
 			System.out.println("Sent to DB");
 		
-			return "redirect:SubmitAssignment";
+			return "redirect:Assignments";
 	
 		}else {
 			System.out.println("error");

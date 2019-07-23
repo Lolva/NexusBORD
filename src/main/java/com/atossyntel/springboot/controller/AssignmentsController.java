@@ -86,7 +86,8 @@ public class AssignmentsController {
 		//emailee list
 		String emailee = emailDAO.getEmailNewGrade(grade.getAssignment_id(), grade.getEmployee_id());
 
-		//within com.atossyntel.springboot.controller.SmtpMailSender.java		
+		//within com.atossyntel.springboot.controller.SmtpMailSender.java	
+		sms.setAssignId(grade.getAssignment_id());
 		sms.send(emailee, 2);
 		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
