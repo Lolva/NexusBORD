@@ -10,7 +10,7 @@ public interface StudentAssignmentsDAO {
 	
 
 	
-	public void submitAssignment(String submitDate, MultipartFile file, String assignmentID, String empID);
+	public void submitAssignment(MultipartFile file, String assignmentID, String empID);
 	
 	//public void submitAssignment(String assignmentID, String empID, String submitDate, int grade, MultipartFile file);
 }

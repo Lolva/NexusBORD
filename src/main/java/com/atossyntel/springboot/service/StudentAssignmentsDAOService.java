@@ -31,7 +31,7 @@ public class StudentAssignmentsDAOService implements StudentAssignmentsDAO {
 	
 	
 	@Override
-	public void submitAssignment(String submitDate, MultipartFile file, String assignmentID, String empID) {
+	public void submitAssignment(MultipartFile file, String assignmentID, String empID) {
 		
 		String fullFile = file.getOriginalFilename();
         int index = fullFile.lastIndexOf(".");
@@ -41,9 +41,9 @@ public class StudentAssignmentsDAOService implements StudentAssignmentsDAO {
         String assignmentIdPlaceholder = assignmentID; // change this as needed until function can be updated to match auto-increment functionality
         
         
-        String sqlQuery = "UPDATE submissions SET submission_date= TO_DATE(?,'YYYY-MM-DD'), file_name= ?, file_type= ?"
+        String sqlQuery = "UPDATE submissions SET submission_date= SYSDATE, file_name= ?, file_type= ?"
         		+ "WHERE assignment_id=? and employee_id=?"; 
-        jTemplate.update(sqlQuery, submitDate, fileName, fileType, assignmentIdPlaceholder, empID);
+        jTemplate.update(sqlQuery, fileName, fileType, assignmentIdPlaceholder, empID);
         
         
 	}

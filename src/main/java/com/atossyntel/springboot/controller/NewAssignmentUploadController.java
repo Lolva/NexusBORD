@@ -7,11 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.service.AssignmentsDAOService;
 import com.atossyntel.springboot.service.EmailDAOService;
 import com.atossyntel.springboot.storage.StorageService;
@@ -32,22 +34,40 @@ public class NewAssignmentUploadController {
     @Autowired
     private EmailDAOService emailDAO;
 
+    //setting these values directly because of enctype
+    private String sId;
+    private String mId;
+    private String cId;
+    
     @Autowired
     public NewAssignmentUploadController(StorageService storageService) {
         this.storageService = storageService;
     }
 	
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.GET)
-	public String init(Model model, HttpSession session) {
+	public String init(Model model, HttpSession session, @ModelAttribute("newassignment") InstructorAssignmentsBean instructBean) {
 		if(session.getAttribute("username")==null) {
 			return "redirect:login";
 		}
-			return "NewAssignmentUpload";
+		System.out.println(instructBean.getStream_id());
+		System.out.println(instructBean.getModule_id());
+		System.out.println(instructBean.getClass_id());
+		model.addAttribute("streamId",instructBean.getStream_id());
+		model.addAttribute("moduleId",instructBean.getModule_id());
+		model.addAttribute("classId",instructBean.getClass_id());
+		sId = instructBean.getStream_id();
+		mId = instructBean.getModule_id();
+		cId = instructBean.getClass_id();
+		
+		return "NewAssignmentUpload";
 	}
 
 	@RequestMapping(value = "/NewAssignmentUpload", method = RequestMethod.POST)
 	public String submit(Model model, HttpServletRequest request, HttpSession session,
-			@RequestParam("fileName") MultipartFile file) throws MessagingException{
+			@RequestParam("fileName") MultipartFile file/*,
+			@RequestParam("streamInput") String sId,
+			@RequestParam("moduleInput") String mId,
+			@RequestParam("classInput") String cId*/) throws MessagingException{
 		if (true) {
 			
 			String aId = request.getParameter("assignmentId");
@@ -55,9 +75,9 @@ public class NewAssignmentUploadController {
 			String date = request.getParameter("due_date");
 			String option = request.getParameter("options");
 			String desc = request.getParameter("desc");
-			String sId = request.getParameter("streamInput");
-			String mId = request.getParameter("moduleInput");
-			String cId = request.getParameter("classInput");
+			//String sId = request.getParameter("streamInput");
+			//String mId = request.getParameter("moduleInput");
+			//String cId = request.getParameter("classInput");
 			String filename = file.getOriginalFilename();
 			
 			//println() for debugging purposes

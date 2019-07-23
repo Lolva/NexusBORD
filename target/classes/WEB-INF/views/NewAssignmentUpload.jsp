@@ -53,11 +53,11 @@
 				</label>
 			</div>
 			<br> <br> Stream: <input type="text" name="streamInput"
-				required placeholder="Stream ID"> <br> <br> 
+				required placeholder="Stream ID" value = "${streamId}" disabled> <br> <br> 
 				Module: <input
-				type="text" name="moduleInput" required placeholder="Module ID"> <br>
+				type="text" name="moduleInput" required placeholder="Module ID" value = "${moduleId}" disabled> <br>
 			<br> Class: <input type="text" name="classInput"
-				required placeholder="Class ID"> <br> <br>
+				required placeholder="Class ID" value = "${classId}"disabled> <br> <br>
 				 Assignment: <input
 				type="text" name="assignmentId" placeholder="Assignment ID">
 			<br> <br> Description: <br>
