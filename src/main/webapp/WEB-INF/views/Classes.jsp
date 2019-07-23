@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
     <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
     
@@ -17,16 +18,16 @@
 
 
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'classes', 'student')">
+<body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-		if (session.getAttribute("username") == null) {
+	//	if (session.getAttribute("username") == null) {
 	%>
 	<script>
-		window.location.href = "/login";
+		//window.location.href = "/login";
 	</script>
 	<%
-		}
+	//	}
 	%>
     <header>
         <!-- div for nav bar to be created in -->
@@ -48,26 +49,27 @@
      <c:forEach items="${classIds}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id} </button>
 			<div class="panel">
-			<table style ="border-spacing:10px; padding:5px;width:100%">
+		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
 				<tr>
 				    <th> Class Id </th>				    
 				    <th> First Name </th>
 				    <th> Last Name </th>
 				    <th> Email </th>
+				    <th> Delete </th>
 			   	</tr>
 			<c:forEach items="${allStudents}" var="j">
 				<c:choose>
 		    		<c:when test="${o.class_id==j.class_id}">
 							<tr >
-								<td style="color:black;">${j.class_id} </td>
-								<td style="color:black;">${j.first_name} </td>
-								<td style="color:black;">${j.last_name}  </td>
-								<td style="color:black;"> ${j.email}   </td>
+								<td style="color:black;padding:5px">${j.class_id} </td>
+								<td style="color:black;padding:5px">${j.first_name} </td>
+								<td style="color:black;padding:5px">${j.last_name}  </td>
+								<td style="color:black;padding:5px"> ${j.email}   </td>
 								<td>
 								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
-								<input type = "submit" value="Delete Employee" class = "btn btn-primary btn-sm">
+								<Button type = "submit" class= "btn btn-basic btn-xs"><span class="glyphicon glyphicon-trash"></span></Button>
 								${error}
 								</form>
 								</td>
