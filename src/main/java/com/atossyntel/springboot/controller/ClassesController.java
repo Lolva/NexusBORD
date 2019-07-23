@@ -25,6 +25,9 @@ public class ClassesController {
 	
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
+		List<Map<String, Object>> allStudents = classdao.getAllStudents();
+
+		model.addAttribute("allStudents", allStudents);
 		List<Map<String, Object>> classIds = classdao.getClasses();
 		
 		model.addAttribute("classIds", classIds);
