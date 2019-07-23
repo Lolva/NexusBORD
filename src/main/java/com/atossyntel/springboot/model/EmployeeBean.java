@@ -7,7 +7,7 @@ public class EmployeeBean {
     private String Email;
     private String Employee_Id;
     private String class_id;
-
+    
     public String getFirst_Name() {
         return First_Name;
     }
@@ -53,7 +53,4 @@ public class EmployeeBean {
     public String toString() {
         return "EmployeeBean{" + "First_Name=" + First_Name + ", Last_Name=" + Last_Name + ", Email=" + Email + ", Employee_Id=" + Employee_Id + '}';
     }
-    
-    
-    
 }

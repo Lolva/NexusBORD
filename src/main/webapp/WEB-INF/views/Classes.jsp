@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -28,9 +29,8 @@
 		}
 	%>
     <header>
-    	<!-- div for nav bar to be created in -->
-        <div id="navDiv" class="navigation">
-        </div>
+        <!-- div for nav bar to be created in -->
+		<div id="navDiv" class="navigation"></div>
     </header>
     
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">

@@ -85,6 +85,8 @@ td, th {
 										<li>
 										<form name="newassignment" action="?newassignment"
 																	method="POST">
+																	<input type="hidden" name="stream_id" value="${cl.stream_id }" />
+																	<input type="hidden" name="class_id" value="${cl.class_id }" />
 																	<select name="module_id">
 																		<c:forEach items="${modules}" var ="module">
 																		<option value="${module.module_id}">${module.module_name }</option>

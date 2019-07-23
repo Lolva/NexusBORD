@@ -1,13 +1,29 @@
 package com.atossyntel.springboot;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+
+import com.atossyntel.springboot.storage.StorageProperties;
+import com.atossyntel.springboot.storage.StorageService;
 
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class MainApp {
 	public static void main(String[] args) {
 		SpringApplication.run(MainApp.class, args);
 	}
+	
+	// com.atossyntel.springboot.storage.FileSystemStorageService.java
+    @Bean
+    CommandLineRunner init(StorageService storageService) {
+        return (args) -> {
+            storageService.deleteAll();
+            storageService.init();
+        };
+    }
 }
 
 /*

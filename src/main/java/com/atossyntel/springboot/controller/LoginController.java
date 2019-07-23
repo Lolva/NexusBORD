@@ -25,8 +25,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String submit(Model model, @ModelAttribute("login") UserLogin login, HttpSession session) {
 		// First, check that the input isn't null
-		if (login != null && login.getUsername() != null & login.getPassword() != null) {
-
+		if (login.getUsername() != "" & login.getPassword() != "") {
 			// Next, check that the user exists in the database
 			if (dao.checkPassword(login)) {
 

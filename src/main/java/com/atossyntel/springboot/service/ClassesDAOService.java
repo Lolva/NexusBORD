@@ -31,6 +31,7 @@ public class ClassesDAOService implements ClassesDAO {
 	@Override
 	public List<Map<String,Object>> getStudents(String classId) {
 		String sql = "Select e.first_name, e.last_name, e.email From Employees e, Enrollments s WHERE e.employee_id = s.employee_id AND s.class_ID = ?";
+
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, classId);
 		 return results;

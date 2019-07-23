@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,12 +19,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
+import com.atossyntel.springboot.service.EmailDAOService;
 import com.atossyntel.springboot.service.AssignmentsDAO;
 
 @Controller
 public class AssignmentsController {
+	
+    @Autowired
+    private SmtpMailSender sms;
+    
+    @Autowired
+    private EmailDAOService emailDAO;
+
+
 	@Autowired
 	AssignmentsDAO assigndao;
+	
 	private String username = null;
 	@RequestMapping(value = "/Assignments", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
@@ -46,12 +57,12 @@ public class AssignmentsController {
 		for(Map<String, Object> t:classes) {
 			System.out.println("da classes " + t.toString());
 			if(t.get("role_id").equals("1")) {
-				System.out.println("Instructor");
+				//System.out.println("Instructor");
 				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
 				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
-				System.out.println("Student");
+				//System.out.println("Student");
 				assignsS.add(assigndao.getStudentAssignments(username, t.get("class_Id").toString()));
 				gradesS.add(assigndao.studentGraded(username, t.get("class_Id").toString()));
 				model.addAttribute("todoAssignments",assigndao.studentTodo(username, t.get("class_Id").toString()));
@@ -69,8 +80,16 @@ public class AssignmentsController {
 	}
 	
 	@RequestMapping(value = "/Assignments", params="grades")
-	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) {
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException{
 		System.out.println(grade.toString());
+		
+		//emailee list
+		String emailee = emailDAO.getEmailNewGrade(grade.getAssignment_id(), grade.getEmployee_id());
+
+		//within com.atossyntel.springboot.controller.SmtpMailSender.java	
+		sms.setAssignId(grade.getAssignment_id());
+		sms.send(emailee, 2);
+		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
 		return "redirect:Assignments";
 		
@@ -96,7 +115,8 @@ public class AssignmentsController {
 		//assignment.setModule_id(result.getParameter("module"));
 		model.addAttribute("module_id", assignment.getModule_id());
 		model.addAttribute("moduleS", assignment);
-		
+		model.addAttribute("stream_id", assignment.getStream_id());
+		model.addAttribute("class_id", assignment.getClass_id());
 		
 		redirectAttributes.addFlashAttribute("newassignment", assignment);
 		return "redirect:NewAssignmentUpload";

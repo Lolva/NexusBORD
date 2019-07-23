@@ -8,13 +8,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
 public class AssignmentsDAOService implements AssignmentsDAO {
 	@Autowired
 	private JdbcTemplate jTemplate;
-
+	
 	@Override
 	public List<Map<String, Object>> getClasses(String username) {
 		String sql = "SELECT e.class_id, e.role_id, s.stream_name, s.stream_id from enrollments e, classes c, streams s WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND e.employee_id = ? order by e.role_id";
@@ -26,8 +27,22 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 			System.out.println(r.toString());
 		}
 		return results;
-
-	}
+	} 
+	
+	@Override
+    public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
+        String fullFile = file.getOriginalFilename();
+        int index = fullFile.lastIndexOf(".");
+        String fileName = fullFile.substring(0, index);
+        String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        //String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "INSERT INTO assignments(assignment_name, module_id, "
+                + "description, due_date, status, file_name, file_type) "
+                + "VALUES(?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?)";
+        jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType);
+    } 
 
 	@Override
 	public List<Map<String, Object>> getActiveAssignments(String class_id, String username) {
@@ -110,12 +125,50 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 		}
 		return results;
 	}
+	
 	@Override
 	public int updateGrade(String username, String assignmentId, int grade){
 		String sql = "UPDATE SUBMISSIONS SET GRADE=? WHERE EMPLOYEE_ID=? AND ASSIGNMENT_ID=?";
 		
 		return jTemplate.update(sql, grade, username, assignmentId);
 	}
+	
+	// Does not change Assignment ID
+	@Override
+    public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number) {
+        String fullFile = file.getOriginalFilename();
+        int index = fullFile.lastIndexOf(".");
+        String fileName = fullFile.substring(0, index);
+        String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "UPDATE assignments SET assignment_name = ?, module_id = ?, "
+                + "description = ?, due_date = TO_DATE(?,'YYYY-MM-DD'), status = ?, file_name = ?, file_type = ? "
+        		+ "WHERE assignment_id = ?";
+        jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType, assignmentIdPlaceholder);
+    } 
+
+	
+	@Override
+    public void deleteAssignment(String number) {
+        //String fullFile = file.getOriginalFilename();
+        //int index = fullFile.lastIndexOf(".");
+        //String fileName = fullFile.substring(0, index);
+        //String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "DELETE FROM assignments WHERE assignment_id = ?";
+        jTemplate.update(sqlQuery, assignmentIdPlaceholder);
+    }
+
+	@Override
+	public List<Map<String, Object>> getAssignment() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public List<Map<String, Object>> getModules(String username){
 		String sql = "SELECT DISTINCT m.MODULE_name, m.module_id From modules m, classes c, lessons l, enrollments e WHERE c.STREAM_ID=l.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.EMPLOYEE_ID = ?";

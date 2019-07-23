@@ -19,7 +19,6 @@ td, th {
 }
 </style>
 </head>
-
 <!-- Dynamically create nav bar based on current page and role -->
 <body onload="navBar(this, 'assignments', 'student')">
 	<%
