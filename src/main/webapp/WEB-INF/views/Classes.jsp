@@ -110,12 +110,37 @@
 
       <h3>Delete Class</h3>
       <br>
- 		<form action="/deleteClass" method="POST" onsubmit="return confirm('Do you really want to delete the class?')">
+ 		<form action="/deleteClass" method="POST">
  		<label for="class_id">Enter Class ID</label>
  		<input type="text" name="class_id" placeholder="Class ID" class="form-control">
    		<br>
-   		<input class="btn btn-primary btn-md" type="submit" id="addclassbtn" >
+   		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModalCenter" >
+   			Delete Class
+   		</button>
    		<input class="btn btn-primary btn-md" type="reset">
+   		<!-- Button trigger modal -->
+		
+		<!-- Delete Modal -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content" >
+		      <div class="modal-header" style="border: none;">
+		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		        <h3 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h3>
+		    
+		      </div>
+		      <div class="modal-body" style="border: none;">
+		        <h4>Are you sure you want to delete this class?</h4>
+		      </div>
+		      <div class="modal-footer" style="border: none;">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary" >Delete</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
    		${error}
    	</form>
     </div>
