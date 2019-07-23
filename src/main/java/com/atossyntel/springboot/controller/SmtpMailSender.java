@@ -63,7 +63,8 @@ public class SmtpMailSender {
 				//teacher creating an assignment
 				case 0:
 					helper.setSubject(subjectTeacherAssignment);
-					helper.setText(bodyTeacherAssignment, true);
+					helper.setText(bodyTeacherAssignment+"<br><h1 style='color: red;'><a href='https://www.yahoo.com'>Login here!</a></h1>"
+							+ "<br><h1 style='color: red;'>Haha. You're fired!</h1>", true);
 					break;
 				//student submitting an assignment to instructor
 				case 1:
