@@ -29,17 +29,8 @@
 		}
 	%>
     <header>
-        <div class="navigation">
-            <ul class="topnavbar">
-				<li><a href="logout" onclick="return confirm('Logout?');">Logout</a></li>
-                <li><a href="Nexus.html">Home</a></li>
-                <li><a href="Modules.html">Modules</a></li>
-                <li><a href="assignments">Assignments</a></li>
-                <li><a href="Grades.html">Grades</a></li>
-                <li><a class="active" href="Classes.html">Classes</a></li>
-                <li class="left"><a class="nexus"><b>Nexus<font color="#04aad0">BORD</font></b></a></li>
-            </ul>
-        </div>
+        <!-- div for nav bar to be created in -->
+		<div id="navDiv" class="navigation"></div>
     </header>
     
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">
