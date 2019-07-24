@@ -45,8 +45,43 @@
 
   <div class="tab-content">
     <div id="viewclass" class="tab-pane fade in active">
-    
-     <c:forEach items="${classIds}" var="o">
+    <h4> Active Classes</h4>
+     <c:forEach items="${activeClassIds}" var="o">
+			<button value="button" class="accordion"> Class ${o.class_id} </button>
+			<div class="panel">
+		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
+				<tr>
+				    <th> Class Id </th>				    
+				    <th> First Name </th>
+				    <th> Last Name </th>
+				    <th> Email </th>
+				    <th> Delete </th>
+			   	</tr>
+			<c:forEach items="${allStudents}" var="j">
+				<c:choose>
+		    		<c:when test="${o.class_id==j.class_id}">
+							<tr >
+								<td style="color:black;padding:5px">${j.class_id} </td>
+								<td style="color:black;padding:5px">${j.first_name} </td>
+								<td style="color:black;padding:5px">${j.last_name}  </td>
+								<td style="color:black;padding:5px"> ${j.email}   </td>
+								<td>
+								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
+								<input type ="hidden" name="Class_ID" value="${j.class_id }">
+								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
+								<Button type = "submit" class= "btn btn-basic btn-xs"><span class="glyphicon glyphicon-trash"></span></Button>
+								${error}
+								</form>
+								</td>
+							</tr>
+		    		</c:when>    
+				</c:choose>
+			</c:forEach>
+			</table>
+			</div>
+		</c:forEach>
+		<h4> Inactive Classes</h4>
+		<c:forEach items="${inactiveClassIds}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">

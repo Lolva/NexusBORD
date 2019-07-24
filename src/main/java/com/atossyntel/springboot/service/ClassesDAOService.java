@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Types;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -47,10 +49,29 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> getClasses() {
-		String sql = "Select class_id From Classes";		
+	public List<Map<String, Object>> getActiveClasses() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime begin = now.plusDays(7);
+		String date = dtf.format(now);
+		String start = dtf.format(begin);
+		String sql = "Select class_id From Classes WHERE start_date<=? AND end_date>=?";		
 		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sql);
+		results = jTemplate.queryForList(sql, start, date);
+		return results;
+		
+	}
+	
+	@Override
+	public List<Map<String, Object>> getInactiveClasses() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime begin = now.plusDays(7);
+		String date = dtf.format(now);
+		String start = dtf.format(begin);
+		String sql = "Select class_id From Classes WHERE start_date>? OR end_date<?";		
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sql, start, date);
 		return results;
 		
 	}

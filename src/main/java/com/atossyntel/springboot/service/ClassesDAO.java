@@ -9,7 +9,8 @@ import java.util.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ClassesDAO {
-	public List<Map<String, Object>> getClasses();
+	public List<Map<String, Object>> getActiveClasses();
+	public List<Map<String, Object>> getInactiveClasses();
 	public List<Map<String,Object>> getStudents(String classId);
 	public List<Map<String,Object>> getAllStudents();
 	public void changeClassId(String employee_id, String class_id);

@@ -28,9 +28,11 @@ public class ClassesController {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 
 		model.addAttribute("allStudents", allStudents);
-		List<Map<String, Object>> classIds = classdao.getClasses();
+		List<Map<String, Object>> activeClassIds = classdao.getActiveClasses();
+		List<Map<String, Object>> inactiveClassIds = classdao.getInactiveClasses();
 		
-		model.addAttribute("classIds", classIds);
+		model.addAttribute("activeClassIds", activeClassIds);
+		model.addAttribute("inactiveClassIds", inactiveClassIds);
 	    return "Classes";
 	  }
 	
