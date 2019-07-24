@@ -182,26 +182,21 @@
     </div>
     <div id="createclass" class="tab-pane fade">
 
-      <h3>Create New Class</h3>
-      <form action="/addClass" method="POST" class="form-group">
-    <label for="class_id" >Enter Class ID</label>
-   	<input type="text" name="class_Id" placeholder="Class ID" class="form-control">
-   	
-   	<label for="stream_id">Enter Stream ID</label>
-   	<input type="text" name="stream_Id" placeholder="Stream ID" class="form-control">
-   	
-   	<label for="start_date" >Enter Start Date</label>
-   	<input type="date" name="start_date" placeholder="Start Date" class="form-control">
-   	
-   	<label for="end_date">Enter End Date</label>
-   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
-   	
-   		<br>
-   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
-   		<input class="btn btn-primary btn-md" type="reset">
-   	
-	
-   	</form>
+	    <h3>Create New Class</h3>
+	    <form action="/addClass" method="POST" class="form-group">
+		   	<label for="stream_id">Enter Stream ID</label>
+		   	<input type="text" name="stream_Id" placeholder="Stream ID" class="form-control">
+		   	
+		   	<label for="start_date" >Enter Start Date</label>
+		   	<input type="date" name="start_date" placeholder="Start Date" class="form-control">
+		   	
+		   	<label for="end_date">Enter End Date</label>
+		   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
+		   	
+	   		<br>
+	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
+	   		<input class="btn btn-primary btn-md" type="reset">
+	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
     	<h4> Edit Classes</h4>

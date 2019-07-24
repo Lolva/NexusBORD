@@ -81,7 +81,7 @@ public class ClassesController {
 	 @RequestMapping(value = "/addClass", method = RequestMethod.POST)
 	   public String submit(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
 		   if (ClassBean != null) {
-			   classdao.addClasses(ClassBean.getClass_Id(),ClassBean.getStream_Id(),ClassBean.getStart_date(),ClassBean.getEnd_date());
+			   classdao.addClasses(ClassBean.getStream_Id(),ClassBean.getStart_date(),ClassBean.getEnd_date());
 		   return "redirect:Classes.html";
 	   } else {
 	   	return "Classes";
@@ -92,7 +92,6 @@ public class ClassesController {
 	 @RequestMapping(value="/editClass", method = RequestMethod.POST)
 	 public String submit1(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
 		 if(ClassBean != null) {
-			 System.out.println("Hello: " + ClassBean.getClass_Id() + " " + ClassBean.getStart_date() + " " + ClassBean.getEnd_date());
 			 classdao.editClass(ClassBean.getClass_Id(), ClassBean.getStart_date(), ClassBean.getEnd_date());
 			 return "redirect:Classes";
 		 } else {

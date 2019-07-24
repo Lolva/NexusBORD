@@ -47,10 +47,10 @@ public class ClassesDAOService implements ClassesDAO {
 		results = jTemplate.queryForList(sqlQuery);
 		return results;
 	}
-	public void addClasses(String class_Id,String stream_Id, Date start_date, Date end_date) {
-		String sql= "INSERT INTO CLASSES(CLASS_ID,STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?, ?)";
-		Object[] params = new Object[] {class_Id , stream_Id, start_date, end_date};
-		int[] types = new int[] { Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
+	public void addClasses(String stream_Id, Date start_date, Date end_date) {
+		String sql= "INSERT INTO CLASSES(STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?)";
+		Object[] params = new Object[] {stream_Id, start_date, end_date};
+		int[] types = new int[] {Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
 		this.jTemplate.update(sql, params, types);
 	
 	}
