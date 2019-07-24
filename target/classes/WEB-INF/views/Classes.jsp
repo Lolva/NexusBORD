@@ -41,6 +41,7 @@
     <li><a data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
     <li><a data-toggle="tab" href="#Delete">Delete Class</a></li>
     <li><a data-toggle="tab" href="#createclass">Create A Class</a></li>
+    <li><a data-toggle="tab" href="#editclass">Edit Class</a></li>
   </ul>
 
   <div class="tab-content">
@@ -189,7 +190,7 @@
    	<label for="stream_id">Enter Stream ID</label>
    	<input type="text" name="stream_Id" placeholder="Stream ID" class="form-control">
    	
-   	 <label for="start_date" >Enter Start Date</label>
+   	<label for="start_date" >Enter Start Date</label>
    	<input type="date" name="start_date" placeholder="Start Date" class="form-control">
    	
    	<label for="end_date">Enter End Date</label>
@@ -201,6 +202,27 @@
    	
 	
    	</form>
+    </div>
+    <div id="editclass" class="tab-pane fade">
+    	<h4> Edit Classes</h4>
+	    <form action="/editClass" method="POST">
+	    <label for="class_id" >Choose Class ID</label>
+	   	<div class="dropdown">
+		  <select name="class_Id">
+			  <c:forEach items="${allClassIds}" var="j">
+			  	 <option class="dropdown-item" id="class_Id" value="${j.class_id}">${j.class_id}</option>
+			  </c:forEach>
+		  </select>
+		</div>
+	    <label for="start_date" >Change Start Date</label>
+	   	<input type="date" name="start_date" placeholder="Start Date" class="form-control">
+	   	
+	   	<label for="end_date">Change End Date</label>
+	   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
+	   	
+	   		<br>
+	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
+	   	</form>
     </div>
   </div>
   </fieldset>

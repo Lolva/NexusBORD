@@ -40,6 +40,13 @@ public class ClassesDAOService implements ClassesDAO {
 		
 	}
 	
+	@Override
+	public List<Map<String, Object>> getAllClasses() {
+		String sqlQuery = "SELECT class_id FROM Classes";
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sqlQuery);
+		return results;
+	}
 	public void addClasses(String class_Id,String stream_Id, Date start_date, Date end_date) {
 		String sql= "INSERT INTO CLASSES(CLASS_ID,STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?, ?)";
 		Object[] params = new Object[] {class_Id , stream_Id, start_date, end_date};
@@ -123,6 +130,12 @@ public class ClassesDAOService implements ClassesDAO {
 		}
 		
 		this.jTemplate.update(sqlQuery2, class_Id);
+	}
+	
+	@Override
+	public void editClass(String class_id, Date start_date, Date end_date) {
+		String sqlQuery = "Update Classes SET start_Date=?, end_date=? WHERE class_id=?";
+		this.jTemplate.update(sqlQuery, start_date, end_date, class_id);
 	}
 	
 	@Override

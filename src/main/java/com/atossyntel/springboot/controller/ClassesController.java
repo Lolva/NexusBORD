@@ -26,8 +26,11 @@ public class ClassesController {
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
-
 		model.addAttribute("allStudents", allStudents);
+		
+		List<Map<String, Object>> getAllClasses = classdao.getAllClasses();
+		model.addAttribute("allClassIds", getAllClasses);
+		
 		List<Map<String, Object>> activeClassIds = classdao.getActiveClasses();
 		List<Map<String, Object>> inactiveClassIds = classdao.getInactiveClasses();
 		
@@ -85,6 +88,17 @@ public class ClassesController {
 	   }
 
 	}
+	 
+	 @RequestMapping(value="/editClass", method = RequestMethod.POST)
+	 public String submit1(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
+		 if(ClassBean != null) {
+			 System.out.println("Hello: " + ClassBean.getClass_Id() + " " + ClassBean.getStart_date() + " " + ClassBean.getEnd_date());
+			 classdao.editClass(ClassBean.getClass_Id(), ClassBean.getStart_date(), ClassBean.getEnd_date());
+			 return "redirect:Classes";
+		 } else {
+			 return "redirect:Classes";
+		 }
+	 }
 	 @RequestMapping(value="/upload", method = RequestMethod.POST)
 	   public String submit(@RequestParam("file") MultipartFile file, Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) throws IOException {
 		   if(EmployeeBean != null) {
