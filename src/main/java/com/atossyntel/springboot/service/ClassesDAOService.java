@@ -54,6 +54,16 @@ public class ClassesDAOService implements ClassesDAO {
 		this.jTemplate.update(sql, params, types);
 	
 	}
+	
+	@Override
+	public List<Map<String, Object>> getStream(){
+		String sql = "Select Stream_id From Streams";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql);
+		System.out.println(results);
+		return results;
+		
+	}
 
 	@Override
 	public List<Map<String, Object>> getActiveClasses() {
