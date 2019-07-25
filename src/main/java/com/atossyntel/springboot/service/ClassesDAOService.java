@@ -85,8 +85,16 @@ public class ClassesDAOService implements ClassesDAO {
 	
 
 	@Override
+	public List<Map<String, Object>> getActiveStudents() {
+		String sql = "SELECT UNIQUE s.class_id, s.employee_id, e.first_name, e.last_name, e.email FROM Employees e, Enrollments s WHERE e.employee_id = s.employee_id";
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sql);
+		return results;
+	}
+	
+	@Override
 	public List<Map<String, Object>> getAllStudents() {
-		String sql = "SELECT s.class_id, s.employee_id, e.first_name, e.last_name, e.email FROM Employees e, Enrollments s WHERE e.employee_id = s.employee_id";
+		String sql = "SELECT employee_id, first_name, last_name, email FROM Employees";
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql);
 		return results;
@@ -94,15 +102,19 @@ public class ClassesDAOService implements ClassesDAO {
 
 
 	@Override
-	public void changeClassId(String EmpId, String classId) {
+	public void changeClassId(String EmpId, String classId, String oldId) {
 		String checkquery = "SELECT Count(*) FROM Enrollments WHERE employee_id=?";
-		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=?";
+		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=? AND class_id=?";
+		System.out.println("EI: " + EmpId + " CI: " + classId + " OI: " + oldId);
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
 		Object results = this.jTemplate.queryForObject(checkquery, new Object[]{EmpId}, Integer.class);
-		if ( ((Number) results).intValue() == 1) {
-			this.jTemplate.update(sqlUpdateQuery, classId, EmpId);
-		} else if ( ((Number) results).intValue() > 1) {
-			
+		if ( ((Number) results).intValue() > 0) {
+			if (oldId != null) {
+				System.out.println(" Changing class");
+				this.jTemplate.update(sqlUpdateQuery, classId, EmpId, oldId);
+			} else {
+				this.jTemplate.update(sqlInsertQuery, EmpId, classId, 2);
+			}
 		} else {
 			this.jTemplate.update(sqlInsertQuery, EmpId, classId, 2);
 		}

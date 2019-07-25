@@ -28,6 +28,9 @@ public class ClassesController {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
 		
+		List<Map<String, Object>> activeStudents = classdao.getActiveStudents();
+		model.addAttribute("activeStudents", activeStudents);
+		
 		List<Map<String, Object>> getAllClasses = classdao.getAllClasses();
 		model.addAttribute("allClassIds", getAllClasses);
 		
@@ -43,9 +46,9 @@ public class ClassesController {
 	 @RequestMapping(value = "/changeClass", method = RequestMethod.POST)
 	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) {
 	        if (EnrollmentBean != null) {
-	        	System.out.println("Change Class");
-	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
-	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID()); 
+//	        	System.out.println("Change Class");
+//	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
+	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID(), EnrollmentBean.getOld_Class_ID()); 
 
 	                return "redirect:Classes.htm";
 	        

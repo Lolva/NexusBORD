@@ -58,7 +58,7 @@
 				    <th> Email </th>
 				    <th> Delete </th>
 			   	</tr>
-			<c:forEach items="${allStudents}" var="j">
+			<c:forEach items="${activeStudents}" var="j">
 				<c:choose>
 		    		<c:when test="${o.class_id==j.class_id}">
 							<tr >
@@ -87,17 +87,17 @@
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
 				<tr>
-				    <th> Class Id </th>				    
+				    <th> Employee ID </th>				    
 				    <th> First Name </th>
 				    <th> Last Name </th>
 				    <th> Email </th>
 				    <th> Delete </th>
 			   	</tr>
-			<c:forEach items="${allStudents}" var="j">
+			<c:forEach items="${activeStudents}" var="j">
 				<c:choose>
 		    		<c:when test="${o.class_id==j.class_id}">
 							<tr >
-								<td style="color:black;padding:5px">${j.class_id} </td>
+								<td style="color:black;padding:5px">${j.employee_id} </td>
 								<td style="color:black;padding:5px">${j.first_name} </td>
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
@@ -120,20 +120,50 @@
     <div id="AddEmployee" class="tab-pane fade"class="row">
 	<form action="/changeClass" style="color: black;" method=POST>
 		<h4>Add Employee to Class:</h4>
-			<label for="Employee_Id">Enter Employee ID</label> 
-			<input type="text" name="Employee_ID" placeholder="Employee ID"/>
-			<label for="Class_id">Enter Class ID</label>
-			<input type="text" name="Class_ID" placeholder="Enter Class ID"/>
-			<br><br>
+		<label for="Employee_Id">Choose Employee ID</label>
+		<div class="dropdown">
+			<select name="Employee_ID">
+				<c:forEach items="${allStudents}" var="e">
+					<option class="dropdown-item" id="Employee_ID" value="${e.employee_id}">${e.employee_id}</option>
+				</c:forEach>
+			 </select>
+		</div>
+			<br>
+			<label for="Class_id">Choose Class ID</label>
+		   	<div class="dropdown">
+			  <select name="Class_ID">
+				  <c:forEach items="${allClassIds}" var="j">
+				  	 <option class="dropdown-item" id="Class_id" value="${j.class_id}">${j.class_id}</option>
+				  </c:forEach>
+			  </select>
+			</div>
+			<br>
+			<h4> If the employee is already in a class:</h4>
+			<label for="Class_id">Choose Old Class ID</label>
+		   	<div class="dropdown">
+			  <select name="old_Class_ID">
+			  		 <option value="null"> None</option>
+				  <c:forEach items="${allClassIds}" var="j">
+				  	 <option class="dropdown-item" value="${j.class_id}">${j.class_id}</option>
+				  </c:forEach>
+			  </select>
+			</div>
+			<br>
 			<input type="submit" class="btn btn-primary btn-md" value="Add Employee"/>
 		</form>
 	<br><br>
-		<h4>Add Employee with File</h4>
+		<h4>Add Employees with a File</h4>
 		<form action="/upload" method = POST enctype="multipart/form-data">
    		<br>
-   		<label for="class_id">Enter Class ID</label>
-   		<input type="text" name="class_id" placeholder="Class ID" class="form-control">
-   		<br>
+   		<label for="class_id">Choose Class ID</label>
+   		<div class="dropdown">
+			  <select name="class_id">
+				  <c:forEach items="${allClassIds}" var="j">
+				  	 <option class="dropdown-item" id="class_id" value="${j.class_id}">${j.class_id}</option>
+				  </c:forEach>
+			  </select>
+		</div>
+   		<br><br>
    		<label for="file">Select an Excel File</label>
    		<input type="file" name="file" class="btn btn-default btn-md">
    		<br><br>
@@ -147,8 +177,14 @@
       <h3>Delete Class</h3>
       <br>
  		<form action="/deleteClass" method="POST">
- 		<label for="class_id">Enter Class ID</label>
- 		<input type="text" name="class_id" placeholder="Class ID" class="form-control">
+ 		<label for="class_id">Choose Class ID</label>
+ 				   	<div class="dropdown">
+			  <select name="class_id">
+				  <c:forEach items="${allClassIds}" var="j">
+				  	 <option class="dropdown-item" id="Class_id" value="${j.class_id}">${j.class_id}</option>
+				  </c:forEach>
+			  </select>
+			</div>
    		<br>
    		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModalCenter" >
    			Delete Class

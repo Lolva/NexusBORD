@@ -13,8 +13,9 @@ public interface ClassesDAO {
 	public List<Map<String, Object>> getActiveClasses();
 	public List<Map<String, Object>> getInactiveClasses();
 	public List<Map<String,Object>> getStudents(String classId);
+	public List<Map<String, Object>> getActiveStudents();
 	public List<Map<String,Object>> getAllStudents();
-	public void changeClassId(String employee_id, String class_id);
+	public void changeClassId(String employee_id, String class_id, String oldId);
 	public void addClasses(String stream_Id, Date start_date, Date end_date);
 	public void deleteEmployee(String class_Id, String employee_id);
 	public void deleteClass(String class_Id);
