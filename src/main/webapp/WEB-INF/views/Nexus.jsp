@@ -59,7 +59,7 @@
 								<div class="card">
 									<div class="card-body">
 										<p class="card-text" style="font-size: 10pt;">
-											<i class="fas fa-star" style="color: gold;"></i> ${obj.DUE_DATE}
+											<i class="fas fa-exclamation-triangle" style="color: gold;"></i> ${obj.DUE_DATE}
 										</p>
 										<div class="card-header">
 											<h5 class="card-title">${obj.STREAM_NAME}</h5>
