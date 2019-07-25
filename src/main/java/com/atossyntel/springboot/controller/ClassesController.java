@@ -34,6 +34,9 @@ public class ClassesController {
 		List<Map<String, Object>> getAllClasses = classdao.getAllClasses();
 		model.addAttribute("allClassIds", getAllClasses);
 		
+		List<Map<String, Object>> stream=classdao.getStream();
+		model.addAttribute("stream",stream);
+		
 		List<Map<String, Object>> activeClassIds = classdao.getActiveClasses();
 		List<Map<String, Object>> inactiveClassIds = classdao.getInactiveClasses();
 		
