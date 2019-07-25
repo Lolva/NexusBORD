@@ -46,41 +46,50 @@
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
-				<c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
 					<li class="active"><a href="#d${cl.CLASS_ID}"
 						id="${cl.role_id}" class="nav-link">${cl.stream_name}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
-					<c:set var="count" value="${count + 1}" scope="page" />
+
 				</c:forEach>
+
 			</ul>
 			<div class="tab-content">
 				<c:forEach items="${classes}" var="c">
 					<div id="d${c.class_id}" class="tab-pane fade in active">
+
 						<c:forEach items="${modules}" var="o">
 							<c:choose>
 								<c:when test="${o.class_id==c.class_id}">
 									<button value="button" class="accordion">${o.module_name}</button>
 								</c:when>
 							</c:choose>
-							
+
 							<div class="panel">
 								<c:choose>
-								<c:when test="${c.role_id == 1}">
-									<button class="btn-primary">Edit</button>
-								</c:when>
-							</c:choose>
+									<c:when test="${c.role_id == 1}">
+										<button class="btn-primary"
+											style="margin: 10px; float: right;">Edit</button>
+
+									</c:when>
+								</c:choose>
 								<table>
 									<tr>
 										<th>Module Files:</th>
 										<td></td>
+										
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
 										<c:choose>
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
-													<td></td>
+													
 													<td style="color: black;">${j.file_name}</td>
+													<c:choose>
+														<c:when test="${c.role_id == 1}">
+															<td><button style="color: red;">x</button>
+														</c:when>
+													</c:choose>
 												</tr>
 											</c:when>
 										</c:choose>
@@ -95,8 +104,13 @@
 										<c:choose>
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
-													<td></td>
+													
 													<td style="color: black;">${k.assignment_name}</td>
+													<c:choose>
+														<c:when test="${c.role_id == 1}">
+															<td><button style="color: red;">x</button>
+														</c:when>
+													</c:choose>
 												</tr>
 											</c:when>
 										</c:choose>
@@ -105,7 +119,19 @@
 
 							</div>
 						</c:forEach>
+						<div>
+							<c:choose>
+								<c:when test="${c.role_id == 1}">
+									<button class="btn btn-primary btn-sm"
+										style="margin: 10px; float: right;">Add new</button>
+
+								</c:when>
+							</c:choose>
+						</div>
 					</div>
+
+
+
 				</c:forEach>
 			</div>
 		</div>
