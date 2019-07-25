@@ -29,24 +29,24 @@ public class ModuleServiceDAO implements ModuleDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>>getAssignments(String module_id) {
-		String sql = "SELECT * FROM assignments WHERE assignments.module_id= ?";
+	public List<Map<String, Object>>getAssignments(String employee_id) {
+		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m, assignments f WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND f.MODULE_ID = m.MODULE_ID AND e.employee_id= ?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, module_id);
+		results = jTemplate.queryForList(sql, employee_id);
 		return results;
 	}
 	@Override
-	public List<Map<String, Object>>getModuleList(String class_id) {
-		String sql = "SELECT * From modules m, classes c, streams s, lessons l WHERE c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND c.class_id= ?";
+	public List<Map<String, Object>>getModuleList(String employee_id) {
+		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.employee_id= ?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, class_id);
+		results = jTemplate.queryForList(sql, employee_id);
 		return results;
 	}
 	@Override
-	public List<Map<String, Object>>getModuleFiles(String module_id) {
-		String sql = "SELECT * FROM module_files WHERE MODULE_ID = ?";
+	public List<Map<String, Object>>getModuleFiles(String employee_id) {
+		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m, MODULE_FILES f WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND f.MODULE_ID = m.MODULE_ID AND e.employee_id= ?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, module_id);
+		results = jTemplate.queryForList(sql, employee_id);
 		return results;
 	}
 	
