@@ -55,7 +55,7 @@ td, th {
 	</header>
 	<fieldset class="container">
 		<div class="tabbable boxed parentTabs p-4">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="classTabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
 					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
@@ -276,6 +276,20 @@ td, th {
 			e.preventDefault();
 			$(this).tab('show');
 		});
+		$(document).ready(() => {
+			  let url = location.href.replace(/\/$/, "");
+			 
+			  if (location.hash) {
+			    const hash = url.split("#");
+			    $('#classTabs a[href="#'+hash[1]+'"]').tab("show");
+			    url = location.href.replace(/\/#/, "#");
+			    history.replaceState(null, null, url);
+			    setTimeout(() => {
+			      $(window).scrollTop(0);
+			    }, 400);
+			  } 
+			   
+			});
 	</script>
 </body>
 </html>
