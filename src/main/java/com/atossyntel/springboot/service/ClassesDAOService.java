@@ -60,7 +60,7 @@ public class ClassesDAOService implements ClassesDAO {
 		String sql = "Select Stream_id From Streams";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql);
-		System.out.println(results);
+//		System.out.println(results);
 		return results;
 		
 	}

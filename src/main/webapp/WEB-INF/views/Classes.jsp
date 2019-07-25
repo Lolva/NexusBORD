@@ -122,7 +122,7 @@
 		<h4>Add Employee to Class:</h4>
 		<label for="Employee_Id">Choose Employee ID</label>
 		<div class="dropdown">
-			<select name="Employee_ID">
+			<select name="Employee_ID" class="form-control">
 				<c:forEach items="${allStudents}" var="e">
 					<option class="dropdown-item" id="Employee_ID" value="${e.employee_id}">${e.employee_id}</option>
 				</c:forEach>
@@ -131,7 +131,7 @@
 			<br>
 			<label for="Class_id">Choose Class ID</label>
 		   	<div class="dropdown">
-			  <select name="Class_ID">
+			  <select name="Class_ID" class="form-control">
 				  <c:forEach items="${allClassIds}" var="j">
 				  	 <option class="dropdown-item" id="Class_id" value="${j.class_id}">${j.class_id}</option>
 				  </c:forEach>
@@ -141,7 +141,7 @@
 			<h4> If the employee is already in a class:</h4>
 			<label for="Class_id">Choose Old Class ID</label>
 		   	<div class="dropdown">
-			  <select name="old_Class_ID">
+			  <select name="old_Class_ID" class="form-control">
 			  		 <option value="null"> None</option>
 				  <c:forEach items="${allClassIds}" var="j">
 				  	 <option class="dropdown-item" value="${j.class_id}">${j.class_id}</option>
@@ -157,7 +157,7 @@
    		<br>
    		<label for="class_id">Choose Class ID</label>
    		<div class="dropdown">
-			  <select name="class_id">
+			  <select name="class_id" class="form-control">
 				  <c:forEach items="${allClassIds}" var="j">
 				  	 <option class="dropdown-item" id="class_id" value="${j.class_id}">${j.class_id}</option>
 				  </c:forEach>
@@ -179,7 +179,7 @@
  		<form action="/deleteClass" method="POST">
  		<label for="class_id">Choose Class ID</label>
  				   	<div class="dropdown">
-			  <select name="class_id">
+			  <select name="class_id" class="form-control">
 				  <c:forEach items="${allClassIds}" var="j">
 				  	 <option class="dropdown-item" id="Class_id" value="${j.class_id}">${j.class_id}</option>
 				  </c:forEach>
@@ -244,7 +244,7 @@
 	    <form action="/editClass" method="POST">
 	    <label for="class_id" >Choose Class ID</label>
 	   	<div class="dropdown">
-		  <select name="class_Id">
+		  <select name="class_Id" class="form-control">
 			  <c:forEach items="${allClassIds}" var="j">
 			  	 <option class="dropdown-item" id="class_Id" value="${j.class_id}">${j.class_id}</option>
 			  </c:forEach>
