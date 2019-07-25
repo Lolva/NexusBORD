@@ -20,5 +20,6 @@ public interface ClassesDAO {
 	public void deleteClass(String class_Id);
 	void addEmployees(MultipartFile file, String fileName, String class_id) throws IOException;
 	public void editClass(String class_id, Date start_date, Date end_date);
+	public List<Map<String, Object>> getStream();
 	
 }
