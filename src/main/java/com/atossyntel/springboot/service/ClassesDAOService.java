@@ -72,7 +72,7 @@ public class ClassesDAOService implements ClassesDAO {
 		LocalDateTime begin = now.plusDays(7);
 		String date = dtf.format(now);
 		String start = dtf.format(begin);
-		String sql = "Select class_id From Classes WHERE start_date<=? AND end_date>=?";		
+		String sql = "Select class_id, to_char(start_date, 'Month dd yyyy') AS start_date, to_char(end_date, 'Month dd yyyy') AS end_date From Classes WHERE start_date<=? AND end_date>=?";		
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, start, date);
 		return results;
@@ -86,7 +86,7 @@ public class ClassesDAOService implements ClassesDAO {
 		LocalDateTime begin = now.plusDays(7);
 		String date = dtf.format(now);
 		String start = dtf.format(begin);
-		String sql = "Select class_id From Classes WHERE start_date>? OR end_date<?";		
+		String sql = "Select class_id, to_char(start_date, 'Month dd yyyy') AS start_date, to_char(end_date, 'Month dd yyyy') AS end_date From Classes WHERE start_date>? OR end_date<?";		
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, start, date);
 		return results;
@@ -156,8 +156,17 @@ public class ClassesDAOService implements ClassesDAO {
 	
 	@Override
 	public void editClass(String class_id, Date start_date, Date end_date) {
-		String sqlQuery = "Update Classes SET start_Date=?, end_date=? WHERE class_id=?";
-		this.jTemplate.update(sqlQuery, start_date, end_date, class_id);
+		String sqlQuery1 = "Update Classes SET start_Date=?, end_date=? WHERE class_id=?";
+		String sqlQuery2 = "Update Classes SET start_Date=? WHERE class_id=?";
+		String sqlQuery3 = "Update Classes SET end_date=? WHERE class_id=?";
+		if (start_date != null && end_date != null) {
+			this.jTemplate.update(sqlQuery1, start_date, end_date, class_id);
+		} else if (start_date != null) {
+			this.jTemplate.update(sqlQuery2, start_date, class_id);
+		} else {
+			this.jTemplate.update(sqlQuery3, end_date, class_id);
+		}
+		
 	}
 	
 	@Override

@@ -48,7 +48,7 @@
     <div id="viewclass" class="tab-pane fade in active">
     <h4> Active Classes</h4>
      <c:forEach items="${activeClassIds}" var="o">
-			<button value="button" class="accordion"> Class ${o.class_id} </button>
+			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
 				<tr>
@@ -83,7 +83,7 @@
 		</c:forEach>
 		<h4> Inactive Classes</h4>
 		<c:forEach items="${inactiveClassIds}" var="o">
-			<button value="button" class="accordion"> Class ${o.class_id} </button>
+			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
 				<tr>
