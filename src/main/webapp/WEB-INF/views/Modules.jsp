@@ -25,6 +25,8 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+<script src="https://kit.fontawesome.com/b1cf46027b.js"></script>
+
 </head>
 
 <body onload="navBar(this, 'modules', 'student')">
@@ -77,17 +79,20 @@
 									<tr>
 										<th>Module Files:</th>
 										<td></td>
-										
+
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
 										<c:choose>
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
-													
+
 													<td style="color: black;">${j.file_name}</td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><button style="color: red;">x</button>
+															<td><div style="color: red; margin: 5px;"
+																	onClick="alert('click')">
+																	<i class="fas fa-times"></i>
+																</div>
 														</c:when>
 													</c:choose>
 												</tr>
@@ -104,11 +109,13 @@
 										<c:choose>
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
-													
-													<td style="color: black;">${k.assignment_name}</td>
+
+													<td id="${k.assignment_id}" style="color: black;">${k.assignment_name}</td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><button style="color: red;">x</button>
+															<td><span id="${k.assignment_id}c" class="btn"
+																style="color: red; margin: 5px;"
+																onClick="alert('click')"><i class="fas fa-times"></i></span>
 														</c:when>
 													</c:choose>
 												</tr>
@@ -122,9 +129,31 @@
 						<div>
 							<c:choose>
 								<c:when test="${c.role_id == 1}">
-									<button class="btn btn-primary btn-sm"
-										style="margin: 10px; float: right;">Add new</button>
+									<button type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#myModal">Add new
+									</button>
+									<div class="modal" id="myModal">
+										<div class="modal-dialog">
+											<div class="modal-content">
 
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h4 class="modal-title">Add new module to class</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body">Modal body..</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Close</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
 								</c:when>
 							</c:choose>
 						</div>
@@ -133,9 +162,14 @@
 
 
 				</c:forEach>
+
+
+
 			</div>
 		</div>
+
 	</fieldset>
+
 	<script type="text/javascript">
 		var acc = document.getElementsByClassName("accordion");
 		var i;
