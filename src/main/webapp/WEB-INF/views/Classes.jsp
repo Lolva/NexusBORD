@@ -221,12 +221,12 @@
 	    <h3>Create New Class</h3>
 	    <form action="/addClass" method="POST" class="form-group">
 		   	<label for="stream_id">Enter Stream ID</label>
-   	               <select name="stream_Id" class="form-control">
-   	                <c:forEach items="${stream}" var="j">
-	               <option value="${j.stream_Id}">${j.stream_Id}</option>
-	               </c:forEach>
-                       </select>
-                         <br>
+   	        <select name="stream_Id" class="form-control">
+   	            <c:forEach items="${stream}" var="j">
+	            	<option value="${j.stream_Id}">${j.stream_Id}</option>
+	            </c:forEach>
+            </select>
+            <br>
 		   	
 		   	<label for="start_date" >Enter Start Date</label>
 		   	<input type="date" name="start_date" placeholder="Start Date" class="form-control">
