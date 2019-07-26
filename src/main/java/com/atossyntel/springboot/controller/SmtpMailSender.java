@@ -33,8 +33,8 @@ public class SmtpMailSender {
 		
 		//Student email body
 		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
-		private String bodyStudentGrade1 = "Your assignment for assignment ID ";
-		private String bodyStudentGrade2 = " has been graded.";
+		private String bodyStudentGrade1 = "Your instuructor has graded assignment ";
+		private String bodyStudentGrade2 = " for class ";
 		
 		
 		
@@ -82,8 +82,8 @@ public class SmtpMailSender {
 					break;
 				//teacher grading an assignment
 				case 2:
-					helper.setSubject(subjectStudentGrade);
-					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2, true);
+					helper.setSubject(subjectStudentGrade + " for class " + classId);
+					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2 + classId, true);
 					break;
 				case 3:
 					helper.setSubject(subjectEnrollment);
