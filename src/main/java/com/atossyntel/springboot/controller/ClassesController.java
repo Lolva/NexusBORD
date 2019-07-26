@@ -1,10 +1,18 @@
 package com.atossyntel.springboot.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
 import java.util.List;
 import java.util.Map;
 
+
 import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.util.FileCopyUtils;
 
 import com.atossyntel.springboot.model.ClassBean;
 import com.atossyntel.springboot.model.EmployeeBean;
@@ -52,6 +62,27 @@ public class ClassesController {
 		model.addAttribute("activeClassIds", activeClassIds);
 		model.addAttribute("inactiveClassIds", inactiveClassIds);
 	    return "Classes";
+		
+		private static final String file_path =  "C:/NexusBORD-classes-view6/src/main/resources/";
+		
+		@RequestMapping("resources/{fileName:.+}")
+	public void download(HttpServletRequest request,HttpServletResponse response,@PathVariable("fileName")String filename) throws IOException {
+		File file=new File(file_path+filename);
+		if(file.exists()) {
+			String mimeType=URLConnection.guessContentTypeFromName(file.getName());
+			if(mimeType==null) {
+				mimeType = "application/octet-stream";
+			}
+			response.setContentType(mimeType);
+			response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
+			//response.setHeader("Content-Disposition",String.format("attachment; filename=\""+file.getName()+ "\""));
+			response.setContentLength((int) file.length());
+			InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
+			FileCopyUtils.copy(inputStream, response.getOutputStream());
+		}
+		
+		
+		
 	  }
 	
 
