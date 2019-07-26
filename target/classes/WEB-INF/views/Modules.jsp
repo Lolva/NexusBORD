@@ -89,14 +89,14 @@
 														<form action="/updateModule" method="POST"
 															class="form-group">
 															<input type="text" required
-																placeholder="${o.module_name}" name="module_name"/> <input type="file"
-																name="File Select" /> <input type="hidden"
+																placeholder="${o.module_name}" name="module_name" /> <input
+																type="file" name="File Select" /> <input type="hidden"
 																value="${o.module_id }" name="module_id" /> <input
 																type="submit" value="Edit" />
 														</form>
 														<form action="/deleteModule" method="POST"
 															class="form-group">
-															<input type="hidden" name="module_file_id"
+															<input type="hidden" name="module_id"
 																value="${o.module_id }" /> <span><input
 																style="color: red;" type="submit" value="Delete module" /></span>
 														</form>
@@ -114,10 +114,50 @@
 
 									</c:when>
 								</c:choose>
+								<div class="modal" id="mf${o.module_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Add new module file:
+													${o.module_name}</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/addModuleFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													<input type="hidden" name="module_id"
+														value="${o.module_id }" /> <input type="hidden"
+														name="class_id" value="${c.class_id }" /> <input
+														type="hidden" name="stream_id" value="${c.stream_id }" />
+													<input type="file" name="fileName" /> <span><input
+														style="color: blue;" type="submit" value="submit" /></span>
+												</form>
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
 								<table>
 									<tr>
 										<th>Module Files:</th>
-										<td></td>
+										<td><c:choose>
+												<c:when test="${c.role_id == 1}">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#mf${o.module_id }">+
+													</button>
+												</c:when>
+											</c:choose></td>
 
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
@@ -132,7 +172,7 @@
 																	class="form-group">
 																	<input type="hidden" name="module_file_id"
 																		value="${j.module_file_id }" /> <span><input
-																		style="color: red;" type="submit" value="x" /></span>
+																		style="color: red;" type="submit" value="x"/></span>
 																</form></td>
 														</c:when>
 													</c:choose>

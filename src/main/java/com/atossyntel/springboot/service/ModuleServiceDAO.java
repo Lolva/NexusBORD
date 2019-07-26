@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.atossyntel.springboot.model.ModuleBean;
 
@@ -59,20 +60,16 @@ public class ModuleServiceDAO implements ModuleDAO {
 	}
 	
 	@Override
-	public int insertModule(String modulename) {
+	public int insertModule(String modulename, int streamid) {
 		String sql = "INSERT INTO modules (module_name) VALUES (?)";
-		
-		return jTemplate.update(sql, modulename);
+		jTemplate.update(sql, modulename);
+		String sql2 = "INSERT INTO lessons (stream_id, module_id) VALUES (?, (SELECT module_id FROM modules WHERE module_name = ?))";
+		return jTemplate.update(sql2, streamid, modulename);
 	}
-	@Override
-	public int insertStream(int streamid) {
-		String sql = "INSERT INTO lessons (stream_id, module_id) VALUES (?, auto_ids)";
-		
-		return jTemplate.update(sql, streamid);
-	}
+
 	@Override
 	public int deleteModule(int module_id) {
-		String sql = "DELETE FROM modules (module_id) where module_id = ?";
+		String sql = "DELETE FROM lessons where module_id = ?";
 		
 		return jTemplate.update(sql, module_id);
 	}
@@ -94,5 +91,15 @@ public class ModuleServiceDAO implements ModuleDAO {
 		String sql = "UPDATE modules SET module_name = ? WHERE module_id = ?";
 		
 		return jTemplate.update(sql, module_name, module_id);
+	}
+	@Override
+	public int insertModuleFile(String module_id, MultipartFile file) {
+		String fullFile = file.getOriginalFilename();
+        int index = fullFile.lastIndexOf(".");
+        String fileName = fullFile.substring(0, index);
+        String fileType = fullFile.substring(index+1, fullFile.length());
+        
+        String sql = "Insert INTO module_Files(module_id, file_name, file_type) values (?, ?, ?)";
+        return jTemplate.update(sql, module_id, fileName, fileType);
 	}
 }
