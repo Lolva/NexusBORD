@@ -72,7 +72,7 @@ td, th {
 						<c:when test="${cl.role_id == 1}">
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
-									<ul class="nav nav-tabs" id="${cl.stream_name}">
+									<ul class="nav nav-tabs" id="${cl.stream_namee} }">
 										Instructor View
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
@@ -278,10 +278,10 @@ td, th {
 		});
 		$(document).ready(() => {
 			  let url = location.href.replace(/\/$/, "");
-			 
 			  if (location.hash) {
 			    const hash = url.split("#");
 			    $('#classTabs a[href="#'+hash[1]+'"]').tab("show");
+			    $('#' + hash[2] + ' a[href="#'+hash[3]+'"]').tab("show");
 			    url = location.href.replace(/\/#/, "#");
 			    history.replaceState(null, null, url);
 			    setTimeout(() => {
