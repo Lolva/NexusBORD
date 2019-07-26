@@ -16,6 +16,7 @@ public class SmtpMailSender {
 		private String assignId;
 		private String empId;
 		private String classId;
+		private String instId;
 		
 		//Teacher email subjects
 		private final String subjectTeacherFile = "NexusBORD - Teacher File Upload";
@@ -27,7 +28,8 @@ public class SmtpMailSender {
 		
 		//Teacher email body
 		private final String bodyTeacherFile = "Your instructor has uploaded a file in the module.";
-		private final String bodyTeacherAssignment = "Your instructor has uploaded an assignment for you to complete";
+		private final String bodyTeacherAssignment0 = "An instructor has uploaded an assignment for you to complete in class ";
+		private final String bodyTeacherAssignment1 = "<br><br>To view this assignment, <a href='localhost:8085'>Login Here.</a>";
 		
 		//Student email body
 		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
@@ -63,8 +65,8 @@ public class SmtpMailSender {
 				//teacher creating an assignment
 				case 0:
 					helper.setSubject(subjectTeacherAssignment);
-					helper.setText(bodyTeacherAssignment+"<br><h1 style='color: red;'><a href='https://www.yahoo.com'>Login here!</a></h1>"
-							+ "<br><h1 style='color: red;'>Haha. You're fired!</h1>", true);
+					helper.setText(bodyTeacherAssignment0 + classId + ". "
+							+ bodyTeacherAssignment1 , true);
 					break;
 				//student submitting an assignment to instructor
 				case 1:

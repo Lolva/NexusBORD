@@ -100,6 +100,7 @@ public class NewAssignmentUploadController {
 			//instructDAO.updateAssignment("A BRAND NEW UPDATE", file, date, mId, cId, "Blah", option, aId);
 			//instructDAO.deleteAssignment(aId);
 
+			sms.setClassId(cId);
 			//retrieve emails of necessary participants
 			String emailee = emailDAO.getEmailNewAssignment(cId);
 
