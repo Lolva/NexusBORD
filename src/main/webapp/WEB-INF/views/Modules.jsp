@@ -11,7 +11,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	
+
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -46,65 +46,93 @@
 		<div class="tabbable boxed parentTabs p-4">
 			<ul class="nav nav-tabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
-				<c:set var="count" value="0" scope="page" />
 				<c:forEach items="${classes}" var="cl">
 					<li class="active"><a href="#d${cl.CLASS_ID}"
 						id="${cl.role_id}" class="nav-link">${cl.stream_name}</a></li>
 					<!--  change href to #classID, inject className. update classID in JS  -->
-					<c:set var="count" value="${count + 1}" scope="page" />
+
 				</c:forEach>
+
 			</ul>
 			<div class="tab-content">
-				<c:set var="county" value="0" scope="page" />
-				<c:forEach items="${modules}" var="md">
-					<div class="tab-pane fade" id="d${md.key}">
-						<c:forEach items="${md.value}" var="poo">
-							<c:forEach items="${poo.value}" var="pee">
-								<c:forEach items="${pee}" var="done">
-								<c:if test="${not empty done.module_name}">
-								<button value="button" class="accordion">${done.module_name }</button>
-           							</c:if>
-           							
-           							   
-           							
-           							
-           							 <c:choose>
-           							 <c:when test="${empty done.module_name}">
-           								<div class="panel"><table>
-           							 <c:choose>
-           							<c:when test="${empty done.assignment_id && not empty done.module_file_id}">
-           								
-           								<tr>
-           								<td>Module file:</td>
-           								
-           								<td style="color:black;">${done.file_name }</td>
-           								</tr>
-           							</c:when>
-           								<c:when test="${empty done.module_file_id && not empty done.assignment_id}">
-           								
+				<c:forEach items="${classes}" var="c">
+					<div id="d${c.class_id}" class="tab-pane fade in active">
+
+						<c:forEach items="${modules}" var="o">
+							<c:choose>
+								<c:when test="${o.class_id==c.class_id}">
+									<button value="button" class="accordion">${o.module_name}</button>
+								</c:when>
+							</c:choose>
+
+							<div class="panel">
+								<c:choose>
+									<c:when test="${c.role_id == 1}">
+										<button class="btn-primary"
+											style="margin: 10px; float: right;">Edit</button>
+
+									</c:when>
+								</c:choose>
+								<table>
 									<tr>
-										<td>Assignment file:</td>
-		                                <td style="color:black;">${done.assignment_name}</td>
-		                                <td style="color:black;">${done.due_date}</td>
-		                                <td style="color:black;">${done.submission_date}</td>
-		                                <td style="color:black;">${done.file_name }</td>
-                            		</tr>
-                            		
-                            		</c:when>
-                            		
-                            		</c:choose>
-                            		
-           								</table></div>
-                            		</c:when>
-                            		 </c:choose>
-                            
-							
-							</c:forEach>
+										<th>Module Files:</th>
+										<td></td>
+										
+									</tr>
+									<c:forEach items="${modulefiles}" var="j">
+										<c:choose>
+											<c:when test="${o.module_id==j.module_id}">
+												<tr>
+													
+													<td style="color: black;">${j.file_name}</td>
+													<c:choose>
+														<c:when test="${c.role_id == 1}">
+															<td><button style="color: red;">x</button>
+														</c:when>
+													</c:choose>
+												</tr>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+								</table>
+								<table>
+									<tr>
+										<th>Assignment Files:</th>
+										<td></td>
+									</tr>
+									<c:forEach items="${moduleassigns}" var="k">
+										<c:choose>
+											<c:when test="${o.module_id==k.module_id}">
+												<tr>
+													
+													<td style="color: black;">${k.assignment_name}</td>
+													<c:choose>
+														<c:when test="${c.role_id == 1}">
+															<td><button style="color: red;">x</button>
+														</c:when>
+													</c:choose>
+												</tr>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+								</table>
+
+							</div>
 						</c:forEach>
-						</c:forEach>
+						<div>
+							<c:choose>
+								<c:when test="${c.role_id == 1}">
+									<button class="btn btn-primary btn-sm"
+										style="margin: 10px; float: right;">Add new</button>
+
+								</c:when>
+							</c:choose>
+						</div>
 					</div>
+
+
+
 				</c:forEach>
-				<c:set var="county" value="${county + 1}" scope="page" />
 			</div>
 		</div>
 	</fieldset>
@@ -114,15 +142,12 @@
 		for (i = 0; i < acc.length; i++) {
 			acc[i].addEventListener("click", function() {
 				this.classList.toggle("active");
-				
-				var x = document.getElementsByClassName("panel");
-				var i;
-				for (i = 0; i < x.length; i++) {
-				if (x[i].style.maxHeight) {
-					x[i].style.maxHeight = null;
+				var panel = this.nextElementSibling;
+				if (panel.style.maxHeight) {
+					panel.style.maxHeight = null;
 				} else {
-					x[i].style.maxHeight = x[i].scrollHeight + "px";
-				}}
+					panel.style.maxHeight = panel.scrollHeight + "px";
+				}
 			});
 		}
 	</script>

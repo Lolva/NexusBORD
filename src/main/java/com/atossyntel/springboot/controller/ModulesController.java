@@ -26,6 +26,10 @@ public class ModulesController {
 		List<Map<String, Object>> classes = moduledao.getClasses(session.getAttribute("username").toString());
 
 		model.addAttribute("classes", classes);
+		model.addAttribute("modules", moduledao.getModuleList(session.getAttribute("username").toString()));
+		model.addAttribute("modulefiles", moduledao.getModuleFiles(session.getAttribute("username").toString()));
+		model.addAttribute("moduleassigns", moduledao.getAssignments(session.getAttribute("username").toString()));
+		/*
 		Map<String, Object> mom = new HashMap<String, Object>();
 		for (Map<String, Object> m : classes) {
 			String classid =m.get("class_id").toString();
@@ -54,6 +58,7 @@ public class ModulesController {
 		System.out.println(mom.toString());
 		
 		model.addAttribute("modules", mom);
+		*/
 		return "Modules";
 	}
 }
