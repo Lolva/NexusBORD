@@ -3,6 +3,8 @@ package com.atossyntel.springboot.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -12,10 +14,10 @@ public interface ClassesDAO {
 	public List<Map<String, Object>> getClasses();
 	public List<Map<String,Object>> getStudents(String classId);
 	public List<Map<String,Object>> getAllStudents();
-	public void changeClassId(String employee_id, String class_id);
+	public void changeClassId(String employee_id, String class_id) throws MessagingException;
 	public void addClasses(String class_Id,String stream_Id, Date start_date, Date end_date);
 	public void deleteEmployee(String class_Id, String employee_id);
 	public void deleteClass(String class_Id);
-	void addEmployees(MultipartFile file, String fileName, String class_id) throws IOException;
+	void addEmployees(MultipartFile file, String fileName, String class_id) throws IOException, MessagingException;
 	
 }

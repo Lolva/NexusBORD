@@ -35,6 +35,13 @@ public class SmtpMailSender {
 		private String bodyStudentGrade2 = " has been graded.";
 		
 		
+		
+		//Enrollments
+		private final String subjectEnrollment = " NexusBord - New Class Enrollment ";
+		private String bodyClassEnrollment = "Your Instructor has enrolled you in class ";
+				
+		
+		
 		@Autowired
 		private JavaMailSender javaMailSender;
 
@@ -74,6 +81,10 @@ public class SmtpMailSender {
 				case 2:
 					helper.setSubject(subjectStudentGrade);
 					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2, true);
+					break;
+				case 3:
+					helper.setSubject(subjectEnrollment);
+					helper.setText(bodyClassEnrollment);
 					break;
 				default:
 					System.out.println("Oh no my email broke");

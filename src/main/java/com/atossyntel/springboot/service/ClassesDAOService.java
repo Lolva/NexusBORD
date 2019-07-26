@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,11 +23,23 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.atossyntel.springboot.controller.SmtpMailSender;
+import com.atossyntel.springboot.model.EnrollmentBean;
+
 @Repository
 @Transactional
 public class ClassesDAOService implements ClassesDAO {
 	@Autowired
     private JdbcTemplate jTemplate;
+	
+	@Autowired
+    private SmtpMailSender sms;
+    @Autowired
+    private EmailDAOService emailDAO;
+    ///////////////////////////////////////////////
+    
+    private EnrollmentBean enroll;
+    
 	
 	
 	@Override
@@ -66,19 +80,28 @@ public class ClassesDAOService implements ClassesDAO {
 
 
 	@Override
-	public void changeClassId(String EmpId, String classId) {
+	public void changeClassId(String EmpId, String classId) throws MessagingException {
 		String checkquery = "SELECT Count(*) FROM Enrollments WHERE employee_id=?";
 		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=?";
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
 		Object results = this.jTemplate.queryForObject(checkquery, new Object[]{EmpId}, Integer.class);
 		if ( ((Number) results).intValue() == 1) {
 			this.jTemplate.update(sqlUpdateQuery, classId, EmpId);
+			String emailee = emailDAO.getEmailEnrollments(EmpId, classId);
+				
+				sms.setEmpId(EmpId);
+				sms.setClassId(classId);
+				sms.send(emailee, 3);
 		} else if ( ((Number) results).intValue() > 1) {
 			
 		} else {
 			this.jTemplate.update(sqlInsertQuery, EmpId, classId, 2);
+			String emailee = emailDAO.getEmailEnrollments(EmpId, classId);
+			
+			sms.setEmpId(EmpId);
+			sms.setClassId(classId);
+			sms.send(emailee, 3);
 		}
-		
 		
 	}
 	@Override
@@ -105,7 +128,7 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	
 	@Override
-	public void addEmployees(MultipartFile multipart, String fileName, String class_id) throws IOException {
+	public void addEmployees(MultipartFile multipart, String fileName, String class_id) throws IOException, MessagingException {
 		File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
 	    multipart.transferTo(convFile);
         FileInputStream fis = new FileInputStream(convFile);
@@ -123,6 +146,7 @@ public class ClassesDAOService implements ClassesDAO {
         String checkquery = "SELECT Count(*) FROM Enrollments WHERE employee_id=?";
 		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=?";
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
+		String emailQuery= "SELECT email FROM employees WHERE employee_id=?";
         
         // Traversing over each row of XLSX file
         while (rowIterator.hasNext()) {
@@ -141,8 +165,21 @@ public class ClassesDAOService implements ClassesDAO {
             		if ( ((Number) results).intValue() == 1) {
             			System.out.println(((Number) results).intValue());
             			this.jTemplate.update(sqlUpdateQuery, class_id, employee_id);
+            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+        				
+        				sms.setEmpId(employee_id);
+        				sms.setClassId(class_id);
+        				sms.send(emailee, 3);
+            			
             		} else {
             			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);
+            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+        				
+        				sms.setEmpId(employee_id);
+        				sms.setClassId(class_id);
+        				sms.send(emailee, 3);
+            			
+
             		}
                     break;
                 default :

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +18,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.atossyntel.springboot.model.ClassBean;
 import com.atossyntel.springboot.model.EmployeeBean;
 import com.atossyntel.springboot.model.EnrollmentBean;
+import com.atossyntel.springboot.model.GradeBean;
+import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.ClassesDAO;
+import com.atossyntel.springboot.service.EmailDAOService;
 
 @Controller
 public class ClassesController {
+	
 	@Autowired
 	ClassesDAO classdao;
-	
+
+   
 	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
@@ -34,9 +41,10 @@ public class ClassesController {
 	    return "Classes";
 	  }
 	
+	
 
 	 @RequestMapping(value = "/changeClass", method = RequestMethod.POST)
-	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) {
+	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) throws MessagingException {
 	        if (EnrollmentBean != null) {
 	        	System.out.println("Change Class");
 	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
@@ -47,7 +55,6 @@ public class ClassesController {
 	        } else {
 	        	return "redirect:Classes";
 	        }
-	       
 	        	
 	   }
 	 
@@ -83,10 +90,12 @@ public class ClassesController {
 	   }
 
 	}
+	 
 	 @RequestMapping(value="/upload", method = RequestMethod.POST)
-	   public String submit(@RequestParam("file") MultipartFile file, Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) throws IOException {
+	   public String submit(@RequestParam("file") MultipartFile file, Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) throws IOException, MessagingException {
 		   if(EmployeeBean != null) {
-			  classdao.addEmployees(file, file.getName(), EmployeeBean.getClass_id());
+			  classdao.addEmployees(file, file.getName(), EmployeeBean.getClass_id());	
+				
 			  return "redirect:Classes";
 		   } else {
 			   return "redirect:Classes";
