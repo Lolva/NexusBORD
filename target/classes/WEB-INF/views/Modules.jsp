@@ -70,8 +70,31 @@
 							<div class="panel">
 								<c:choose>
 									<c:when test="${c.role_id == 1}">
-										<button class="btn-primary"
-											style="margin: 10px; float: right;">Edit</button>
+										<button type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#m${o.module_id }">Edit
+									</button>
+									<div class="modal" id="m${o.module_id }">
+										<div class="modal-dialog">
+											<div class="modal-content">
+
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h4 class="modal-title">Edit this module: ${o.module_name}</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body">Modal body..</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Close</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
 
 									</c:when>
 								</c:choose>
