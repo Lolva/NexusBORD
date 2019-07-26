@@ -58,6 +58,11 @@ public class ModuleServiceDAO implements ModuleDAO {
 		return results;
 	}
 	
-	
+	@Override
+	public int insertModule(String modulename) {
+		String sql = "INSERT INTO modules (module_name) VALUES (?)";
+		
+		return jTemplate.update(sql, modulename);
+	}
 
 }

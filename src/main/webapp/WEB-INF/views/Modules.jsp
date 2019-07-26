@@ -71,30 +71,35 @@
 								<c:choose>
 									<c:when test="${c.role_id == 1}">
 										<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#m${o.module_id }">Edit
-									</button>
-									<div class="modal" id="m${o.module_id }">
-										<div class="modal-dialog">
-											<div class="modal-content">
+											data-toggle="modal" data-target="#m${o.module_id }">Edit
+										</button>
+										<div class="modal" id="m${o.module_id }">
+											<div class="modal-dialog">
+												<div class="modal-content">
 
-												<!-- Modal Header -->
-												<div class="modal-header">
-													<h4 class="modal-title">Edit this module: ${o.module_name}</h4>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<!-- Modal Header -->
+													<div class="modal-header">
+														<h4 class="modal-title">Edit this module:
+															${o.module_name}</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+
+													<!-- Modal body -->
+													<div class="modal-body"><form>
+														<input type="text" placeholder="${o.module_name}" />
+														<input type="file" name="File Select"/>
+														<input type="submit" value="Edit"/>
+													</form></div>
+
+													<!-- Modal footer -->
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger"
+															data-dismiss="modal">Close</button>
+													</div>
+
 												</div>
-
-												<!-- Modal body -->
-												<div class="modal-body">Modal body..</div>
-
-												<!-- Modal footer -->
-												<div class="modal-footer">
-													<button type="button" class="btn btn-danger"
-														data-dismiss="modal">Close</button>
-												</div>
-
 											</div>
 										</div>
-									</div>
 
 									</c:when>
 								</c:choose>
@@ -153,8 +158,7 @@
 							<c:choose>
 								<c:when test="${c.role_id == 1}">
 									<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#myModal">Add new
-									</button>
+										data-toggle="modal" data-target="#myModal">Add new</button>
 									<div class="modal" id="myModal">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -166,7 +170,13 @@
 												</div>
 
 												<!-- Modal body -->
-												<div class="modal-body">Modal body..</div>
+												<div class="modal-body">
+													<form>
+														<input type="text" placeholder="Enter name here" />
+														<input type="file" name="File Select"/>
+														<input type="submit" value="Add"/>
+													</form>
+												</div>
 
 												<!-- Modal footer -->
 												<div class="modal-footer">
