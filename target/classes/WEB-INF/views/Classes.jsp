@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +37,7 @@
     </header>
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">
   	<fieldset style="background:white;height:100%;margin-top:40px; padding-bottom:30%;">
+
  <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#viewclass">Home</a></li>
     <li><a data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
@@ -46,8 +48,15 @@
 
   <div class="tab-content">
     <div id="viewclass" class="tab-pane fade in active">
-    <h4> Active Classes</h4>
-    <!-- ${activeClassIds} -->
+
+    
+    <ul class="nav nav-tabs">
+    <li class ="active"><a data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeClassIds)}</span></a></li>
+    <li><a data-toggle="tab" href="#inactiveClass">Inactive Classes <span class="badge badge-info">${fn:length(inactiveClassIds)}</span></a></li> 
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane fade in active" id="activeClass">
+      <!-- ${activeClassIds} -->
      <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
@@ -82,6 +91,8 @@
 			</table>
 			</div>
 		</c:forEach>
+		</div>
+		<div class="tab-pane fade" id="inactiveClass">
 		<h4> Inactive Classes</h4>
 		<!-- ${inactiveClassIds} -->
 		<c:forEach items="${inactiveInstructorClasses}" var="o">
@@ -118,6 +129,8 @@
 			</table>
 			</div>
 		</c:forEach>
+    </div>
+    </div>
     </div>
     <div id="AddEmployee" class="tab-pane fade"class="row">
 	<form action="/changeClass" style="color: black;" method=POST>
@@ -170,7 +183,7 @@
    		<input type="file" name="file" class="btn btn-default btn-md">
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-  
+  <a href="NexusBORD/src/main/resources/AddEmployeeFile.xlsx" download >Download</a>
    	</form>
    	</div>
    	
@@ -264,6 +277,7 @@
   </div>
   </fieldset>
 </div>
+
 <script>
 	$(document).ready(function(){
 		  $(".nav-tabs a").click(function(){
