@@ -11,5 +11,10 @@ public interface ModuleDAO {
 	public List<Map<String, Object>> getAssignments(String employee_id);
 	public List<Map<String, Object>> getModuleFiles(String employee_id);
 	public List<Map<String, Object>> getModuleName(String employee_id);
-	public int insertModule(String modulename); 
+	public int insertModule(String modulename);
+	public int insertStream(int streamid);
+	public int deleteModule(int module_id);
+	public int deleteAssignment(int assignment_id);
+	public int deleteModuleFile(int module_file_id);
+	public int updateModule(String module_name, int module_id); 
 }

@@ -64,5 +64,35 @@ public class ModuleServiceDAO implements ModuleDAO {
 		
 		return jTemplate.update(sql, modulename);
 	}
-
+	@Override
+	public int insertStream(int streamid) {
+		String sql = "INSERT INTO lessons (stream_id, module_id) VALUES (?, auto_ids)";
+		
+		return jTemplate.update(sql, streamid);
+	}
+	@Override
+	public int deleteModule(int module_id) {
+		String sql = "DELETE FROM modules (module_id) where module_id = ?";
+		
+		return jTemplate.update(sql, module_id);
+	}
+	
+	@Override
+	public int deleteAssignment(int assignment_id) {
+		String sql = "DELETE FROM assignments where assignment_id = ?";
+		
+		return jTemplate.update(sql, assignment_id);
+	}
+	@Override
+	public int deleteModuleFile(int module_file_id) {
+		String sql = "DELETE FROM module_files where module_file_id = ?";
+		
+		return jTemplate.update(sql, module_file_id);
+	}
+	@Override
+	public int updateModule(String module_name, int module_id) {
+		String sql = "UPDATE modules SET module_name = ? WHERE module_id = ?";
+		
+		return jTemplate.update(sql, module_name, module_id);
+	}
 }

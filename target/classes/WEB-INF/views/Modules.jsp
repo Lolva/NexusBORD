@@ -85,12 +85,22 @@
 													</div>
 
 													<!-- Modal body -->
-													<div class="modal-body"><form>
-														<input type="text" placeholder="${o.module_name}" />
-														<input type="file" name="File Select"/>
-														<input type="submit" value="Edit"/>
-														<input type="button" value="Delete this module"/>
-													</form></div>
+													<div class="modal-body">
+														<form action="/updateModule" method="POST"
+															class="form-group">
+															<input type="text" required
+																placeholder="${o.module_name}" name="module_name"/> <input type="file"
+																name="File Select" /> <input type="hidden"
+																value="${o.module_id }" name="module_id" /> <input
+																type="submit" value="Edit" />
+														</form>
+														<form action="/deleteModule" method="POST"
+															class="form-group">
+															<input type="hidden" name="module_file_id"
+																value="${o.module_id }" /> <span><input
+																style="color: red;" type="submit" value="Delete module" /></span>
+														</form>
+													</div>
 
 													<!-- Modal footer -->
 													<div class="modal-footer">
@@ -118,10 +128,12 @@
 													<td style="color: black;">${j.file_name}</td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><div style="color: red; margin: 5px;"
-																	onClick="alert('click')">
-																	<i class="fas fa-times"></i>
-																</div>
+															<td><form action="/deleteModuleFile" method="POST"
+																	class="form-group">
+																	<input type="hidden" name="module_file_id"
+																		value="${j.module_file_id }" /> <span><input
+																		style="color: red;" type="submit" value="x" /></span>
+																</form></td>
 														</c:when>
 													</c:choose>
 												</tr>
@@ -142,9 +154,13 @@
 													<td id="${k.assignment_id}" style="color: black;">${k.assignment_name}</td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><span id="${k.assignment_id}c" class="btn"
-																style="color: red; margin: 5px;"
-																onClick="alert('click')"><i class="fas fa-times"></i></span>
+															<td><form action="/deleteAssignment" method="POST"
+																	class="form-group">
+																	<input type="hidden" name="assignment_id"
+																		value="${k.assignment_id }" /> <span><input
+																		style="color: red;" type="submit" value="x" /></span>
+																</form></td>
+
 														</c:when>
 													</c:choose>
 												</tr>
@@ -172,10 +188,13 @@
 
 												<!-- Modal body -->
 												<div class="modal-body">
-													<form>
-														<input type="text" placeholder="Enter name here" />
-														<input type="file" name="File Select"/>
-														<input type="submit" value="Add"/>
+													<form action="/addModule" method="POST" class="form-group">
+														<label for="module_name">Enter Module Name</label> <input
+															type="text" name="module_name" placeholder="Module Name"
+															class="form-control" /> <input type="hidden"
+															name="stream_id" value="${c.stream_id }" /> <input
+															class="btn btn-primary btn-md" id="addmodulebtn"
+															type="submit" />
 													</form>
 												</div>
 
