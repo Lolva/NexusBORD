@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +26,16 @@ public class ClassesController {
 	@Autowired
 	ClassesDAO classdao;
 	
-	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
-	public String init(Model model) {
+	@RequestMapping(value = "/Classes", method = {RequestMethod.GET, RequestMethod.POST})
+	public String init(Model model,  HttpSession session) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
+		//In progress
+		List<Map<String,Object>> activeInstructorClasses = classdao.getActiveInstructorClasses((String) session.getAttribute("username"));	
+		model.addAttribute("activeInstructorClasses", activeInstructorClasses);
+		
+		List<Map<String,Object>> inactiveInstructorClasses = classdao.getInactiveInstructorClasses((String) session.getAttribute("username"));
+		model.addAttribute("inactiveInstructorClasses", inactiveInstructorClasses);
 		
 		List<Map<String, Object>> activeStudents = classdao.getActiveStudents();
 		model.addAttribute("activeStudents", activeStudents);
@@ -53,10 +62,10 @@ public class ClassesController {
 //	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
 	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID(), EnrollmentBean.getOld_Class_ID()); 
 
-	                return "redirect:Classes.htm";
+	                return "redirect:Classes.html";
 	        
 	        } else {
-	        	return "redirect:Classes";
+	        	return "Classes";
 	        }
 	       
 	        	
@@ -65,10 +74,10 @@ public class ClassesController {
 	 @RequestMapping(value = "/deleteClass", method = RequestMethod.POST)
 	 public String submit1(Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) {
 	     if (EmployeeBean != null) {
-	        classdao.deleteClass(EmployeeBean.getClass_id()); 
-	           return "redirect:Classes.htm";	
+	        classdao.deleteClass(EmployeeBean.getClass_id());
+	           return "redirect:Classes.html";	
 	        } else {
-	        	return "Classes";
+	        	return "/Classes";
 	        }
 	       
 	        	
@@ -85,9 +94,9 @@ public class ClassesController {
 	        	
 	   }
 	 @RequestMapping(value = "/addClass", method = RequestMethod.POST)
-	   public String submit(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
+	   public String submit(Model model, @ModelAttribute("classBean") ClassBean ClassBean,  HttpSession session) {
 		   if (ClassBean != null) {
-			   classdao.addClasses(ClassBean.getStream_Id(),ClassBean.getStart_date(),ClassBean.getEnd_date());
+			   classdao.addClasses((String) session.getAttribute("username"), ClassBean.getStream_Id(),ClassBean.getStart_date(),ClassBean.getEnd_date());
 		   return "redirect:Classes.html";
 	   } else {
 	   	return "Classes";

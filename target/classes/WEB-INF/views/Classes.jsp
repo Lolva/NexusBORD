@@ -22,6 +22,7 @@
 	<%
 	//User is not logged in
 	//	if (session.getAttribute("username") == null) {
+		//in progress
 	%>
 	<script>
 		//window.location.href = "/login";
@@ -33,7 +34,6 @@
         <!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>
     </header>
-    
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">
   	<fieldset style="background:white;height:100%;margin-top:40px; padding-bottom:30%;">
  <ul class="nav nav-tabs">
@@ -47,7 +47,8 @@
   <div class="tab-content">
     <div id="viewclass" class="tab-pane fade in active">
     <h4> Active Classes</h4>
-     <c:forEach items="${activeClassIds}" var="o">
+    <!-- ${activeClassIds} -->
+     <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -82,7 +83,8 @@
 			</div>
 		</c:forEach>
 		<h4> Inactive Classes</h4>
-		<c:forEach items="${inactiveClassIds}" var="o">
+		<!-- ${inactiveClassIds} -->
+		<c:forEach items="${inactiveInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -233,7 +235,6 @@
 		   	
 		   	<label for="end_date">Enter End Date</label>
 		   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
-		   	
 	   		<br>
 	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
 	   		<input class="btn btn-primary btn-md" type="reset">

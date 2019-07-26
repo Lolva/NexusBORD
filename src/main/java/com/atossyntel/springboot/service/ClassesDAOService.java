@@ -3,16 +3,20 @@ package com.atossyntel.springboot.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.temporal.TemporalAccessor;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,29 +45,21 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getAllClasses() {
-		String sqlQuery = "SELECT class_id FROM Classes";
-		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sqlQuery);
-		return results;
-	}
-	public void addClasses(String stream_Id, Date start_date, Date end_date) {
-		String sql= "INSERT INTO CLASSES(STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?)";
-		Object[] params = new Object[] {stream_Id, start_date, end_date};
-		int[] types = new int[] {Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
-		this.jTemplate.update(sql, params, types);
-	
-	}
-	
-	@Override
-	public List<Map<String, Object>> getStream(){
-		String sql = "Select Stream_id From Streams";
+	public List<Map<String,Object>> getActiveInstructorClasses(String username) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime begin = now.plusDays(7);
+		String date = dtf.format(now);
+		String start = dtf.format(begin);
+		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
+				+ "FROM enrollments s, Classes c "
+				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql);
-//		System.out.println(results);
+//		results = jTemplate.queryForList(sql, "II9999999", start, date);
+		results = jTemplate.queryForList(sql, username, start, date);
 		return results;
-		
 	}
+	
 
 	@Override
 	public List<Map<String, Object>> getActiveClasses() {
@@ -78,7 +74,6 @@ public class ClassesDAOService implements ClassesDAO {
 		return results;
 		
 	}
-	
 	@Override
 	public List<Map<String, Object>> getInactiveClasses() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
@@ -89,6 +84,58 @@ public class ClassesDAOService implements ClassesDAO {
 		String sql = "Select class_id, to_char(start_date, 'Month dd yyyy') AS start_date, to_char(end_date, 'Month dd yyyy') AS end_date From Classes WHERE start_date>? OR end_date<?";		
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, start, date);
+		return results;
+		
+	}
+	@Override
+	public List<Map<String,Object>> getInactiveInstructorClasses(String username) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime begin = now.plusDays(7);
+		String date = dtf.format(now);
+		String start = dtf.format(begin);
+		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
+				+ "FROM enrollments s, Classes c "
+				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>? AND c.end_date<?";
+		List<Map<String, Object>> results;
+//		results = jTemplate.queryForList(sql, "II9999999", start, date);
+		results = jTemplate.queryForList(sql, username, start, date);
+		return results;
+	}
+	
+	
+	@Override
+	public List<Map<String, Object>> getAllClasses() {
+		String sqlQuery = "SELECT class_id FROM Classes";
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sqlQuery);
+		return results;
+	}
+	public void addClasses(String employee_id, String stream_Id, Date start_date, Date end_date) {
+		String sql= "INSERT INTO CLASSES(STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?)";
+		Object[] params = new Object[] {stream_Id, start_date, end_date};
+		int[] types = new int[] {Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jTemplate.update(
+	              connection -> {
+	                  PreparedStatement ps = connection.prepareStatement(sql, new String[]{"class_id"});
+	                  ps.setString(1, stream_Id);
+	                  ps.setDate(2, start_date);
+	                  ps.setDate(3, end_date);
+	                  return ps;
+	              }, keyHolder);
+		String key = (String) keyHolder.getKeys().get("class_id");
+//		System.out.println(key);
+		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
+		this.jTemplate.update(addInstructor, employee_id, key, 1);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getStream(){
+		String sql = "Select Stream_id From Streams";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql);
+//		System.out.println(results);
 		return results;
 		
 	}
