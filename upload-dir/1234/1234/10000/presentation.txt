@@ -1,0 +1,18 @@
+Testing Overview : Types of testing, 
+STLC(Software Testing life Cycle)
+
+
+
+What is Testing?
+Verification Vs Validation?
+Types of testing
+Categories of Testing
+-White Box Testing
+-Black Box Testing
+-Grey Box Testing
+Functional Tests
+Non- Functional Tests
+Test Case, Test Plan
+Writing a Test Case
+Examples
+To do Activity

@@ -33,10 +33,8 @@ public class SmtpMailSender {
 		
 		//Student email body
 		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
-		private String bodyStudentGrade1 = "Your instuructor has graded assignment ";
-		private String bodyStudentGrade2 = " for class ";
-		
-		
+		private String bodyStudentGrade1 = "Your instructor has graded assignment ";
+		private String bodyStudentGrade2 = " for class ";		
 		
 		//Enrollments
 		private final String subjectEnrollment = " NexusBord - New Class Enrollment ";

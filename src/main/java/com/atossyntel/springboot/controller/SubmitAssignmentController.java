@@ -40,19 +40,15 @@ public class SubmitAssignmentController {
     @Autowired
     private SmtpMailSender sms;
     
-    
     @Autowired
     private StudentAssignmentsDAOService studentDAO;
-    
     
     private StudentSubmissionBean studsub; 
     
 	@RequestMapping(value = "/SubmitAssignment", method = RequestMethod.GET)
 	public String init(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment) {
 		
-		
 		studsub=assignment;
-
 		System.out.println(assignment.toString());
 		System.out.println(studsub.getAssignment_id());
 		System.out.println(assignment.getAssignment_id());
@@ -66,7 +62,6 @@ public class SubmitAssignmentController {
 			@RequestParam("fileName") MultipartFile file, @ModelAttribute("assignment") StudentSubmissionBean assignment) 
 					throws MessagingException{
 		if (true) {
-			
 
 			String assignID = studsub.getAssignment_id();
 			String empID = studsub.getEmployee_id();
@@ -102,10 +97,8 @@ public class SubmitAssignmentController {
 	
 		}else {
 			System.out.println("error");
-			
 			model.addAttribute("error","Please Upload a File");
 			return "redirect:SubmitAssignment";
-			
 		}
 		//HELLO
 		

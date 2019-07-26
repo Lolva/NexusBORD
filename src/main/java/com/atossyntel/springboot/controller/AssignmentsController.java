@@ -31,7 +31,6 @@ public class AssignmentsController {
     @Autowired
     private EmailDAOService emailDAO;
 
-
 	@Autowired
 	AssignmentsDAO assigndao;
 	
@@ -92,7 +91,6 @@ public class AssignmentsController {
 		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
 		return "redirect:Assignments";
-		
 	}
 	
 	@RequestMapping(value = "/Assignments", params = "assignment")
@@ -106,9 +104,9 @@ public class AssignmentsController {
 		model.addAttribute("employee_id", assignment.getEmployee_id());
 		redirectAttributes.addFlashAttribute("assignment", assignment);
 		return "redirect:SubmitAssignment";
-		
 
 	}
+	
 	@RequestMapping(value = "/Assignments", params = "newassignment")
 	public String newAssignment(Model model, @ModelAttribute("newassignment") InstructorAssignmentsBean assignment, RedirectAttributes redirectAttributes, HttpServletRequest result) {
 		System.out.println(assignment.toString());
@@ -120,9 +118,9 @@ public class AssignmentsController {
 		
 		redirectAttributes.addFlashAttribute("newassignment", assignment);
 		return "redirect:NewAssignmentUpload";
-		
-
+	
 	}
+	
 	@ModelAttribute("modules")
 	public List<Map<String, Object>> getModules(HttpSession session){
 		
