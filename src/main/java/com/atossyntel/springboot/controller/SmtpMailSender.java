@@ -40,7 +40,7 @@ public class SmtpMailSender {
 		
 		//Enrollments
 		private final String subjectEnrollment = " NexusBord - New Class Enrollment ";
-		private String bodyClassEnrollment = "Your Instructor has enrolled you in class ";
+		private String bodyClassEnrollment = "Your Instructor has enrolled you in a class. ";
 				
 		
 		
