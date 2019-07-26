@@ -22,14 +22,13 @@
 <body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-	//	if (session.getAttribute("username") == null) {
-		//in progress
+		if (session.getAttribute("username") == null) {
 	%>
 	<script>
 		//window.location.href = "/login";
 	</script>
 	<%
-	//	}
+		}
 	%>
     <header>
         <!-- div for nav bar to be created in -->
@@ -56,7 +55,7 @@
     </ul>
     <div class="tab-content">
     <div class="tab-pane fade in active" id="activeClass">
-      <!-- ${activeClassIds} -->
+    <!-- ${activeClassIds} -->
      <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">

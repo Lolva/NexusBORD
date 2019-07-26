@@ -62,7 +62,7 @@ public class ClassesController {
 		model.addAttribute("activeClassIds", activeClassIds);
 		model.addAttribute("inactiveClassIds", inactiveClassIds);
 	    return "Classes";
-		
+	}
 		private static final String file_path =  "C:/NexusBORD-classes-view6/src/main/resources/";
 		
 		@RequestMapping("resources/{fileName:.+}")

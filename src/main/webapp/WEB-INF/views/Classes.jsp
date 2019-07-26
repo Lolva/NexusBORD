@@ -25,7 +25,7 @@
 		if (session.getAttribute("username") == null) {
 	%>
 	<script>
-		window.location.href = "/login";
+		//window.location.href = "/login";
 	</script>
 	<%
 		}
@@ -56,7 +56,7 @@
     <div class="tab-content">
     <div class="tab-pane fade in active" id="activeClass">
     <!-- ${activeClassIds} -->
-     <c:forEach items="$activeInstructorClasses}" var="o">
+     <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
