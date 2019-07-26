@@ -89,6 +89,7 @@
 														<input type="text" placeholder="${o.module_name}" />
 														<input type="file" name="File Select"/>
 														<input type="submit" value="Edit"/>
+														<input type="button" value="Delete this module"/>
 													</form></div>
 
 													<!-- Modal footer -->
