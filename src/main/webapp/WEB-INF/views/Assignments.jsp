@@ -252,6 +252,7 @@ td, th {
 																		value="${cl.stream_id}" /> <input type="hidden"
 																		name="module_id" value="${in.module_id}" /> <input
 																		type="hidden" name="class_id" value="${cl.class_id}" />
+																	<input type="file" id="uploadFile" name="fileName">
 																	<input class="btn btn-primary" type="submit"
 																		value="submit" />
 																</form>
