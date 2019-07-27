@@ -35,7 +35,7 @@ public class MailController {
 
 	@GetMapping("/download")
 	public ResponseEntity<Resource> submit(Model model) throws MessagingException {
-		System.out.println("Download is starting...");
+		System.out.println("Download is startintreg...");
 		StringBuilder folder = new StringBuilder("/stream/class/module/");
 		Resource file = storageService.loadAsResource("SQL.txt",folder.toString());
 		System.out.println("Downloading done");
