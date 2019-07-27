@@ -142,6 +142,7 @@ public class ModulesController {
 		System.out.println(request.getParameter("stream_id"));
 		System.out.println(request.getParameter("class_id"));
 		System.out.println(moduledao.insertModuleFile(request.getParameter("module_id"), file));
+		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
 		return "redirect:Modules";
 
 	}
