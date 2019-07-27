@@ -22,18 +22,19 @@
 <body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-		if (session.getAttribute("username") == null) {
+	//	if (session.getAttribute("username") == null) {
 	%>
 	<script>
 		//window.location.href = "/login";
 	</script>
 	<%
-		}
+	//	}
 	%>
     <header>
         <!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>
     </header>
+    
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">
   	<fieldset style="background:white;height:100%;margin-top:40px; padding-bottom:30%;">
 
@@ -47,7 +48,6 @@
 
   <div class="tab-content">
     <div id="viewclass" class="tab-pane fade in active">
-
     
     <ul class="nav nav-tabs">
     <li class ="active"><a data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeClassIds)}</span></a></li>
@@ -55,6 +55,7 @@
     </ul>
     <div class="tab-content">
     <div class="tab-pane fade in active" id="activeClass">
+
     <!-- ${activeClassIds} -->
      <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
@@ -93,8 +94,7 @@
 		</div>
 		<div class="tab-pane fade" id="inactiveClass">
 		<h4> Inactive Classes</h4>
-		<!-- ${inactiveClassIds} -->
-		<c:forEach items="${inactiveInstructorClasses}" var="o">
+		<c:forEach items="${inactiveClassIds}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -182,7 +182,7 @@
    		<input type="file" name="file" class="btn btn-default btn-md">
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-  <a href="NexusBORD/src/main/resources/AddEmployeeFile.xlsx" download >Download</a>
+                <a href="<c:url value='/resources/AddEmployeeFile.xlsx' />">Download</a>
    	</form>
    	</div>
    	
@@ -247,6 +247,7 @@
 		   	
 		   	<label for="end_date">Enter End Date</label>
 		   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
+		   	
 	   		<br>
 	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
 	   		<input class="btn btn-primary btn-md" type="reset">

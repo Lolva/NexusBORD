@@ -20,4 +20,8 @@ public interface StorageService {
 
     void deleteAll();
 
+	Path loadExcel(String filename, String folder);
+
+	Resource loadExcelAsResource(String filename, String folder);
+
 }

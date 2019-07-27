@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,11 +33,15 @@ import com.atossyntel.springboot.model.ClassBean;
 import com.atossyntel.springboot.model.EmployeeBean;
 import com.atossyntel.springboot.model.EnrollmentBean;
 import com.atossyntel.springboot.service.ClassesDAO;
+import com.atossyntel.springboot.storage.FileSystemStorageService;
 
 @Controller
 public class ClassesController {
 	@Autowired
 	ClassesDAO classdao;
+	
+	@Autowired
+	FileSystemStorageService storageService;
 	
 	@RequestMapping(value = "/Classes", method = {RequestMethod.GET, RequestMethod.POST})
 	public String init(Model model,  HttpSession session) {
@@ -63,25 +70,29 @@ public class ClassesController {
 		model.addAttribute("inactiveClassIds", inactiveClassIds);
 	    return "Classes";
 	}
-		private static final String file_path =  "C:/NexusBORD-classes-view6/src/main/resources/";
+	//C:\Users\syntel\Desktop\NexusBORD
+	//C:/NexusBORD-classes-view6
+		private static final String FILE_PATH =  "src/main/resources/";
 		
 		@RequestMapping("resources/{fileName:.+}")
-	public void download(HttpServletRequest request,HttpServletResponse response,@PathVariable("fileName")String filename) throws IOException {
-		File file=new File(file_path+filename);
-		if(file.exists()) {
-			String mimeType=URLConnection.guessContentTypeFromName(file.getName());
-			if(mimeType==null) {
-				mimeType = "application/octet-stream";
-			}
-			response.setContentType(mimeType);
-			response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
-			//response.setHeader("Content-Disposition",String.format("attachment; filename=\""+file.getName()+ "\""));
-			response.setContentLength((int) file.length());
-			InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
-			FileCopyUtils.copy(inputStream, response.getOutputStream());
-		}
-		
-		
+	public ResponseEntity<Resource> download(HttpServletRequest request,HttpServletResponse response,@PathVariable("fileName")String filename) throws IOException {
+//		File file=new File(file_path+filename);
+//		if(file.exists()) {
+//			String mimeType=URLConnection.guessContentTypeFromName(file.getName());
+//			if(mimeType==null) {
+//				mimeType = "application/octet-stream";
+//			}
+//			response.setContentType(mimeType);
+//			response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
+//			//response.setHeader("Content-Disposition",String.format("attachment; filename=\""+file.getName()+ "\""));
+//			response.setContentLength((int) file.length());
+//			InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
+//			FileCopyUtils.copy(inputStream, response.getOutputStream());
+//		}
+		System.out.println("Downloading excel file...");
+		Resource file = storageService.loadExcelAsResource(filename,FILE_PATH);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 		
 	  }
 	

@@ -148,4 +148,32 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Could not initialize storage", e);
         }
     }
+    
+    @Override
+    public Path loadExcel(String filename,String folder) {
+    	this.rootLocation = Paths.get(folder);
+    	System.out.println(rootLocation.resolve(filename));
+        return rootLocation.resolve(filename);
+    }
+    
+    @Override
+    public Resource loadExcelAsResource(String filename,String folder) {
+        try {
+            Path file = loadExcel(filename,folder);
+            Resource resource = new UrlResource(file.toUri());
+            System.out.println(resource.exists());
+            System.out.println(resource.isReadable());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new StorageFileNotFoundException(
+                        "Could not read file: " + filename);
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+        }
+    }
 }
