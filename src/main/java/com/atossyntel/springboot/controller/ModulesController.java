@@ -5,13 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +27,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.ModuleBean;
 import com.atossyntel.springboot.service.ModuleDAO;
+import com.atossyntel.springboot.storage.StorageService;
 
 @Controller
 public class ModulesController {
 
 	@Autowired
 	ModuleDAO moduledao;
+	@Autowired
+	 StorageService storageService;
 
 	@RequestMapping(value = "/Modules", method = RequestMethod.GET)
 	public String init(Model model, HttpSession session) {
@@ -135,5 +144,17 @@ public class ModulesController {
 		System.out.println(moduledao.insertModuleFile(request.getParameter("module_id"), file));
 		return "redirect:Modules";
 
+	}
+	@GetMapping("/download/{streamid}/{classid}/{moduleid}/{modulefile}")
+	public ResponseEntity<Resource> submit(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename) throws MessagingException {
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + classid + "/" + moduleid + "/");
+		Resource file = storageService.loadAsResource(filename,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
 	}
 }

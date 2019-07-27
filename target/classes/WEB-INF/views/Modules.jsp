@@ -165,7 +165,7 @@
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
 
-													<td style="color: black;">${j.file_name}</td>
+													<td style="color: black;"><a href="/download/${c.stream_id}/${c.class_id}/${o.module_id}/${j.file_name}"> ${j.file_name} </a></td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
 															<td><form action="/deleteModuleFile" method="POST"
