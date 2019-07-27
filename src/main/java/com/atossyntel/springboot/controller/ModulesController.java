@@ -146,11 +146,12 @@ public class ModulesController {
 		return "redirect:Modules";
 
 	}
-	@GetMapping("/download/{streamid}/{classid}/{moduleid}/{modulefile}")
-	public ResponseEntity<Resource> submit(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename) throws MessagingException {
+	@GetMapping("/download/{streamid}/{classid}/{moduleid}/{modulefile}/{filetype}")
+	public ResponseEntity<Resource> submit(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid + " " + classid + " " + moduleid + " " + filename);
 		System.out.println("Download is starting...");
 		StringBuilder folder = new StringBuilder("/" + streamid + "/" + classid + "/" + moduleid + "/");
-		Resource file = storageService.loadAsResource(filename,folder.toString());
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
 		System.out.println("Downloading done");
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
