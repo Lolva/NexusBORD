@@ -40,7 +40,7 @@ public class NexusController {
 
 			return "Nexus";
 		} else {
-			return "login";
+			return "redirect:login";
 		}
 	}
 }

@@ -94,7 +94,8 @@ public class FileSystemStorageService implements StorageService {
 	 * 1st parameter: String to specify filename
 	 ******/
     @Override
-    public Path load(String filename) {
+    public Path load(String filename,String folder) {
+    	this.rootLocation = Paths.get(props.getLocation()+folder);
         return rootLocation.resolve(filename);
     }
 
@@ -105,9 +106,9 @@ public class FileSystemStorageService implements StorageService {
 	 * 1st parameter: String for a given filename
 	 ******/
     @Override
-    public Resource loadAsResource(String filename) {
+    public Resource loadAsResource(String filename,String folder) {
         try {
-            Path file = load(filename);
+            Path file = load(filename,folder);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
