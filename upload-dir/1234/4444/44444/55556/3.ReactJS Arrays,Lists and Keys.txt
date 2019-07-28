@@ -1,0 +1,363 @@
+Working with Arrays
+
+Example 1:
+
+// The array that is storing the information we want to display:
+const Names = [
+  {first: 'Bob', last: 'Smith'},
+  {first: 'Sam', last: 'Spade'},
+  {first: 'Carol', last: 'Alexander'},
+  {first: 'Sarah', last: 'Jones'}
+]
+
+// Our child component that will display our names:
+const Child = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <p>{this.props.first} {this.props.last}</p>
+      </div>
+    );
+  }
+});
+
+
+const Parent = React.createClass({
+  getInitialState: function() {
+    return {names: Names};
+  },
+  render: function() {
+    const names = this.state.names.map((name, i) => {
+      return (
+        <Child
+          key={i}
+          first={name.first}
+          last={name.last}
+        />
+      );
+    });
+   return (
+    <div>
+       {names}
+    </div>
+   );
+  }
+});
+
+ReactDOM.render(<Parent />, document.getElementById('app'));
+====================
+
+Example 2: React To-do List
+
+CSS
+---
+html, body {
+  height: 100%;
+  color: #61DAFB;
+  background: #2D2D2D;
+}
+
+h1 {
+  margin: 20px 0 15px 0;  
+}
+
+#main {
+  width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+ul {
+  list-style: none;
+}
+
+ul>li:hover {
+  background-color: #F5F5F5;
+}
+
+.form-inline .form-control {
+  width: 50%;
+  margin-left: 80px;
+}
+
+.done {
+  color: red;
+  text-decoration: line-through;
+}
+
+.undone {
+  color: #61DAFB;
+}
+
+.icon {
+  margin: 6px 10px 6px 0;
+}
+
+
+JS
+---
+/*
+Todo app structure
+
+TodoApp
+	- TodoHeader
+	- TodoList
+    - TodoListItem #1
+		- TodoListItem #2
+		  ...
+		- TodoListItem #N
+	- TodoForm
+*/
+var todoItems = [];
+todoItems.push({index: 1, value: "learn react", done: false});
+todoItems.push({index: 2, value: "Go shopping", done: true});
+todoItems.push({index: 3, value: "buy flowers", done: true});
+
+class TodoList extends React.Component {
+  render () {
+    var items = this.props.items.map((item, index) => {
+      return (
+        <TodoListItem key={index} item={item} index={index} removeItem={this.props.removeItem} markTodoDone={this.props.markTodoDone} />
+      );
+    });
+    return (
+      <ul className="list-group"> {items} </ul>
+    );
+  }
+}
+  
+class TodoListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClickClose = this.onClickClose.bind(this);
+    this.onClickDone = this.onClickDone.bind(this);
+  }
+  onClickClose() {
+    var index = parseInt(this.props.index);
+    this.props.removeItem(index);
+  }
+  onClickDone() {
+    var index = parseInt(this.props.index);
+    this.props.markTodoDone(index);
+  }
+  render () {
+    var todoClass = this.props.item.done ? 
+        "done" : "undone";
+    return(
+      <li className="list-group-item ">
+        <div className={todoClass}>
+          <span className="glyphicon glyphicon-ok icon" aria-hidden="true" onClick={this.onClickDone}></span>
+          {this.props.item.value}
+          <button type="button" className="close" onClick={this.onClickClose}>&times;</button>
+        </div>
+      </li>     
+    );
+  }
+}
+
+class TodoForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  componentDidMount() {
+    this.refs.itemName.focus();
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    var newItemValue = this.refs.itemName.value;
+    
+    if(newItemValue) {
+      this.props.addItem({newItemValue});
+      this.refs.form.reset();
+    }
+  }
+  render () {
+    return (
+      <form ref="form" onSubmit={this.onSubmit} className="form-inline">
+        <input type="text" ref="itemName" className="form-control" placeholder="add a new todo..."/>
+        <button type="submit" className="btn btn-default">Add</button> 
+      </form>
+    );   
+  }
+}
+  
+class TodoHeader extends React.Component {
+  render () {
+    return <h1>Todo list</h1>;
+  }
+}
+  
+class TodoApp extends React.Component {
+  constructor (props) {
+    super(props);
+    this.addItem = this.addItem.bind(this);
+    this.removeItem = this.removeItem.bind(this);
+    this.markTodoDone = this.markTodoDone.bind(this);
+    this.state = {todoItems: todoItems};
+  }
+  addItem(todoItem) {
+    todoItems.unshift({
+      index: todoItems.length+1, 
+      value: todoItem.newItemValue, 
+      done: false
+    });
+    this.setState({todoItems: todoItems});
+  }
+  removeItem (itemIndex) {
+    todoItems.splice(itemIndex, 1);
+    this.setState({todoItems: todoItems});
+  }
+  markTodoDone(itemIndex) {
+    var todo = todoItems[itemIndex];
+    todoItems.splice(itemIndex, 1);
+    todo.done = !todo.done;
+    todo.done ? todoItems.push(todo) : todoItems.unshift(todo);
+    this.setState({todoItems: todoItems});  
+  }
+  render() {
+    return (
+      <div id="main">
+        <TodoHeader />
+        <TodoList items={this.props.initItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone}/>
+        <TodoForm addItem={this.addItem} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<TodoApp initItems={todoItems}/>, document.getElementById('root'));
+
+
+====================
+
+Example 3: Filterable React List
+
+CSS
+---
+body {
+  padding: 40px 10% 20px 10%;
+}
+h1 {
+  padding: 20px 0;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+JS
+---
+
+class ContactRow extends React.Component {
+  render() {
+    return (
+      <tr>
+        <td>{this.props.contact.name}</td>
+        <td>{this.props.contact.phone}</td>
+        <td>{this.props.contact.email}</td>
+      </tr>
+    );
+  }
+}
+
+class ContactTable extends React.Component {
+  render() {
+    var rows = [];
+    this.props.contacts.forEach((contact) => {
+      if (contact.name.indexOf(this.props.filterText) === -1) {
+        return;
+      }
+      rows.push(<ContactRow contact={contact} />);
+    });
+    return (
+      <table className='table'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    );
+  }
+}
+
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
+  }
+  
+  handleFilterTextInputChange(e) {
+    this.props.onFilterTextInput(e.target.value);
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          className="form-control"
+          type="text"
+          placeholder="Search..."
+          value={this.props.filterText}
+          onChange={this.handleFilterTextInputChange}
+        />
+      </form>
+    );
+  }
+}
+
+class FilterableContactTable extends React.Component {
+  constructor(props) {
+    super(props);
+    // FilterableContactTable is the owner of the state as the filterText is needed in both nodes (searchbar and table) that are below in the hierarchy tree.
+    this.state = {
+      filterText: ''
+    };
+    
+    this.handleFilterTextInput = this.handleFilterTextInput.bind(this);
+    
+  }
+
+  handleFilterTextInput(filterText) {
+    //Call to setState to update the UI
+    this.setState({
+      filterText: filterText
+    });
+    //React knows the state has changed, and calls render() method again to learn what should be on the screen
+  }
+  
+  render() {
+    return (
+      <div>
+        <h1>Filterable React List</h1>
+        <SearchBar
+          filterText={this.state.filterText}
+          onFilterTextInput={this.handleFilterTextInput}
+        />
+        <ContactTable
+          contacts={this.props.contacts}
+          filterText={this.state.filterText}
+        />
+      </div>
+    );
+  }
+}
+
+
+var CONTACTS = [
+  {name: 'Tom Jackson', phone: '555-444-333', email: 'tom@gmail.com'},
+  {name: 'Mike James', phone: '555-777-888', email: 'mikejames@gmail.com'},
+  {name: 'Janet Larson', phone: '555-222-111', email: 'janetlarson@gmail.com'},
+  {name: 'Clark Thompson', phone: '555-444-333', email: 'clark123@gmail.com'},
+  {name: 'Emma Page', phone: '555-444-333', email: 'emma1page@gmail.com'},
+  
+];
+
+ReactDOM.render(
+  <FilterableContactTable contacts={CONTACTS} />,
+  document.getElementById('root')
+);
+
+

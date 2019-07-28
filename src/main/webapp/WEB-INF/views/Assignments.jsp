@@ -244,7 +244,7 @@ td, th {
 															<!--  assignment_id, stream_id, module_id, and class_id -->
 															<td>
 																<form name="assignment" action="?assignment"
-																	method="POST">
+																	method="POST" enctype="multipart/form-data">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
