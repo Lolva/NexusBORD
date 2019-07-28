@@ -8,10 +8,25 @@
     <title>Classes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+	
+<link rel="stylesheet" href="/resources/css/nexusbord.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>	
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  
     <link rel="stylesheet" href="/resources/css/nexusbord.css">
     <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
     
@@ -22,41 +37,44 @@
 <body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-		if (session.getAttribute("username") == null) {
+	//	if (session.getAttribute("username") == null) {
 	%>
 	<script>
 		//window.location.href = "/login";
 	</script>
 	<%
-		}
+	//	}
 	%>
     <header>
         <!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>
     </header>
+    
      <div class="container" style = "color:black;background:white;margin-top:40px;'width:100%;padding-bottom:20px;height:100% ">
   	<fieldset style="background:white;height:100%;margin-top:40px; padding-bottom:30%;">
-
+  	<br>
+<div class="tabbable boxed parentTabs ">
  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#viewclass">Home</a></li>
-    <li><a data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
-    <li><a data-toggle="tab" href="#Delete">Delete Class</a></li>
-    <li><a data-toggle="tab" href="#createclass">Create A Class</a></li>
-    <li><a data-toggle="tab" href="#editclass">Edit Class</a></li>
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#viewclass">Home</a></li>
+    <li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Delete">Delete Class</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#createclass">Create A Class</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#editclass">Edit Class</a></li>
   </ul>
 
   <div class="tab-content">
-    <div id="viewclass" class="tab-pane fade in active">
-
-    
+    <div id="viewclass" class="tab-pane fade show active">
+    <br>
     <ul class="nav nav-tabs">
-    <li class ="active"><a data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeClassIds)}</span></a></li>
-    <li><a data-toggle="tab" href="#inactiveClass">Inactive Classes <span class="badge badge-info">${fn:length(inactiveClassIds)}</span></a></li> 
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeClassIds)}</span></a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#inactiveClass">Inactive Classes <span class="badge badge-info">${fn:length(inactiveClassIds)}</span></a></li> 
     </ul>
     <div class="tab-content">
-    <div class="tab-pane fade in active" id="activeClass">
+    <div class="tab-pane fade show active" id="activeClass">
+    <br>
+
     <!-- ${activeClassIds} -->
-     <c:forEach items="${activeInstructorClasses}" var="o">
+     <c:forEach items="${getActiveInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -79,7 +97,7 @@
 								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
-								<Button type = "submit" class= "btn btn-basic btn-xs"><span class="glyphicon glyphicon-trash"></span></Button>
+								<Button type = "submit" class= "btn btn-basic btn-xs"><ion-icon name="trash"></ion-icon></Button>
 								${error}
 								</form>
 								</td>
@@ -92,9 +110,8 @@
 		</c:forEach>
 		</div>
 		<div class="tab-pane fade" id="inactiveClass">
-		<h4> Inactive Classes</h4>
-		<!-- ${inactiveClassIds} -->
-		<c:forEach items="${inactiveInstructorClasses}" var="o">
+		<br>
+		<c:forEach items="${inactiveClassIds}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -117,7 +134,7 @@
 								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
-								<Button type = "submit" class= "btn btn-basic btn-xs"><span class="glyphicon glyphicon-trash"></span></Button>
+								<Button type = "submit" class= "btn btn-basic btn-xs"><ion-icon name="trash"></ion-icon></Button>
 								${error}
 								</form>
 								</td>
@@ -131,6 +148,7 @@
     </div>
     </div>
     </div>
+    
     <div id="AddEmployee" class="tab-pane fade"class="row">
 	<form action="/changeClass" style="color: black;" method=POST>
 		<h4>Add Employee to Class:</h4>
@@ -182,7 +200,7 @@
    		<input type="file" name="file" class="btn btn-default btn-md">
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-  <a href="NexusBORD/src/main/resources/AddEmployeeFile.xlsx" download >Download</a>
+                <a href="<c:url value='/resources/AddEmployeeFile.xlsx' />">Download</a>
    	</form>
    	</div>
    	
@@ -247,6 +265,7 @@
 		   	
 		   	<label for="end_date">Enter End Date</label>
 		   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
+		   	
 	   		<br>
 	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
 	   		<input class="btn btn-primary btn-md" type="reset">
@@ -273,6 +292,7 @@
 	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
 	   	</form>
     </div>
+  </div>
   </div>
   </fieldset>
 </div>
@@ -302,6 +322,7 @@
 	
     
  
-	
+	<!-- JavaScript for icons -->
+	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </body>
 </html>
