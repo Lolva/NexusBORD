@@ -82,32 +82,42 @@ td, th {
 
 											<!-- Modal body -->
 											<div class="modal-body">
-												<form action="/addAssignmentsFile" method="POST"
-													class="form-group" enctype="multipart/form-data">
+												<form action="/addAssignmentsFile" method="POST" class="form-group" enctype="multipart/form-data">
 													<input type="text" name="name" placeholder="Enter name"/>
+													<br>
+													<br>
 													<input type="text" name="desc" placeholder="Enter description"/>
+													<br>
+													<br>
 													<select name="status">
 														<option>active</option>
 														<option>inactive</option>
 														<option>completed</option>
 													</select>
+													<br>
+													<br>
 													<input type="date" name="due_date"/>
-													
+													<br>
+													<br>													
 													<select name="module_id">
-																		<c:forEach items="${modules}" var ="module">
+																	<c:forEach items="${modules}" var ="module">
 																		<option value="${module.module_id}">${module.module_name }</option>
 																	</c:forEach>
-																	</select> <input type="hidden"
-														name="class_id" value="${cl.class_id }" /> <input
-														type="hidden" name="stream_id" value="${cl.stream_id }" />
-													<input type="file" name="fileName" /> <span><input
-														style="color: blue;" type="submit" value="submit" /></span>
+																	</select>
+																	<input type="hidden" name="class_id" value="${cl.class_id }"/>
+														<br>
+														<br>
+														<input type="hidden" name="stream_id" value="${cl.stream_id }" />
+													<input type="file" name="fileName" />
+													<br>
+													<br>
+													<input class="submissionButtons" type="submit" value="submit" /></span>
 												</form>
 											</div>
 
 											<!-- Modal footer -->
 											<div class="modal-footer">
-												<button type="button" class="btn btn-danger"
+												<button type="button" class="submissionButtons"
 													data-dismiss="modal">Close</button>
 											</div>
 
@@ -117,7 +127,6 @@ td, th {
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
-										Instructor View
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
 										<li><a href="#sub${count +1 }" class="nav-link">Assignments
@@ -129,7 +138,7 @@ td, th {
 										<li>
 										<c:choose>
 												<c:when test="${cl.role_id == 1}">
-													<button type="button" class="btn btn-primary"
+													<button type="button" class="submissionButtons"
 														data-toggle="modal" data-target="#af${cl.class_id }">New Assignment
 													</button>
 													</c:when>
@@ -201,7 +210,7 @@ td, th {
 																		name="assignment_id" value="${in.assignment_id }" />
 																	<input type="text" name="grade"
 																		placeholder="${in.grade}" /> <input
-																		class="btn btn-primary" type="submit" value="submit" />
+																		class="submissionButtons" type="submit" value="submit" />
 																</form>
 															</td>
 														</tr>
@@ -293,7 +302,7 @@ td, th {
 																		value="${cl.stream_id}" /> <input type="hidden"
 																		name="module_id" value="${in.module_id}" /> <input
 																		type="hidden" name="class_id" value="${cl.class_id}" />
-																	<input class="btn btn-primary" type="submit"
+																	<input class="submissionButtons" type="submit"
 																		value="submit" />
 																</form>
 															</td>
