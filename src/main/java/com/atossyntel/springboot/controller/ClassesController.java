@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.BufferedInputStream;
 import java.util.List;
 import java.util.Map;
@@ -63,28 +64,25 @@ public class ClassesController {
 		model.addAttribute("inactiveClassIds", inactiveClassIds);
 	    return "Classes";
 	}
-		private static final String file_path =  "C:/NexusBORD-classes-view6/src/main/resources/";
+		private static final String file_path =  new File("src/main/resources/AddEmployeeFile.xlsx").getAbsolutePath();
 		
-		@RequestMapping("resources/{fileName:.+}")
-	public void download(HttpServletRequest request,HttpServletResponse response,@PathVariable("fileName")String filename) throws IOException {
-		File file=new File(file_path+filename);
-		if(file.exists()) {
-			String mimeType=URLConnection.guessContentTypeFromName(file.getName());
-			if(mimeType==null) {
-				mimeType = "application/octet-stream";
-			}
-			response.setContentType(mimeType);
-			response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
-			//response.setHeader("Content-Disposition",String.format("attachment; filename=\""+file.getName()+ "\""));
-			response.setContentLength((int) file.length());
-			InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
-			FileCopyUtils.copy(inputStream, response.getOutputStream());
-		}
-		
-		
-		
-	  }
-	
+		 @RequestMapping(value = "/giveFile", method = RequestMethod.GET)
+		    public void submit(Model model, HttpServletRequest request,HttpServletResponse response) throws IOException {
+			 File file=new File(file_path);
+				System.out.println(file);
+				if(file.exists()) {
+					String mimeType=URLConnection.guessContentTypeFromName(file.getName());
+					if(mimeType==null) {
+						mimeType = "application/octet-stream";
+					}
+					System.out.println("Heloo");
+					response.setContentType(mimeType);
+					response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
+					response.setContentLength((int) file.length());
+					InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				}
+		 }
 
 	 @RequestMapping(value = "/changeClass", method = RequestMethod.POST)
 	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) {

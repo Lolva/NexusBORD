@@ -185,6 +185,10 @@
 		</form>
 		<hr>
 		<h4>Add Employees with a File</h4>
+		<br><br>
+   		<form action="/giveFile" method="GET">
+   			Example Excel File: <button class="btn btn-secondary btn-sm" type="submit">Download</button>
+   		</form>
 		<form action="/upload" method = POST enctype="multipart/form-data">
    		<br>
    		<label for="class_id">Choose Class ID</label>
@@ -195,9 +199,6 @@
 				  </c:forEach>
 			  </select>
 		</div>
-		<br>
-		Example Excel File: 
-        <a href="<c:url value='/resources/AddEmployeeFile.xlsx' />">Download</a>
    		<br><br>
    		<label for="file">Select an Excel File</label>
    		<input type="file" name="file" class="btn btn-default btn-md">
