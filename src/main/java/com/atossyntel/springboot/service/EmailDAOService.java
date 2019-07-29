@@ -147,7 +147,7 @@ public class EmailDAOService implements EmailDAO {
 	
 	@Override
 	public String getEmailAssignName(String assignID) {
-		String select = "select first_name from employees where employee_id=?";
+		String select = "select assignment_name from assignments where assignment_id=?";
 		String aname;
 		aname = jTemplate.queryForObject(select, String.class, assignID);
 		
