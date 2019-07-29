@@ -70,6 +70,50 @@ td, th {
 				<c:forEach items="${classes}" var="cl">
 					<c:choose>
 						<c:when test="${cl.role_id == 1}">
+						<div class="modal" id="af${cl.class_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Add new assignment file: </h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/addAssignmentsFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													<input type="text" name="name" placeholder="Enter name"/>
+													<input type="text" name="desc" placeholder="Enter description"/>
+													<select name="status">
+														<option>active</option>
+														<option>inactive</option>
+														<option>completed</option>
+													</select>
+													<input type="date" name="due_date"/>
+													
+													<select name="module_id">
+																		<c:forEach items="${modules}" var ="module">
+																		<option value="${module.module_id}">${module.module_name }</option>
+																	</c:forEach>
+																	</select> <input type="hidden"
+														name="class_id" value="${cl.class_id }" /> <input
+														type="hidden" name="stream_id" value="${cl.stream_id }" />
+													<input type="file" name="fileName" /> <span><input
+														style="color: blue;" type="submit" value="submit" /></span>
+												</form>
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
@@ -83,17 +127,14 @@ td, th {
 												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
 										</a></li>
 										<li>
-										<form name="newassignment" action="?newassignment"
-																	method="POST">
-																	<input type="hidden" name="stream_id" value="${cl.stream_id }" />
-																	<input type="hidden" name="class_id" value="${cl.class_id }" />
-																	<select name="module_id">
-																		<c:forEach items="${modules}" var ="module">
-																		<option value="${module.module_id}">${module.module_name }</option>
-																	</c:forEach>
-																	</select>
-																	<input class="btn btn-primary" type="submit"
-																		name="submit" value="New Assignment" /></form>
+										<c:choose>
+												<c:when test="${cl.role_id == 1}">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#af${cl.class_id }">New Assignment
+													</button>
+													</c:when>
+											</c:choose>
+										
 										</li>
 									</ul>
 									<div class="tab-content">
