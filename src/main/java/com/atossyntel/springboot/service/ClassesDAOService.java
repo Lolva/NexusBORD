@@ -98,7 +98,7 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
 //		results = jTemplate.queryForList(sql, "II9999999", start);
-		results = jTemplate.queryForList(sql, username, start, date);
+		results = jTemplate.queryForList(sql, username, start);
 		return results;
 	}
 	
