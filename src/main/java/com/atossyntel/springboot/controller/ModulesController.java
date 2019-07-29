@@ -142,7 +142,7 @@ public class ModulesController {
 		System.out.println(request.getParameter("stream_id"));
 		System.out.println(request.getParameter("class_id"));
 		System.out.println(moduledao.insertModuleFile(request.getParameter("module_id"), file));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		storageService.store(file, "/" + stream_id +"/"+ module_id + "/moduleFiles/");
 		return "redirect:Modules";
 
 	}
@@ -150,6 +150,7 @@ public class ModulesController {
 	public ResponseEntity<Resource> submit(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
 		System.out.println(streamid + " " + classid + " " + moduleid + " " + filename);
 		System.out.println("Download is starting...");
+		//TODO string for folder path needs to be worked on in ModulesController
 		StringBuilder folder = new StringBuilder("/" + streamid + "/" + classid + "/" + moduleid + "/");
 		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
 		System.out.println("Downloading done");
@@ -167,7 +168,7 @@ public class ModulesController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
 		return "redirect:Modules";
 
 	}

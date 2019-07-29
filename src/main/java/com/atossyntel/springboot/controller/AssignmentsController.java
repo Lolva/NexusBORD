@@ -125,7 +125,7 @@ public class AssignmentsController {
 	@RequestMapping(value = "/Assignments", params = "assignment")
 	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
 			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
-		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getClass_id()+"/"+assignment.getModule_id()+"/"+ assignment.getAssignment_id() + "/");
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
 		storageService.store(file, modFolder.toString());
 		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
 		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
@@ -149,7 +149,7 @@ public class AssignmentsController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);
 		String className = emailDAO.getEmailClassName(class_id);
