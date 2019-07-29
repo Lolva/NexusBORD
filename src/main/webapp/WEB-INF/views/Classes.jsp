@@ -40,7 +40,7 @@
 
 
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'classes', 'instructor')">
+<body onload="navBar(this, 'classes', '<%=session.getAttribute("role").toString()%>')">
 	<%
 	//User is not logged in
 	if (session.getAttribute("username") == null) {
@@ -50,7 +50,9 @@
 	</script>
 	<%
 		}
+				
 	%>
+	
     <header>
         <!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>

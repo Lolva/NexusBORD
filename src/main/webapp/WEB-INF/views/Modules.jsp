@@ -29,7 +29,7 @@
 
 </head>
 
-<body onload="navBar(this, 'modules', 'student')">
+<body onload="navBar(this, 'modules', '<%=session.getAttribute("role").toString()%>')">
 	<%
 		//User is not logged in
 		if (session.getAttribute("username") == null) {
