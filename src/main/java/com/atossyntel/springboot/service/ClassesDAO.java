@@ -27,5 +27,6 @@ public interface ClassesDAO {
 	public List<Map<String, Object>> getStream();
 	public List<Map<String,Object>> getActiveInstructorClasses(String username);
 	public List<Map<String,Object>> getInactiveInstructorClasses(String username);
+	List<Map<String, Object>> getModules();
 	
 }

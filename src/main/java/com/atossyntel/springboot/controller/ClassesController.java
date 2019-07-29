@@ -51,6 +51,10 @@ public class ClassesController {
 	public String init(Model model,  HttpSession session) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
+		
+		List<Map<String, Object>> allModules = classdao.getModules();
+		model.addAttribute("allModules", allModules);		
+		
 		List<Map<String,Object>> activeInstructorClasses = classdao.getActiveInstructorClasses((String) session.getAttribute("username"));	
 		model.addAttribute("activeInstructorClasses", activeInstructorClasses);
 		
@@ -84,7 +88,6 @@ public class ClassesController {
 					if(mimeType==null) {
 						mimeType = "application/octet-stream";
 					}
-					System.out.println("Heloo");
 					response.setContentType(mimeType);
 					response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
 					response.setContentLength((int) file.length());

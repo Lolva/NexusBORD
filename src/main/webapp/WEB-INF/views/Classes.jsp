@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
 <html>
 <head>
     <title>Classes</title>
@@ -101,7 +100,7 @@
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
 								<td>
-								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
+								<form name="deleteform" action="/deleteEmployee" method="POST">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
 								<!-- Button trigger modal -->
@@ -333,10 +332,18 @@
 <br>
 	    <h3>Create New Class</h3>
 	    <form action="/addClass" method="POST"  >
-		   	<label for="stream_id">Enter Stream ID</label>
+		   	<label for="stream_id">Choose Stream</label>
    	        <select name="stream_Id" class="form-control">
    	            <c:forEach items="${stream}" var="j">
-	            	<option value="${j.stream_Id}">${j.stream_Id}</option>
+	            	<option value="${j.stream_id}" title="${stream_name}">${j.stream_name} ( Modules Included:
+					<c:forEach items="${allModules}" var="i">
+						<c:choose>
+		    				<c:when test="${j.stream_id==i.stream_id}">
+								 - ${i.module_name} 
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					)</option>
 	            </c:forEach>
             </select>
             <br>
