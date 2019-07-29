@@ -29,6 +29,7 @@ import com.atossyntel.springboot.service.StudentAssignmentsDAOService;
 
 import com.atossyntel.springboot.storage.StorageService;
 import com.atossyntel.springboot.service.AssignmentsDAO;
+import com.atossyntel.springboot.service.ClassesDAOService;
 
 @Controller
 public class AssignmentsController {
@@ -53,7 +54,9 @@ public class AssignmentsController {
 
 	@Autowired
     private StudentAssignmentsDAOService studentDAO;
-
+	
+	@Autowired
+	private ClassesDAOService classDAO;
 
 	@Autowired
 	AssignmentsDAO assigndao;
@@ -108,9 +111,11 @@ public class AssignmentsController {
 		
 		//emailee list
 		String emailee = emailDAO.getEmailNewGrade(grade.getAssignment_id(), grade.getEmployee_id());
-
-		//within com.atossyntel.springboot.controller.SmtpMailSender.java	
-		sms.setAssignId(grade.getAssignment_id());
+		String assignName = emailDAO.getEmailAssignName(grade.getAssignment_id());
+		
+		//within com.atossyntel.springboot.controller.SmtpMailSender.java
+		sms.setAssignId(assignName);
+		
 		sms.send(emailee, 2);
 		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
@@ -124,9 +129,11 @@ public class AssignmentsController {
 		storageService.store(file, modFolder.toString());
 		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
 		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
+		String className = emailDAO.getEmailClassName(assignment.getClass_id());
+		String fullName = emailDAO.getEmailEmpName(username);
 		
-		sms.setEmpId(username);
-		sms.setClassId(assignment.getClass_id());
+		sms.setEmpId(fullName);
+		sms.setClassId(className);
 		sms.send(emailee, 1);
 		
 		System.out.println("Sent to DB");
@@ -138,11 +145,17 @@ public class AssignmentsController {
 	@RequestMapping(value = "/addAssignmentsFile", method = RequestMethod.POST)
 	public String newAssignmentFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
 			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id,
-			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) {
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
 		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		
+		String emailee = emailDAO.getEmailNewAssignment(class_id);
+		String className = emailDAO.getEmailClassName(class_id);
+		sms.setClassId(className);
+		sms.send(emailee, 0);
+		
 		return "redirect:Assignments";
 	}
 	

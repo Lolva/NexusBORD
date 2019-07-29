@@ -223,7 +223,7 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	
 	@Override
-	public void addEmployees(MultipartFile multipart, String fileName, String class_id) throws IOException {
+	public void addEmployees(MultipartFile multipart, String fileName, String class_id) throws IOException, MessagingException {
 		File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+fileName);
 	    multipart.transferTo(convFile);
         FileInputStream fis = new FileInputStream(convFile);
@@ -261,8 +261,25 @@ public class ClassesDAOService implements ClassesDAO {
 //            			System.out.println(((Number) results).intValue());
             			this.jTemplate.update(sqlUpdateQuery, class_id, employee_id);
             			
+            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+            			String className = emailDAO.getEmailClassName(class_id);
+            			String fullName = emailDAO.getEmailEmpName(employee_id);
+            			
+            			sms.setEmpId(fullName);
+            			sms.setClassId(className);
+            			
+            			sms.send(emailee, 3);
+            			
             		} else {
             			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);
+            			
+            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+            			String className = emailDAO.getEmailClassName(class_id);
+            			String fullName = emailDAO.getEmailEmpName(employee_id);
+            			
+            			sms.setEmpId(fullName);
+            			sms.setClassId(className);
+            			sms.send(emailee, 3);
 
             		}
                     break;

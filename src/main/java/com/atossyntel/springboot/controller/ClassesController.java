@@ -39,6 +39,12 @@ public class ClassesController {
 	
 	@Autowired
 	ClassesDAO classdao;
+	
+	@Autowired
+	private EmailDAOService emailDAO;
+	
+	@Autowired
+	private SmtpMailSender sms;
 
 	
 	@RequestMapping(value = "/Classes", method = {RequestMethod.GET, RequestMethod.POST})
@@ -93,7 +99,7 @@ public class ClassesController {
 //	        	System.out.println("Change Class");
 //	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
 	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID(), EnrollmentBean.getOld_Class_ID()); 
-
+	        	 
 	                return "redirect:Classes.html";
 	        
 	        } else {
