@@ -8,8 +8,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+
+<!-- Bootstrap Dependencies -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<!-- Icons -->
+<script src="https://kit.fontawesome.com/b1cf46027b.js"></script>
 </head>
 
 <!-- Dynamically create nav bar based on current page and role -->
@@ -56,15 +68,15 @@
 							<div class="col-sm-3 mb-4">
 								<div class="card">
 									<div class="card-body">
+										<p class="card-text" style="font-size: 10pt;">
+											<i class="fas fa-exclamation-triangle" style="color: gold;"></i> ${obj.DUE_DATE}
+										</p>
 										<div class="card-header">
 											<h5 class="card-title">${obj.STREAM_NAME}</h5>
 											<h6 class="card-subtitle mb-2 text-muted">${obj.ASSIGNMENT_NAME}</h6>
 										</div>
 										<p class="card-text">
 											${obj.DESCRIPTION}
-										</p>
-										<p class="card-footer text-white bg-danger">
-											${obj.DUE_DATE}
 										</p>
 									</div>
 								</div>
@@ -88,15 +100,15 @@
 							<div class="col-sm-3 mb-4">
 								<div class="card">
 									<div class="card-body">
+										<p class="card-text" style="font-size: 10pt;">
+											${obj.DUE_DATE}
+										</p>
 										<div class="card-header">
 											<h5 class="card-title">${obj.stream_name} </h5>
 											<h6 class="card-subtitle mb-2 text-muted">${obj.assignment_name}</h6>
 										</div>
 										<p class="card-text">
 											${obj.description}
-										</p>
-										<p class="card-footer text-white bg-warning">
-											${obj.due_date}
 										</p>
 									</div>
 								</div>
@@ -117,7 +129,8 @@
 				<c:when test="${changelogSize > 0}">
 					<c:forEach items="${changelog}" var="obj">
 						<div class="row" style="padding-left: 20px">
-						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/Assignments">Here</a>.</p>
+						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/Assignments">Here</a>.
+						</p>
 						</div>
 					</c:forEach>
 				</c:when>
@@ -129,5 +142,8 @@
 			</c:choose>
 		</div>
 	</fieldset>
+	
+	<!-- Container for logout modal -->	
+	<div id="LogoutModalDiv"></div>
 </body>
 </html>
