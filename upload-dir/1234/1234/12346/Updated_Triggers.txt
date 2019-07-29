@@ -1,0 +1,56 @@
+DROP SEQUENCE AUTO_IDS;
+
+CREATE OR REPLACE TRIGGER autoincrement
+BEFORE INSERT
+ON assignments
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+ :NEW.assignment_ID := :NEW.assignment_ID || trim(to_char(DBMS_RANDOM.VALUE(1, 999999999), '00000000000'));
+
+END autoincrement;
+/
+
+
+CREATE OR REPLACE TRIGGER autoincrement_c
+BEFORE INSERT
+ON classes
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+ :NEW.class_ID := :NEW.class_ID ||  trim(to_char(DBMS_RANDOM.VALUE(1, 999999999), '00000000000'));
+
+END autoincrement_c;
+/
+
+CREATE OR REPLACE TRIGGER autoincrement_s
+BEFORE INSERT
+ON streams
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+ :NEW.stream_ID := :NEW.stream_ID ||  trim(to_char(DBMS_RANDOM.VALUE(1, 999999999), '00000000000'));
+
+END autoincrement_s;
+/
+
+
+CREATE OR REPLACE TRIGGER m_autoincrement
+BEFORE INSERT
+ON modules
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+ :NEW.module_ID := :NEW.module_ID ||  trim(to_char(DBMS_RANDOM.VALUE(1, 999999999), '00000000000'));
+END m_autoincrement;
+/
+
+CREATE OR REPLACE TRIGGER mf_autoincrement
+BEFORE INSERT
+ON module_files
+REFERENCING NEW AS NEW OLD AS OLD
+FOR EACH ROW
+BEGIN
+ :NEW.module_file_ID := :NEW.module_file_ID ||  trim(to_char(DBMS_RANDOM.VALUE(1, 999999999), '00000000000'));
+END mf_autoincrement;
+/

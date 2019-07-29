@@ -1,0 +1,87 @@
+const CourseAPI = {
+  courses: [
+    { number: 1, name: "Java"},
+    { number: 2, name: "JUnit"},
+    { number: 3, name: "Spring Boot"},
+    { number: 4, name: "JDBC"}
+  ],
+  all: function() { return this.courses},
+  get: function(id) {
+    const isCourse = course => course.number === id
+    return this.courses.find(isCourse)
+  }
+}
+
+const Courses = () => (
+  <div>
+    <ul>
+      {
+        CourseAPI.all().map(course => (
+          <li key={course.number}>
+            <Link to={`/courses/${course.number}`}>{course.name}</Link>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+)
+
+const Course = (props) => {
+  const course = CourseAPI.get(
+    parseInt(props.match.params.number, 10)
+  )
+  if (!course) {
+    return <div>Sorry, but the course was not found</div>
+  }
+  return (
+    <div>
+      <h1>{course.name} (#{course.number})</h1>
+      <Link to='/courses'>Back</Link>
+    </div>
+  )
+}
+
+const CoursesList = () => (
+  <Switch>
+    <Route exact path='/courses' component={Courses}/>
+    <Route path='/courses/:number' component={Course}/>
+  </Switch>
+)
+
+const Stream = () => (
+  <div>
+    <h1>Welcome to Syntel Training!</h1>
+  </div>
+)
+
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={Stream}/>
+      <Route path='/courses' component={CoursesList}/>
+    </Switch>
+  </main>
+)
+
+const Header = () => (
+  <header>
+    <nav>
+      <ul>
+        <li><Link to='/'>Stream</Link></li>
+        <li><Link to='/courses'>Courses</Link></li>
+      </ul>
+    </nav>
+  </header>
+)
+
+const App = () => (
+  <div>
+    <Header />
+    <Main />
+  </div>
+)
+
+
+
+
+

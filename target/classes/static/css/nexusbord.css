@@ -7,7 +7,9 @@ header {
     padding: 0;
     line-height: 1.5;
 }
+
 body {
+	padding-right: 0 !important;
     font-family: sans-serif;
     background-image: url(/resources/pictures/test.png);
     background-repeat: no-repeat;

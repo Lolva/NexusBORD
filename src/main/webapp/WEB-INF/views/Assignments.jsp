@@ -72,7 +72,7 @@ td, th {
 						<c:when test="${cl.role_id == 1}">
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
-									<ul class="nav nav-tabs" id="${cl.stream_namee} }">
+									<ul class="nav nav-tabs" id="${cl.stream_name}">
 										Instructor View
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
