@@ -78,6 +78,7 @@ public class SubmitAssignmentController {
 			System.out.println(filename);
 			System.out.println(assignID);
 			System.out.println(empID);
+			System.out.println(classId);
 			
 			//Test case as proof of concept for dynamic folder building
 			StringBuilder modFolder = new StringBuilder("/"+streamId+"/"+classId+"/"+moduleId+"/"+ assignID + "/");
