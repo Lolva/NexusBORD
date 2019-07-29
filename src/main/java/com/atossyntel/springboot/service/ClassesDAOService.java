@@ -43,23 +43,6 @@ public class ClassesDAOService implements ClassesDAO {
 		 return results;
 		
 	}
-	
-	@Override
-	public List<Map<String,Object>> getActiveInstructorClasses(String username) {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime begin = now.plusDays(7);
-		String date = dtf.format(now);
-		String start = dtf.format(begin);
-		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
-				+ "FROM enrollments s, Classes c "
-				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
-		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start, date);
-		results = jTemplate.queryForList(sql, username, start, date);
-		return results;
-	}
-	
 
 	@Override
 	public List<Map<String, Object>> getActiveClasses() {
@@ -88,6 +71,22 @@ public class ClassesDAOService implements ClassesDAO {
 		
 	}
 	@Override
+	public List<Map<String,Object>> getActiveInstructorClasses(String username) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime begin = now.plusDays(7);
+		String date = dtf.format(now);
+		String start = dtf.format(begin);
+		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
+				+ "FROM enrollments s, Classes c "
+				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
+		List<Map<String, Object>> results;
+//		results = jTemplate.queryForList(sql, "II9999999", start, date);
+		results = jTemplate.queryForList(sql, username, start, date);
+		return results;
+	}
+	
+	@Override
 	public List<Map<String,Object>> getInactiveInstructorClasses(String username) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
 		LocalDateTime now = LocalDateTime.now();
@@ -96,9 +95,9 @@ public class ClassesDAOService implements ClassesDAO {
 		String start = dtf.format(begin);
 		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
 				+ "FROM enrollments s, Classes c "
-				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>? AND c.end_date<?";
+				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start, date);
+//		results = jTemplate.queryForList(sql, "II9999999", start);
 		results = jTemplate.queryForList(sql, username, start, date);
 		return results;
 	}
@@ -127,6 +126,7 @@ public class ClassesDAOService implements ClassesDAO {
 		String key = (String) keyHolder.getKeys().get("class_id");
 //		System.out.println(key);
 		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
+//		this.jTemplate.update(addInstructor, "II9999999", key, 1);
 		this.jTemplate.update(addInstructor, employee_id, key, 1);
 	}
 	

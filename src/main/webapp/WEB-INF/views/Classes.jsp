@@ -66,15 +66,15 @@
     <div id="viewclass" class="tab-pane fade show active">
     <br>
     <ul class="nav nav-tabs">
-    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeClassIds)}</span></a></li>
-    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#inactiveClass">Inactive Classes <span class="badge badge-info">${fn:length(inactiveClassIds)}</span></a></li> 
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#activeClass">Active Classes <span class="badge badge-info">${fn:length(activeInstructorClasses)}</span></a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#inactiveClass">Inactive Classes <span class="badge badge-info">${fn:length(inactiveInstructorClasses)}</span></a></li> 
     </ul>
     <div class="tab-content">
     <div class="tab-pane fade show active" id="activeClass">
     <br>
 
     <!-- ${activeClassIds} -->
-     <c:forEach items="${getActiveInstructorClasses}" var="o">
+     <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -111,7 +111,7 @@
 		</div>
 		<div class="tab-pane fade" id="inactiveClass">
 		<br>
-		<c:forEach items="${inactiveClassIds}" var="o">
+		<c:forEach items="${inactiveInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
@@ -151,7 +151,7 @@
     
     <div id="AddEmployee" class="tab-pane fade"class="row">
 	<form action="/changeClass" style="color: black;" method=POST>
-		<h4>Add Employee to Class:</h4>
+		<h4>Add Employee to Class</h4>
 		<label for="Employee_Id">Choose Employee ID</label>
 		<div class="dropdown">
 			<select name="Employee_ID" class="form-control">
@@ -170,7 +170,7 @@
 			  </select>
 			</div>
 			<br>
-			<h4> If the employee is already in a class:</h4>
+			<h5> If the employee is already in a class:</h5>
 			<label for="Class_id">Choose Old Class ID</label>
 		   	<div class="dropdown">
 			  <select name="old_Class_ID" class="form-control">
@@ -183,7 +183,7 @@
 			<br>
 			<input type="submit" class="btn btn-primary btn-md" value="Add Employee"/>
 		</form>
-	<br><br>
+		<hr>
 		<h4>Add Employees with a File</h4>
 		<form action="/upload" method = POST enctype="multipart/form-data">
    		<br>
@@ -195,12 +195,14 @@
 				  </c:forEach>
 			  </select>
 		</div>
+		<br>
+		Example Excel File: 
+        <a href="<c:url value='/resources/AddEmployeeFile.xlsx' />">Download</a>
    		<br><br>
    		<label for="file">Select an Excel File</label>
    		<input type="file" name="file" class="btn btn-default btn-md">
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-                <a href="<c:url value='/resources/AddEmployeeFile.xlsx' />">Download</a>
    	</form>
    	</div>
    	

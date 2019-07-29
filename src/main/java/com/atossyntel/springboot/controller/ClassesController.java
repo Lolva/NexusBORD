@@ -40,7 +40,7 @@ public class ClassesController {
 	public String init(Model model,  HttpSession session) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
-		//In progress
+		
 		List<Map<String,Object>> activeInstructorClasses = classdao.getActiveInstructorClasses((String) session.getAttribute("username"));	
 		model.addAttribute("activeInstructorClasses", activeInstructorClasses);
 		
