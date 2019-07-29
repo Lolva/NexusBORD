@@ -14,22 +14,46 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.EmailDAOService;
+
+import com.atossyntel.springboot.service.ModuleDAO;
+
+import com.atossyntel.springboot.service.StudentAssignmentsDAOService;
+
+import com.atossyntel.springboot.storage.StorageService;
 import com.atossyntel.springboot.service.AssignmentsDAO;
 
 @Controller
 public class AssignmentsController {
+	
+	
+	@Autowired
+    public AssignmentsController(StorageService storageService) {
+        this.storageService = storageService;
+    }
 	
     @Autowired
     private SmtpMailSender sms;
     
     @Autowired
     private EmailDAOService emailDAO;
+    
+    @Autowired
+	private ModuleDAO moduledao;
+    
+	@Autowired
+	private StorageService storageService;
+
+	@Autowired
+    private StudentAssignmentsDAOService studentDAO;
+
 
 	@Autowired
 	AssignmentsDAO assigndao;
@@ -94,31 +118,32 @@ public class AssignmentsController {
 	}
 	
 	@RequestMapping(value = "/Assignments", params = "assignment")
-	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes) {
-		System.out.println(assignment.toString());
-		model.addAttribute("assignment_id", assignment.getAssignment_id());
-		model.addAttribute("class_id", assignment.getClass_id());
-		model.addAttribute("module_id", assignment.getModule_id());
-		model.addAttribute("stream_id", assignment.getStream_id());
-		assignment.setEmployee_id(username);
-		model.addAttribute("employee_id", assignment.getEmployee_id());
-		redirectAttributes.addFlashAttribute("assignment", assignment);
-		return "redirect:SubmitAssignment";
+	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
+			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getClass_id()+"/"+assignment.getModule_id()+"/"+ assignment.getAssignment_id() + "/");
+		storageService.store(file, modFolder.toString());
+		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
+		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
+		
+		sms.setEmpId(username);
+		sms.setClassId(assignment.getClass_id());
+		sms.send(emailee, 1);
+		
+		System.out.println("Sent to DB");
+	
+		return "redirect:Assignments";
+		
 
 	}
-	
-	@RequestMapping(value = "/Assignments", params = "newassignment")
-	public String newAssignment(Model model, @ModelAttribute("newassignment") InstructorAssignmentsBean assignment, RedirectAttributes redirectAttributes, HttpServletRequest result) {
-		System.out.println(assignment.toString());
-		//assignment.setModule_id(result.getParameter("module"));
-		model.addAttribute("module_id", assignment.getModule_id());
-		model.addAttribute("moduleS", assignment);
-		model.addAttribute("stream_id", assignment.getStream_id());
-		model.addAttribute("class_id", assignment.getClass_id());
+	@RequestMapping(value = "/addAssignmentsFile", method = RequestMethod.POST)
+	public String newAssignmentFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
+			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id,
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) {
 		
-		redirectAttributes.addFlashAttribute("newassignment", assignment);
-		return "redirect:NewAssignmentUpload";
-	
+		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
+		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
+		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		return "redirect:Assignments";
 	}
 	
 	@ModelAttribute("modules")

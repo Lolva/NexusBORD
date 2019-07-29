@@ -55,7 +55,7 @@ td, th {
 	</header>
 	<fieldset class="container">
 		<div class="tabbable boxed parentTabs p-4">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="classTabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
 					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
@@ -70,9 +70,53 @@ td, th {
 				<c:forEach items="${classes}" var="cl">
 					<c:choose>
 						<c:when test="${cl.role_id == 1}">
+						<div class="modal" id="af${cl.class_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Add new assignment file: </h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/addAssignmentsFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													<input type="text" name="name" placeholder="Enter name"/>
+													<input type="text" name="desc" placeholder="Enter description"/>
+													<select name="status">
+														<option>active</option>
+														<option>inactive</option>
+														<option>completed</option>
+													</select>
+													<input type="date" name="due_date"/>
+													
+													<select name="module_id">
+																		<c:forEach items="${modules}" var ="module">
+																		<option value="${module.module_id}">${module.module_name }</option>
+																	</c:forEach>
+																	</select> <input type="hidden"
+														name="class_id" value="${cl.class_id }" /> <input
+														type="hidden" name="stream_id" value="${cl.stream_id }" />
+													<input type="file" name="fileName" /> <span><input
+														style="color: blue;" type="submit" value="submit" /></span>
+												</form>
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
-									<ul class="nav nav-tabs" id="${cl.stream_name}">
+									<ul class="nav nav-tabs" id="${cl.stream_namee} }">
 										Instructor View
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
@@ -83,17 +127,14 @@ td, th {
 												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
 										</a></li>
 										<li>
-										<form name="newassignment" action="?newassignment"
-																	method="POST">
-																	<input type="hidden" name="stream_id" value="${cl.stream_id }" />
-																	<input type="hidden" name="class_id" value="${cl.class_id }" />
-																	<select name="module_id">
-																		<c:forEach items="${modules}" var ="module">
-																		<option value="${module.module_id}">${module.module_name }</option>
-																	</c:forEach>
-																	</select>
-																	<input class="btn btn-primary" type="submit"
-																		name="submit" value="New Assignment" /></form>
+										<c:choose>
+												<c:when test="${cl.role_id == 1}">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#af${cl.class_id }">New Assignment
+													</button>
+													</c:when>
+											</c:choose>
+										
 										</li>
 									</ul>
 									<div class="tab-content">
@@ -244,7 +285,7 @@ td, th {
 															<!--  assignment_id, stream_id, module_id, and class_id -->
 															<td>
 																<form name="assignment" action="?assignment"
-																	method="POST">
+																	method="POST" enctype="multipart/form-data">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
@@ -252,6 +293,7 @@ td, th {
 																		value="${cl.stream_id}" /> <input type="hidden"
 																		name="module_id" value="${in.module_id}" /> <input
 																		type="hidden" name="class_id" value="${cl.class_id}" />
+																	<input type="file" id="uploadFile" name="fileName">
 																	<input class="btn btn-primary" type="submit"
 																		value="submit" />
 																</form>
@@ -276,6 +318,20 @@ td, th {
 			e.preventDefault();
 			$(this).tab('show');
 		});
+		$(document).ready(() => {
+			  let url = location.href.replace(/\/$/, "");
+			  if (location.hash) {
+			    const hash = url.split("#");
+			    $('#classTabs a[href="#'+hash[1]+'"]').tab("show");
+			    $('#' + hash[2] + ' a[href="#'+hash[3]+'"]').tab("show");
+			    url = location.href.replace(/\/#/, "#");
+			    history.replaceState(null, null, url);
+			    setTimeout(() => {
+			      $(window).scrollTop(0);
+			    }, 400);
+			  } 
+			   
+			});
 	</script>
 	<!-- Container for logout modal -->	
 	<div id="LogoutModalDiv"></div>

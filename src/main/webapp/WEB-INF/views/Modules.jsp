@@ -25,6 +25,8 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
+<script src="https://kit.fontawesome.com/b1cf46027b.js"></script>
+
 </head>
 
 <body onload="navBar(this, 'modules', 'student')">
@@ -68,26 +70,109 @@
 							<div class="panel">
 								<c:choose>
 									<c:when test="${c.role_id == 1}">
-										<button class="btn-primary"
-											style="margin: 10px; float: right;">Edit</button>
+										<button type="button" class="btn btn-primary"
+											data-toggle="modal" data-target="#m${o.module_id }">Edit
+										</button>
+										<div class="modal" id="m${o.module_id }">
+											<div class="modal-dialog">
+												<div class="modal-content">
+
+													<!-- Modal Header -->
+													<div class="modal-header">
+														<h4 class="modal-title">Edit this module:
+															${o.module_name}</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+
+													<!-- Modal body -->
+													<div class="modal-body">
+														<form action="/updateModule" method="POST"
+															class="form-group">
+															<input type="text" required
+																placeholder="${o.module_name}" name="module_name" /> <input type="hidden"
+																value="${o.module_id }" name="module_id" /> <input
+																type="submit" value="Edit" />
+														</form>
+														<form action="/deleteModule" method="POST"
+															class="form-group">
+															<input type="hidden" name="module_id"
+																value="${o.module_id }" /> <span><input
+																style="color: red;" type="submit" value="Delete module" /></span>
+														</form>
+													</div>
+
+													<!-- Modal footer -->
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger"
+															data-dismiss="modal">Close</button>
+													</div>
+
+												</div>
+											</div>
+										</div>
 
 									</c:when>
 								</c:choose>
+								<div class="modal" id="mf${o.module_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Add new module file:
+													${o.module_name}</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/addModuleFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													<input type="hidden" name="module_id"
+														value="${o.module_id }" /> <input type="hidden"
+														name="class_id" value="${c.class_id }" /> <input
+														type="hidden" name="stream_id" value="${c.stream_id }" />
+													<input type="file" name="fileName" /> <span><input
+														style="color: blue;" type="submit" value="submit" /></span>
+												</form>
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
 								<table>
 									<tr>
 										<th>Module Files:</th>
-										<td></td>
-										
+										<td><c:choose>
+												<c:when test="${c.role_id == 1}">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#mf${o.module_id }">+
+													</button>
+												</c:when>
+											</c:choose></td>
+
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
 										<c:choose>
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
-													
-													<td style="color: black;">${j.file_name}</td>
+
+													<td style="color: black;"><a href="/download/${c.stream_id}/${c.class_id}/${o.module_id}/${j.file_name}/${j.file_type}"> ${j.file_name} </a></td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><button style="color: red;">x</button>
+															<td><form action="/deleteModuleFile" method="POST"
+																	class="form-group">
+																	<input type="hidden" name="module_file_id"
+																		value="${j.module_file_id }" /> <span><input
+																		style="color: red;" type="submit" value="x"/></span>
+																</form></td>
 														</c:when>
 													</c:choose>
 												</tr>
@@ -95,20 +180,74 @@
 										</c:choose>
 									</c:forEach>
 								</table>
+								<div class="modal" id="af${o.module_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Add new assignment file:
+													${o.module_name}</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/addAssignmentFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													<input type="text" name="name" placeholder="Enter name"/>
+													<input type="text" name="desc" placeholder="Enter description"/>
+													<select name="status">
+														<option>active</option>
+														<option>inactive</option>
+														<option>completed</option>
+													</select>
+													<input type="date" name="due_date"/>
+													
+													<input type="hidden" name="module_id"
+														value="${o.module_id }" /> <input type="hidden"
+														name="class_id" value="${c.class_id }" /> <input
+														type="hidden" name="stream_id" value="${c.stream_id }" />
+													<input type="file" name="fileName" /> <span><input
+														style="color: blue;" type="submit" value="submit" /></span>
+												</form>
+											</div>
+
+											<!-- Modal footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Close</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
 								<table>
 									<tr>
 										<th>Assignment Files:</th>
-										<td></td>
+										<td><c:choose>
+												<c:when test="${c.role_id == 1}">
+													<button type="button" class="btn btn-primary"
+														data-toggle="modal" data-target="#af${o.module_id }">+
+													</button>
+												</c:when>
+											</c:choose></td>
 									</tr>
 									<c:forEach items="${moduleassigns}" var="k">
 										<c:choose>
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
-													
-													<td style="color: black;">${k.assignment_name}</td>
+
+													<td id="${k.assignment_id}" style="color: black;"><a href="/download/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a></td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
-															<td><button style="color: red;">x</button>
+															<td><form action="/deleteAssignment" method="POST"
+																	class="form-group">
+																	<input type="hidden" name="assignment_id"
+																		value="${k.assignment_id }" /> <span><input
+																		style="color: red;" type="submit" value="x" /></span>
+																</form></td>
+
 														</c:when>
 													</c:choose>
 												</tr>
@@ -122,9 +261,39 @@
 						<div>
 							<c:choose>
 								<c:when test="${c.role_id == 1}">
-									<button class="btn btn-primary btn-sm"
-										style="margin: 10px; float: right;">Add new</button>
+									<button type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#myModal">Add new</button>
+									<div class="modal" id="myModal">
+										<div class="modal-dialog">
+											<div class="modal-content">
 
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h4 class="modal-title">Add new module to class</h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body">
+													<form action="/addModule" method="POST" class="form-group">
+														<label for="module_name">Enter Module Name</label> <input
+															type="text" name="module_name" placeholder="Module Name"
+															class="form-control" /> <input type="hidden"
+															name="stream_id" value="${c.stream_id }" /> <input
+															class="btn btn-primary btn-md" id="addmodulebtn"
+															type="submit" />
+													</form>
+												</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Close</button>
+												</div>
+
+											</div>
+										</div>
+									</div>
 								</c:when>
 							</c:choose>
 						</div>
@@ -133,9 +302,14 @@
 
 
 				</c:forEach>
+
+
+
 			</div>
 		</div>
+
 	</fieldset>
+
 	<script type="text/javascript">
 		var acc = document.getElementsByClassName("accordion");
 		var i;
