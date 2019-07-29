@@ -55,7 +55,7 @@ td, th {
 	</header>
 	<fieldset class="container">
 		<div class="tabbable boxed parentTabs p-4">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="classTabs">
 				<!--  change #instructor to #classID, update JS classID, inject className  -->
 				<c:forEach items="${classes}" var="cl">
 					<li><a href="#class${cl.CLASS_ID}" id="${cl.role_id}"
@@ -116,7 +116,7 @@ td, th {
 								</div>
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
-									<ul class="nav nav-tabs" id="${cl.stream_name}">
+									<ul class="nav nav-tabs" id="${cl.stream_namee} }">
 										Instructor View
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
@@ -285,7 +285,7 @@ td, th {
 															<!--  assignment_id, stream_id, module_id, and class_id -->
 															<td>
 																<form name="assignment" action="?assignment"
-																	method="POST">
+																	method="POST" enctype="multipart/form-data">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
@@ -293,6 +293,7 @@ td, th {
 																		value="${cl.stream_id}" /> <input type="hidden"
 																		name="module_id" value="${in.module_id}" /> <input
 																		type="hidden" name="class_id" value="${cl.class_id}" />
+																	<input type="file" id="uploadFile" name="fileName">
 																	<input class="btn btn-primary" type="submit"
 																		value="submit" />
 																</form>
@@ -317,6 +318,22 @@ td, th {
 			e.preventDefault();
 			$(this).tab('show');
 		});
+		$(document).ready(() => {
+			  let url = location.href.replace(/\/$/, "");
+			  if (location.hash) {
+			    const hash = url.split("#");
+			    $('#classTabs a[href="#'+hash[1]+'"]').tab("show");
+			    $('#' + hash[2] + ' a[href="#'+hash[3]+'"]').tab("show");
+			    url = location.href.replace(/\/#/, "#");
+			    history.replaceState(null, null, url);
+			    setTimeout(() => {
+			      $(window).scrollTop(0);
+			    }, 400);
+			  } 
+			   
+			});
 	</script>
+	<!-- Container for logout modal -->	
+	<div id="LogoutModalDiv"></div>
 </body>
 </html>

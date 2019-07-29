@@ -331,5 +331,8 @@
 			$(this).tab('show');
 		});
 	</script>
+	
+	<!-- Container for logout modal -->	
+	<div id="LogoutModalDiv"></div>
 </body>
 </html>

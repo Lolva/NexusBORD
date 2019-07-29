@@ -22,12 +22,22 @@ import com.atossyntel.springboot.model.GradeBean;
 import com.atossyntel.springboot.model.InstructorAssignmentsBean;
 import com.atossyntel.springboot.model.StudentSubmissionBean;
 import com.atossyntel.springboot.service.EmailDAOService;
+
 import com.atossyntel.springboot.service.ModuleDAO;
+
+import com.atossyntel.springboot.service.StudentAssignmentsDAOService;
+
 import com.atossyntel.springboot.storage.StorageService;
 import com.atossyntel.springboot.service.AssignmentsDAO;
 
 @Controller
 public class AssignmentsController {
+	
+	
+	@Autowired
+    public AssignmentsController(StorageService storageService) {
+        this.storageService = storageService;
+    }
 	
     @Autowired
     private SmtpMailSender sms;
@@ -36,10 +46,15 @@ public class AssignmentsController {
     private EmailDAOService emailDAO;
     
     @Autowired
-	ModuleDAO moduledao;
+	private ModuleDAO moduledao;
     
 	@Autowired
-	 StorageService storageService;
+	private StorageService storageService;
+
+	@Autowired
+    private StudentAssignmentsDAOService studentDAO;
+
+
 
 	@Autowired
 	AssignmentsDAO assigndao;
@@ -105,16 +120,20 @@ public class AssignmentsController {
 	}
 	
 	@RequestMapping(value = "/Assignments", params = "assignment")
-	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes) {
-		System.out.println(assignment.toString());
-		model.addAttribute("assignment_id", assignment.getAssignment_id());
-		model.addAttribute("class_id", assignment.getClass_id());
-		model.addAttribute("module_id", assignment.getModule_id());
-		model.addAttribute("stream_id", assignment.getStream_id());
-		assignment.setEmployee_id(username);
-		model.addAttribute("employee_id", assignment.getEmployee_id());
-		redirectAttributes.addFlashAttribute("assignment", assignment);
-		return "redirect:SubmitAssignment";
+	public String submitAssignment(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
+			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getClass_id()+"/"+assignment.getModule_id()+"/"+ assignment.getAssignment_id() + "/");
+		storageService.store(file, modFolder.toString());
+		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
+		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
+		
+		sms.setEmpId(username);
+		sms.setClassId(assignment.getClass_id());
+		sms.send(emailee, 1);
+		
+		System.out.println("Sent to DB");
+	
+		return "redirect:Assignments";
 		
 
 	}
