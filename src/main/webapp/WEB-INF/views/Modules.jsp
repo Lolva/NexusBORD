@@ -86,18 +86,17 @@
 															<input type="text" required
 																placeholder="${o.module_name}" name="module_name" /> <input
 																type="hidden" value="${o.module_id }" name="module_id" />
-															<input type="submit" value="Edit" />
+															<input class="submissionButtons" type="submit" value="Edit" />
 														</form>
 														<form action="/deleteModule" method="POST"
 															class="form-group">
 															<input type="hidden" name="module_id"
-																value="${o.module_id }" /> <span><input
-																style="color: red;" type="submit" value="Delete module" /></span>
+																value="${o.module_id }" /> <span><input class="dangerButtons" type="submit" value="Delete module" /></span>
 														</form>
 													</div>
 													<!-- Modal footer -->
 													<div class="modal-footer">
-														<button type="button" class="btn btn-danger"
+														<button type="button" class="submissionButtons"
 															data-dismiss="modal">Close</button>
 													</div>
 												</div>
@@ -122,14 +121,16 @@
 													<input type="hidden" name="module_id"
 														value="${o.module_id }" /> <input type="hidden"
 														name="class_id" value="${c.class_id }" /> <input
-														type="hidden" name="stream_id" value="${c.stream_id }" />
-													<input type="file" name="fileName" /> <span><input
-														style="color: blue;" type="submit" value="submit" /></span>
+														type="hidden" name="stream_id" value="${c.stream_id }" />																											
+													<input type="file" name="fileName" />
+														<br>
+														<br>
+													<input class="submissionButtons" type="submit" value="submit" />
 												</form>
 											</div>
 											<!-- Modal footer -->
 											<div class="modal-footer">
-												<button type="button" class="btn btn-danger"
+												<button type="button" class="submissionButtons"
 													data-dismiss="modal">Close</button>
 											</div>
 										</div>
@@ -181,24 +182,35 @@
 											<div class="modal-body">
 												<form action="/addAssignmentFile" method="POST"
 													class="form-group" enctype="multipart/form-data">
-													<input type="text" name="name" placeholder="Enter name" />
+													<input type="text" name="name" placeholder="Enter name" />  
+													<br> 
+													<br>
 													<input type="text" name="desc"
-														placeholder="Enter description" /> <select name="status">
+														placeholder="Enter description" />
+														<br>
+														<br>
+														<select name="status">
 														<option>active</option>
 														<option>inactive</option>
 														<option>completed</option>
-													</select> <input type="date" name="due_date" /> <input
+													</select>
+													<br>
+													<br>
+													<input type="date" name="due_date" />
+													<br>
+													<br>
+													<input
 														type="hidden" name="module_id" value="${o.module_id }" />
 													<input type="hidden" name="class_id" value="${c.class_id }" />
 													<input type="hidden" name="stream_id"
 														value="${c.stream_id }" /> <input type="file"
 														name="fileName" /> <span><input
-														style="color: blue;" type="submit" value="submit" /></span>
+														class="submissionButtons" type="submit" value="submit" /></span>
 												</form>
 											</div>
 											<!-- Modal footer -->
 											<div class="modal-footer">
-												<button type="button" class="btn btn-danger"
+												<button type="button" class="submissionButtons"
 													data-dismiss="modal">Close</button>
 											</div>
 										</div>
@@ -255,17 +267,17 @@
 												<!-- Modal body -->
 												<div class="modal-body">
 													<form action="/addModule" method="POST" class="form-group">
-														<label for="module_name">Enter Module Name</label> <input
+														<label for="module_name">Enter Module Name  </label> <input
 															type="text" name="module_name" placeholder="Module Name"
 															class="form-control" /> <input type="hidden"
 															name="stream_id" value="${c.stream_id }" /> <input
-															class="btn btn-primary btn-md" id="addmodulebtn"
-															type="submit" />
+															class="submissionButtons" id="addmodulebtn"
+															type="submit" style="margin-top:10px;" />
 													</form>
 												</div>
 												<!-- Modal footer -->
 												<div class="modal-footer">
-													<button type="button" class="btn btn-danger"
+													<button type="button" class="submissionButtons"
 														data-dismiss="modal">Close</button>
 												</div>
 											</div>
