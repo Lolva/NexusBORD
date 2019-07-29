@@ -97,7 +97,32 @@
 								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
-								<Button type = "submit" class= "btn btn-basic btn-xs"><ion-icon name="trash"></ion-icon></Button>
+								<!-- Button trigger modal -->
+								<Button type = "button" class= "btn btn-basic btn-xs" data-toggle="modal" data-target="#deleteEmpModal">
+								<ion-icon name="trash"></ion-icon></Button>
+								
+ 								 <!-- Modal -->
+							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+   								 <div class="modal-content">
+   								   <div class="modal-header">
+    							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
+   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+      								</div>
+     							 <div class="modal-body">
+    						    Are you sure you want to delete this employee?
+   								   </div>
+   							   <div class="modal-footer">
+    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   	 				    <button type="submit" class="btn btn-primary">Delete</button>
+    				  </div>
+   					</div>
+ 				</div>
+				</div>			
+							
+
 								${error}
 								</form>
 								</td>
@@ -134,8 +159,34 @@
 								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
-								<Button type = "submit" class= "btn btn-basic btn-xs"><ion-icon name="trash"></ion-icon></Button>
-								${error}
+								
+								<!-- Button trigger modal -->
+								<Button type = "button" class= "btn btn-basic btn-xs" data-toggle="modal" data-target="#deleteEmpModal">
+								<ion-icon name="trash"></ion-icon></Button>
+								
+ 								 <!-- Modal -->
+							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+   								 <div class="modal-content">
+   								   <div class="modal-header">
+    							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
+   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+      								</div>
+     							 <div class="modal-body">
+    						    Are you sure you want to delete this employee?
+   								   </div>
+   							   <div class="modal-footer">
+    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   	 				    <button type="submit" class="btn btn-primary">Delete</button>
+    				  </div>
+   					</div>
+ 				</div>
+				</div>			
+							
+
+							${error}
 								</form>
 								</td>
 							</tr>
@@ -151,6 +202,7 @@
     
     <div id="AddEmployee" class="tab-pane fade"class="row">
 	<form action="/changeClass" style="color: black;" method=POST>
+	<br>
 		<h4>Add Employee to Class</h4>
 		<label for="Employee_Id">Choose Employee ID</label>
 		<div class="dropdown">
@@ -181,7 +233,27 @@
 			  </select>
 			</div>
 			<br>
-			<input type="submit" class="btn btn-primary btn-md" value="Add Employee"/>
+			<input type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addModal" value="Add Employee"/>
+		 <!-- add employee Modal -->
+							<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+   								 <div class="modal-content">
+   								   <div class="modal-header">
+    							    <h5 class="modal-title" id="addModalLabel">Add Employee</h5>
+   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+      								</div>
+     							 <div class="modal-body">
+    						    Are you sure you want to add this employee?
+   								   </div>
+   							   <div class="modal-footer">
+    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   	 				    <button type="submit" class="btn btn-primary">Add</button>
+    		</div>
+    		</div>
+    		</div>
+    		</div>
 		</form>
 		<hr>
 		<h4>Add Employees with a File</h4>
@@ -229,19 +301,18 @@
 		
 		<!-- Delete Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content" >
-		      <div class="modal-header" style="border: none;">
-		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		        <h3 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h3>
-		    
-		      </div>
+		 <div class="modal-dialog" role="document">
+   			<div class="modal-content">
+   		     <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+		        					 </div>
 		      <div class="modal-body" style="border: none;">
-		        <h4>Are you sure you want to delete this class?</h4>
+		        Are you sure you want to delete this class?
 		      </div>
-		      <div class="modal-footer" style="border: none;">
+		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		        <button type="submit" class="btn btn-primary" >Delete</button>
 		      </div>
@@ -252,7 +323,7 @@
    	</form>
     </div>
     <div id="createclass" class="tab-pane fade">
-
+<br>
 	    <h3>Create New Class</h3>
 	    <form action="/addClass" method="POST" class="form-group">
 		   	<label for="stream_id">Enter Stream ID</label>
@@ -270,12 +341,38 @@
 		   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
 		   	
 	   		<br>
-	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
+	   		
+	   		<Button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Edit Class</Button>
+	   		
+	   		<!-- new class Modal -->
+							<div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+   								 <div class="modal-content">
+   								   <div class="modal-header">
+    							    <h5 class="modal-title" id="classModalLabel">Create Class</h5>
+   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+      								</div>
+     							 <div class="modal-body">
+    						    Are you sure you want to create a new class?
+   								   </div>
+   							   <div class="modal-footer">
+    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   	 				    <button type="submit" class="btn btn-primary">Create Class</button>
+    				  </div>
+   					</div>
+ 				</div>
+				</div>
+	   		
+	   		
 	   		<input class="btn btn-primary btn-md" type="reset">
 	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
+    <br>
     	<h4> Edit Classes</h4>
+    	
 	    <form action="/editClass" method="POST">
 	    <label for="class_id" >Choose Class ID</label>
 	   	<div class="dropdown">
@@ -292,7 +389,29 @@
 	   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
 	   	
 	   		<br>
-	   		<input class="btn btn-primary btn-md" id="addclassbtn" type="submit" >
+	   		<Button class="btn btn-primary btn-md" id="editclassbtn" data-toggle="modal" data-target="#editModal">Edit Class</Button>
+	   		
+	   		<!-- edit  Modal -->
+							<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+   								 <div class="modal-content">
+   								   <div class="modal-header">
+    							    <h5 class="modal-title" id="editModalLabel">Edit Class</h5>
+   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		   						     <span aria-hidden="true">&times;</span>
+		        					 </button>
+      								</div>
+     							 <div class="modal-body">
+    						    Are you sure you want to edit this class?
+   								   </div>
+   							   <div class="modal-footer">
+    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+   	 				    <button type="submit" class="btn btn-primary">Edit Class</button>
+    				  </div>
+   					</div>
+ 				</div>
+				</div>
+	   		
 	   	</form>
     </div>
   </div>
