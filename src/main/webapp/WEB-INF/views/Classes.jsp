@@ -370,9 +370,7 @@
 	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
-    <br>
     	<h4> Edit Classes</h4>
-    	
 	    <form action="/editClass" method="POST">
 	    <label for="class_id" >Choose Class ID</label>
 	   	<div class="dropdown">
@@ -389,28 +387,38 @@
 	   	<input type="date" name="end_date" placeholder="End Date" class="form-control">
 	   	
 	   		<br>
-	   		<Button class="btn btn-primary btn-md" id="editclassbtn" data-toggle="modal" data-target="#editModal">Edit Class</Button>
+	   		<!-- Button to Open the Modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+		  Edit Class
+		</button>
 	   		
-	   		<!-- edit  Modal -->
-							<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-   								 <div class="modal-content">
-   								   <div class="modal-header">
-    							    <h5 class="modal-title" id="editModalLabel">Edit Class</h5>
-   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
-      								</div>
-     							 <div class="modal-body">
-    						    Are you sure you want to edit this class?
-   								   </div>
-   							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-   	 				    <button type="submit" class="btn btn-primary">Edit Class</button>
-    				  </div>
-   					</div>
- 				</div>
-				</div>
+	   		<!-- The Modal -->
+		<div class="modal" id="editModal">
+  		<div class="modal-dialog">
+    	<div class="modal-content">
+	   		
+	   		<!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Class</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+       Are you sure you want to edit this class?
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Edit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+      
+      
 	   		
 	   	</form>
     </div>
