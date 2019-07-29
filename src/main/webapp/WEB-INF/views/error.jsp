@@ -64,5 +64,6 @@
 	   		window.history.back(); //   return to previous page
 		}, 10000);
 	</script>
+	<div id="LogoutModalDiv"></div>
 </body>
 </html>
