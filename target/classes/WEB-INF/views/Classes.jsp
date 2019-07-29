@@ -342,7 +342,7 @@
 		   	
 	   		<br>
 	   		
-	   		<button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Edit Class</button>
+	   		<button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Create Class</button>
 	   		
 	   		<!-- new class Modal -->
 							<div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
