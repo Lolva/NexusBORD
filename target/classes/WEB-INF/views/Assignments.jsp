@@ -127,12 +127,12 @@ td, th {
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
-										<li class="active"><a href="#sub${count }"
+										<li class="active"><a href="#all${cl.class_id}"
 											class="nav-link">All Assignments </a></li>
-										<li><a href="#sub${count +1 }" class="nav-link">Assignments
+										<li><a href="#overdue${cl.class_id}" class="nav-link">Assignments
 												OverDue <span class="badge badge-danger">${fn:length(olist)}</span>
 										</a></li>
-										<li><a href="#sub${count + 2 }" class="nav-link">Assignments
+										<li><a href="#toGrade${cl.class_id}" class="nav-link">Assignments
 												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
 										</a></li>
 										<li>
@@ -147,7 +147,7 @@ td, th {
 										</li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade" id="sub${count }">
+										<div class="tab-pane fade" id="all${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>
@@ -167,7 +167,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count +1 }">
+										<div class="tab-pane fade" id="overdue${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>
@@ -185,7 +185,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count + 2 }">
+										<div class="tab-pane fade" id="toGrade${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>
@@ -226,16 +226,16 @@ td, th {
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
-										<li class="active"><a href="#sub${count +3}"
+										<li class="active"><a href="#all${cl.class_id}"
 											class="nav-link"> All Assignments</a></li>
-										<li><a href="#sub${count+4 }" class="nav-link">Graded
+										<li><a href="#graded${cl.class_id}" class="nav-link">Graded
 												Assignments</a></li>
-										<li><a href="#sub${count+5}" class="nav-link">Assignments
+										<li><a href="#toDo${cl.class_id}" class="nav-link">Assignments
 												To Do <span class="badge badge-danger">${fn:length(todoAssignments)}</span>
 										</a></li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade" id="sub${count+3}">
+										<div class="tab-pane fade" id="all${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>
@@ -255,7 +255,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count+4}">
+										<div class="tab-pane fade" id="graded${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>
@@ -279,7 +279,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count+5}">
+										<div class="tab-pane fade" id="toDo${cl.class_id}">
 											<div>
 												<table class="table">
 													<tr>

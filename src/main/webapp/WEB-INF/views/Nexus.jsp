@@ -129,7 +129,7 @@
 				<c:when test="${changelogSize > 0}">
 					<c:forEach items="${changelog}" var="obj">
 						<div class="row" style="padding-left: 20px">
-						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/Assignments">Here</a>.
+						<p>Assignment <span style="color: orange;">${obj.assignment_name}</span> added to your class ${obj.stream_name}. See the Assignment <a href="/Assignments#class${obj.class_id}#${obj.stream_name}#toDo${obj.class_id}">Here</a>.
 						</p>
 						</div>
 					</c:forEach>
