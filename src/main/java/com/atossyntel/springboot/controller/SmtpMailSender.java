@@ -35,10 +35,12 @@ public class SmtpMailSender {
 		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
 		private String bodyStudentGrade1 = "Your instructor has graded assignment ";
 		private String bodyStudentGrade2 = " for class ";		
+		private String bodyStudentGrade3 = ". <br><br> To view your grade, <a href='localhost:8085'>Click Here.</a>";	
 		
 		//Enrollments
 		private final String subjectEnrollment = " NexusBord - New Class Enrollment ";
-		private String bodyClassEnrollment = "Your Instructor has enrolled you in a class. ";
+		private String bodyClassEnrollment = "Your Instructor has enrolled you in class ";
+		private final String bodyClassEnrollment2 = ".<br><br>To view your new class, <a href='localhost:8085'>Click Here.</a>";
 				
 		
 		
@@ -81,11 +83,11 @@ public class SmtpMailSender {
 				//teacher grading an assignment
 				case 2:
 					helper.setSubject(subjectStudentGrade + " for class " + classId);
-					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2 + classId, true);
+					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2 + classId + bodyStudentGrade3, true);
 					break;
 				case 3:
 					helper.setSubject(subjectEnrollment);
-					helper.setText(bodyClassEnrollment);
+					helper.setText(bodyClassEnrollment + classId + bodyClassEnrollment2, true);
 					break;
 				default:
 					System.out.println("Oh no my email broke");
