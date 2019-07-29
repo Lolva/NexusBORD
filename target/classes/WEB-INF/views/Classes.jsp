@@ -37,10 +37,10 @@
 <body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-	//	if (session.getAttribute("username") == null) {
+	//if (session.getAttribute("username") == null) {
 	%>
 	<script>
-		//window.location.href = "/login";
+	//window.location.href = "/login";
 	</script>
 	<%
 	//	}
@@ -325,7 +325,7 @@
     <div id="createclass" class="tab-pane fade">
 <br>
 	    <h3>Create New Class</h3>
-	    <form action="/addClass" method="POST" class="form-group">
+	    <form action="/addClass" method="POST"  >
 		   	<label for="stream_id">Enter Stream ID</label>
    	        <select name="stream_Id" class="form-control">
    	            <c:forEach items="${stream}" var="j">
@@ -342,31 +342,30 @@
 		   	
 	   		<br>
 	   		
-	   		<button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Create Class</button>
+	   		<!-- Button trigger modal -->
+	   		<button type = "button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#classModal">Create Class</button>
 	   		
-	   		<!-- new class Modal -->
-							<div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-   								 <div class="modal-content">
-   								   <div class="modal-header">
-    							    <h5 class="modal-title" id="classModalLabel">Create Class</h5>
-   								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
-      								</div>
-     							 <div class="modal-body">
-    						    Are you sure you want to create a new class?
-   								   </div>
-   							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-   	 				    <button type="submit" class="btn btn-primary">Create Class</button>
-    				  </div>
-   					</div>
- 				</div>
-				</div>
+	   		<!-- Modal -->
+<div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classModalLabel">Create Class</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to create a new class?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create Class</button>
+      </div>
+    </div>
+  </div>
+</div>
 	   		
-	   		
-	   		<input class="btn btn-primary btn-md" type="reset">
 	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
