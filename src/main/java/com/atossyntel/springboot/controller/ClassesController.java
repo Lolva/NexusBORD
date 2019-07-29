@@ -5,13 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.BufferedInputStream;
 import java.util.List;
 import java.util.Map;
 
-
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.util.FileCopyUtils;
 
 import com.atossyntel.springboot.model.ClassBean;
@@ -41,7 +37,6 @@ public class ClassesController {
 	public String init(Model model,  HttpSession session) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
-		
 		List<Map<String,Object>> activeInstructorClasses = classdao.getActiveInstructorClasses((String) session.getAttribute("username"));	
 		model.addAttribute("activeInstructorClasses", activeInstructorClasses);
 		

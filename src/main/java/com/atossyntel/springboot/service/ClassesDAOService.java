@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -91,14 +89,13 @@ public class ClassesDAOService implements ClassesDAO {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MMM-yyyy");  
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime begin = now.plusDays(7);
-		String date = dtf.format(now);
 		String start = dtf.format(begin);
 		String sql = "SELECT s.class_id, to_char(c.start_date, 'Month dd yyyy') AS start_date, to_char(c.end_date, 'Month dd yyyy') AS end_date "
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, "II9999999", start);
-//		results = jTemplate.queryForList(sql, username, start);
+//		results = jTemplate.queryForList(sql, "II9999999", start);
+		results = jTemplate.queryForList(sql, username, start);
 		return results;
 	}
 	
@@ -112,8 +109,6 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	public void addClasses(String employee_id, String stream_Id, Date start_date, Date end_date) {
 		String sql= "INSERT INTO CLASSES(STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?)";
-		Object[] params = new Object[] {stream_Id, start_date, end_date};
-		int[] types = new int[] {Types.VARCHAR, Types.TIMESTAMP, Types.TIMESTAMP };
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jTemplate.update(
 	              connection -> {
@@ -124,10 +119,9 @@ public class ClassesDAOService implements ClassesDAO {
 	                  return ps;
 	              }, keyHolder);
 		String key = (String) keyHolder.getKeys().get("class_id");
-//		System.out.println(key);
 		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
-		this.jTemplate.update(addInstructor, "II9999999", key, 1);
-//		this.jTemplate.update(addInstructor, employee_id, key, 1);
+//		this.jTemplate.update(addInstructor, "II9999999", key, 1);
+		this.jTemplate.update(addInstructor, employee_id, key, 1);
 	}
 	
 	@Override
@@ -135,7 +129,6 @@ public class ClassesDAOService implements ClassesDAO {
 		String sql = "Select Stream_id From Streams";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql);
-//		System.out.println(results);
 		return results;
 		
 	}

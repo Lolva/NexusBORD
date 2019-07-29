@@ -37,13 +37,13 @@
 <body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
-	//if (session.getAttribute("username") == null) {
+	if (session.getAttribute("username") == null) {
 	%>
 	<script>
-	//window.location.href = "/login";
+	window.location.href = "/login";
 	</script>
 	<%
-	//	}
+		}
 	%>
     <header>
         <!-- div for nav bar to be created in -->
