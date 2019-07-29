@@ -1,0 +1,10 @@
+SELECT * FROM assignments a, submissions s WHERE a.assignment_id = s.assignment_id AND s.employee_id = 'SS5061505';
+SELECT * FROM assignments a, submissions s WHERE a.assignment_id = s.assignment_id;
+SELECT * FROM assignments a, submissions s WHERE a.assignment_id = s.assignment_id AND s.EMPLOYEE_ID = 'SS5061505' AND s.GRADE IS NULL;
+SELECT * FROM classes c, enrollments e WHERE c.class_id = e.class_id;
+SELECT * FROM modules m, module_files f WHERE m.MODULE_ID = f.MODULE_ID;
+SELECT * FROM classes c, streams s, lessons l, modules m, assignments a WHERE c.STREAM_ID = s.STREAM_ID AND s.STREAM_ID =l.STREAM_ID AND m.MODULE_ID = l.MODULE_ID AND l.MODULE_ID = a.MODULE_ID;
+SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.EMPLOYEE_ID = 'SS0123456' and m.MODULE_NAME = 'JDBC';
+SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.role_id = 1;
+SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.EMPLOYEE_ID = 'SS0123456' order by a.status;
+SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.EMPLOYEE_ID = 'SS5061505' AND a.status != 'inactive' order by a.due_date, a.status;

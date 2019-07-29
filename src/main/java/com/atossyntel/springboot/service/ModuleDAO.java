@@ -20,5 +20,7 @@ public interface ModuleDAO {
 	public int deleteModuleFile(int module_file_id);
 	public int updateModule(String module_name, int module_id);
 	public int insertModuleFile(String module_id, MultipartFile file);
+	public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc,
+			String status);
 	
 }

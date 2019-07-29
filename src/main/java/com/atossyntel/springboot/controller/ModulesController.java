@@ -159,4 +159,17 @@ public class ModulesController {
 		//System.out.print("going to new page");
 		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
 	}
+	//String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status
+	@RequestMapping(value = "/addAssignmentFile", method = RequestMethod.POST)
+	public String newAssignmentFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
+			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id,
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) {
+		
+		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
+		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
+		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		return "redirect:Modules";
+
+	}
+
 }

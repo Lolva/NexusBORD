@@ -76,7 +76,7 @@ public class ModuleServiceDAO implements ModuleDAO {
 	
 	@Override
 	public int deleteAssignment(int assignment_id) {
-		String sql = "DELETE FROM assignments where assignment_id = ?";
+		String sql = "update assignments SET module_id= '00000' where assignment_id = ?";
 		
 		return jTemplate.update(sql, assignment_id);
 	}
@@ -102,4 +102,20 @@ public class ModuleServiceDAO implements ModuleDAO {
         String sql = "Insert INTO module_Files(module_id, file_name, file_type) values (?, ?, ?)";
         return jTemplate.update(sql, module_id, fileName, fileType);
 	}
+	@Override
+    public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
+        String fullFile = file.getOriginalFilename();
+        int index = fullFile.lastIndexOf(".");
+        String fileName = fullFile.substring(0, index);
+        String fileType = fullFile.substring(index+1, fullFile.length());
+        //String sql1 = "SELECT assignment_id FROM assignments where assignment_id = ( select max(assignment_id) from assignments) ";
+        //int assignment_id = jTemplate.queryForObject(sql1, Integer.class);
+        //assignment_id += 1;
+        //String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
+        
+        String sqlQuery = "INSERT INTO assignments(assignment_name, module_id, "
+                + "description, due_date, status, file_name, file_type) "
+                + "VALUES( ?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?)";
+        return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType);
+    } 
 }
