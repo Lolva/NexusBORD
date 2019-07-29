@@ -81,8 +81,8 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start, date);
-		results = jTemplate.queryForList(sql, username, start, date);
+		results = jTemplate.queryForList(sql, "II9999999", start, date);
+//		results = jTemplate.queryForList(sql, username, start, date);
 		return results;
 	}
 	
@@ -97,8 +97,8 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start);
-		results = jTemplate.queryForList(sql, username, start);
+		results = jTemplate.queryForList(sql, "II9999999", start);
+//		results = jTemplate.queryForList(sql, username, start);
 		return results;
 	}
 	
@@ -126,8 +126,8 @@ public class ClassesDAOService implements ClassesDAO {
 		String key = (String) keyHolder.getKeys().get("class_id");
 //		System.out.println(key);
 		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
-//		this.jTemplate.update(addInstructor, "II9999999", key, 1);
-		this.jTemplate.update(addInstructor, employee_id, key, 1);
+		this.jTemplate.update(addInstructor, "II9999999", key, 1);
+//		this.jTemplate.update(addInstructor, employee_id, key, 1);
 	}
 	
 	@Override
