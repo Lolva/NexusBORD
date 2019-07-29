@@ -36,7 +36,7 @@ public class ClassesDAOService implements ClassesDAO {
 	
 	@Override
 	public List<Map<String,Object>> getStudents(String classId) {
-		String sql = "Select e.first_name, e.last_name, e.email From Employees e, Enrollments s WHERE e.employee_id = s.employee_id AND s.class_ID = ?";
+		String sql = "Select e.first_name, e.last_name, e.email From Employees e, Enrollments s WHERE e.employee_id = s.employee_id AND s.class_ID = ? ORDER BY s.role_id";
 
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, classId);
@@ -143,7 +143,7 @@ public class ClassesDAOService implements ClassesDAO {
 
 	@Override
 	public List<Map<String, Object>> getActiveStudents() {
-		String sql = "SELECT UNIQUE s.class_id, s.employee_id, e.first_name, e.last_name, e.email FROM Employees e, Enrollments s WHERE e.employee_id = s.employee_id";
+		String sql = "SELECT UNIQUE s.class_id, s.employee_id, e.first_name, e.last_name, e.email, s.role_id FROM Employees e, Enrollments s WHERE e.employee_id = s.employee_id ORDER BY s.role_id";
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql);
 		return results;
@@ -251,7 +251,7 @@ public class ClassesDAOService implements ClassesDAO {
                     String employee_id = cell.getStringCellValue();
                     Object results = this.jTemplate.queryForObject(checkquery, new Object[]{employee_id}, Integer.class);
             		if ( ((Number) results).intValue() == 1) {
-            			System.out.println(((Number) results).intValue());
+//            			System.out.println(((Number) results).intValue());
             			this.jTemplate.update(sqlUpdateQuery, class_id, employee_id);
             		} else {
             			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);

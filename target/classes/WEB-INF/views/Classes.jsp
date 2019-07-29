@@ -79,7 +79,7 @@
 			<div class="panel">
 		<table style ="border-collapse:collaspe; padding:5px;width:100%;padding-bottom:10px;padding-top:10px">
 				<tr>
-				    <th> Class Id </th>				    
+				    <th> Employee ID </th>				    
 				    <th> First Name </th>
 				    <th> Last Name </th>
 				    <th> Email </th>
@@ -89,7 +89,7 @@
 				<c:choose>
 		    		<c:when test="${o.class_id==j.class_id}">
 							<tr >
-								<td style="color:black;padding:5px">${j.class_id} </td>
+								<td style="color:black;padding:5px">${j.employee_id} </td>
 								<td style="color:black;padding:5px">${j.first_name} </td>
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
@@ -156,7 +156,7 @@
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
 								<td>
-								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
+								<form name="deleteform" action="/deleteEmployee" method="POST">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
 								
@@ -250,9 +250,9 @@
    							   <div class="modal-footer">
     					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Add</button>
-    		</div>
-    		</div>
-    		</div>
+    						  </div>
+    						  </div>
+    						</div>
     		</div>
 		</form>
 		<hr>
@@ -342,7 +342,7 @@
 		   	
 	   		<br>
 	   		
-	   		<Button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Edit Class</Button>
+	   		<button class="btn btn-primary btn-md" id="addclassbtn" data-toggle="modal" data-target="#classModal">Edit Class</button>
 	   		
 	   		<!-- new class Modal -->
 							<div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
