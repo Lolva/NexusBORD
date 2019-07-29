@@ -27,12 +27,20 @@ public class SmtpMailSender {
 		
 		//Teacher email body
 		private final String bodyTeacherFile = "Your instructor has uploaded a file in the module.";
-		private final String bodyTeacherAssignment = "Your instructor has uploaded an assignment for you to complete";
+		private final String bodyTeacherAssignment0 = "An instructor has uploaded an assignment for you to complete in class ";
+		private final String bodyTeacherAssignment1 = "<br><br>To view this assignment, <a href='localhost:8085'>Login Here.</a>";
 		
 		//Student email body
 		private final String bodyStudentAssignment = " has uploaded an assignment for you to review and grade in class ";
-		private String bodyStudentGrade1 = "Your assignment for assignment ID ";
-		private String bodyStudentGrade2 = " has been graded.";
+		private String bodyStudentGrade1 = "Your instructor has graded assignment ";
+		private String bodyStudentGrade2 = " for class ";		
+		private String bodyStudentGrade3 = ". <br><br> To view your grade, <a href='localhost:8085'>Click Here.</a>";	
+		
+		//Enrollments
+		private final String subjectEnrollment = " NexusBord - New Class Enrollment ";
+		private String bodyClassEnrollment = "Your Instructor has enrolled you in class ";
+		private final String bodyClassEnrollment2 = ".<br><br>To view your new class, <a href='localhost:8085'>Click Here.</a>";
+				
 		
 		
 		@Autowired
@@ -63,7 +71,8 @@ public class SmtpMailSender {
 				//teacher creating an assignment
 				case 0:
 					helper.setSubject(subjectTeacherAssignment);
-					helper.setText(bodyTeacherAssignment, true);
+					helper.setText(bodyTeacherAssignment0 + classId + ". "
+							+ bodyTeacherAssignment1 , true);
 					break;
 				//student submitting an assignment to instructor
 				case 1:
@@ -73,7 +82,12 @@ public class SmtpMailSender {
 				//teacher grading an assignment
 				case 2:
 					helper.setSubject(subjectStudentGrade);
-					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2, true);
+					helper.setText(bodyStudentGrade1 + assignId +"." + bodyStudentGrade3, true);
+					break;
+				//teacher enrolling a student into a class
+				case 3:
+					helper.setSubject(subjectEnrollment);
+					helper.setText(bodyClassEnrollment + classId + bodyClassEnrollment2, true);
 					break;
 				default:
 					System.out.println("Oh no my email broke");

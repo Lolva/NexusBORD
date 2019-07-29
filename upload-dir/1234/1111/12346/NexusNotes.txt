@@ -1,0 +1,44 @@
+-----Classes------
+Class_ID shouldnt need to be entered
+Stream_ID shouldnt need to be entered
+
+Should be a selector based on name
+
+*Edit classes (change dates)
+
+Excel template file
+Update delete employee button
+	trash can icon
+
+update alert box
+
+-----Assignments-----
+error should be dialog box not error page
+
+update submit buttons
+	smaller icons
+
+be able to look at the assignment (keep dl on both)
+
+* pagination
+* add stream button
+
+-----Modules------
+add modules button
+*pagination
+
+----Logout----
+dialog box to confirm
+
+----Email----
+more meaningful email body text
+- email sent on enrollment (how to access website)
+- module file upload
+
+---upload assignments-----
+do it on the same page
+	dont open a new page
+test excel file upload
+
+---general---
+on error, redirect to same page

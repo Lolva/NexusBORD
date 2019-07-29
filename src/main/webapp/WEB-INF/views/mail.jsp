@@ -40,6 +40,8 @@
 	<form method="POST">
 		<label>Email Test:</label> <input type="submit" value="send Email">
 	</form>
+	
+	<a href="/download">Download!</a>
 
 	<!-- Container for logout modal -->	
 	<div id="LogoutModalDiv"></div>

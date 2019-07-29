@@ -171,7 +171,7 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 
 	@Override
 	public List<Map<String, Object>> getModules(String username){
-		String sql = "SELECT DISTINCT m.MODULE_name, m.module_id From modules m, classes c, lessons l, enrollments e WHERE c.STREAM_ID=l.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.EMPLOYEE_ID = ?";
+		String sql = "SELECT DISTINCT m.MODULE_name, m.module_id From modules m, classes c, lessons l, enrollments e WHERE e.class_id=c.class_id AND c.STREAM_ID=l.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.EMPLOYEE_ID = ? AND e.role_id = 1";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, username);
 		return results;
