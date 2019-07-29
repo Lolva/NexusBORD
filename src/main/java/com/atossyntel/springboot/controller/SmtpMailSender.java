@@ -16,7 +16,6 @@ public class SmtpMailSender {
 		private String assignId;
 		private String empId;
 		private String classId;
-		private String instId;
 		
 		//Teacher email subjects
 		private final String subjectTeacherFile = "NexusBORD - Teacher File Upload";
@@ -82,8 +81,8 @@ public class SmtpMailSender {
 					break;
 				//teacher grading an assignment
 				case 2:
-					helper.setSubject(subjectStudentGrade + " for class " + classId);
-					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2 + classId + bodyStudentGrade3, true);
+					helper.setSubject(subjectStudentGrade);
+					helper.setText(bodyStudentGrade1 + assignId +"." + bodyStudentGrade3, true);
 					break;
 				//teacher enrolling a student into a class
 				case 3:

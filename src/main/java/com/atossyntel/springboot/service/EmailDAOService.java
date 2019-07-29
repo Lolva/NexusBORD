@@ -117,6 +117,40 @@ public class EmailDAOService implements EmailDAO {
 		concat = concat.substring(0, concat.length() - 1);
 		
 		System.out.println(concat);
-		return concat;}
-
+		return concat;
+	}
+	
+	@Override
+	public String getEmailEmpName(String empId) {
+		String select = "select first_name from employees where employee_id=?";
+		String fname;
+		fname = jTemplate.queryForObject(select, String.class, empId);
+		
+		System.out.println(fname);
+		
+		String select2 = "select last_name from employees where employee_id=?";
+		String lname;
+		lname = jTemplate.queryForObject(select2, String.class, empId);	
+		
+		return fname + " " + lname;
+		
+	}
+	
+	@Override
+	public String getEmailClassName(String classId) {
+		String select = "SELECT DISTINCT s.stream_name From modules m, classes c, streams s, lessons l, enrollments e WHERE e.class_id=c.class_id AND c.STREAM_ID=s.STREAM_ID AND s.stream_id=l.stream_id AND m.MODULE_ID=l.MODULE_ID  and c.class_id =?";
+		String cname;
+		cname = jTemplate.queryForObject(select, String.class, classId);
+		
+		return cname;
+	}
+	
+	@Override
+	public String getEmailAssignName(String assignID) {
+		String select = "select assignment_name from assignments where assignment_id=?";
+		String aname;
+		aname = jTemplate.queryForObject(select, String.class, assignID);
+		
+		return aname;
+	}
 }

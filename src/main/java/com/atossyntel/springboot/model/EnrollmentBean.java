@@ -4,11 +4,18 @@ import java.sql.Date;
 
 public class EnrollmentBean {
 	String Employee_ID;
+	String old_Class_ID;
 	String Class_ID;
 	String Role_ID;
 	Date Enrollment_Date;
 	
 	
+	public String getOld_Class_ID() {
+		return old_Class_ID;
+	}
+	public void setOld_Class_ID(String old_Class_ID) {
+		this.old_Class_ID = old_Class_ID;
+	}
 	public String getEmployee_ID() {
 		return Employee_ID;
 	}
