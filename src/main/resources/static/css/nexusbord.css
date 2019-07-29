@@ -176,3 +176,43 @@ accordion.active:after {
 fieldset.container {
 	width: 90%; margin-top: 20px; background-color: white;
 }
+.submissionButtons {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3));
+	background:-moz-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+	background:-webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+	background:-o-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+	background:-ms-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+	background:linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#04abd0', endColorstr='#0493b3',GradientType=0);
+	background-color:#04abd0;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #004f61;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #45707a;
+}
+.submissionButtons:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0493b3), color-stop(1, #04abd0));
+	background:-moz-linear-gradient(top, #0493b3 5%, #04abd0 100%);
+	background:-webkit-linear-gradient(top, #0493b3 5%, #04abd0 100%);
+	background:-o-linear-gradient(top, #0493b3 5%, #04abd0 100%);
+	background:-ms-linear-gradient(top, #0493b3 5%, #04abd0 100%);
+	background:linear-gradient(to bottom, #0493b3 5%, #04abd0 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0493b3', endColorstr='#04abd0',GradientType=0);
+	background-color:#0493b3;
+}
+.submissionButtons:active {
+	position:relative;
+	top:1px;
+}
