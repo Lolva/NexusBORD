@@ -85,6 +85,7 @@ public class SmtpMailSender {
 					helper.setSubject(subjectStudentGrade + " for class " + classId);
 					helper.setText(bodyStudentGrade1 + assignId + bodyStudentGrade2 + classId + bodyStudentGrade3, true);
 					break;
+				//teacher enrolling a student into a class
 				case 3:
 					helper.setSubject(subjectEnrollment);
 					helper.setText(bodyClassEnrollment + classId + bodyClassEnrollment2, true);
