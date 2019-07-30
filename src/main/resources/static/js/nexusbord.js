@@ -24,9 +24,9 @@ function navBar(currentPage, activePage, student ){
 					"<div class='modal-body'>" +
 						"<p>Are you sure you want to log out?</p>" +
 					"</div>" +
-					"<div class='modal-footer'>" +
-						"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancel</button>" +
-						"<button type='button' class='btn btn-primary' onclick=\"window.location.href='/logout';\">Logout</button>" + 
+					"<div class='modal-footer' style=\"color: white;\">" +
+						"<a class='inactiveButtons' data-dismiss='modal'>Cancel</button>" +
+						"<a class='submissionButtons' onclick=\"window.location.href='/logout';\">Logout</button>" + 
 					"</div>" +
 				"</div>" +
 			"</div>" +
