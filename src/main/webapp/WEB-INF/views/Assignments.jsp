@@ -288,23 +288,37 @@ td, th {
 														<th>Submit Assignment</th>
 													</tr>
 													<c:forEach items="${todoAssignments}" var="in">
+														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h4 class="modal-title">Upload a File for the Assignment </h4>
+																		<button type="button" class="close" data-dismiss="modal">&times;</button>
+																	</div>
+																	<div class="modal-body">
+																	<form action="/submitAssignment" method="POST" class="form-group" enctype="multipart/form-data">
+																		<input type="hidden" name="employee_id" value="${in.employee_id }" /> 
+																		<input type="hidden" name="assignment_id" value="${in.assignment_id }" />
+																		<input type="hidden" name="stream_id" alue="${cl.stream_id}" /> 
+																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
+																		<input type="hidden" name="class_id" value="${cl.class_id}" />
+																		<input type="file" id="uploadFile" name="fileName"/>
+																		<input class="btn btn-primary" type="submit" value="submit" />
+																	</form>
+																	</div>
+																<!-- Modal footer -->
+																	<div class="modal-footer">
+																		<button type="button" class="submissionButtons" data-dismiss="modal">Close</button>
+																	</div>
+																							
+																</div>
+															</div>
+														</div>
 														<tr>
 															<td>${in.assignment_name}</td>
 															<td>${in.due_date}</td>
-															<!--  assignment_id, stream_id, module_id, and class_id -->
 															<td>
-																<form name="assignment" action="?assignment"
-																	method="POST" enctype="multipart/form-data">
-																	<input type="hidden" name="employee_id"
-																		value="${in.employee_id }" /> <input type="hidden"
-																		name="assignment_id" value="${in.assignment_id }" />
-																	<input type="hidden" name="stream_id"
-																		value="${cl.stream_id}" /> <input type="hidden"
-																		name="module_id" value="${in.module_id}" /> <input
-																		type="hidden" name="class_id" value="${cl.class_id}" />
-																	<input class="submissionButtons" type="submit"
-																		value="submit" />
-																</form>
+																<button type="button" class="submissionButtons" data-toggle="modal" data-target="#submit${cl.class_id}_${in.assignment_id}">Submit </button>
 															</td>
 														</tr>
 													</c:forEach>

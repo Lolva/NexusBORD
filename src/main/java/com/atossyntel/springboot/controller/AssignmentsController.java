@@ -158,6 +158,22 @@ public class AssignmentsController {
 		
 		return "redirect:Assignments";
 	}
+
+	@RequestMapping(value="/submitAssignment", method= RequestMethod.POST)
+	public String newSubmmissionFile(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
+			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getClass_id()+"/"+assignment.getModule_id()+"/"+ assignment.getAssignment_id() + "/");
+		storageService.store(file, modFolder.toString());
+		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
+		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
+		
+		sms.setEmpId(username);
+		sms.setClassId(assignment.getClass_id());
+		sms.send(emailee, 1);
+		
+		System.out.println("Sent to DB");
+		return "redirect:Assignments";
+	}
 	
 	@ModelAttribute("modules")
 	public List<Map<String, Object>> getModules(HttpSession session){
