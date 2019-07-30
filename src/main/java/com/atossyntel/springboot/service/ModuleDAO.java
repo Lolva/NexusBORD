@@ -22,5 +22,7 @@ public interface ModuleDAO {
 	public int insertModuleFile(String module_id, MultipartFile file);
 	public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc,
 			String status);
+	public int editAssignmentFile(String name, MultipartFile file, String dueDate, String moduleId, String desc,
+			String status, String assignment_id);
 	
 }

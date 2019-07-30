@@ -37,7 +37,7 @@ public class ModuleServiceDAO implements ModuleDAO {
 
 	@Override
 	public List<Map<String, Object>> getModuleList(String employee_id) {
-		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.employee_id= ?";
+		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND e.employee_id= ? and e.role_id = 1";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, employee_id);
 		return results;
@@ -117,5 +117,36 @@ public class ModuleServiceDAO implements ModuleDAO {
                 + "description, due_date, status, file_name, file_type) "
                 + "VALUES( ?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?)";
         return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType);
-    } 
+    }
+
+	@Override
+    public int editAssignmentFile(String name, MultipartFile file, String dueDate, String moduleId, String desc, String status, String assignment_id) {
+		
+		/*
+		if(dueDate == null && file == null) {
+       	 String sqlQuery = "Update assignments Set assignment_name = ?, module_id = ?, description = ?, status = ? WHERE assignment_id = ?";
+            return jTemplate.update(sqlQuery, name, moduleId, desc, status, assignment_id);} */
+		if(file.isEmpty()) {
+			System.out.println("file null " + name +  " " +  dueDate + " " + desc + " " + status + " " + assignment_id);
+        String sqlQuery = "Update assignments Set assignment_name = ?, module_id = ?, description = ?, due_date = TO_DATE(?,'YYYY-MM-DD'), status = ? WHERE assignment_id = ?";
+        return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, assignment_id);
+        }
+        /*
+        if(file != null) {
+        	String fullFile = file.getOriginalFilename();
+            int index = fullFile.lastIndexOf(".");
+            String fileName = fullFile.substring(0, index);
+            String fileType = fullFile.substring(index+1, fullFile.length());
+            String sqlQuery = "Update assignments Set assignment_name = ?, module_id = ?, description = ?, status = ?, file_name =?, file_type=? WHERE assignment_id = ?";
+            return jTemplate.update(sqlQuery, name, moduleId, desc, status, fileName, fileType, assignment_id);
+        } */else {
+        	System.out.println("file not null " + name + " " + file.toString() + " " +  dueDate + " " + desc + " " + status + " " + assignment_id);
+        	String fullFile = file.getOriginalFilename();
+            int index = fullFile.lastIndexOf(".");
+            String fileName = fullFile.substring(0, index);
+            String fileType = fullFile.substring(index+1, fullFile.length());
+            String sqlQuery = "Update assignments Set assignment_name = ?, module_id = ?, description = ?, due_date = TO_DATE(?,'YYYY-MM-DD'), status = ?, file_name =?, file_type=? WHERE assignment_id = ?";
+            return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType, assignment_id);
+        }
+	}
 }

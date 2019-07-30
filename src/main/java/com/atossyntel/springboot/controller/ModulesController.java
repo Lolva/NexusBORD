@@ -84,17 +84,17 @@ public class ModulesController {
 		return "redirect:Modules";
 	}
 
-	@RequestMapping(value = "/deleteAssignment", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteAssignment/{id}", method = RequestMethod.GET)
 	public String deleteAssignment(Model model,
-			@ModelAttribute("deleteassignment") InstructorAssignmentsBean assignment) {
-		System.out.println(assignment.toString());
-		System.out.println(moduledao.deleteAssignment(assignment.getAssignment_id()));
+			@PathVariable("id") int id) {
+		System.out.println(id);
+		System.out.println(moduledao.deleteAssignment(id));
 		// System.out.println(moduledao.insertStream(module.getStream_id()));
 		// assignment.setModule_id(result.getParameter("module"));
 		// model.addAttribute("module_id", module.getCourse_id());
 		// model.addAttribute("module_name", module.getModule_name());
 
-		return "redirect:Modules";
+		return "redirect:/Modules";
 	}
 
 	@RequestMapping(value = "/deleteModule", method = RequestMethod.POST)
@@ -170,6 +170,38 @@ public class ModulesController {
 		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
 		return "redirect:Modules";
 
+	}
+	/*<input type="text" name="assignment_name" placeholder="Enter name" />
+	<br> <br> <input type="text" name="desc"
+			placeholder="Enter description" /> <br> <br> <select
+			name="status">
+			<option>active</option>
+			<option>inactive</option>
+			<option>completed</option>
+		</select> <br> <br> <input type="date" name="due_date" />
+		<br> <br> <select><c:forEach items="${modules}" var="mo"><option value="${mo.module_id}">${mo.module_name}</option></c:forEach></select> <input type="hidden" name="assignment_id"
+			value="${k.assignment_id}" /><input type="hidden"
+			name="class_id" value="${c.class_id }" /> <input
+			type="hidden" name="stream_id" value="${c.stream_id }" />
+		<input type="file" name="fileName" /><span><input>
+		ASSIGNMENT_ID
+        ASSIGNMENT_NAME
+        MODULE_ID
+        DESCRIPTION
+        DUE_DATE
+        STATUS
+        FILE_NAME
+        FILE_TYPE*/
+	@RequestMapping(value="/editAssignmentFile", method = RequestMethod.POST)
+	public String editAssignmentFile(Model model, @RequestParam("assignment_id") String assignment_id, @RequestParam("assignment_name") String assignment_name, @RequestParam("module_id") String module_id,
+			@RequestParam("stream_id") int stream_id,
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status, @RequestParam("class_id") String class_id) {
+		System.out.println(assignment_name + " " + file.toString() + " " + module_id + " "  + due_date + " " + desc + " " + status + " " + assignment_id + " " + " " + stream_id + " " + class_id);
+		System.out.println(moduledao.editAssignmentFile(assignment_name, file, due_date, module_id, desc, status, assignment_id));
+		if(!file.isEmpty()) {
+		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		}
+		return "redirect:Modules";
 	}
 
 }
