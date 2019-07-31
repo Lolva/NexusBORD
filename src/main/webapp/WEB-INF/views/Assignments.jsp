@@ -151,13 +151,81 @@ td, th {
 											<div>
 												<table class="table">
 													<tr>
+														<th>Edit Assignment</th>
 														<th>Status</th>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
 													</tr>
 													<c:forEach items="${daList}" var="dl">
 														<c:forEach items="${dl}" var="in">
+															<div class="modal" id="edit${cl.class_id}_${in.assignment_id}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">Edit An Assignment</h4>
+																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		</div>
+																		<div class="modal-body">
+																			<form action="/editAssignmentsFile" method="POST" class="form-group" enctype="multipart/form-data">
+																				<input type="text" name="name" placeholder="Enter name" value="${ in.assignment_name}"/>
+																				<input type="text" name="desc" placeholder="Enter description" value="${ in.description}"/>
+																				<select name="status">
+																					<c:choose>
+																						<c:when test="${in.status == 'active'}">
+																							<option selected>active</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>active</option>
+																						</c:otherwise>
+																					</c:choose>
+																					<c:choose>
+																						<c:when test="${in.status == 'inactive'}">
+																							<option selected>inactive</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>inactive</option>
+																						</c:otherwise>
+																					</c:choose>
+																					<c:choose>
+																						<c:when test="${in.status == 'completed'}">
+																							<option selected>completed</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>completed</option>
+																						</c:otherwise>
+																					</c:choose>
+																				</select>
+																				<input type="date" name="due_date" value="${in.due_date}"/>												
+																				<select name="module_id">
+																								<c:forEach items="${modules}" var ="module">
+																								<c:choose>
+																									<c:when test="${in.module_id == module.module_id}">
+																										<option selected value="${module.module_id}">${module.module_name }</option>
+																									</c:when>
+																									<c:otherwise>
+																										<option value="${module.module_id}">${module.module_name }</option>
+																									</c:otherwise>
+																								</c:choose>
+																								</c:forEach>
+																								</select>
+																								<input type="hidden" name="class_id" value="${cl.class_id }"/>
+																					<input type="hidden" name="stream_id" value="${cl.stream_id }" />
+																					<input type="hidden" name="assignment_id" value="${in.assignment_id}"/>
+																				<input type="file" name="fileName" value="${in.file_name}"/>
+																				<input class="submissionButtons" type="submit" value="submit" /></span>
+																			</form>
+																									</div>
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																		</div>
+																								
+																	</div>
+																</div>
+															</div>
 															<tr>
+																<td>
+																	<button type="button" class="submissionButtons" data-toggle="modal" data-target="#edit${cl.class_id}_${in.assignment_id}">Edit </button>
+																</td>
 																<td>${in.STATUS}</td>
 																<td>${in.assignment_name}</td>
 																<td>${in.due_date}</td>
@@ -291,7 +359,7 @@ td, th {
 														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
 															<div class="modal-dialog">
 																<div class="modal-content">
-																	<div class="modal-header">
+																	<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
 																		<h4 class="modal-title">Upload a File for the Assignment </h4>
 																		<button type="button" class="close" data-dismiss="modal">&times;</button>
 																	</div>
@@ -308,7 +376,7 @@ td, th {
 																	</div>
 																<!-- Modal footer -->
 																	<div class="modal-footer">
-																		<button type="button" class="submissionButtons" data-dismiss="modal">Close</button>
+																		<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
 																	</div>
 																							
 																</div>

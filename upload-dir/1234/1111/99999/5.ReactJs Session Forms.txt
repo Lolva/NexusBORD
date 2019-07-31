@@ -1,0 +1,1387 @@
+When working with forms in React, two types of components are typically used:
+=> Controlled components
+=> Uncontrolled components
+
+Example 1: Binding Data in React (Using Controlled Components)
+
+CSS
+---
+.container {
+  padding-top: 2em;
+}
+
+.intro {
+  font-size: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.input-value {
+  margin-top: 1em;
+  font-size: 1.25em;
+}
+
+.highlight {
+  color: #00d1b2;
+  font-weight: bold;
+}
+
+JS
+--
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'Hello React'};
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e) {
+    this.setState({value: e.target.value});
+  }
+
+  
+  render() {
+    return(
+      <div className="container">
+        <h1 className="intro">Binding data with React</h1>
+        <div className="box">
+          <label className="label">Enter text here</label>
+          <input className="input is-medium" type='text' id='input' value={this.state.value} onChange={this.handleChange} />
+          <p className="input-value">The value of the input is: <span className="highlight">{this.state.value}</span></p>
+        </div>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Input />, document.getElementById('root'));
+
+
+In ReactJS the form elements itself can have events. In addition to the standard DOM events, 3 React Events are:
+
+onChange: fires if there is any change in any of the form's input elements
+onInput: fires for each change in <textarea> and <input> values( onInput is a wrapper around DOM;s onInput. React recommends using onChange around onInput)
+onSubmit: fires when the form is submitted
+
+=========================================
+Example 2: Simple Form: Text Box(Using ref- Using Uncontrolled Components)
+While using uncontrolled component there is no need to use the external event binding methods as events would be bounded by DOM implicitly
+
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(e) {
+    alert('The value is: ' + this.input.value);
+    e.preventDefault();
+  }
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" ref={(input) => this.input = input} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+
+
+ReactDOM.render(<NameForm />, document.getElementById('root'));
+==============================================================
+Example 3: Updating Textbox based on User Input
+
+CSS
+---
+body {
+  height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+.box {
+  width: 300px;
+  h1 {
+    font-size: 20px;
+    margin: 0 0 1rem 0;
+  }
+}
+
+
+JS
+---
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+    this.state = {
+      name: ""
+    };
+  }
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({ name: this.textInput.current.value });
+  };
+  render() {
+    return (
+      <div className="box">
+        <h1> Hello, <span>{!!this.state.name ? this.state.name : "Abel"}!</span></h1>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <div class="field">
+            <label for="name-1">Update Name</label>
+            <div class="control">
+              <input
+                type="text"
+                ref={this.textInput}
+                name="name-1"
+                class="input"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-dark">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+==========================================================================
+Example 4: Login Form
+
+
+JS
+---
+const Welcome = ({user, onSignOut})=> {
+  // This is a dumb "stateless" component
+  return (
+    <div>
+      Welcome <strong>{user.username}</strong>!
+      <a href="javascript:;" onClick={onSignOut}>Sign out</a>
+    </div>
+  )
+}
+
+class LoginForm extends React.Component {
+  
+  // Using a class based component here because we're accessing DOM refs 
+  handleSignIn(e) {
+    e.preventDefault()
+    let username = this.refs.username.value
+    let password = this.refs.password.value
+    this.props.onSignIn(username, password)
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSignIn.bind(this)}>
+        <h3>Sign in</h3>
+        <input type="text" ref="username" placeholder="enter you username" />
+        <input type="password" ref="password" placeholder="enter password" />
+        <input type="submit" value="Login" />
+      </form>
+    )
+  }
+
+}
+
+
+class App extends React.Component {  
+  constructor(props) {
+    super(props)
+    // the initial application state
+    this.state = {
+      user: null
+    }
+  }  
+  // App "actions" (functions that modify state)
+  signIn(username, password) {
+    // This is where you would call Firebase, an API etc...
+    // calling setState will re-render the entire app (efficiently!)
+    this.setState({
+      user: {
+        username,
+        password,
+      }
+    })
+  }
+  
+  signOut() {
+    // clear out user from state
+    this.setState({user: null})
+  }
+  
+  render() {
+    // Here we pass relevant state to our child components
+    // as props. Note that functions are passed using `bind` to
+    // make sure we keep our scope to App
+    return (
+      <div>
+        <h1>My cool App</h1>
+        { 
+          (this.state.user) ? 
+            <Welcome 
+             user={this.state.user} 
+             onSignOut={this.signOut.bind(this)} 
+            />
+          :
+            <LoginForm 
+             onSignIn={this.signIn.bind(this)} 
+            />
+        }
+      </div>
+    )
+    
+  }
+  
+}
+
+ReactDOM.render(<App/>, document.getElementById("root"))
+
+
+==========================================================================
+Example 5: Simple Contact Form
+
+CSS
+---
+body {
+  padding: 30px 20%;
+}
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+
+JS
+--
+//Form component
+class ContactForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email:''
+    };
+
+    this.handleChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    
+    this.setState({
+      [name]: value
+    });
+    console.log('Change detected. State updated' + name + ' = ' + value);
+  }
+
+  handleSubmit(event) {
+    alert('A form was submitted: ' + this.state.name + ' // ' + this.state.email);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit} >
+          <div className="form-group">
+            <label for="nameImput">Name</label>
+            <input type="text" name="name" value={this.state.name} onChange={this.handleChange} className="form-control" id="nameImput" placeholder="Name" />
+          </div>
+          <div className="form-group">
+            <label for="emailImput">Name</label>
+            <input name="email" type="email" value={this.state.email} onChange={this.handleChange} className="form-control" id="emailImput" placeholder="email@domain.com" />
+          </div>
+          <input type="submit" value="Submit" className="btn btn-primary" />
+        </form>
+      </div>
+    )
+  }
+}
+
+class MainTitle extends React.Component {
+  render(){
+    return(
+      <h1>React Form example</h1>
+    )
+  }
+}
+
+class App extends React.Component {
+  render(){
+    return(
+      <div>
+        <MainTitle/>
+        <ContactForm/>
+      </div>
+    )
+  }
+}
+
+React.render(<App/>, document.getElementById('root'))
+
+
+==============================================================================
+
+React's composition model lets you organize your React components into smaller reusable code. Each component exists as an independent functional unit and an hierarchy of components can be used to represent a specific feature. This structure works particularly well with forms. You can create custom components for <input>, <textarea>, <select>, etc. and reuse them to compose a FormContainer component.
+
+Example 6: React Forms - Login Form(Simple Form with multiple components)
+
+CSS
+---
+#app {
+  display: flex;
+}
+
+#app > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 350px;
+  align-items: center;
+  justify-content: center;
+}
+
+
+JS
+--
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div>
+        <h1>{this.props.text}</h1>
+      </div>
+    )
+  }
+}
+
+class Footer extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  render() {
+    return <div><h3>{this.props.text}</h3></div>
+  }
+}
+
+class Input extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      inputVal: ""
+    }
+    this.changeHandler = this.changeHandler.bind(this)
+  }
+    
+  changeHandler(e) {
+    this.props.parentFunction(e.target.value)
+  }
+  
+  render() {
+    return (
+      <div>
+        <label>{this.props.labelName}</label>
+        <input type={this.props.inputType} id={this.props.id} onChange={this.changeHandler} />
+      </div>
+    )
+  }
+}
+
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: "",
+      password: ""
+    }
+    this.clickHandler = this.clickHandler.bind(this)
+    this.setUsername = this.setUsername.bind(this)
+    this.setPassword = this.setPassword.bind(this)
+  }
+  
+  setUsername(username) {
+    this.setState({username: username})
+  }
+  
+  setPassword(password) {
+    this.setState({password: password})
+  }
+  
+  clickHandler() {
+    // put your own code here
+    alert(`Username: ${this.state.username} Password: ${this.state.password}`)
+  }
+  
+  render() {
+    return (
+      <div>
+        <Input id ="username" labelName="Username: " inputType="text" parentFunction={this.setUsername}  />
+        <Input id ="password" labelName="Password: " inputType="password" parentFunction={this.setPassword} /> 
+        <button onClick={this.clickHandler}>{this.props.buttonName}</button>
+      </div>
+    )
+  }
+}
+
+class Content extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  render() {
+    return (
+      <div>
+        <h2>{this.props.title}</h2>
+        <LoginForm buttonName="Submit"/>
+      </div>
+    )
+  }
+}
+
+class Main extends React.Component {
+  render() {
+    return (
+      <div>
+        <Header text="React Login Example"/>
+        <Content title="Enter your credentials"/>
+        <Footer text="Put some style on it"/>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<Main />, document.getElementById('root'))
+
+--------------------------------------------------------------
+Example 7: React Forms - Multiple Components (Seperate Components for Button,Inputs,Checkbox,etc...)
+
+HTML
+-----
+<div class="react-form-container"></div>
+
+CSS
+---
+html {
+  font-size: 16px;
+}
+
+body {
+  font: 100% / 1.414 sans-serif;
+}
+
+form {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 320px;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  
+  & + & {
+    margin-top: 24px;
+  }
+}
+
+label {
+  margin-bottom: 8px;
+  display: block;
+  color: #2b2e4a;
+}
+
+input:not([type=checkbox]):not([type=radio]),
+select,
+textarea {
+  padding: 8px;
+  width: 100%;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #bdc3c7;
+  border-left: 0;
+  transition: border-bottom-color .15s ease-in;
+  
+  &:focus {
+    outline: 0;
+    border-bottom-color: #3fc1c9;
+  }
+}
+
+input[type=checkbox],
+input[type=radio] {
+  margin-right: 8px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3fc1c9;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color .15s ease-in;
+  
+  &:focus:active {
+    background-color: darken(#3fc1c9, 8%);
+  }
+  
+  &:focus {
+    outline: 0;
+  }
+  
+  &:hover {
+    background-color: lighten(#3fc1c9, 15%);
+  }
+}
+
+JS
+----
+const formContainer = document.querySelector('.react-form-container');
+
+// Create component for button
+class Button extends React.Component {
+  render() {
+    return (
+      <fieldset>
+        <button
+          type={this.props.type || 'button'}
+          value={this.props.value || null}
+        >
+          {this.props.text}
+        </button>
+      </fieldset>
+    );
+  }
+};
+
+// Create component for datalist input
+class Datalist extends React.Component {
+  render() {
+    // Get all options from option prop
+    const dataOptions = this.props.options.split(', ');
+
+    // Generate list of options
+    const dataOptionsList = dataOptions.map((dataOption, index) => {
+      return <option key={index} value={dataOption} />
+    });
+
+    return (
+      <fieldset>
+        <Label
+          hasLabel={this.props.hasLabel}
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        />
+        
+        <input list={this.props.htmlFor} />
+          
+        <datalist
+          defaultValue=''
+          id={this.props.htmlFor}
+          name={this.props.name || null}
+          required={this.props.required || null}
+        >
+          <option value='' disabled>Select one option</option>
+
+          {dataOptionsList}
+        </datalist>
+      </fieldset>
+    );
+  }
+};
+
+// Create component for checkbox input
+class Checkbox extends React.Component {
+  render() {
+    return (
+      <fieldset>
+        <label
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        >
+          <input
+            id={this.props.htmlFor}
+            name={this.props.name || null}
+            required={this.props.required || null}
+            type='checkbox'
+          />
+          {this.props.label}
+        </label>
+      </fieldset>
+    );
+  }
+}
+
+// Create component for label
+class Label extends React.Component {
+  render() {
+    if (this.props.hasLabel === 'true') {
+      return <label htmlFor={this.props.htmlFor}>{this.props.label}</label>
+    }
+  }
+}
+
+// Create component for input
+class Input extends React.Component {
+  render() {
+    return (
+      <fieldset>
+        <Label
+          hasLabel={this.props.hasLabel}
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        />
+
+        <input
+          id={this.props.htmlFor}
+          max={this.props.max || null}
+          min={this.props.min || null}
+          name={this.props.name || null}
+          placeholder={this.props.placeholder || null}
+          required={this.props.required || null}
+          step={this.props.step || null}
+          type={this.props.type || 'text'}
+        />
+      </fieldset>
+    );
+  }
+}
+
+// Create component for radio input
+class Radio extends React.Component {
+  render() {
+    return (
+      <fieldset>
+        <label
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        >
+          <input
+            id={this.props.htmlFor}
+            name={this.props.name || null}
+            required={this.props.required || null}
+            type='radio'
+          />
+          {this.props.label}
+        </label>
+      </fieldset>
+    );
+  }
+}
+
+// Create component for select input
+class Select extends React.Component {
+  render() {
+    // Get all options from option prop
+    const selectOptions = this.props.options.split(', ');
+
+    // Generate list of options
+    const selectOptionsList = selectOptions.map((selectOption, index) => {
+      return <option key={index} value={index}>{selectOption}</option>
+    });
+
+    return (
+      <fieldset>
+        <Label
+          hasLabel={this.props.hasLabel}
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        />
+        
+        <select
+          defaultValue=''
+          id={this.props.htmlFor}
+          name={this.props.name || null}
+          required={this.props.required || null}
+        >
+          <option value='' disabled>Select one option</option>
+
+          {selectOptionsList}
+        </select>
+      </fieldset>
+    );
+  }
+};
+
+// Create component for textarea
+class Textarea extends React.Component {
+  render() {
+    return (
+      <fieldset>
+        <Label
+          hasLabel={this.props.hasLabel}
+          htmlFor={this.props.htmlFor}
+          label={this.props.label}
+        />
+
+        <textarea
+          cols={this.props.cols || null}
+          id={this.props.htmlFor}
+          name={this.props.name || null}
+          required={this.props.required || null}
+          rows={this.props.rows || null}
+        >
+        </textarea>
+      </fieldset>
+    );
+  }
+};
+
+// Create component for form
+class Form extends React.Component {
+  render() {
+    return (
+      <form method='' action=''>
+        <Input
+          hasLabel='true'
+          htmlFor='textInput'
+          label='Text input'
+          required='true'
+          type='text'
+        />
+        
+        <Input
+          hasLabel='true'
+          htmlFor='emailInput'
+          label='Email input'
+          required='true'
+          type='email'
+        />
+        
+        <Input
+          hasLabel='true'
+          htmlFor='numberInput'
+          label='Number input'
+          required='true'
+          type='number'
+          min='0.5'
+          max='100'
+          step='0.5'
+        />
+        
+        <Input
+          hasLabel='true'
+          htmlFor='passwordInput'
+          label='Password input'
+          required='true'
+          type='password'
+        />
+        
+        <Select
+          hasLabel='true'
+          htmlFor='select'
+          label='Select'
+          options='one, two, three, option four, five'
+          required='true'
+        />
+        
+        <Datalist
+          hasLabel='true'
+          htmlFor='datalist'
+          label='Datalist'
+          options='Chrome, Edge, Firefox, Internet Explorer, Opera, Safari, Vivaldi'
+          required='true'
+        />
+        
+        <Textarea
+          hasLabel='true'
+          htmlFor='textarea'
+          label='Textarea'
+          required='true'
+        />
+        
+        <Checkbox
+          hasLabel='true'
+          htmlFor='checkbox'
+          label='Checkbox'
+          required='true'
+        />
+        
+        <Radio
+          hasLabel='true'
+          htmlFor='radioOne'
+          label='Radio one'
+          name='radios'
+          required='true'
+        />
+        
+        <Radio
+          hasLabel='true'
+          htmlFor='radioTwo'
+          label='Radio two'
+          name='radios'
+          required='true'
+        />
+        
+        <Button
+          type='submit'
+          value='submit'
+          text='Send form'
+        />
+      </form>
+    )
+  }
+}
+
+// Render Form component
+ReactDOM.render(<Form />, formContainer);
+=========================================================================================
+Multi-Step Forms
+=========================================================================================
+One way to deal with long, complex forms is to break them up into multiple steps. You know, answer one set of questions, move on to another, then maybe another, and so on and so forth. We often refer to these as multi-step forms
+
+Multi-step forms can be a great idea! By only showing a few inputs on a screen at a time, the form may feel more digestible and prevent users from feeling overwhelmed by a sea of form fields. 
+=========================================================================================
+Example 8: Multipart/MultiStep Forms
+
+class MasterForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentStep: 1,
+      email:  '',
+      username: '',
+      password: '', 
+    }
+  }
+
+  handleChange = event => {
+    const {name, value} = event.target
+    this.setState({
+      [name]: value
+    })    
+  }
+   
+  handleSubmit = event => {
+    event.preventDefault()
+    const { email, username, password } = this.state
+    alert(`Your registration detail: \n 
+           Email: ${email} \n 
+           Username: ${username} \n
+           Password: ${password}`)
+  }
+  
+  _next = () => {
+    let currentStep = this.state.currentStep
+    currentStep = currentStep >= 2? 3: currentStep + 1
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+    
+  _prev = () => {
+    let currentStep = this.state.currentStep
+    currentStep = currentStep <= 1? 1: currentStep - 1
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+
+/*
+* the functions for our button
+*/
+previousButton() {
+  let currentStep = this.state.currentStep;
+  if(currentStep !==1){
+    return (
+      <button 
+        className="btn btn-secondary" 
+        type="button" onClick={this._prev}>
+      Previous
+      </button>
+    )
+  }
+  return null;
+}
+
+nextButton(){
+  let currentStep = this.state.currentStep;
+  if(currentStep <3){
+    return (
+      <button 
+        className="btn btn-primary float-right" 
+        type="button" onClick={this._next}>
+      Next
+      </button>        
+    )
+  }
+  return null;
+}
+  
+  render() {    
+    return (
+      <React.Fragment>
+      <h1>React Wizard Form ?????</h1>
+      <p>Step {this.state.currentStep} </p> 
+
+      <form onSubmit={this.handleSubmit}>
+      {/* 
+        render the form steps and pass required props in
+      */}
+        <Step1 
+          currentStep={this.state.currentStep} 
+          handleChange={this.handleChange}
+          email={this.state.email}
+        />
+        <Step2 
+          currentStep={this.state.currentStep} 
+          handleChange={this.handleChange}
+          username={this.state.username}
+        />
+        <Step3 
+          currentStep={this.state.currentStep} 
+          handleChange={this.handleChange}
+          password={this.state.password}
+        />
+        {this.previousButton()}
+        {this.nextButton()}
+
+      </form>
+      </React.Fragment>
+    );
+  }
+}
+
+function Step1(props) {
+  if (props.currentStep !== 1) {
+    return null
+  } 
+  return(
+    <div className="form-group">
+      <label htmlFor="email">Email address</label>
+      <input
+        className="form-control"
+        id="email"
+        name="email"
+        type="text"
+        placeholder="Enter email"
+        value={props.email}
+        onChange={props.handleChange}
+        />
+    </div>
+  );
+}
+
+function Step2(props) {
+  if (props.currentStep !== 2) {
+    return null
+  } 
+  return(
+    <div className="form-group">
+      <label htmlFor="username">Username</label>
+      <input
+        className="form-control"
+        id="username"
+        name="username"
+        type="text"
+        placeholder="Enter username"
+        value={props.username}
+        onChange={props.handleChange}
+        />
+    </div>
+  );
+}
+
+function Step3(props) {
+  if (props.currentStep !== 3) {
+    return null
+  } 
+  return(
+    <React.Fragment>
+    <div className="form-group">
+      <label htmlFor="password">Password</label>
+      <input
+        className="form-control"
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        value={props.password}
+        onChange={props.handleChange}
+        />      
+    </div>
+    <button className="btn btn-success btn-block">Sign up</button>
+    </React.Fragment>
+  );
+}
+
+ReactDOM.render(<MasterForm />, document.getElementById('root'))
+
+
+<Step1/> component will render an email address input
+<Step2/> will render a username input
+<Step3/> will render a password input and a submit button
+
+=======================================================================
+Creating Reusable Form Components
+=======================================================================
+Example 1: Sample Form
+HTML
+----
+<div class="container">
+  <div id='myForm'></div>
+</div>
+
+JS
+---
+// Form component
+var Form = React.createClass({
+    render: function() {
+        return (
+            <form>
+                <fieldset>
+                    <legend>RSVP</legend>
+
+                    <label htmlFor='name'>Name
+                        <input id='name' name='name' type='text' />
+                    </label>
+
+                    <label htmlFor='email'>Email Address
+                        <input id='email' name='email' type='email' />
+                    </label>
+
+                    <input type='submit' />
+                </fieldset>
+            </form>
+        );
+    }
+});
+
+React.render(<Form />, document.getElementById('myForm'));
+=======================================================================
+Example 2: Reusing Components
+
+// InputGroup component
+var InputGroup = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <input id={this.props.id} name={this.props.id} type={this.props.type} />
+            </label>
+        );
+    }
+});
+
+// Form component
+var Form = React.createClass({
+    render: function() {
+        return (
+            <form>
+                <fieldset>
+                    <legend>Basic Stuff</legend>
+
+                    <InputGroup id={'name'} type={'text'} title={'Name'} />
+                    <InputGroup id={'email'} type={'email'} title={'Email Address'} />
+
+                    <input type='submit' />
+                </fieldset>
+            </form>
+        );
+    }
+});
+
+React.render(<Form />, document.getElementById('myForm'));
+=======================================================================
+Creating the <InputGroup /> component is a great first step, but it cannot yet handle textareas, selects, inline checkboxes, or inline radio buttons. It could be modified to handle these elements, or new React components could be used. The following example shows the functionality of a <select> element offloaded to a new component, called <Dropdown />, which accepts an array of options that render as the <select>’s options.
+=======================================================================
+Example 3: Drop-Downs and TextBoxes as Re-usable components
+
+// Dropdown component
+var Dropdown = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <select id={this.props.id} name={this.props.id}>
+                    {this.props.options.map(function(option, i) {
+                        return <option val={option} key={i}>{option}</option>
+                    })}
+                </select>
+            </label>
+        );
+    }
+});
+
+// InputGroup component
+var InputGroup = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <input id={this.props.id} name={this.props.id} type={this.props.type} />
+            </label>
+        );
+    }
+});
+
+// Form component
+var Form = React.createClass({
+    render: function() {
+        return (
+            <form>
+                <fieldset>
+                    <legend>RSVP</legend>
+
+                    <InputGroup id={'name'} type={'text'} title={'Name'} />
+                    <InputGroup id={'email'} type={'email'} title={'Email Address'} />
+
+                    <Dropdown
+                        id={'diet'}
+                        type={'select'}
+                        title={'Dietary Needs'}
+                        options={DIETARY_OPTIONS} />
+
+                    <input type='submit' />
+                </fieldset>
+            </form>
+        );
+    }
+});
+
+var DIETARY_OPTIONS = ['None', 'Gluten-free', 'Nut-free', 'Vegan', 'Other'];
+
+React.render(<Form />, document.getElementById('myForm'));
+
+=======================================================================
+Example 4: Dynamically Generating Component(Hiding and Showing)
+
+JSP
+----
+// Dropdown component
+var Dropdown = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                {/* Set 'onChange' to the passed-in change handler */}
+                <select id={this.props.id} name={this.props.id} onChange={this.props.handleChange}>
+                    {this.props.options.map(function(option, i) {
+                        return <option val={option} key={i}>{option}</option>
+                    })}
+                </select>
+            </label>
+        );
+    }
+});
+
+// InputGroup component
+var InputGroup = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <input id={this.props.id} name={this.props.id} type={this.props.type} />
+            </label>
+        );
+    }
+});
+
+// Form component
+var Form = React.createClass({
+    getInitialState: function() {
+        return {
+            otherDiet: false
+        };
+    },
+    handleChangeDiet: function(event) {
+        this.setState({
+            otherDiet: event.target.value == 'Other'
+        });
+    },
+    render: function() {
+        return (
+            <form>
+                <fieldset>
+                    <legend>RSVP</legend>
+
+                    <InputGroup id={'name'} type={'text'} title={'Name'} />
+                    <InputGroup id={'email'} type={'email'} title={'Email Address'} />
+
+                    <Dropdown
+                        id={'diet'}
+                        type={'select'}
+                        title={'Dietary Considerations'}
+                        options={DIETARY_OPTIONS}
+                        handleChange={this.handleChangeDiet} /> {/* Set up the change handler */}
+
+                    {this.state.otherDiet
+                        ? <InputGroup id={'otherDiet'} type={'text'} title={'Please Specify'} />
+                        : null
+                    }
+
+                    <input type='submit' />
+                </fieldset>
+            </form>
+        );
+    }
+});
+
+var DIETARY_OPTIONS = ['None', 'Gluten-free', 'Nut-free', 'Vegan', 'Other'];
+
+React.render(<Form />, document.getElementById('myForm'));
+
+=======================================================================
+Example 5: Repeatable Components/Sections
+
+HTML
+----
+<div class="container">
+  <div id='myForm'></div>
+</div>
+
+JS
+---
+// Repeatable component
+var Repeatable = React.createClass({
+    getInitialState: function() {
+        // The initial state is a copy of the passed-in children elements
+        return {
+            repeatedItems: [new Array().concat(this.props.children)]
+        };
+    },
+    handleClick: function(cmd) {
+        var newItems = this.state.repeatedItems;
+        
+        // The list is added to or removed from based on the user controls
+        if (cmd == 'inc' && newItems.length < this.props.maxRepeat) {
+            newItems.push(new Array().concat(this.props.children));
+        } else if (cmd == 'dec' && newItems.length > this.props.minRepeat) {
+            newItems.splice(-1,1);
+        }
+
+        // The list is updated and the UI re-rendered
+        this.setState({
+            repeatedItems: newItems
+        });
+    },
+    render: function() {
+        var titleRepeat = this.props.titleRepeat;
+        // Since the children are an array of elements, loop through twice
+        // This is brittle in handling children with nested elements
+        return (
+            <div>
+                {this.state.repeatedItems.map(function(itemGroup, i) {
+                    return (
+                        <fieldset key={i + 1}>
+                            <legend>{titleRepeat}</legend>
+
+                            {itemGroup.map(function(item) {
+                                return React.cloneElement(item, {id: item.props.id + '-' + (i + 1)});
+                            })}
+                        </fieldset>
+                    );
+                })}
+
+                {/* User controls */}
+                <a onClick={this.handleClick.bind(this, 'dec')} className='button tiny repeat-control'>Remove</a>
+                <a onClick={this.handleClick.bind(this, 'inc')} className='button tiny repeat-control'>Add</a>
+            </div>
+        );
+    }
+});
+
+// Dropdown component
+var Dropdown = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <select id={this.props.id} name={this.props.id} onChange={this.props.handleChange}>
+                    {this.props.options.map(function(option, i) {
+                        return <option val={option} key={i}>{option}</option>
+                    })}
+                </select>
+            </label>
+        );
+    }
+});
+
+// InputGroup component
+var InputGroup = React.createClass({
+    render: function() {
+        return (
+            <label htmlFor={this.props.id}>{this.props.title}
+                <input id={this.props.id} name={this.props.id} type={this.props.type} />
+            </label>
+        );
+    }
+});
+
+// Form component
+var Form = React.createClass({
+    getInitialState: function() {
+        return {
+            otherDiet: false
+        };
+    },
+    handleChangeDiet: function(event) {
+        this.setState({
+            otherDiet: event.target.value == 'Other'
+        });
+    },
+    render: function() {
+        return (
+            <form>
+                <fieldset>
+                    <legend>RSVP</legend>
+
+                    <InputGroup id={'name'} type={'text'} title={'Name'} />
+                    <InputGroup id={'email'} type={'email'} title={'Email Address'} />
+
+                    <Dropdown
+                        id={'diet'}
+                        type={'select'}
+                        title={'Dietary Considerations'}
+                        options={DIETARY_OPTIONS}
+                        handleChange={this.handleChangeDiet} />
+
+                    {this.state.otherDiet
+                        ? <InputGroup id={'otherDiet'} type={'text'} title={'Please Specify'} />
+                        : null
+                    }
+
+                    {/* Pass in minimum, maximum, and title for each repeating unit */}
+                    <Repeatable minRepeat={1} maxRepeat={5} titleRepeat='Invitee'>
+                            <InputGroup 
+                                id={'inviteeName'} 
+                                type='text' 
+                                title='Invite Name' 
+                                key={'inviteeName'} />
+
+                            <InputGroup 
+                                id={'inviteeEmail'} 
+                                type='email' 
+                                title='Invitee Email' 
+                                key={'inviteeEmail'} />
+                    </Repeatable>
+
+                    <input type='submit' className='button' />
+                </fieldset>
+            </form>
+        );
+    }
+});
+
+var DIETARY_OPTIONS = ['None', 'Gluten-free', 'Nut-free', 'Vegan', 'Other'];
+
+React.render(<Form />, document.getElementById('myForm'));
+
+=======================================================================

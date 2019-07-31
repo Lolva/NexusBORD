@@ -175,6 +175,22 @@ public class AssignmentsController {
 		return "redirect:Assignments";
 	}
 	
+	@RequestMapping(value="/editAssignmentsFile", method = RequestMethod.POST)
+	public String editAssignmentsFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
+			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id, @RequestParam("assignment_id") String assignment_id,
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
+			
+		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
+		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		
+		String emailee = emailDAO.getEmailNewAssignment(class_id);
+		String className = emailDAO.getEmailClassName(class_id);
+		sms.setClassId(className);
+		sms.send(emailee, 0);
+		
+		return "redirect:Assignments";
+	}
+	
 	@ModelAttribute("modules")
 	public List<Map<String, Object>> getModules(HttpSession session){
 		
