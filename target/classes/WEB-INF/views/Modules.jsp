@@ -58,7 +58,7 @@
 			</ul>
 			<div class="tab-content">
 				<c:forEach items="${classes}" var="c">
-					<div id="d${c.class_id}" class="tab-pane fade in active">
+					<div id="d${c.class_id}" class="tab-pane fade in">
 						<c:forEach items="${modules}" var="o">
 							<c:choose>
 								<c:when test="${o.class_id==c.class_id}">
