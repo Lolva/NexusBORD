@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,11 +99,7 @@
 																value="Delete module" /></span>
 														</form>
 													</div>
-													<!-- Modal footer -->
-													<div class="modal-footer">
-														<button type="button" class="submissionButtons"
-															data-dismiss="modal">Close</button>
-													</div>
+													
 												</div>
 											</div>
 										</div>
@@ -121,20 +119,17 @@
 											<div class="modal-body">
 												<form action="/addModuleFile" method="POST"
 													class="form-group" enctype="multipart/form-data">
-													<input type="hidden" name="module_id"
+													Name: <input type="text" name="name" /> Description: <input type="text"
+														name="desc" /> <input type="hidden" name="module_id"
 														value="${o.module_id }" /> <input type="hidden"
 														name="class_id" value="${c.class_id }" /> <input
 														type="hidden" name="stream_id" value="${c.stream_id }" />
-													<input type="file" name="fileName" /> <br> <br>
+													File: <input type="file" name="fileName" /> <br> <br>
 													<input class="submissionButtons" type="submit"
 														value="submit" />
 												</form>
 											</div>
-											<!-- Modal footer -->
-											<div class="modal-footer">
-												<button type="button" class="submissionButtons"
-													data-dismiss="modal">Close</button>
-											</div>
+											
 										</div>
 									</div>
 								</div>
@@ -151,11 +146,59 @@
 											</c:choose></td>
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
+										<div class="modal" id="mfe${j.module_file_id }">
+									<div class="modal-dialog">
+										<div class="modal-content">
+
+											<!-- Modal Header -->
+											<div class="modal-header">
+												<h4 class="modal-title">Edit module file:</h4>
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											</div>
+											<!-- Modal body -->
+											<div class="modal-body">
+												<form action="/editModuleFile" method="POST"
+													class="form-group" enctype="multipart/form-data">
+													Name: <input type="text" name="name" /> Description: <input type="text"
+														name="desc" /> <input type="hidden" name="module_id"
+														value="${o.module_id }" /> <input type="hidden"
+														name="module_file_id" value="${j.module_file_id }" /> <input
+														type="hidden" name="stream_id" value="${c.stream_id }" />
+													File:<input type="file" name="file" /> <br> <br>
+													<input class="submissionButtons" type="submit"
+														value="submit" />
+												</form>
+											</div>
+											
+										</div>
+									</div>
+								</div>
 										<c:choose>
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
+												<td id="${k.assignment_id}"
+														style="color: black; width: 200px"><a
+														href="/downloadModule/${c.stream_id}/${o.module_id}/${j.file_name}/${j.file_type}">
+															${j.name}</a>
+														<c:choose>
+															<c:when test="${c.role_id == 1}">
+																<a class=" dropdown-toggle dropdown-toggle-split "
+																	data-toggle="dropdown" aria-haspopup="true"
+																	aria-expanded="false"> <span class="sr-only">Toggle
+																		Dropdown</span>
+																</a>
+																<div class="dropdown-menu">
+																	<a class="dropdown-item" data-toggle="modal"
+																		data-target="#mfe${j.module_file_id}">Edit</a> <a
+																		class="dropdown-item"
+																		href="/deleteModuleFile/${j.module_file_id }">Delete</a>
+																</div>
+															</c:when>
+														</c:choose>
+													</td><td>${j.description }</td>
+												<!-- 
 													<td style="color: black; width: 200px"><a
-														href="/download/${c.stream_id}/${c.class_id}/${o.module_id}/${j.file_name}/${j.file_type}">
+														href="/downloadModule/${c.stream_id}/${o.module_id}/${j.file_name}/${j.file_type}">
 															${j.file_name} </a></td>
 													<c:choose>
 														<c:when test="${c.role_id == 1}">
@@ -166,9 +209,9 @@
 																		value="${j.module_file_id}" /> <span><input
 																		style="color: red; width: 28px; padding-top: 1px; padding-right: 0px; padding-bottom: 2px; padding-left: 0px; font-size: 16px; border-top-width: 2px;"
 																		type="submit" value="x" /></span>
-																</form></td>
+																</form></td> 
 														</c:when>
-													</c:choose>
+													</c:choose> -->
 												</tr>
 											</c:when>
 										</c:choose>
@@ -237,44 +280,45 @@
 													<div class="modal-body">
 														<form action="/editAssignmentFile" method="POST"
 															class="form-group" enctype="multipart/form-data">
-															<input type="text" name="assignment_name"
-																value="${k.assignment_name }" /> <br> <br> <input
-																type="text" name="desc" value="${k.description }" /> <br>
-															<br> <select name="status">
+															Assignment Name: <input type="text"
+																name="assignment_name" value="${k.assignment_name }" />
+															<br> <br> Description: <input type="text"
+																name="desc" value="${k.description }" /> <br> <br>
+															Status: <select name="status">
 																<option>active</option>
 																<option>inactive</option>
 																<option>completed</option>
-															</select> <br> <br> <input type="text" value="${k.due_date}" name="due_date" />
-															<br> <br> <select name="module_id"><c:forEach
-																	items="${modules}" var="mo">
-																	<option  value="${mo.module_id}">${mo.module_name}</option>
-																</c:forEach></select> <input type="hidden" name="assignment_id"
+															</select> <br> <br> Due Date (YYYY-MM-DD): <input
+																type="text"
+																value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${k.due_date}" />"
+																name="due_date" /> <br> <br> Module: <select
+																name="module_id"><c:forEach items="${modules}"
+																	var="mo">
+																	<option value="${mo.module_id}">${mo.module_name}</option>
+																</c:forEach></select> <br> <input type="hidden" name="assignment_id"
 																value="${k.assignment_id}" /><input type="hidden"
-																name="class_id" value="${c.class_id }" /> <input type="hidden"
-																name="stream_id" value="${c.stream_id }" /> <input
-																type="file" name="fileName" /><span><input
-																class="submissionButtons" type="submit" value="submit" /></span>
+																name="class_id" value="${c.class_id }" /> <input
+																type="hidden" name="stream_id" value="${c.stream_id }" />
+															<br> <input type="file" name="fileName" /><br>
+															<br>
+															<input class="submissionButtons" type="submit"
+																value="Submit" /> <input class="submissionButtons"
+																type="reset" value="Clear" />
 														</form>
 													</div>
-													<!-- Modal footer -->
-													<div class="modal-footer">
-														<button type="button" class="submissionButtons"
-															data-dismiss="modal">Close</button>
-													</div>
+
 												</div>
 											</div>
 										</div>
 										<c:choose>
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
-
-
 													<td id="${k.assignment_id}"
 														style="color: black; width: 200px"><a
-														href="/download/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a>
+														href="/downloadAssign/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a>
 														<c:choose>
 															<c:when test="${c.role_id == 1}">
-																<a class=" dropdown-toggle dropdown-toggle-split"
+																<a class=" dropdown-toggle dropdown-toggle-split "
 																	data-toggle="dropdown" aria-haspopup="true"
 																	aria-expanded="false"> <span class="sr-only">Toggle
 																		Dropdown</span>
@@ -286,17 +330,9 @@
 																		href="/deleteAssignment/${k.assignment_id }">Delete</a>
 																</div>
 															</c:when>
-														</c:choose></td>
-
-
-													<!--  
-															<td style="width: 200px"><form action="/deleteAssignment" method="POST"
-																	class="form-group">
-																	<input type="hidden" name="assignment_id"
-																		value="${k.assignment_id }" /> <span><input
-																		style="color: red;width: 28px;padding-top: 1px;padding-right: 0px;padding-bottom: 2px;padding-left: 0px;font-size: 16px;border-top-width: 2px;" type="submit" value="x" /></span>
-																</form></td> -->
-
+														</c:choose>
+													</td>
+													<td>${k.description }</td>
 												</tr>
 											</c:when>
 										</c:choose>

@@ -19,10 +19,11 @@ public interface ModuleDAO {
 	public int deleteAssignment(int assignment_id);
 	public int deleteModuleFile(int module_file_id);
 	public int updateModule(String module_name, int module_id);
-	public int insertModuleFile(String module_id, MultipartFile file);
+	public int insertModuleFile(String module_id, MultipartFile file, String name, String desc);
 	public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc,
 			String status);
 	public int editAssignmentFile(String name, MultipartFile file, String dueDate, String moduleId, String desc,
 			String status, String assignment_id);
+	public int editModuleFile(String module_file_id, MultipartFile file, String module_id, String name, String description);
 	
 }

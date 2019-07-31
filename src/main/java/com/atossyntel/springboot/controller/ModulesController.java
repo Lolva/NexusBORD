@@ -109,16 +109,16 @@ public class ModulesController {
 		return "redirect:Modules";
 	}
 
-	@RequestMapping(value = "/deleteModuleFile", method = RequestMethod.POST)
-	public String deleteModuleFile(Model model, @ModelAttribute("module") ModuleBean module) {
-		System.out.println(module.toString());
-		System.out.println(moduledao.deleteModuleFile(module.getModule_file_id()));
+	@RequestMapping(value = "/deleteModuleFile/{id}", method = RequestMethod.GET)
+	public String deleteModuleFile(Model model, @PathVariable("id") int id) {
+		
+		System.out.println(moduledao.deleteModuleFile(id));
 		// System.out.println(moduledao.insertStream(module.getStream_id()));
 		// assignment.setModule_id(result.getParameter("module"));
 		// model.addAttribute("module_id", module.getCourse_id());
 		// model.addAttribute("module_name", module.getModule_name());
 
-		return "redirect:Modules";
+		return "redirect:/Modules";
 	}
 
 	@RequestMapping(value = "/updateModule", method = RequestMethod.POST)
@@ -134,23 +134,36 @@ public class ModulesController {
 	}
 
 	@RequestMapping(value = "/addModuleFile", method = RequestMethod.POST)
-	public String newModuleFile(Model model, HttpServletRequest request, @RequestParam("module_id") int module_id,
+	public String newModuleFile(Model model, HttpServletRequest request, @RequestParam("module_id") String module_id,
 			@RequestParam("class_id") int class_id, @RequestParam("stream_id") int stream_id,
-			@RequestParam("fileName") MultipartFile file) {
+			@RequestParam("fileName") MultipartFile file, @RequestParam("name") String name, @RequestParam("desc") String desc) {
 		
 		System.out.println(request.getParameter("module_id"));
 		System.out.println(request.getParameter("stream_id"));
 		System.out.println(request.getParameter("class_id"));
-		System.out.println(moduledao.insertModuleFile(request.getParameter("module_id"), file));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		System.out.println(moduledao.insertModuleFile(module_id, file, name, desc));
+		storageService.store(file, "/" + stream_id +  "/" + module_id + "/moduleFiles/");
 		return "redirect:Modules";
 
 	}
-	@GetMapping("/download/{streamid}/{classid}/{moduleid}/{modulefile}/{filetype}")
-	public ResponseEntity<Resource> submit(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+	@GetMapping("/downloadModule/{streamid}/{moduleid}/{modulefile}/{filetype}")
+	public ResponseEntity<Resource> submitModule(Model model, @PathVariable("streamid") String streamid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid +  " " + moduleid + " " + filename);
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid +  "/" + moduleid + "/moduleFiles/");
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
+	}
+	@GetMapping("/downloadAssign/{streamid}/{classid}/{moduleid}/{modulefile}/{filetype}")
+	public ResponseEntity<Resource> submitAssignment(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
 		System.out.println(streamid + " " + classid + " " + moduleid + " " + filename);
 		System.out.println("Download is starting...");
-		StringBuilder folder = new StringBuilder("/" + streamid + "/" + classid + "/" + moduleid + "/");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + moduleid + "/assignmentFiles/");
 		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
 		System.out.println("Downloading done");
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
@@ -167,7 +180,7 @@ public class ModulesController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		storageService.store(file, "/" + stream_id + "/"  + module_id + "/assignmentFiles/");
 		return "redirect:Modules";
 
 	}
@@ -199,7 +212,16 @@ public class ModulesController {
 		System.out.println(assignment_name + " " + file.toString() + " " + module_id + " "  + due_date + " " + desc + " " + status + " " + assignment_id + " " + " " + stream_id + " " + class_id);
 		System.out.println(moduledao.editAssignmentFile(assignment_name, file, due_date, module_id, desc, status, assignment_id));
 		if(!file.isEmpty()) {
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
+		}
+		return "redirect:Modules";
+	}
+	//module_id, name, description, module_file_id, fileName, fileType
+	@RequestMapping(value="/editModuleFile", method = RequestMethod.POST)
+	public String editModuleFile(Model model, @RequestParam("module_id") String module_id, @RequestParam("name") String name, @RequestParam("desc") String desc, @RequestParam("module_file_id") String module_file_id, @RequestParam("file") MultipartFile file, @RequestParam("stream_id") String stream_id) {
+		System.out.println(moduledao.editModuleFile(module_file_id, file, module_id, name, desc));
+		if(!file.isEmpty()) {
+			storageService.store(file, "/" + stream_id +  "/" + module_id + "/moduleFiles/");
 		}
 		return "redirect:Modules";
 	}
