@@ -29,7 +29,6 @@
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 <style>
 td, th {
-	border: 1px solid black;
 	text-align: left;
 	padding: 8px;
 	color: black;
@@ -72,53 +71,60 @@ td, th {
 						<c:when test="${cl.role_id == 1}">
 							<div class="modal" id="af${cl.class_id }">
 								<div class="modal-dialog">
-									<div class="modal-content" style="width: 530px;">
+									<div class="modal-content" style="width: 471px;">
 
 										<!-- Modal Header -->
-										<div class="modal-header" style="
-												background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3));
-												background:-moz-linear-gradient(top, #04abd0 5%, #0493b3 100%);
-												background:-webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%);
-												background:-o-linear-gradient(top, #04abd0 5%, #0493b3 100%);
-												background:-ms-linear-gradient(top, #04abd0 5%, #0493b3 100%);
-												background:linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+										<div class="modal-header"
+											style="padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
 											<h4 class="modal-title">
-												<font color="white"> Add new assignment file: </font>
+												<font color="white"> New Assignment </font>
 											</h4>
-											<button type="button" class="close" aria-label="Close">
-												<span aria-hidden="true" style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+											<button type="button" class="close" aria-label="Close" data-dismiss="modal" style="padding-top:-14px;">
+												<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
 											</button>
 										</div>
 
 										<!-- Modal body -->
 										<div class="modal-body">
 											<form action="/addAssignmentsFile" method="POST"
-												class="form-group" enctype="multipart/form-data" style="margin-bottom: 0px; padding-top:4px;">
-												<input type="text" name="name" placeholder="Enter name" />     <input type="text" name="desc"
-													placeholder="Enter description" /> <br> <br> <select
-													name="status">
-													<option>active</option>
-													<option>inactive</option>
-													<option>completed</option>
-												</select>     <input type="date" name="due_date" /> <br>
-												<br> <select name="module_id">
-													<c:forEach items="${modules}" var="module">
-														<option value="${module.module_id}">${module.module_name }</option>
-													</c:forEach>
-												</select> <input type="hidden" name="class_id"
-													value="${cl.class_id }" />     <input
-													type="hidden" name="stream_id" value="${cl.stream_id }" />
-												<input type="file" name="fileName" /><br><br><input
-													class="submissionButtons" type="submit" value="submit" /></span>
+												class="form-group" enctype="multipart/form-data"
+												style="margin-bottom: 0px; padding-top: 4px;">
+												<table>
+													<tbody>
+														<tr>
+															<th scope="row"><input type="text" name="name"
+																placeholder="Enter name" /></th>
+															<td><input type="text" name="desc"
+																placeholder="Enter description" /></td>
+														</tr>
+														<tr>
+															<th scope="row"><select name="status">
+																	<option>active</option>
+																	<option>inactive</option>
+																	<option>completed</option>
+															</select></th>
+															<td><input type="date" name="due_date" /></td>
+														</tr>
+														<tr>
+															<th scope="row"><select name="module_id">
+																	<c:forEach items="${modules}" var="module">
+																		<option value="${module.module_id}">${module.module_name }</option>
+																	</c:forEach>
+															</select></th>
+															<td><input type="file" class="form-control-file"
+																id="fileName" name="fileName"></td>
+														</tr>
+													</tbody>
+												</table>
+												<input type="hidden" name="class_id" value="${cl.class_id }" />
+												<input type="hidden" name="stream_id"
+													value="${cl.stream_id }" /> <input
+													class="submissionButtons" type="submit" value="submit"
+													style="margin-top: 10px; margin-left: 7px; margin-bottom: 2px;" />
+												<input class="inactiveButtons" type="reset" value="clear"
+													style="margin-top: 10px; margin-left: 236px; margin-bottom: 2px;" />
 											</form>
 										</div>
-
-										<!-- Modal footer -->
-										<div class="modal-footer">
-											<button type="button" class="submissionButtons"
-												data-dismiss="modal">Close</button>
-										</div>
-
 									</div>
 								</div>
 							</div>
@@ -145,7 +151,7 @@ td, th {
 									<div class="tab-content">
 										<div class="tab-pane fade" id="sub${count }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Status</th>
 														<th>Assignment Name</th>
@@ -165,7 +171,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count +1 }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Employee</th>
 														<th>Assignment Name</th>
@@ -183,7 +189,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count + 2 }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Employee</th>
@@ -227,13 +233,13 @@ td, th {
 										<li><a href="#sub${count+4 }" class="nav-link">Graded
 												Assignments</a></li>
 										<li><a href="#sub${count+5}" class="nav-link">Assignments
-												To Do <span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												To Do <span class="badge badge-primary">${fn:length(todoAssignments)}</span>
 										</a></li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane fade" id="sub${count+3}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
@@ -253,7 +259,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count+4}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
@@ -277,7 +283,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count+5}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>

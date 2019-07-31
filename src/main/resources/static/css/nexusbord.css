@@ -273,7 +273,7 @@ fieldset.container {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    border:1px solid #004f61;
+    border:0px;
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
@@ -298,3 +298,10 @@ fieldset.container {
     position:relative;
     top:1px;
 }
+td, th {
+	border: none;
+	text-align: left;
+	padding: 8px;
+	color: black;
+}
+
