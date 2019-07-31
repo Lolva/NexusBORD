@@ -88,7 +88,11 @@ public class ModulesController {
 	public String deleteAssignment(Model model,
 			@PathVariable("id") int id) {
 		System.out.println(id);
+		Map<String, Object> res = moduledao.getDeleteAssignment(id);
+		storageService.deleteFile(res.get("file_name").toString() + "." + res.get("file_type").toString(), "/" + res.get("stream_id").toString() + "/" + res.get("module_id").toString() + "/assignmentFiles/");
+		
 		System.out.println(moduledao.deleteAssignment(id));
+		
 		// System.out.println(moduledao.insertStream(module.getStream_id()));
 		// assignment.setModule_id(result.getParameter("module"));
 		// model.addAttribute("module_id", module.getCourse_id());
@@ -111,6 +115,8 @@ public class ModulesController {
 
 	@RequestMapping(value = "/deleteModuleFile/{id}", method = RequestMethod.GET)
 	public String deleteModuleFile(Model model, @PathVariable("id") int id) {
+		Map<String, Object> res = moduledao.getDeleteModuleFile(id);
+		storageService.deleteFile(res.get("file_name").toString() + "." + res.get("file_type").toString(), "/" + res.get("stream_id").toString() + "/" + res.get("module_id").toString() + "/moduleFiles/");
 		
 		System.out.println(moduledao.deleteModuleFile(id));
 		// System.out.println(moduledao.insertStream(module.getStream_id()));

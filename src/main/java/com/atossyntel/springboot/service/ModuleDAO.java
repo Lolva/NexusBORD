@@ -25,5 +25,7 @@ public interface ModuleDAO {
 	public int editAssignmentFile(String name, MultipartFile file, String dueDate, String moduleId, String desc,
 			String status, String assignment_id);
 	public int editModuleFile(String module_file_id, MultipartFile file, String module_id, String name, String description);
+	public Map<String, Object> getDeleteAssignment(int id);
+	public Map<String, Object> getDeleteModuleFile(int id);
 	
 }

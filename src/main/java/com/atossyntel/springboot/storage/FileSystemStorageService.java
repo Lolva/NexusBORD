@@ -133,6 +133,11 @@ public class FileSystemStorageService implements StorageService {
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
+    @Override
+    public void deleteFile(String filename, String folder) {
+    	this.rootLocation=Paths.get(props.getLocation()+folder+"/"+filename);
+        FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
 
 	/******
 	 * function init()

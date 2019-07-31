@@ -168,4 +168,19 @@ public class ModuleServiceDAO implements ModuleDAO {
 			return jTemplate.update(sql, module_id, name, description, fileName, fileType, module_file_id);
 		}
 	}
+
+	@Override
+	public Map<String, Object> getDeleteAssignment(int id) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT DISTINCT * from assignments a, lessons l WHERE a.module_id = l.module_id AND a.ASSIGNMENT_ID = ?";
+		Map<String, Object> res = jTemplate.queryForMap(sql, id);
+		return res;
+	}
+	@Override
+	public Map<String, Object> getDeleteModuleFile(int id) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * from module_files a, lessons l, modules m WHERE l.module_id = m.module_id AND a.module_id = m.module_id AND a.module_file_id = ?";
+		Map<String, Object> res = jTemplate.queryForMap(sql, id);
+		return res;
+	}
 }
