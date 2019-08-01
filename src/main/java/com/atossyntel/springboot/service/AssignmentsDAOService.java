@@ -1,5 +1,7 @@
 package com.atossyntel.springboot.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +33,14 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	
 	@Override
     public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
-        String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+		String fileName = null;
+		String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         
         //String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
         
@@ -45,13 +51,16 @@ public class AssignmentsDAOService implements AssignmentsDAO {
     } 
 
 	@Override
-	public List<Map<String, Object>> getActiveAssignments(String class_id, String username) {
+	public List<Map<String, Object>> getActiveAssignments(String stream_id, String username) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.EMPLOYEE_ID = ? AND c.class_id = ? AND a.status != 'inactive' order by a.due_date, a.status";
+		String sql = "SELECT * from assignments a, lessons l, modules m WHERE l.module_id = m.module_id AND a.module_id = m.module_id AND l.STREAM_ID= ?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, username, class_id);
+		results = jTemplate.queryForList(sql, stream_id);
 		for(Map<String, Object> r: results) {
-			System.out.println("Active Assignments " + r.toString());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+			String strDate = dateFormat.format(r.get("due_date"));
+			r.put("formattedDate", strDate);
+			System.out.println(strDate);
 		}
 		return results;
 		
@@ -136,10 +145,14 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	// Does not change Assignment ID
 	@Override
     public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number) {
-        String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+        String fileName = null;
+        String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         
         String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
         
@@ -158,9 +171,10 @@ public class AssignmentsDAOService implements AssignmentsDAO {
         //String fileType = fullFile.substring(index+1, fullFile.length());
         
         String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
-        
-        String sqlQuery = "DELETE FROM assignments WHERE assignment_id = ?";
-        jTemplate.update(sqlQuery, assignmentIdPlaceholder);
+        String sqlQuery1 = "DELETE FROM SUBMISSIONS WHERE ASSIGNMENT_ID=?";
+        String sqlQuery2 = "DELETE FROM assignments WHERE assignment_id =?";
+        jTemplate.update(sqlQuery1,assignmentIdPlaceholder);
+        jTemplate.update(sqlQuery2, assignmentIdPlaceholder);
     }
 
 	@Override

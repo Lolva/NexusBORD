@@ -195,7 +195,7 @@ td, th {
 																						</c:otherwise>
 																					</c:choose>
 																				</select>
-																				<input type="date" name="due_date" value="${in.due_date}"/>												
+																				<input type="date" name="due_date" value="${in.formattedDate}"/>												
 																				<select name="module_id">
 																								<c:forEach items="${modules}" var ="module">
 																								<c:choose>
@@ -217,6 +217,10 @@ td, th {
 																									</div>
 																		<div class="modal-footer">
 																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																			<form action="/deleteAssignments" method="POST" class="form-group">
+																				<input type="hidden" name="assignmentID" value="${in.assignment_id}"/>
+																				<input class="dangerButtons" type="submit" value="Delete"/>
+																			</form>
 																		</div>
 																								
 																	</div>

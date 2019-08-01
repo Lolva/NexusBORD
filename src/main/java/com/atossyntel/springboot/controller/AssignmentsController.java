@@ -84,7 +84,7 @@ public class AssignmentsController {
 			System.out.println("da classes " + t.toString());
 			if(t.get("role_id").equals("1")) {
 				//System.out.println("Instructor");
-				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
+				activesI.add(assigndao.getActiveAssignments(t.get("stream_id").toString(), username));
 				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
@@ -149,7 +149,9 @@ public class AssignmentsController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		}
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);
 		String className = emailDAO.getEmailClassName(class_id);
@@ -181,13 +183,22 @@ public class AssignmentsController {
 			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
 			
 		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		}
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);
 		String className = emailDAO.getEmailClassName(class_id);
 		sms.setClassId(className);
 		sms.send(emailee, 0);
 		
+		return "redirect:Assignments";
+	}
+	
+	@RequestMapping(value="/deleteAssignments", method=RequestMethod.POST)
+	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID) {
+		assigndao.deleteAssignment(assignmentID);
+		System.out.println("Its getting here");
 		return "redirect:Assignments";
 	}
 	

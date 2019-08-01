@@ -94,20 +94,28 @@ public class ModuleServiceDAO implements ModuleDAO {
 	}
 	@Override
 	public int insertModuleFile(String module_id, MultipartFile file) {
-		String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+		String fileName = null;
+		String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         
         String sql = "Insert INTO module_Files(module_id, file_name, file_type) values (?, ?, ?)";
         return jTemplate.update(sql, module_id, fileName, fileType);
 	}
 	@Override
     public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
-        String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+		String fileName = null;
+		String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         //String sql1 = "SELECT assignment_id FROM assignments where assignment_id = ( select max(assignment_id) from assignments) ";
         //int assignment_id = jTemplate.queryForObject(sql1, Integer.class);
         //assignment_id += 1;
