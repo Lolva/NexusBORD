@@ -45,11 +45,11 @@ public class AssignmentsDAOService implements AssignmentsDAO {
     } 
 
 	@Override
-	public List<Map<String, Object>> getActiveAssignments(String class_id, String username) {
+	public List<Map<String, Object>> getActiveAssignments(String stream_id, String username) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT DISTINCT * FROM enrollments e, classes c, streams s, lessons l, modules m, assignments a WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID = s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND l.module_id = m.MODULE_ID AND m.MODULE_ID = a.MODULE_ID AND e.EMPLOYEE_ID = ? AND c.class_id = ? AND a.status != 'inactive' order by a.due_date, a.status";
+		String sql = "SELECT * from assignments a, lessons l, modules m WHERE l.module_id = m.module_id AND a.module_id = m.module_id AND l.STREAM_ID= ? AND a.status != 'inactive' order by a.due_date, a.status";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, username, class_id);
+		results = jTemplate.queryForList(sql, stream_id);
 		for(Map<String, Object> r: results) {
 			System.out.println("Active Assignments " + r.toString());
 		}

@@ -84,7 +84,7 @@ public class AssignmentsController {
 			System.out.println("da classes " + t.toString());
 			if(t.get("role_id").equals("1")) {
 				//System.out.println("Instructor");
-				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
+				activesI.add(assigndao.getActiveAssignments(t.get("stream_id").toString(), username));
 				model.addAttribute("olist", assigndao.overdueInstructor(t.get("class_Id").toString()));
 				model.addAttribute("tgList", assigndao.getToGrade(t.get("class_Id").toString(), username));
 			} else {
