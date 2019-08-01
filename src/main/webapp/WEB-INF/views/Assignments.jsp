@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,7 +134,7 @@ td, th {
 																	<input title="Upload an assignment file." type="file"
 																		class="custom-file-input" id="fileName"
 																		name="fileName"> <label
-																		class="custom-file-label" for="customFile">
+																		class="custom-file-label" id="fileName2" for="customFile">																
 																		Choose file </label>
 																</div></td>
 														</tr>
@@ -145,7 +146,7 @@ td, th {
 													class="submissionButtons" type="submit" value="submit"
 													style="margin-top: 10px; margin-left: 7px; margin-bottom: 2px;" />
 												<input class="inactiveButtons" type="reset" value="clear"
-													style="margin-top: 10px; margin-left: 236px; margin-bottom: 2px;" />
+													style="margin-top: 10px; margin-left: 236px; margin-bottom: 2px;" onclick="clearfile()" />
 											</form>
 										</div>
 									</div>
@@ -177,25 +178,39 @@ td, th {
 											<div>
 												<table class="table table-striped">
 													<tr>
-														<th>Edit Assignment</th>
 														<th>Status</th>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
+														<th>Edit Assignment</th>
 													</tr>
 													<c:forEach items="${daList}" var="dl">
 														<c:forEach items="${dl}" var="in">
-															<div class="modal" id="edit${cl.class_id}_${in.assignment_id}">
+															<div class="modal"
+																id="edit${cl.class_id}_${in.assignment_id}">
 																<div class="modal-dialog">
 																	<div class="modal-content">
-																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
-																			<h4 class="modal-title">Edit An Assignment</h4>
-																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		<div class="modal-header"
+																			style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">
+																				<font color="white"> Edit Assignment</font>
+																			</h4>
+																			<button type="button" class="close"
+																				aria-label="Close" data-dismiss="modal"
+																				style="padding-top: -14px;">
+																				<span
+																					style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+																			</button>
 																		</div>
 																		<div class="modal-body">
-																			<form action="/editAssignmentsFile" method="POST" class="form-group" enctype="multipart/form-data">
-																				<input type="text" name="name" placeholder="Enter name" value="${ in.assignment_name}"/>
-																				<input type="text" name="desc" placeholder="Enter description" value="${ in.description}"/>
-																				<select name="status">
+																			<form action="/editAssignmentsFile" method="POST"
+																				class="form-group" enctype="multipart/form-data">
+																				<input type="text" name="name"
+																					placeholder="Enter name"
+																					value="${ in.assignment_name}" /> <input
+																					type="text" name="desc"
+																					placeholder="Enter description"
+																					value="${ in.description}" /> <select
+																					name="status">
 																					<c:choose>
 																						<c:when test="${in.status == 'active'}">
 																							<option selected>active</option>
@@ -220,45 +235,55 @@ td, th {
 																							<option>completed</option>
 																						</c:otherwise>
 																					</c:choose>
-																				</select>
-																				<input type="date" name="due_date" value="${in.formattedDate}"/>												
-																				<select name="module_id">
-																								<c:forEach items="${modules}" var ="module">
-																								<c:choose>
-																									<c:when test="${in.module_id == module.module_id}">
-																										<option selected value="${module.module_id}">${module.module_name }</option>
-																									</c:when>
-																									<c:otherwise>
-																										<option value="${module.module_id}">${module.module_name }</option>
-																									</c:otherwise>
-																								</c:choose>
-																								</c:forEach>
-																								</select>
-																								<input type="hidden" name="class_id" value="${cl.class_id }"/>
-																					<input type="hidden" name="stream_id" value="${cl.stream_id }" />
-																					<input type="hidden" name="assignment_id" value="${in.assignment_id}"/>
-																				<input type="file" name="fileName" value="${in.file_name}"/>
-																				<input class="submissionButtons" type="submit" value="submit" />
-																			</form>
-																									</div>
-																		<div class="modal-footer">
-																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
-																			<form action="/deleteAssignments" method="POST" class="form-group">
-																				<input type="hidden" name="assignmentID" value="${in.assignment_id}"/>
-																				<input class="dangerButtons" type="submit" value="Delete"/>
+																				</select> <input type="date" name="due_date"
+																					value="${in.formattedDate}" /> <select
+																					name="module_id">
+																					<c:forEach items="${modules}" var="module">
+																						<c:choose>
+																							<c:when
+																								test="${in.module_id == module.module_id}">
+																								<option selected value="${module.module_id}">${module.module_name }</option>
+																							</c:when>
+																							<c:otherwise>
+																								<option value="${module.module_id}">${module.module_name }</option>
+																							</c:otherwise>
+																						</c:choose>
+																					</c:forEach>
+																				</select> <input type="hidden" name="class_id"
+																					value="${cl.class_id }" /> <input type="hidden"
+																					name="stream_id" value="${cl.stream_id }" /> <input
+																					type="hidden" name="assignment_id"
+																					value="${in.assignment_id}" /> <input type="file"
+																					name="fileName" value="${in.file_name}" /> <input
+																					class="submissionButtons" type="submit"
+																					value="submit" />
 																			</form>
 																		</div>
-																								
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons"
+																				data-dismiss="modal">Close</button>
+																			<form action="/deleteAssignments" method="POST"
+																				class="form-group">
+																				<input type="hidden" name="assignmentID"
+																					value="${in.assignment_id}" /> <input
+																					class="dangerButtons" type="submit" value="Delete" />
+																			</form>
+																		</div>
+
 																	</div>
 																</div>
 															</div>
 															<tr>
-																<td>
-																	<button type="button" class="submissionButtons" data-toggle="modal" data-target="#edit${cl.class_id}_${in.assignment_id}">Edit </button>
-																</td>
 																<td>${in.STATUS}</td>
 																<td>${in.assignment_name}</td>
-																<td>${in.due_date}</td>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${in.due_date}" /></td>
+																<td>
+																	<button type="button" class="submissionButtons"
+																		data-toggle="modal"
+																		data-target="#edit${cl.class_id}_${in.assignment_id}">Edit
+																	</button>
+																</td>
 															</tr>
 														</c:forEach>
 													</c:forEach>
@@ -277,7 +302,8 @@ td, th {
 														<tr>
 															<td>${in.first_name } ${in.last_name }</td>
 															<td>${in.assignment_name}</td>
-															<td>${in.due_date}</td>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${in.due_date}" /></td>
 														</tr>
 													</c:forEach>
 												</table>
@@ -298,17 +324,25 @@ td, th {
 														<tr>
 															<td>${in.assignment_name}</td>
 															<td>${in.first_name } ${in.last_name }</td>
-															<td>${in.due_date}</td>
-															<td>${in.submission_date}</td>
+
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${in.due_date}" /></td>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${in.submission_date}" /></td>
+
 															<td>${in.file_name}</td>
 															<td>
 																<form name="grades" action="?grades" method="POST">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
-																	<input style="width:20%; margin-left:10px; margin-right: 10px;" type="text" name="grade"
-																		placeholder="${in.grade}" /><span> <input style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
-																		class="submissionButtons" type="submit" value="+" /></span>
+																	<input
+																		style="width: 20%; margin-left: 10px; margin-right: 10px;"
+																		type="text" name="grade" placeholder="${in.grade}" /><span>
+																		<input
+																		style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
+																		class="submissionButtons" type="submit" value="+" />
+																	</span>
 																</form>
 															</td>
 														</tr>
@@ -346,8 +380,10 @@ td, th {
 														<c:forEach items="${dl}" var="in">
 															<tr>
 																<td>${in.assignment_name}</td>
-																<td>${in.due_date}</td>
-																<td>${in.submission_date}</td>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${in.due_date}" /></td>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${in.submission_date}" /></td>
 															</tr>
 														</c:forEach>
 													</c:forEach>
@@ -368,8 +404,10 @@ td, th {
 														<c:forEach items="${dl}" var="in">
 															<tr>
 																<td>${in.assignment_name}</td>
-																<td>${in.due_date}</td>
-																<td>${in.submission_date}</td>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${in.due_date}" /></td>
+																<td><fmt:formatDate pattern="yyyy-MM-dd"
+																		value="${in.submission_date}" /></td>
 																<td>${in.file_name }</td>
 																<td>${in.grade }</td>
 															</tr>
@@ -387,37 +425,50 @@ td, th {
 														<th>Submit Assignment</th>
 													</tr>
 													<c:forEach items="${todoAssignments}" var="in">
-														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
+														<div class="modal"
+															id="submit${cl.class_id}_${in.assignment_id}">
 															<div class="modal-dialog">
 																<div class="modal-content">
-																	<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
-																		<h4 class="modal-title">Upload a File for the Assignment </h4>
-																		<button type="button" class="close" data-dismiss="modal">&times;</button>
+																	<div class="modal-header"
+																		style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																		<h4 class="modal-title">
+																			<font color="white">Upload Submission:
+																				${in.assignment_name}</font>
+																		</h4>
+																		<button type="button" class="close" aria-label="Close"
+																			data-dismiss="modal" style="padding-top: -14px;">
+																			<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+																		</button>
 																	</div>
 																	<div class="modal-body">
-																	<form action="/submitAssignment" method="POST" class="form-group" enctype="multipart/form-data">
-																		<input type="hidden" name="employee_id" value="${in.employee_id }" /> 
-																		<input type="hidden" name="assignment_id" value="${in.assignment_id }" />
-																		<input type="hidden" name="stream_id" value="${cl.stream_id}" /> 
-																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
-																		<input type="hidden" name="class_id" value="${cl.class_id}" />
-																		<input type="file" id="uploadFile" name="fileName"/>
-																		<input class="btn btn-primary" type="submit" value="submit" />
-																	</form>
+																		<form action="/submitAssignment" method="POST"
+																			class="form-group" enctype="multipart/form-data">
+																			<input type="hidden" name="employee_id"
+																				value="${in.employee_id }" /> <input type="hidden"
+																				name="assignment_id" value="${in.assignment_id }" />
+																			<input type="hidden" name="stream_id"
+																				value="${cl.stream_id}" /> <input type="hidden"
+																				name="module_id" value="${in.module_id}" /> <input
+																				type="hidden" name="class_id" value="${cl.class_id}" />
+																			<input type="file" id="uploadFile" name="fileName" />
+																			<input class="submissionButtons" type="submit"
+																				value="submit" />
+																			<button type="button" class="inactiveButtons"
+																				data-dismiss="modal">Close</button>
+																		</form>
 																	</div>
-																<!-- Modal footer -->
-																	<div class="modal-footer">
-																		<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
-																	</div>
-																							
 																</div>
 															</div>
 														</div>
 														<tr>
 															<td>${in.assignment_name}</td>
-															<td>${in.due_date}</td>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${in.due_date}" /></td>
 															<td>
-																<button type="button" class="submissionButtons" data-toggle="modal" data-target="#submit${cl.class_id}_${in.assignment_id}">Submit </button>
+																<button type="button" class="submissionButtons"
+																	data-toggle="modal"
+																	data-target="#submit${cl.class_id}_${in.assignment_id}">Submit
+																</button>
 															</td>
 														</tr>
 													</c:forEach>
@@ -457,8 +508,15 @@ td, th {
 	<script>
 		$(".custom-file-input").on("change", function() {
  			var fileName = $(this).val().split("\\").pop();
-  			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  			$(this).siblings(".custom-file-label").html(fileName);
 		});
+	</script>
+	<script>
+		function clearfile() {
+ 			var fileName = "Choose file";
+  			$("#fileName2").html(fileName);
+  			console.log("ladies and gentlemen, we got him.")
+			}
 	</script>
 	<!-- Container for logout modal -->
 	<div id="LogoutModalDiv"></div>

@@ -431,4 +431,8 @@ td, th {
 		.custom-dropdown--large .custom-dropdown__select { padding-right: 1.3em }
 		.custom-dropdown--small .custom-dropdown__select { padding-right: .5em }
 	}
+
+	.borderlessInput {
+		border-left-width: 0px;border-right-width: 0px;border-top-width: 0px;
+	}
 }

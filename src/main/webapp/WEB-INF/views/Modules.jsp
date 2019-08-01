@@ -76,10 +76,15 @@
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<!-- Modal Header -->
-													<div class="modal-header">
-														<h4 class="modal-title">Edit this module:
-															${o.module_name}</h4>
-														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<div class="modal-header"
+														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+														<h4 class="modal-title">
+															<font color="white"> Edit Module </font>
+														</h4>
+														<button type="button" class="close" aria-label="Close"
+															data-dismiss="modal" style="padding-top: -14px;">
+															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+														</button>
 													</div>
 													<!-- Modal body -->
 													<div class="modal-body">
@@ -110,23 +115,52 @@
 										<div class="modal-content">
 
 											<!-- Modal Header -->
-											<div class="modal-header">
-												<h4 class="modal-title">Add new module file:
-													${o.module_name}</h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<div class="modal-header"
+												style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+												<h4 class="modal-title">
+													<font color="white"> New Module File </font>
+												</h4>
+												<button type="button" class="close" aria-label="Close"
+													data-dismiss="modal" style="padding-top: -14px;">
+													<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+												</button>
 											</div>
 											<!-- Modal body -->
-											<div class="modal-body">
+											<div class="modal-body" style="padding-bottom: 0px;">
 												<form action="/addModuleFile" method="POST"
 													class="form-group" enctype="multipart/form-data">
-													Name: <input type="text" name="name" /> Description: <input
-														type="text" name="desc" /> <input type="hidden"
-														name="module_id" value="${o.module_id }" /> <input
-														type="hidden" name="class_id" value="${c.class_id }" /> <input
-														type="hidden" name="stream_id" value="${c.stream_id }" />
-													File: <input type="file" name="fileName" /> <br> <br>
-													<input class="submissionButtons" type="submit"
-														value="submit" />
+													<table>
+														<tbody>
+															<tr>
+																<td><input class="borderlessInput" type="text"
+																	name="name" placeholder="Module File Name"
+																	title="Please enter a module file name." /></td>
+
+																<td><input class="borderlessInput" type="text"
+																	name="desc" placeholder="Description"
+																	title="Please enter a module file description." /></td>
+															</tr>
+															<tr>
+																<td><div class="custom-file">
+																		<input title="Upload a module file." type="file"
+																			class="custom-file-input" id="fileName"
+																			name="fileName"> <label
+																			class="custom-file-label" id="fileName2"
+																			for="customFile"> Choose file </label>
+																	</div></td>
+															</tr>
+														</tbody>
+													</table>
+
+													<input type="hidden" name="module_id"
+														value="${o.module_id }" /> <input type="hidden"
+														name="class_id" value="${c.class_id }" /> <input
+														type="hidden" name="stream_id" value="${c.stream_id }" /><input
+														class="submissionButtons" type="submit" value="submit"
+														style="margin-top: 10px; margin-left: 7px; margin-bottom: 2px;" />
+													<input class="inactiveButtons" type="reset" value="clear"
+														style="margin-top: 10px; margin-left: 268px; margin-bottom: 2px;"
+														onclick="clearfile()" />
 												</form>
 											</div>
 										</div>
@@ -150,9 +184,15 @@
 												<div class="modal-content">
 
 													<!-- Modal Header -->
-													<div class="modal-header">
-														<h4 class="modal-title">Edit module file:</h4>
-														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<div class="modal-header"
+														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+														<h4 class="modal-title">
+															<font color="white"> Edit Module File </font>
+														</h4>
+														<button type="button" class="close" aria-label="Close"
+															data-dismiss="modal" style="padding-top: -14px;">
+															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+														</button>
 													</div>
 													<!-- Modal body -->
 													<div class="modal-body">
@@ -160,22 +200,26 @@
 															class="form-group" enctype="multipart/form-data">
 															Name: <input type="text" name="name" value="${j.name}" />
 															Description: <input type="text" name="desc"
-																value="${j.description}" />
-																<select>
-															<c:forEach items="${modulesI}" var="mo">
+																value="${j.description}" /> <select>
+																<c:forEach items="${modulesI}" var="mo">
 																	<c:choose>
-																	<c:when test="${o.module_id eq j.module_id}"><option value="${mo.module_id}" selected>${mo.module_name}</option></c:when>
-																	<c:otherwise><option value="${mo.module_id}">${mo.module_name}</option></c:otherwise>
+																		<c:when test="${o.module_id eq j.module_id}">
+																			<option value="${mo.module_id}" selected>${mo.module_name}</option>
+																		</c:when>
+																		<c:otherwise>
+																			<option value="${mo.module_id}">${mo.module_name}</option>
+																		</c:otherwise>
 																	</c:choose>
-																</c:forEach></select>
-														<input type="hidden" name="module_id"
-														value="${o.module_id }" /> <input type="hidden"
-														name="module_file_id" value="${j.module_file_id }" /> <input
-														type="hidden" name="stream_id" value="${c.stream_id }" />
-													File:<input type="file" name="file" /> <br> <br>
-													<input class="submissionButtons" type="submit"
-														value="submit" /> <input class="submissionButtons" type="reset" value="Reset" />
-												</form>
+																</c:forEach>
+															</select> <input type="hidden" name="module_id"
+																value="${o.module_id }" /> <input type="hidden"
+																name="module_file_id" value="${j.module_file_id }" /> <input
+																type="hidden" name="stream_id" value="${c.stream_id }" />
+															File:<input type="file" name="file" /> <br> <br>
+															<input class="submissionButtons" type="submit"
+																value="submit" /> <input class="submissionButtons"
+																type="reset" value="Reset" />
+														</form>
 													</div>
 												</div>
 											</div>
@@ -279,7 +323,10 @@
 													<!-- Modal Header -->
 													<div class="modal-header">
 														<h4 class="modal-title">Edit assignment file:</h4>
-														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<button type="button" class="close" aria-label="Close"
+															data-dismiss="modal" style="padding-top: -14px;">
+															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+														</button>
 													</div>
 													<!-- Modal body -->
 													<div class="modal-body">
@@ -323,11 +370,14 @@
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
 													<td id="${k.assignment_id}"
-														style="color: black; width: 200px">
-														<c:choose><c:when test="${empty k.file_name}">${k.assignment_name}
-														</c:when><c:otherwise><a
-														href="/downloadAssign/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a></c:otherwise></c:choose>
-														<c:choose>
+														style="color: black; width: 200px"><c:choose>
+															<c:when test="${empty k.file_name}">${k.assignment_name}
+														</c:when>
+															<c:otherwise>
+																<a
+																	href="/downloadAssign/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a>
+															</c:otherwise>
+														</c:choose> <c:choose>
 															<c:when test="${c.role_id == 1}">
 																<a class=" dropdown-toggle dropdown-toggle-split "
 																	data-toggle="dropdown" aria-haspopup="true"
@@ -415,5 +465,18 @@
 
 	<!-- Container for logout modal -->
 	<div id="LogoutModalDiv"></div>
+	<script>
+		$(".custom-file-input").on("change", function() {
+			var fileName = $(this).val().split("\\").pop();
+			$(this).siblings(".custom-file-label").html(fileName);
+		});
+	</script>
+	<script>
+		function clearfile() {
+			var fileName = "Choose file";
+			$("#fileName2").html(fileName);
+			console.log("ladies and gentlemen, we got him.")
+		}
+	</script>
 </body>
 </html>
