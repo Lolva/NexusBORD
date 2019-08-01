@@ -4,6 +4,58 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
+<!-- Style for Autocomplete -->
+<style>
+	* { box-sizing: border-box; }
+body {
+  font: 16px Arial; 
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+</style>
     <title>Classes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,7 +132,6 @@
     <div class="tab-content">
     <div class="tab-pane fade show active" id="activeClass">
     <br>
-
     <!-- ${activeClassIds} -->
      <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
@@ -142,6 +193,7 @@
 			</div>
 		</c:forEach>
 		</div>
+		
 		<div class="tab-pane fade" id="inactiveClass">
 		<br>
 		<c:forEach items="${inactiveInstructorClasses}" var="o">
@@ -207,21 +259,24 @@
     </div>
     </div>
     </div>
-    
     <div id="AddEmployee" class="tab-pane fade"class="row">
-	<form action="/changeClass" style="color: black;" method=POST>
+
+
+
+    <input type="hidden" id="xyz" value="${employeeIds}"/>
+		
+		
+	<form autocomplete="off" action="/changeClass" style="color: black;" method=POST>
 	<br>
 		<h4>Add Employee to Class</h4>
 		<label for="Employee_Id">Choose Employee ID</label>
-		<div class="dropdown">
-			<select name="Employee_ID" class="form-control">
-				<c:forEach items="${allStudents}" var="e">
-					<option class="dropdown-item" id="Employee_ID" value="${e.employee_id}">${e.employee_id}</option>
-				</c:forEach>
-			 </select>
+		<br>
+		<div class="autocomplete">
+			<input name="Employee_ID" class="form-control" id="Employee_ID"/>
 		</div>
-			<br>
+		<br>
 			<label for="Class_id">Choose Class ID</label>
+			<br>
 		   	<div class="dropdown">
 			  <select name="Class_ID" class="form-control">
 				  <c:forEach items="${allClassIds}" var="j">
@@ -469,6 +524,116 @@
 
 	<!-- Container for logout modal -->	
 	<div id="LogoutModalDiv"></div>
-
+	<script type="text/javascript">
+	function autocomplete(inp, arr) {
+		  /*the autocomplete function takes two arguments,
+		  the text field element and an array of possible autocompleted values:*/
+		  var currentFocus;
+		  /*execute a function when someone writes in the text field:*/
+		  inp.addEventListener("input", function(e) {
+		      var a, b, i, val = this.value;
+		      /*close any already open lists of autocompleted values*/
+		      closeAllLists();
+		      if (!val) { return false;}
+		      currentFocus = -1;
+		      /*create a DIV element that will contain the items (values):*/
+		      a = document.createElement("DIV");
+		      a.setAttribute("id", this.id + "autocomplete-list");
+		      a.setAttribute("class", "autocomplete-items");
+		      /*append the DIV element as a child of the autocomplete container:*/
+		      this.parentNode.appendChild(a);
+		      /*for each item in the array...*/
+		      for (i = 0; i < arr.length; i++) {
+		        /*check if the item starts with the same letters as the text field value:*/
+		        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+		          /*create a DIV element for each matching element:*/
+		          b = document.createElement("DIV");
+		          /*make the matching letters bold:*/
+		          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+		          b.innerHTML += arr[i].substr(val.length);
+		          /*insert a input field that will hold the current array item's value:*/
+		          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+		          /*execute a function when someone clicks on the item value (DIV element):*/
+		              b.addEventListener("click", function(e) {
+		              /*insert the value for the autocomplete text field:*/
+		              inp.value = this.getElementsByTagName("input")[0].value;
+		              /*close the list of autocompleted values,
+		              (or any other open lists of autocompleted values:*/
+		              closeAllLists();
+		          });
+		          a.appendChild(b);
+		        }
+		      }
+		  });
+		  /*execute a function presses a key on the keyboard:*/
+		  inp.addEventListener("keydown", function(e) {
+		      var x = document.getElementById(this.id + "autocomplete-list");
+		      if (x) x = x.getElementsByTagName("div");
+		      if (e.keyCode == 40) {
+		        /*If the arrow DOWN key is pressed,
+		        increase the currentFocus variable:*/
+		        currentFocus++;
+		        /*and and make the current item more visible:*/
+		        addActive(x);
+		      } else if (e.keyCode == 38) { //up
+		        /*If the arrow UP key is pressed,
+		        decrease the currentFocus variable:*/
+		        currentFocus--;
+		        /*and and make the current item more visible:*/
+		        addActive(x);
+		      } else if (e.keyCode == 13) {
+		        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+		        e.preventDefault();
+		        if (currentFocus > -1) {
+		          /*and simulate a click on the "active" item:*/
+		          if (x) x[currentFocus].click();
+		        }
+		      }
+		  });
+		  function addActive(x) {
+		    /*a function to classify an item as "active":*/
+		    if (!x) return false;
+		    /*start by removing the "active" class on all items:*/
+		    removeActive(x);
+		    if (currentFocus >= x.length) currentFocus = 0;
+		    if (currentFocus < 0) currentFocus = (x.length - 1);
+		    /*add class "autocomplete-active":*/
+		    x[currentFocus].classList.add("autocomplete-active");
+		  }
+		  function removeActive(x) {
+		    /*a function to remove the "active" class from all autocomplete items:*/
+		    for (var i = 0; i < x.length; i++) {
+		      x[i].classList.remove("autocomplete-active");
+		    }
+		  }
+		  function closeAllLists(elmnt) {
+		    /*close all autocomplete lists in the document,
+		    except the one passed as an argument:*/
+		    var x = document.getElementsByClassName("autocomplete-items");
+		    for (var i = 0; i < x.length; i++) {
+		      if (elmnt != x[i] && elmnt != inp) {
+		      x[i].parentNode.removeChild(x[i]);
+		    }
+		  }
+		}
+		/*execute a function when someone clicks in the document:*/
+		document.addEventListener("click", function (e) {
+		    closeAllLists(e.target);
+		});
+		}
+	var countries = ["Zambia", "Madagascar", "Albania"];
+	//for(int i=0; i<10; i++;) {
+	//	document.getElementById("xyz").value = ${allStudents[i].employee_id};
+	//}
+ 	var data = document.getElementById("xyz").value;
+ 	var lbracket = data.replace(new RegExp('{', 'g'),'');
+ 	var rbracket = lbracket.replace(new RegExp('}', 'g'),'');
+ 	var lsb = rbracket.replace('[','');
+ 	var rsb = lsb.replace(']','');
+ 	var name = rsb.replace(new RegExp('EMPLOYEE_ID=', 'g'),'');
+ 	var arr = name.split(', ');
+	autocomplete(document.getElementById("Employee_ID"), arr);
+	</script>
 </body>
 </html>
+

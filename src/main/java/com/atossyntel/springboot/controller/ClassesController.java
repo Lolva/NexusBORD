@@ -52,6 +52,9 @@ public class ClassesController {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
 		
+		List<Map<String, Object>> employeeIds = classdao.getEmployeeIds();
+		model.addAttribute("employeeIds", employeeIds);
+		
 		List<Map<String, Object>> allModules = classdao.getModules();
 		model.addAttribute("allModules", allModules);		
 		

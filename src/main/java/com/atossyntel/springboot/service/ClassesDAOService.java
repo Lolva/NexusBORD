@@ -55,6 +55,16 @@ public class ClassesDAOService implements ClassesDAO {
 		 return results;
 		
 	}
+	
+	@Override
+	public List<Map<String,Object>> getEmployeeIds() {
+		String sql = "Select employee_id From Employees";
+
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sql);
+		 return results;
+		
+	}
 
 	@Override
 	public List<Map<String, Object>> getActiveClasses() {
