@@ -103,9 +103,8 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 	    crossorigin="anonymous"></script>
 </head>
 
-
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'classes', 'instructor')">
+<body onload="navBar(this, 'classes', '<%=session.getAttribute("role").toString()%>')">
 	<%
 	//User is not logged in
 	if (session.getAttribute("username") == null) {
@@ -114,7 +113,8 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 	window.location.href = "/login";
 	</script>
 	<%
-	}
+		}
+				
 	%>
     <header>
         <!-- div for nav bar to be created in -->
