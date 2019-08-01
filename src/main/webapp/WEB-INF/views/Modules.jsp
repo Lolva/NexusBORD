@@ -99,7 +99,7 @@
 																value="Delete module" /></span>
 														</form>
 													</div>
-													
+
 												</div>
 											</div>
 										</div>
@@ -119,17 +119,17 @@
 											<div class="modal-body">
 												<form action="/addModuleFile" method="POST"
 													class="form-group" enctype="multipart/form-data">
-													Name: <input type="text" name="name" /> Description: <input type="text"
-														name="desc" /> <input type="hidden" name="module_id"
-														value="${o.module_id }" /> <input type="hidden"
-														name="class_id" value="${c.class_id }" /> <input
+													Name: <input type="text" name="name" /> Description: <input
+														type="text" name="desc" /> <input type="hidden"
+														name="module_id" value="${o.module_id }" /> <input
+														type="hidden" name="class_id" value="${c.class_id }" /> <input
 														type="hidden" name="stream_id" value="${c.stream_id }" />
 													File: <input type="file" name="fileName" /> <br> <br>
 													<input class="submissionButtons" type="submit"
 														value="submit" />
 												</form>
 											</div>
-											
+
 										</div>
 									</div>
 								</div>
@@ -147,40 +147,48 @@
 									</tr>
 									<c:forEach items="${modulefiles}" var="j">
 										<div class="modal" id="mfe${j.module_file_id }">
-									<div class="modal-dialog">
-										<div class="modal-content">
+											<div class="modal-dialog">
+												<div class="modal-content">
 
-											<!-- Modal Header -->
-											<div class="modal-header">
-												<h4 class="modal-title">Edit module file:</h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-											</div>
-											<!-- Modal body -->
-											<div class="modal-body">
-												<form action="/editModuleFile" method="POST"
-													class="form-group" enctype="multipart/form-data">
-													Name: <input type="text" name="name" /> Description: <input type="text"
-														name="desc" /> <input type="hidden" name="module_id"
+													<!-- Modal Header -->
+													<div class="modal-header">
+														<h4 class="modal-title">Edit module file:</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+													<!-- Modal body -->
+													<div class="modal-body">
+														<form action="/editModuleFile" method="POST"
+															class="form-group" enctype="multipart/form-data">
+															Name: <input type="text" name="name" value="${j.name}" />
+															Description: <input type="text" name="desc"
+																value="${j.description}" />
+																<select>
+															<c:forEach items="${modulesI}" var="mo">
+																	<c:choose>
+																	<c:when test="${o.module_id eq j.module_id}"><option value="${mo.module_id}" selected>${mo.module_name}</option></c:when>
+																	<c:otherwise><option value="${mo.module_id}">${mo.module_name}</option></c:otherwise>
+																	</c:choose>
+																</c:forEach></select>
+														<input type="hidden" name="module_id"
 														value="${o.module_id }" /> <input type="hidden"
 														name="module_file_id" value="${j.module_file_id }" /> <input
 														type="hidden" name="stream_id" value="${c.stream_id }" />
 													File:<input type="file" name="file" /> <br> <br>
 													<input class="submissionButtons" type="submit"
-														value="submit" />
+														value="submit" /> <input class="submissionButtons" type="reset" value="Reset" />
 												</form>
+													</div>
+
+												</div>
 											</div>
-											
 										</div>
-									</div>
-								</div>
 										<c:choose>
 											<c:when test="${o.module_id==j.module_id}">
 												<tr>
-												<td id="${k.assignment_id}"
+													<td id="${k.assignment_id}"
 														style="color: black; width: 200px"><a
 														href="/downloadModule/${c.stream_id}/${o.module_id}/${j.file_name}/${j.file_type}">
-															${j.name}</a>
-														<c:choose>
+															${j.name}</a> <c:choose>
 															<c:when test="${c.role_id == 1}">
 																<a class=" dropdown-toggle dropdown-toggle-split "
 																	data-toggle="dropdown" aria-haspopup="true"
@@ -194,9 +202,9 @@
 																		href="/deleteModuleFile/${j.module_file_id }">Delete</a>
 																</div>
 															</c:when>
-														</c:choose>
-													</td><td>${j.description }</td>
-												<!-- 
+														</c:choose></td>
+													<td>${j.description }</td>
+													<!-- 
 													<td style="color: black; width: 200px"><a
 														href="/downloadModule/${c.stream_id}/${o.module_id}/${j.file_name}/${j.file_type}">
 															${j.file_name} </a></td>
@@ -288,22 +296,27 @@
 																<option>active</option>
 																<option>inactive</option>
 																<option>completed</option>
-															</select> <br> <br> Due Date (YYYY-MM-DD): <input
-																type="text"
+															</select> <br> <br> Due Date: <input type="date"
 																value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${k.due_date}" />"
 																name="due_date" /> <br> <br> Module: <select
-																name="module_id"><c:forEach items="${modules}"
+																name="module_id"><c:forEach items="${modulesI}"
 																	var="mo">
-																	<option value="${mo.module_id}">${mo.module_name}</option>
+																	<c:choose>
+																		<c:when test="${mo.module_id eq k.module_id}">
+																			<option value="${mo.module_id}" selected>${mo.module_name}</option>
+																		</c:when>
+																		<c:otherwise>
+																			<option value="${mo.module_id}">${mo.module_name}</option>
+																		</c:otherwise>
+																	</c:choose>
 																</c:forEach></select> <br> <input type="hidden" name="assignment_id"
 																value="${k.assignment_id}" /><input type="hidden"
 																name="class_id" value="${c.class_id }" /> <input
 																type="hidden" name="stream_id" value="${c.stream_id }" />
 															<br> <input type="file" name="fileName" /><br>
-															<br>
-															<input class="submissionButtons" type="submit"
+															<br> <input class="submissionButtons" type="submit"
 																value="Submit" /> <input class="submissionButtons"
-																type="reset" value="Clear" />
+																type="reset" value="Reset" />
 														</form>
 													</div>
 
@@ -330,8 +343,7 @@
 																		href="/deleteAssignment/${k.assignment_id }">Delete</a>
 																</div>
 															</c:when>
-														</c:choose>
-													</td>
+														</c:choose></td>
 													<td>${k.description }</td>
 												</tr>
 											</c:when>

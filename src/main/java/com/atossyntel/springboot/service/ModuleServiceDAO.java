@@ -183,4 +183,11 @@ public class ModuleServiceDAO implements ModuleDAO {
 		Map<String, Object> res = jTemplate.queryForMap(sql, id);
 		return res;
 	}
+	@Override
+	public List<Map<String, Object>> getModulesI(String employee_id){
+		String sql = "SELECT DISTINCT * From  enrollments e, classes c, streams s, lessons l, modules m WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID  AND e.employee_id= ? AND e.role_id = '1'";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql, employee_id);
+		return results;
+	}
 }

@@ -43,6 +43,7 @@ public class ModulesController {
 
 		model.addAttribute("classes", classes);
 		model.addAttribute("modules", moduledao.getModuleList(session.getAttribute("username").toString()));
+		model.addAttribute("modulesI", moduledao.getModulesI(session.getAttribute("username").toString()));
 		model.addAttribute("modulefiles", moduledao.getModuleFiles(session.getAttribute("username").toString()));
 		model.addAttribute("moduleassigns", moduledao.getAssignments(session.getAttribute("username").toString()));
 		/*
