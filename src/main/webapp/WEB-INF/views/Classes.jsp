@@ -2,9 +2,10 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
 <html>
 <head>
-<!-- Style for Autocomplete -->
+	<!-- Style for Autocomplete -->
 <style>
 	* { box-sizing: border-box; }
 body {
@@ -55,7 +56,19 @@ input[type=submit] {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
 }
+.modal-header{
+padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:white;
+   				 -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); 
+   								   background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+   								    background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); 
+   								    background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%)";
+
+}
+
 </style>
+
+
+
     <title>Classes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +105,7 @@ input[type=submit] {
 
 
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'classes', '<%=session.getAttribute("role").toString()%>')">
+<body onload="navBar(this, 'classes', 'instructor')">
 	<%
 	//User is not logged in
 	if (session.getAttribute("username") == null) {
@@ -101,10 +114,8 @@ input[type=submit] {
 	window.location.href = "/login";
 	</script>
 	<%
-		}
-				
+	}
 	%>
-	
     <header>
         <!-- div for nav bar to be created in -->
 		<div id="navDiv" class="navigation"></div>
@@ -117,9 +128,11 @@ input[type=submit] {
  <ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#viewclass">Home</a></li>
     <li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
+     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#addFile">Add Employee with File</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Delete">Delete Class</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#createclass">Create A Class</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#editclass">Edit Class</a></li>
+   
   </ul>
 
   <div class="tab-content">
@@ -132,6 +145,7 @@ input[type=submit] {
     <div class="tab-content">
     <div class="tab-pane fade show active" id="activeClass">
     <br>
+
     <!-- ${activeClassIds} -->
      <c:forEach items="${activeInstructorClasses}" var="o">
 			<button value="button" class="accordion"> Class ${o.class_id}: ${o.start_date} - ${o.end_date} </button>
@@ -162,19 +176,18 @@ input[type=submit] {
 								
  								 <!-- Modal -->
 							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+									 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+     								  </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to delete this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Delete</button>
     				  </div>
    					</div>
@@ -193,7 +206,6 @@ input[type=submit] {
 			</div>
 		</c:forEach>
 		</div>
-		
 		<div class="tab-pane fade" id="inactiveClass">
 		<br>
 		<c:forEach items="${inactiveInstructorClasses}" var="o">
@@ -226,19 +238,18 @@ input[type=submit] {
 								
  								 <!-- Modal -->
 							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		 									<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+      									 </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to delete this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Delete</button>
     				  </div>
    					</div>
@@ -259,7 +270,8 @@ input[type=submit] {
     </div>
     </div>
     </div>
-    <div id="AddEmployee" class="tab-pane fade"class="row">
+    
+<div id="AddEmployee" class="tab-pane fade"class="row">
 
 
 
@@ -304,8 +316,8 @@ input[type=submit] {
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="addModalLabel">Add Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		 								<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+     								  </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to add this employee?
@@ -316,9 +328,11 @@ input[type=submit] {
     						  </div>
     						  </div>
     						</div>
-    		</div>
-		</form>
-		<hr>
+    						</div>
+    						</form>
+    						</div>
+    	<div id="addFile" class="tab-pane fade">
+		<br>
 		<h4>Add Employees with a File</h4>
 		<br><br>
    		<form action="/giveFile" method="GET">
@@ -335,15 +349,19 @@ input[type=submit] {
 			  </select>
 		</div>
    		<br><br>
-   		<label for="file">Select an Excel File</label>
-   		<input type="file" name="file" class="btn btn-default btn-md">
+   		<div class="custom-file">
+   		<label class="custom-file-label" for="file">Select an Excel File</label>
+   		<input type="file" name="file" class="custom-file-input">
+   		</div>
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-   	</form>
-   	</div>
+   		</form>
+   		</div>
+   		
+   	
    	
     <div id="Delete" class="tab-pane fade">
-
+<br>
       <h3>Delete Class</h3>
       <br>
  		<form action="/deleteClass" method="POST">
@@ -364,19 +382,18 @@ input[type=submit] {
 		
 		<!-- Delete Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		 <div class="modal-dialog" role="document">
+		 <div class="modal-dialog modal-dialog-centered" role="document">
    			<div class="modal-content">
    		     <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
 		        					 </div>
 		      <div class="modal-body" style="border: none;">
 		        Are you sure you want to delete this class?
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		        <button type="submit" class="btn btn-primary" >Delete</button>
 		      </div>
 		    </div>
@@ -389,18 +406,10 @@ input[type=submit] {
 <br>
 	    <h3>Create New Class</h3>
 	    <form action="/addClass" method="POST"  >
-		   	<label for="stream_id">Choose Stream</label>
+		   	<label for="stream_id">Enter Stream ID</label>
    	        <select name="stream_Id" class="form-control">
    	            <c:forEach items="${stream}" var="j">
-	            	<option value="${j.stream_id}" title="${stream_name}">${j.stream_name} ( Modules Included:
-					<c:forEach items="${allModules}" var="i">
-						<c:choose>
-		    				<c:when test="${j.stream_id==i.stream_id}">
-								 - ${i.module_name} 
-							</c:when>
-						</c:choose>
-					</c:forEach>
-					)</option>
+	            	<option value="${j.stream_Id}">${j.stream_Id}</option>
 	            </c:forEach>
             </select>
             <br>
@@ -418,19 +427,18 @@ input[type=submit] {
 	   		
 	   		<!-- Modal -->
 <div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="classModalLabel">Create Class</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
       </div>
       <div class="modal-body">
         Are you sure you want to create a new class?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Create Class</button>
       </div>
     </div>
@@ -440,6 +448,7 @@ input[type=submit] {
 	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
+    <br>
     	<h4> Edit Classes</h4>
 	    <form action="/editClass" method="POST">
 	    <label for="class_id" >Choose Class ID</label>
@@ -463,14 +472,16 @@ input[type=submit] {
 		</button>
 	   		
 	   		<!-- The Modal -->
-		<div class="modal" id="editModal">
-  		<div class="modal-dialog">
+		<div class="modal fade" id="editModal">
+  		<div class="modal-dialog modal-dialog-centered">
     	<div class="modal-content">
 	   		
 	   		<!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Edit Class</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
       </div>
       
       <!-- Modal body -->
@@ -480,7 +491,6 @@ input[type=submit] {
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Edit</button>
       </div>
 
@@ -519,6 +529,12 @@ input[type=submit] {
  		 });
 	}
 	</script>
+	<script>
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+<</script>
 	<!-- JavaScript for icons -->
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
@@ -634,6 +650,6 @@ input[type=submit] {
  	var arr = name.split(', ');
 	autocomplete(document.getElementById("Employee_ID"), arr);
 	</script>
+
 </body>
 </html>
-
