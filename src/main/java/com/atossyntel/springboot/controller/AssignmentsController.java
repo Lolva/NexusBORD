@@ -150,7 +150,7 @@ public class AssignmentsController {
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
 		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
-			storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+			storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
 		}
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);
@@ -164,7 +164,9 @@ public class AssignmentsController {
 	@RequestMapping(value="/submitAssignment", method= RequestMethod.POST)
 	public String newSubmmissionFile(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
 			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
-		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getClass_id()+"/"+assignment.getModule_id()+"/"+ assignment.getAssignment_id() + "/");
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
+		System.out.println("hard coded text;" + assignment.getStream_id());
+		System.out.println(modFolder.toString());
 		storageService.store(file, modFolder.toString());
 		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
 		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
@@ -184,7 +186,7 @@ public class AssignmentsController {
 			
 		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
 		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
-			storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+			storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
 		}
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);

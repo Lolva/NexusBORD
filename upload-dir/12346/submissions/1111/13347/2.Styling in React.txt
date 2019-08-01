@@ -1,0 +1,225 @@
+Applying Styling in React
+- Using CSS Classes
+- Using the style attribute
+- Using CSS Modules
+- Using SASS/SCSS
+
+===========================================
+1) Using classes and CSS
+--------------------------------------
+Example 1: Applying css classes
+
+CSS
+---
+.button {
+  background-color: yellow;
+}
+
+HTML
+----
+const Button = () => {
+  return <button className="button">A button</button>
+}
+
+ReactDOM.render(<Button />, document.getElementById('root'))
+
+Note: To use the style sheet use the import statement
+
+import './style.css'
+--------------------------------------
+Example 2: Using the Style attribute
+
+const Button = () => {
+  return <button style={{ backgroundColor: 'yellow' }}>A button</button>
+}
+
+Note: Use the double curly brackets to do the styling: it’s because style accepts an object. We pass in a JavaScript object, which is defined in curly braces. 
+
+We could also do this:
+
+const buttonStyle = { backgroundColor: 'yellow' }
+const Button = () => {
+  return <button style={buttonStyle}>A button</button>
+}
+
+Styles have the benefit of being local to the component, and they cannot leak to other components in other parts of the app, something that using classes and an external CSS file can’t provide.
+
+==============================================
+CSS Modules
+
+They are a means to achieve locally scoped CSS class names.
+
+CSS Modules seem to be a perfect spot in the middle: you use classes, but CSS is scoped to the component, which means that any styling you add cannot be applied to other components without your permission.
+
+For a simple one-page app they may not be necessary. But if you're working on a large 20+ component app, this tool could really help you clean up your CSS.
+--------------------------------------
+Example 3: Using CSS Modules
+
+CSS Module -- FileName: myStyles.css
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.email {
+  padding: .5rem;
+}
+
+.submitButton {
+  padding: .5rem;
+  margin-top: .5rem;
+  border: 1px solid #2F79AD;
+  border-radius: 4px;
+  background-color: #6DB9EE;
+}
+
+.submitButton:hover {
+  background-color: #2F79AD;
+}
+
+JS
+---
+import styles from './Widget2.css';
+
+class Widget2 extends React.Component {
+  render() {
+    return (
+      <div>
+        <h2 className={styles.title}>
+          Email Signup
+        </h2>
+        <input
+          className={styles.email}
+          placeholder="Email Please"
+          />
+        <br/>
+        <button
+          className={styles.submitButton}
+          >
+          Submit
+        </button>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Widget2 />, document.getElementById('root'))
+
+-------------------------------------------
+You could also use multiple class names for styling
+
+We are using the classnames package here to combine classnames. In this situation it just adds a space between the two classnames.
+
+--------------------------------------
+Example 4: Using Multiple classNames
+
+CSS : FileName - buttonStyle.css
+-----
+.button {
+  padding: .5rem;
+  margin-top: .5rem;
+  border: 1px solid #2F79AD;
+  border-radius: 4px;
+  background-color: #6DB9EE;
+}
+
+.button.disabled {
+  background-color: #aaa;
+  border-color: #999;
+}
+
+JS
+---
+import styles from './buttonStyle.css';
+import cx from 'classnames';
+
+class Widget3 extends React.Component {
+  render() {
+    return (
+      <div>
+        <button
+          className={styles.button}
+          >
+          Click Me!
+        </button>
+        <br/>
+        <button
+          className={cx(
+            styles.button,
+            styles.disabled
+          )}
+          >
+          Do Not Click Me
+        </button>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Widget3 />, document.getElementById('root'))
+
+==================================
+SASS
+smarter way to write styles with CSS-in-JS
+Using Sass in React is a quick way to get styling in your app. It is also recommended to look at CSS-in-JS solutions so that we can create even more modular CSS in our component based React apps.
+
+If we want to use any 3rd party libraries like Bulma or Bootstrap (Bulma is my favorite right now), we don't need to import the entire CSS library anymore.
+
+With Sass in React, we can import just the files we need.
+
+------------------------------------
+Example 5: Simple sass
+
+SCSS File -- styles.scss
+--------
+.App {
+  font-family: sans-serif;
+  text-align: right;
+}
+
+JS
+----
+import './styles.scss'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  )
+}
+
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)
+
+------------------------------------
+Example 6: External Sass files(https://appdividend.com/2018/11/13/react-material-ui-example-tutorial/)
+
+// App.scss
+--------
+.container{
+   h1{
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+   }
+}
+
+JS
+---
+import './bootstrap.min.css';
+import './App.css';
+import './App.scss';
+
+class App extends Component {
+  render () {
+    return(
+      <div className="container">
+        <h1>hello</h1>
+      </div>
+    )
+    
+  }
+}
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)

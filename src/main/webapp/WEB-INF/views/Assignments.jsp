@@ -371,7 +371,7 @@ td, th {
 																	<form action="/submitAssignment" method="POST" class="form-group" enctype="multipart/form-data">
 																		<input type="hidden" name="employee_id" value="${in.employee_id }" /> 
 																		<input type="hidden" name="assignment_id" value="${in.assignment_id }" />
-																		<input type="hidden" name="stream_id" alue="${cl.stream_id}" /> 
+																		<input type="hidden" name="stream_id" value="${cl.stream_id}" /> 
 																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
 																		<input type="hidden" name="class_id" value="${cl.class_id}" />
 																		<input type="file" id="uploadFile" name="fileName"/>

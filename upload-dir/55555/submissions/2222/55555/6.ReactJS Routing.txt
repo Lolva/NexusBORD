@@ -1,0 +1,508 @@
+Topic: React Routing
+=======================================================================
+React Router is the perfect tool to link together the URL and your React app. React Router is the de-facto React routing library, and it's one of the most popular projects built on top of React.
+
+Routing helps to create a Single Page Application is the way to introduce some features to navigating the app through links, which are expected in normal web applications:
+
+The browser should change the URL when you navigate to a different screen
+Deep linking should work: if you point the browser to a URL, the application should reconstruct the same view that was presented when the URL was generated.
+The browser back (and forward) button should work like expected.
+Routing links together your application navigation with the navigation features offered by the browser: the address bar and the navigation buttons.
+
+React Router offers a way to write your code so that it will show certain components of your app only if the route matches what you define.
+
+Installation:
+npm install react-router-dom
+
+The 3 components you will interact the most when working with React Router are:
+1)BrowserRouter, usually aliased as Router(wraps all your Route components)
+2)Link(used to generate links to your routes)
+3)Route (responsible for showing - or hiding - the components they contain)
+
+--------------------------------------------------------------------------
+Example1: Simple Routing 
+
+HTML
+---
+<div id='root'></div>
+
+JS
+----
+const {
+  BrowserRouter,
+  Route,
+  Link
+} = ReactRouterDOM
+
+const App = () => (
+  <div>
+    <h1>React Router Example</h1>
+    <ul role="nav">
+      <li><Link to="/dashboard">Dashboard</Link></li>
+      <li><Link to="/profile">Profile</Link></li>
+    </ul>
+     
+    <div>
+      <Route path='/dashboard' component={Dashboard} />
+      <Route path='/profile' component={Profile} />
+    </div>
+  </div>
+)
+ 
+const Dashboard= () => <h2>You are in the Dashboard</h2>
+const Profile= () => <h2>You are in the Profile</h2>
+
+
+ReactDOM.render((
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>
+), document.getElementById('root'));
+-------------------------------------------------------------------------
+Example 2: Multiple links
+
+HTML
+----
+<div id='root'></div>
+
+JS
+---
+// For this demo, we are using the UMD build of react-router-dom
+const {
+  HashRouter,
+  Switch,
+  Route,
+  Link
+} = ReactRouterDOM
+
+// A simple data API that will be used to get the data for our
+// components. On a real website, a more robust data fetching
+// solution would be more appropriate.
+const PlayerAPI = {
+  players: [
+    { number: 1, name: "Ben Blocker", position: "G" },
+    { number: 2, name: "Dave Defender", position: "D" },
+    { number: 3, name: "Sam Sweeper", position: "D" },
+    { number: 4, name: "Matt Midfielder", position: "M" },
+    { number: 5, name: "William Winger", position: "M" },
+    { number: 6, name: "Fillipe Forward", position: "F" }
+  ],
+  all: function() { return this.players},
+  get: function(id) {
+    const isPlayer = p => p.number === id
+    return this.players.find(isPlayer)
+  }
+}
+
+// The FullRoster iterates over all of the players and creates
+// a link to their profile page.
+const FullRoster = () => (
+  <div>
+    <ul>
+      {
+        PlayerAPI.all().map(p => (
+          <li key={p.number}>
+            <Link to={`/roster/${p.number}`}>{p.name}</Link>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+)
+
+// The Player looks up the player using the number parsed from
+// the URL's pathname. If no player is found with the given
+// number, then a "player not found" message is displayed.
+const Player = (props) => {
+  const player = PlayerAPI.get(
+    parseInt(props.match.params.number, 10)
+  )
+  if (!player) {
+    return <div>Sorry, but the player was not found</div>
+  }
+  return (
+    <div>
+      <h1>{player.name} (#{player.number})</h1>
+      <h2>Position: {player.position}</h2>
+      <Link to='/roster'>Back</Link>
+    </div>
+  )
+}
+
+// The Roster component matches one of two different routes
+// depending on the full pathname
+const Roster = () => (
+  <Switch>
+    <Route exact path='/roster' component={FullRoster}/>
+    <Route path='/roster/:number' component={Player}/>
+  </Switch>
+)
+
+const Schedule = () => (
+  <div>
+    <ul>
+      <li>6/5 @ Evergreens</li>
+      <li>6/8 vs Kickers</li>
+      <li>6/14 @ United</li>
+    </ul>
+  </div>
+)
+
+const Home = () => (
+  <div>
+    <h1>Welcome to the Tornadoes Website!</h1>
+  </div>
+)
+
+// The Main component renders one of the three provided
+// Routes (provided that one matches). Both the /roster
+// and /schedule routes will match any pathname that starts
+// with /roster or /schedule. The / route will only match
+// when the pathname is exactly the string "/"
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path='/' component={Home}/>
+      <Route path='/roster' component={Roster}/>
+      <Route path='/schedule' component={Schedule}/>
+    </Switch>
+  </main>
+)
+
+// The Header creates links that can be used to navigate
+// between routes.
+const Header = () => (
+  <header>
+    <nav>
+      <ul>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to='/roster'>Roster</Link></li>
+        <li><Link to='/schedule'>Schedule</Link></li>
+      </ul>
+    </nav>
+  </header>
+)
+
+const App = () => (
+  <div>
+    <Header />
+    <Main />
+  </div>
+)
+
+// This demo uses a HashRouter instead of BrowserRouter
+// because there is no server to match URLs
+ReactDOM.render((
+  <HashRouter>
+    <App />
+  </HashRouter>
+), document.getElementById('root'))
+
+----------------------------------------------------------
+Example 3: Nested Routes
+
+HTML
+----
+<div id="root">
+  <!-- This div's content will be managed by React. -->
+</div>
+
+JS
+--
+const Footer = () => <div>Footer</div>;
+const ArtistInfo = () => <div>ArtistInfo</div>;
+const ArtistMedia = () => <div>ArtistMedia</div>;
+const ArtistLineup = () => <div>ArtistLineUp</div>;
+const NotFound = () => <div>NotFound</div>;
+const { BrowserRouter, Switch, Route, Link, withRouter } = ReactRouterDOM;
+
+let Router = BrowserRouter;
+
+class ArtistProfilePageNew extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { match } = this.props;
+    console.log(match);
+    return (
+      <div className="ArtistProfilePage">
+        <ArtistInfo />
+
+        <Link to={`${match.url}`}>Artist Media</Link>
+        <Link to={`${match.url}/lineup`}>Line-up</Link>
+        <Link to={`${match.url}/gigs`}>Gigs</Link>
+        <Switch>
+          <Route exact path={`${match.url}`} component={ArtistMedia} />
+          <Route path={`${match.url}/lineup`} component={ArtistLineup} />
+        </Switch>
+      </div>
+    );
+  }
+}
+
+const renderProfile = (user, id, type, match) => {
+  if (1 || type === "artist") {
+    return <ArtistProfilePageNew id={id} match={match} />;
+  } else {
+    return "bla";
+  }
+};
+
+const Profile = ({ loading, user, id, type, match }) => (
+  <div>{!loading && renderProfile(user, id, type, match)}</div>
+);
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Link to="/u/22">Test user</Link>
+        <Switch>
+          <Route path="/u/:id" component={Profile} />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);
+
+---------------------------------------
+Example 4: Redirecting
+
+HTML
+-----
+<div id='root'></div>
+
+CSS
+---
+nav {
+  border-bottom: 1px solid #666;
+  margin-bottom: 10px;
+}
+
+ul {
+  display: flex;
+  flex-flow: row nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: flex-end;
+}
+
+ul li {
+  padding: 0 5px;
+  margin: 0 2px;
+}
+
+
+
+JS
+---
+const {
+  HashRouter,
+  Route,
+  Switch,
+  Link,
+  Redirect
+} = ReactRouterDOM
+
+const Global404 = () => (
+  <div>
+    <h1>Oh, no!</h1>
+    <p>You weren't supposed to see this... it was meant to be a surprise!</p>
+  </div>
+)
+
+const Home = () => (
+  <div>
+    The links to "How?" and "Random" have no matching routes, so if you click on either of them, you will get a "global" 404 page.
+  </div>
+)
+const Question = ({ q }) => (
+  <div>
+    <div>Question: {q}</div>
+    <div>Answer: I have no idea</div>
+  </div>
+)
+const Who = () => <Question q={"Who?"}/>
+const What = () => <Question q={"What?"}/>
+const Where = () => <Question q={"Where?"}/>
+const When = () => <Question q={"When?"}/>
+const Why = () => <Question q={"Why?"}/>
+
+const RedirectAs404 = ({ location }) => 
+  <Redirect to={Object.assign({}, location, { state: { is404: true }})}/>
+
+const Nav = () => (
+  <nav>
+    <ul>
+      <li><Link to='/'>Home</Link></li>
+      <li><Link to='/faq/who'>Who?</Link></li>
+      <li><Link to='/faq/what'>What?</Link></li>
+      <li><Link to='/faq/where'>Where?</Link></li>
+      <li><Link to='/faq/when'>When?</Link></li>
+      <li><Link to='/faq/why'>Why?</Link></li>
+      <li><Link to='/faq/how'>How?</Link></li>
+      <li><Link to='/random'>Random</Link></li>
+    </ul>
+  </nav>
+)
+
+const App = () => (
+  <Switch>
+    <Route exact path='/' component={Home}/>
+    <Route path='/faq' component={FAQ}/>
+    <Route component={RedirectAs404}/>
+  </Switch>
+)
+
+const FAQ = () => (
+  <div>
+    <h1>Frequently Asked Questions</h1>
+    <Switch>
+      <Route path='/faq/who' component={Who}/>
+      <Route path='/faq/what' component={What}/>
+      <Route path='/faq/where' component={Where}/>
+      <Route path='/faq/when' component={When}/>
+      <Route path='/faq/why' component={Why}/>
+      <Route component={RedirectAs404}/>
+    </Switch>
+  </div>
+)
+
+ReactDOM.render((
+  <HashRouter>
+    <div>
+      <Nav />
+      <Route render={({ location }) => (
+        location.state && location.state.is404
+          ? <Global404 />
+          : <App />
+      )}/>
+    </div>
+  </HashRouter>
+), document.getElementById('root'))
+
+-----------------------------------------------------------------------
+Example 5: Routing Parameters
+
+HTML
+---
+<div id="App"></div>
+
+CSS
+---
+body{
+  margin:20px;
+  background-color: Grey;
+}
+
+ li{
+  margin: 10px;
+}
+
+.navbar{
+border-top-left-radius: 10px;
+border-bottom-left-radius: 10px;  
+border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;  
+}
+
+.navbar{
+  background-color:white;
+  border-color:white;
+}
+.navbar .nav-pills >li >a {
+    color: black;
+}
+
+/* Check out the fancy selector */
+
+ul.nav > li:nth-child(1) > a:hover{
+  background-color: orange;  
+    color:white;
+}
+
+ul.nav > li:nth-child(2) > a:hover{
+  background-color: red;
+  color:white;
+}
+
+ul.nav > li:nth-child(3) > a:hover{
+  background-color: green;  
+    color:white;
+}
+
+ul.nav > li:nth-child(4) > a:hover{
+  background-color: purple;  
+    color:white;
+}
+ 
+
+
+
+
+JS
+---
+var {Router,Route,Link} = ReactRouter
+
+var NavComponent = React.createClass({
+  render: function() {
+    return (
+
+<div>  
+   <nav className="navbar navbar-default navbar-static-top">
+    <ul className="nav nav-pills">
+      {/* 1. Page Param gets passed to the router through the link*/}
+      <li><Link to="/color/orange">Orange</Link></li>
+      <li><Link to="/color/red">Red</Link></li>
+      <li><Link to="/color/green">Green</Link></li>
+      <li><Link to="/color/purple">Purple</Link></li>
+    </ul>
+  </nav>
+        {this.props.children}
+  </div>    
+      
+    );
+  }
+});
+
+
+
+var Color = React.createClass({
+  render: function() {
+    return (
+      <div>
+              {/* 3. The param in turn is used, notice the inline style color */}
+        <h3>You are in the <strong style= {{color:this.props.params.name}}>{this.props.params.name}</strong> page</h3>
+      </div>
+    );
+  }
+});
+
+
+ReactDOM.render(
+  <Router>
+    <Route path="/" component={NavComponent}>
+  {/* 2. name gets passed as a param */}
+      <Route path='/color/:name' component={Color} />
+    </Route>
+  </Router>,
+  document.getElementById('App')
+);
+
+=======================================================================
+Latest Version: React Router 4 API
+
+React Router 5 is now available which is backwards compatible with React Router 4. It mostly has bug fixes and internal enhancements to make it more compatible with React 16.
+=======================================================================
