@@ -73,21 +73,12 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 		return results;
 		
 	} 
+
 	@Override
-	public List<Map<String, Object>> getOverdue(String class_id) {
-		String sql = "SELECT sub.*, a.* FROM submissions sub, assignments a, modules m, lessons l, streams str, classes c WHERE c.class_id = ? AND c.stream_id = str.stream_id AND str.stream_id = l.stream_id AND l.module_id = m.module_id AND m.module_id = a.module_id AND sub.assignment_id = a.assignment_id AND a.due_date < SYSDATE AND sub.submission_date IS NULL";
+	public List<Map<String, Object>> getToGrade(String stream_id, String username) {
+		String sql = "SELECT * from employees e, submissions so, assignments a, lessons l, modules m WHERE l.module_id = m.module_id AND a.module_id = m.module_id AND a.ASSIGNMENT_ID = so.ASSIGNMENT_ID AND e.EMPLOYEE_ID = so.EMPLOYEE_ID AND l.STREAM_ID= ? AND so.grade IS NULL";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, class_id);
-		for(Map<String, Object> r: results) {
-			System.out.println("Overdue " + r.toString());
-		}
-		return results;
-	}
-	@Override
-	public List<Map<String, Object>> getToGrade(String class_id, String username) {
-		String sql = "SELECT DISTINCT * FROM assignments a, submissions s WHERE a.ASSIGNMENT_ID = s.ASSIGNMENT_ID AND a.status != 'inactive' AND s.grade IS NULL";
-		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql);
+		results = jTemplate.queryForList(sql, stream_id);
 		for(Map<String, Object> r: results) {
 			System.out.println("to Grade " + r.toString());
 		}
@@ -95,10 +86,10 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> overdueInstructor(String class_id) {
-		String SQLQuery = "SELECT sub.*, a.* FROM submissions sub, assignments a, modules m, lessons l, streams str, classes c WHERE c.class_id = ? AND c.stream_id = str.stream_id AND str.stream_id = l.stream_id AND l.module_id = m.module_id AND m.module_id = a.module_id AND sub.assignment_id = a.assignment_id AND a.due_date < SYSDATE AND sub.submission_date IS NULL";
+	public List<Map<String, Object>> overdueInstructor(String stream_id) {
+		String SQLQuery = "SELECT * from employees e, submissions so, assignments a, lessons l, modules m WHERE l.module_id = m.module_id AND a.module_id = m.module_id AND a.ASSIGNMENT_ID = so.ASSIGNMENT_ID AND e.EMPLOYEE_ID = so.EMPLOYEE_ID AND l.STREAM_ID= ? AND a.due_date < SYSDATE AND so.submission_date IS NULL";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(SQLQuery, class_id);
+		results = jTemplate.queryForList(SQLQuery, stream_id);
 		for(Map<String, Object> r : results) {
 			System.out.println("Submission: " + r.toString());
 		}

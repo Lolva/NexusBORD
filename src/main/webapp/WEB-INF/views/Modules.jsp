@@ -129,7 +129,6 @@
 														value="submit" />
 												</form>
 											</div>
-
 										</div>
 									</div>
 								</div>
@@ -178,7 +177,6 @@
 														value="submit" /> <input class="submissionButtons" type="reset" value="Reset" />
 												</form>
 													</div>
-
 												</div>
 											</div>
 										</div>
@@ -262,7 +260,6 @@
 										</div>
 									</div>
 								</div>
-
 								<table>
 									<tr>
 										<th>Assignment Files:</th>
@@ -319,7 +316,6 @@
 																type="reset" value="Reset" />
 														</form>
 													</div>
-
 												</div>
 											</div>
 										</div>

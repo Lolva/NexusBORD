@@ -275,7 +275,7 @@ td, th {
 													</tr>
 													<c:forEach items="${olist}" var="in">
 														<tr>
-															<td>${in.employee_id}</td>
+															<td>${in.first_name } ${in.last_name }</td>
 															<td>${in.assignment_name}</td>
 															<td>${in.due_date}</td>
 														</tr>
@@ -297,7 +297,7 @@ td, th {
 													<c:forEach items="${tgList}" var="in">
 														<tr>
 															<td>${in.assignment_name}</td>
-															<td>${in.employee_id}</td>
+															<td>${in.first_name } ${in.last_name }</td>
 															<td>${in.due_date}</td>
 															<td>${in.submission_date}</td>
 															<td>${in.file_name}</td>

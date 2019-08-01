@@ -29,7 +29,7 @@ public class ModuleServiceDAO implements ModuleDAO {
 
 	@Override
 	public List<Map<String, Object>> getAssignments(String employee_id) {
-		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m, assignments f WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND f.MODULE_ID = m.MODULE_ID AND e.employee_id= ? AND f.status != 'inactive'";
+		String sql = "SELECT * From  enrollments e, classes c, streams s, lessons l, modules m, assignments f WHERE e.CLASS_ID = c.CLASS_ID AND c.STREAM_ID=s.STREAM_ID AND l.STREAM_ID=s.STREAM_ID AND m.MODULE_ID=l.MODULE_ID AND f.MODULE_ID = m.MODULE_ID AND e.employee_id= ?";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, employee_id);
 		return results;

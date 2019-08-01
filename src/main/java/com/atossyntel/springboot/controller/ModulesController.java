@@ -46,7 +46,7 @@ public class ModulesController {
 		model.addAttribute("modulesI", moduledao.getModulesI(session.getAttribute("username").toString()));
 		model.addAttribute("modulefiles", moduledao.getModuleFiles(session.getAttribute("username").toString()));
 		model.addAttribute("moduleassigns", moduledao.getAssignments(session.getAttribute("username").toString()));
-		/*
+		/* VITAL COMMENT
 		 * Map<String, Object> mom = new HashMap<String, Object>(); for (Map<String,
 		 * Object> m : classes) { String classid =m.get("class_id").toString();
 		 * List<List<Map<String, Object>>> modules = new ArrayList<List<Map<String,
@@ -78,9 +78,7 @@ public class ModulesController {
 	public String newModule(Model model, @ModelAttribute("newmodule") ModuleBean module) {
 		System.out.println(module.toString());
 		System.out.println(moduledao.insertModule(module.getModule_name(), module.getStream_id()));
-		// assignment.setModule_id(result.getParameter("module"));
-		// model.addAttribute("module_id", module.getCourse_id());
-		// model.addAttribute("module_name", module.getModule_name());
+
 
 		return "redirect:Modules";
 	}
@@ -94,10 +92,7 @@ public class ModulesController {
 		
 		System.out.println(moduledao.deleteAssignment(id));
 		
-		// System.out.println(moduledao.insertStream(module.getStream_id()));
-		// assignment.setModule_id(result.getParameter("module"));
-		// model.addAttribute("module_id", module.getCourse_id());
-		// model.addAttribute("module_name", module.getModule_name());
+
 
 		return "redirect:/Modules";
 	}
@@ -106,10 +101,7 @@ public class ModulesController {
 	public String deleteModule(Model model, @ModelAttribute("module") ModuleBean module) {
 		System.out.println(module.toString());
 		System.out.println(moduledao.deleteModule(module.getModule_id()));
-		// System.out.println(moduledao.insertStream(module.getStream_id()));
-		// assignment.setModule_id(result.getParameter("module"));
-		// model.addAttribute("module_id", module.getCourse_id());
-		// model.addAttribute("module_name", module.getModule_name());
+		
 
 		return "redirect:Modules";
 	}
@@ -120,10 +112,7 @@ public class ModulesController {
 		storageService.deleteFile(res.get("file_name").toString() + "." + res.get("file_type").toString(), "/" + res.get("stream_id").toString() + "/" + res.get("module_id").toString() + "/moduleFiles/");
 		
 		System.out.println(moduledao.deleteModuleFile(id));
-		// System.out.println(moduledao.insertStream(module.getStream_id()));
-		// assignment.setModule_id(result.getParameter("module"));
-		// model.addAttribute("module_id", module.getCourse_id());
-		// model.addAttribute("module_name", module.getModule_name());
+		
 
 		return "redirect:/Modules";
 	}
@@ -132,10 +121,7 @@ public class ModulesController {
 	public String updateModule(Model model, @ModelAttribute("module") ModuleBean module) {
 		System.out.println(module.toString());
 		System.out.println(moduledao.updateModule(module.getModule_name(), module.getModule_id()));
-		// System.out.println(moduledao.insertStream(module.getStream_id()));
-		// assignment.setModule_id(result.getParameter("module"));
-		// model.addAttribute("module_id", module.getCourse_id());
-		// model.addAttribute("module_name", module.getModule_name());
+		
 
 		return "redirect:Modules";
 	}
@@ -193,27 +179,7 @@ public class ModulesController {
 		return "redirect:Modules";
 
 	}
-	/*<input type="text" name="assignment_name" placeholder="Enter name" />
-	<br> <br> <input type="text" name="desc"
-			placeholder="Enter description" /> <br> <br> <select
-			name="status">
-			<option>active</option>
-			<option>inactive</option>
-			<option>completed</option>
-		</select> <br> <br> <input type="date" name="due_date" />
-		<br> <br> <select><c:forEach items="${modules}" var="mo"><option value="${mo.module_id}">${mo.module_name}</option></c:forEach></select> <input type="hidden" name="assignment_id"
-			value="${k.assignment_id}" /><input type="hidden"
-			name="class_id" value="${c.class_id }" /> <input
-			type="hidden" name="stream_id" value="${c.stream_id }" />
-		<input type="file" name="fileName" /><span><input>
-		ASSIGNMENT_ID
-        ASSIGNMENT_NAME
-        MODULE_ID
-        DESCRIPTION
-        DUE_DATE
-        STATUS
-        FILE_NAME
-        FILE_TYPE*/
+	
 	@RequestMapping(value="/editAssignmentFile", method = RequestMethod.POST)
 	public String editAssignmentFile(Model model, @RequestParam("assignment_id") String assignment_id, @RequestParam("assignment_name") String assignment_name, @RequestParam("module_id") String module_id,
 			@RequestParam("stream_id") int stream_id,
