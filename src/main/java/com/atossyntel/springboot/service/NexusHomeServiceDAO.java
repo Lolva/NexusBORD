@@ -42,7 +42,7 @@ public class NexusHomeServiceDAO implements NexusHomeDAO {
 	@Override
 	public List<Map<String, Object>> changelog(String employeeId) {
 		List<Map<String, Object>> results;
-		String SQLQuery = "SELECT DISTINCT str.stream_name as stream_name, a.assignment_name as assignment_name, a.description as description, a.due_date as due_date " + 
+		String SQLQuery = "SELECT DISTINCT str.stream_name as stream_name, a.assignment_name as assignment_name, a.description as description, a.due_date as due_date, c.class_id as class_id " + 
 				"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr, streams str " + 
 				"WHERE e.employee_id = ? AND a.status = 'active' "                                + 
 					"AND e.employee_id = enr.employee_id AND enr.class_id    = c.class_id "       + 

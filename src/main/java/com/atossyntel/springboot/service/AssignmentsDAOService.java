@@ -1,5 +1,7 @@
 package com.atossyntel.springboot.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +33,14 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	
 	@Override
     public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
-        String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+		String fileName = null;
+		String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         
         //String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
         
@@ -51,7 +57,10 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql, stream_id);
 		for(Map<String, Object> r: results) {
-			System.out.println("Active Assignments " + r.toString());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+			String strDate = dateFormat.format(r.get("due_date"));
+			r.put("formattedDate", strDate);
+			System.out.println(strDate);
 		}
 		return results;
 		
@@ -136,10 +145,14 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	// Does not change Assignment ID
 	@Override
     public void updateAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status, String number) {
-        String fullFile = file.getOriginalFilename();
-        int index = fullFile.lastIndexOf(".");
-        String fileName = fullFile.substring(0, index);
-        String fileType = fullFile.substring(index+1, fullFile.length());
+        String fileName = null;
+        String fileType = null;
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			String fullFile = file.getOriginalFilename();
+	        int index = fullFile.lastIndexOf(".");
+	        fileName = fullFile.substring(0, index);
+	        fileType = fullFile.substring(index+1, fullFile.length());
+        }
         
         String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
         
@@ -158,9 +171,10 @@ public class AssignmentsDAOService implements AssignmentsDAO {
         //String fileType = fullFile.substring(index+1, fullFile.length());
         
         String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
-        
-        String sqlQuery = "DELETE FROM assignments WHERE assignment_id = ?";
-        jTemplate.update(sqlQuery, assignmentIdPlaceholder);
+        String sqlQuery1 = "DELETE FROM SUBMISSIONS WHERE ASSIGNMENT_ID=?";
+        String sqlQuery2 = "DELETE FROM assignments WHERE assignment_id =?";
+        jTemplate.update(sqlQuery1,assignmentIdPlaceholder);
+        jTemplate.update(sqlQuery2, assignmentIdPlaceholder);
     }
 
 	@Override

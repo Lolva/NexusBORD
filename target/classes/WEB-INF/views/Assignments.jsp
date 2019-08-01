@@ -154,13 +154,14 @@ td, th {
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
-										<li class="active"><a href="#sub${count }"
+										<li class="active"><a href="#all${cl.class_id}"
 											class="nav-link">All Assignments </a></li>
-										<li><a href="#sub${count +1 }" class="nav-link">Assignments
-												OverDue <span class="badge badge-primary">${fn:length(olist)}</span>
+
+										<li><a href="#overdue${cl.class_id}" class="nav-link">Assignments
+												OverDue <span class="badge badge-danger">${fn:length(olist)}</span>
 										</a></li>
-										<li><a href="#sub${count + 2 }" class="nav-link">Assignments
-												To Grade <span class="badge badge-primary">${fn:length(tgList)}</span>
+										<li><a href="#toGrade${cl.class_id}" class="nav-link">Assignments
+												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
 										</a></li>
 										<li><c:choose>
 												<c:when test="${cl.role_id == 1}">
@@ -172,17 +173,89 @@ td, th {
 											</c:choose></li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade" id="sub${count }">
+										<div class="tab-pane fade" id="all${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
+														<th>Edit Assignment</th>
 														<th>Status</th>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
 													</tr>
 													<c:forEach items="${daList}" var="dl">
 														<c:forEach items="${dl}" var="in">
+															<div class="modal" id="edit${cl.class_id}_${in.assignment_id}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">Edit An Assignment</h4>
+																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		</div>
+																		<div class="modal-body">
+																			<form action="/editAssignmentsFile" method="POST" class="form-group" enctype="multipart/form-data">
+																				<input type="text" name="name" placeholder="Enter name" value="${ in.assignment_name}"/>
+																				<input type="text" name="desc" placeholder="Enter description" value="${ in.description}"/>
+																				<select name="status">
+																					<c:choose>
+																						<c:when test="${in.status == 'active'}">
+																							<option selected>active</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>active</option>
+																						</c:otherwise>
+																					</c:choose>
+																					<c:choose>
+																						<c:when test="${in.status == 'inactive'}">
+																							<option selected>inactive</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>inactive</option>
+																						</c:otherwise>
+																					</c:choose>
+																					<c:choose>
+																						<c:when test="${in.status == 'completed'}">
+																							<option selected>completed</option>
+																						</c:when>
+																						<c:otherwise>
+																							<option>completed</option>
+																						</c:otherwise>
+																					</c:choose>
+																				</select>
+																				<input type="date" name="due_date" value="${in.formattedDate}"/>												
+																				<select name="module_id">
+																								<c:forEach items="${modules}" var ="module">
+																								<c:choose>
+																									<c:when test="${in.module_id == module.module_id}">
+																										<option selected value="${module.module_id}">${module.module_name }</option>
+																									</c:when>
+																									<c:otherwise>
+																										<option value="${module.module_id}">${module.module_name }</option>
+																									</c:otherwise>
+																								</c:choose>
+																								</c:forEach>
+																								</select>
+																								<input type="hidden" name="class_id" value="${cl.class_id }"/>
+																					<input type="hidden" name="stream_id" value="${cl.stream_id }" />
+																					<input type="hidden" name="assignment_id" value="${in.assignment_id}"/>
+																				<input type="file" name="fileName" value="${in.file_name}"/>
+																				<input class="submissionButtons" type="submit" value="submit" />
+																			</form>
+																									</div>
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																			<form action="/deleteAssignments" method="POST" class="form-group">
+																				<input type="hidden" name="assignmentID" value="${in.assignment_id}"/>
+																				<input class="dangerButtons" type="submit" value="Delete"/>
+																			</form>
+																		</div>
+																								
+																	</div>
+																</div>
+															</div>
 															<tr>
+																<td>
+																	<button type="button" class="submissionButtons" data-toggle="modal" data-target="#edit${cl.class_id}_${in.assignment_id}">Edit </button>
+																</td>
 																<td>${in.STATUS}</td>
 																<td>${in.assignment_name}</td>
 																<td>${in.due_date}</td>
@@ -192,7 +265,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count +1 }">
+										<div class="tab-pane fade" id="overdue${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
@@ -210,7 +283,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count + 2 }">
+										<div class="tab-pane fade" id="toGrade${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
@@ -251,16 +324,17 @@ td, th {
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
-										<li class="active"><a href="#sub${count +3}"
+										<li class="active"><a href="#all${cl.class_id}"
 											class="nav-link"> All Assignments</a></li>
-										<li><a href="#sub${count+4 }" class="nav-link">Graded
+										<li><a href="#graded${cl.class_id}" class="nav-link">Graded
 												Assignments</a></li>
-										<li><a href="#sub${count+5}" class="nav-link">Assignments
-												To Do <span class="badge badge-primary">${fn:length(todoAssignments)}</span>
+
+										<li><a href="#toDo${cl.class_id}" class="nav-link">Assignments
+												To Do <span class="badge badge-danger">${fn:length(todoAssignments)}</span>
 										</a></li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade" id="sub${count+3}">
+										<div class="tab-pane fade" id="all${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
@@ -280,7 +354,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count+4}">
+										<div class="tab-pane fade" id="graded${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
@@ -304,7 +378,7 @@ td, th {
 												</table>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="sub${count+5}">
+										<div class="tab-pane fade" id="toDo${cl.class_id}">
 											<div>
 												<table class="table table-striped">
 													<tr>
@@ -313,23 +387,37 @@ td, th {
 														<th>Submit Assignment</th>
 													</tr>
 													<c:forEach items="${todoAssignments}" var="in">
+														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																		<h4 class="modal-title">Upload a File for the Assignment </h4>
+																		<button type="button" class="close" data-dismiss="modal">&times;</button>
+																	</div>
+																	<div class="modal-body">
+																	<form action="/submitAssignment" method="POST" class="form-group" enctype="multipart/form-data">
+																		<input type="hidden" name="employee_id" value="${in.employee_id }" /> 
+																		<input type="hidden" name="assignment_id" value="${in.assignment_id }" />
+																		<input type="hidden" name="stream_id" value="${cl.stream_id}" /> 
+																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
+																		<input type="hidden" name="class_id" value="${cl.class_id}" />
+																		<input type="file" id="uploadFile" name="fileName"/>
+																		<input class="btn btn-primary" type="submit" value="submit" />
+																	</form>
+																	</div>
+																<!-- Modal footer -->
+																	<div class="modal-footer">
+																		<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																	</div>
+																							
+																</div>
+															</div>
+														</div>
 														<tr>
 															<td>${in.assignment_name}</td>
 															<td>${in.due_date}</td>
-															<!--  assignment_id, stream_id, module_id, and class_id -->
 															<td>
-																<form name="assignment" action="?assignment"
-																	method="POST" enctype="multipart/form-data">
-																	<input type="hidden" name="employee_id"
-																		value="${in.employee_id }" /> <input type="hidden"
-																		name="assignment_id" value="${in.assignment_id }" />
-																	<input type="hidden" name="stream_id"
-																		value="${cl.stream_id}" /> <input type="hidden"
-																		name="module_id" value="${in.module_id}" /> <input
-																		type="hidden" name="class_id" value="${cl.class_id}" />
-																	<input class="submissionButtons" type="submit"
-																		value="submit" />
-																</form>
+																<button type="button" class="submissionButtons" data-toggle="modal" data-target="#submit${cl.class_id}_${in.assignment_id}">Submit </button>
 															</td>
 														</tr>
 													</c:forEach>

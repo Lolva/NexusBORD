@@ -149,13 +149,58 @@ public class AssignmentsController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		storageService.store(file, "/" + stream_id + "/" + class_id + "/" + module_id + "/");
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
+		}
 		
 		String emailee = emailDAO.getEmailNewAssignment(class_id);
 		String className = emailDAO.getEmailClassName(class_id);
 		sms.setClassId(className);
 		sms.send(emailee, 0);
 		
+		return "redirect:Assignments";
+	}
+
+	@RequestMapping(value="/submitAssignment", method= RequestMethod.POST)
+	public String newSubmmissionFile(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
+			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
+		System.out.println("hard coded text;" + assignment.getStream_id());
+		System.out.println(modFolder.toString());
+		storageService.store(file, modFolder.toString());
+		studentDAO.submitAssignment(file,assignment.getAssignment_id(),username);
+		String emailee = emailDAO.getEmailStudentSubmission(assignment.getClass_id());
+		
+		sms.setEmpId(username);
+		sms.setClassId(assignment.getClass_id());
+		sms.send(emailee, 1);
+		
+		System.out.println("Sent to DB");
+		return "redirect:Assignments";
+	}
+	
+	@RequestMapping(value="/editAssignmentsFile", method = RequestMethod.POST)
+	public String editAssignmentsFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
+			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id, @RequestParam("assignment_id") String assignment_id,
+			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
+			
+		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
+		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+			storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
+		}
+		
+		String emailee = emailDAO.getEmailNewAssignment(class_id);
+		String className = emailDAO.getEmailClassName(class_id);
+		sms.setClassId(className);
+		sms.send(emailee, 0);
+		
+		return "redirect:Assignments";
+	}
+	
+	@RequestMapping(value="/deleteAssignments", method=RequestMethod.POST)
+	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID) {
+		assigndao.deleteAssignment(assignmentID);
+		System.out.println("Its getting here");
 		return "redirect:Assignments";
 	}
 	
