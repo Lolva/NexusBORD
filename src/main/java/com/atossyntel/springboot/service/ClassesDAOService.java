@@ -191,7 +191,7 @@ public class ClassesDAOService implements ClassesDAO {
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
 		Object results = this.jTemplate.queryForObject(checkquery, new Object[]{EmpId}, Integer.class);
 		if ( ((Number) results).intValue() > 0) {
-			if (oldId != null) {
+			if (oldId.equals(null)) {
 				System.out.println(" Changing class");
 				this.jTemplate.update(sqlUpdateQuery, classId, EmpId, oldId);
 			} else {
