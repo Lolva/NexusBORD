@@ -11,10 +11,8 @@ header {
 body {
 	padding-right: 0 !important;
     font-family: sans-serif;
-    background-image: url(/resources/pictures/test.png);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 100%, 100%;
+    background-image: url(https://media.discordapp.net/attachments/598173060528472069/605531908352507915/test.jpg);
+    background-repeat: repeat;
     color: black;
     margin: 0;
     padding: 0;
@@ -193,7 +191,7 @@ fieldset.container {
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
-	border:1px solid #004f61;
+	border:0px;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -234,7 +232,7 @@ fieldset.container {
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
-	border:1px solid #700a02;
+	border:0px;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -258,4 +256,138 @@ fieldset.container {
 .dangerButtons:active {
 	position:relative;
 	top:1px;
+}
+
+.inactiveButtons {
+    -moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+    -webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+    box-shadow: 0px 1px 0px 0px #f0f7fa;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #666e75), color-stop(1, #4b5157));
+    background:-moz-linear-gradient(top, #666e75 5%, #4b5157 100%);
+    background:-webkit-linear-gradient(top, #666e75 5%, #4b5157 100%);
+    background:-o-linear-gradient(top, #666e75 5%, #4b5157 100%);
+    background:-ms-linear-gradient(top, #666e75 5%, #4b5157 100%);
+    background:linear-gradient(to bottom, #666e75 5%, #4b5157 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666e75', endColorstr='#4b5157',GradientType=0);
+    background-color:#666e75;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:0px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px -1px 0px #45707a;
+}
+.inactiveButtons:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #4b5157), color-stop(1, #666e75));
+    background:-moz-linear-gradient(top, #4b5157 5%, #666e75 100%);
+    background:-webkit-linear-gradient(top, #4b5157 5%, #666e75 100%);
+    background:-o-linear-gradient(top, #4b5157 5%, #666e75 100%);
+    background:-ms-linear-gradient(top, #4b5157 5%, #666e75 100%);
+    background:linear-gradient(to bottom, #4b5157 5%, #666e75 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4b5157', endColorstr='#666e75',GradientType=0);
+    background-color:#4b5157;
+}
+.inactiveButtons:active {
+    position:relative;
+    top:1px;
+}
+td, th {
+	border: none;
+	text-align: left;
+	padding: 8px;
+	color: black;
+}
+
+.custom-dropdown--large {
+	font-size: 1.5em;
+}
+
+.custom-dropdown--small {
+	font-size: .7em;
+}
+
+.custom-dropdown__select{
+	font-size: inherit; /* inherit size from .custom-dropdown */
+	padding: .5em; /* add some space*/
+	margin: 0; /* remove default margins */
+}
+
+.custom-dropdown__select--white {
+	background-color: #fff;
+	color: #444;    
+}
+
+@supports (pointer-events: none) and
+	  ((-webkit-appearance: none) or
+	  (-moz-appearance: none) or
+	  (appearance: none)) {
+
+	.custom-dropdown {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.custom-dropdown__select {
+		padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
+		border: 0;
+		border-radius: 3px;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;    
+	}
+
+	.custom-dropdown::before,
+	.custom-dropdown::after {
+		content: "";
+		position: absolute;
+		pointer-events: none;
+	}
+
+	.custom-dropdown::after { /*  Custom dropdown arrow */
+		content: "\25BC";
+		height: 1em;
+		font-size: .625em;
+		line-height: 1;
+		right: 1.2em;
+		top: 50%; margin-top: -.5em;
+	}
+
+	.custom-dropdown::before { /*  Custom dropdown arrow cover */
+		width: 2em;
+		right: 0; top: 0; bottom: 0;
+		border-radius: 0 3px 3px 0;
+	}
+
+	.custom-dropdown__select[disabled] {
+		color: rgba(0,0,0,.3);
+	}
+
+	.custom-dropdown.custom-dropdown--disabled::after {
+		color: rgba(0,0,0,.1);
+	}
+
+	/* White dropdown style */
+	.custom-dropdown--white::before {
+		background-color: #fff;
+		border-left: 1px solid rgba(0,0,0,.1);
+	}
+
+	.custom-dropdown--white::after {
+		color: rgba(0,0,0,.9);
+	}
+
+	/* FF only temp fix */
+	@-moz-document url-prefix() {
+		.custom-dropdown__select 			 { padding-right: .9em }
+		.custom-dropdown--large .custom-dropdown__select { padding-right: 1.3em }
+		.custom-dropdown--small .custom-dropdown__select { padding-right: .5em }
+	}
 }

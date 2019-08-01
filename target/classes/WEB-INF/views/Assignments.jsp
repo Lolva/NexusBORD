@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	
+
 <link rel="stylesheet" href="/resources/css/nexusbord.css">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -25,11 +25,10 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>	
+	crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/js/nexusbord.js"></script>
 <style>
 td, th {
-	border: 1px solid black;
 	text-align: left;
 	padding: 8px;
 	color: black;
@@ -70,86 +69,112 @@ td, th {
 				<c:forEach items="${classes}" var="cl">
 					<c:choose>
 						<c:when test="${cl.role_id == 1}">
-						<div class="modal" id="af${cl.class_id }">
-									<div class="modal-dialog">
-										<div class="modal-content">
+							<div class="modal" id="af${cl.class_id }">
+								<div class="modal-dialog">
+									<div class="modal-content" style="width: 471px;">
 
-											<!-- Modal Header -->
-											<div class="modal-header">
-												<h4 class="modal-title">Add new assignment file: </h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-											</div>
+										<!-- Modal Header -->
+										<div class="modal-header"
+											style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+											<h4 class="modal-title">
+												<font color="white"> New Assignment </font>
+											</h4>
+											<button type="button" class="close" aria-label="Close"
+												data-dismiss="modal" style="padding-top: -14px;">
+												<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+											</button>
+										</div>
 
-											<!-- Modal body -->
-											<div class="modal-body">
-												<form action="/addAssignmentsFile" method="POST" class="form-group" enctype="multipart/form-data">
-													<input type="text" name="name" placeholder="Enter name"/>
-													<br>
-													<br>
-													<input type="text" name="desc" placeholder="Enter description"/>
-													<br>
-													<br>
-													<select name="status">
-														<option>active</option>
-														<option>inactive</option>
-														<option>completed</option>
-													</select>
-													<br>
-													<br>
-													<input type="date" name="due_date"/>
-													<br>
-													<br>													
-													<select name="module_id">
-																	<c:forEach items="${modules}" var ="module">
-																		<option value="${module.module_id}">${module.module_name }</option>
-																	</c:forEach>
-																	</select>
-																	<input type="hidden" name="class_id" value="${cl.class_id }"/>
-														<br>
-														<br>
-														<input type="hidden" name="stream_id" value="${cl.stream_id }" />
-													<input type="file" name="fileName" />
-													<br>
-													<br>
-													<input class="submissionButtons" type="submit" value="submit" /></span>
-												</form>
-											</div>
-
-											<!-- Modal footer -->
-											<div class="modal-footer">
-												<button type="button" class="submissionButtons"
-													data-dismiss="modal">Close</button>
-											</div>
-
+										<!-- Modal body -->
+										<div class="modal-body">
+											<form action="/addAssignmentsFile" method="POST"
+												class="form-group" enctype="multipart/form-data"
+												style="margin-bottom: 0px; padding-top: 4px;">
+												<table>
+													<tbody>
+														<tr>
+															<th scope="row"><input type="text" name="name"
+																placeholder="Assignment Name"
+																title="Please enter an assignment name."
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></th>
+															<td><input type="text" name="desc"
+																placeholder="Assignment Description"
+																title="Please enter an assignment description."
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></td>
+														</tr>
+														<tr>
+															<th scope="row"><span
+																class="custom-dropdown custom-dropdown--white"> <select
+																	name="status"
+																	title="Please select an assignment status."
+																	class="custom-dropdown__select custom-dropdown__select--white"
+																	style="padding-left: 0px; padding-right: 114px;">
+																		<option>active</option>
+																		<option>inactive</option>
+																		<option>completed</option>
+																</select>
+															</span></th>
+															<td><input title="Please enter a due date."
+																type="date" name="due_date"
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></td>
+														</tr>
+														<tr>
+															<th scope="row"><span
+																class="custom-dropdown custom-dropdown--white"> <select
+																	name="module_id" title="Please select a module."
+																	class="custom-dropdown__select custom-dropdown__select--white"
+																	style="padding-left: 0px;">
+																		<c:forEach items="${modules}" var="module">
+																			<option value="${module.module_id}">${module.module_name }</option>
+																		</c:forEach>
+																</select>
+															</span></th>
+															<td><div class="custom-file">
+																	<input title="Upload an assignment file." type="file"
+																		class="custom-file-input" id="fileName"
+																		name="fileName"> <label
+																		class="custom-file-label" for="customFile">
+																		Choose file </label>
+																</div></td>
+														</tr>
+													</tbody>
+												</table>
+												<input type="hidden" name="class_id" value="${cl.class_id }" />
+												<input type="hidden" name="stream_id"
+													value="${cl.stream_id }" /> <input
+													class="submissionButtons" type="submit" value="submit"
+													style="margin-top: 10px; margin-left: 7px; margin-bottom: 2px;" />
+												<input class="inactiveButtons" type="reset" value="clear"
+													style="margin-top: 10px; margin-left: 236px; margin-bottom: 2px;" />
+											</form>
 										</div>
 									</div>
 								</div>
+							</div>
 							<div class="tab-pane fade" id="class${cl.class_id}">
 								<div class="tabbable">
 									<ul class="nav nav-tabs" id="${cl.stream_name}">
 										<li class="active"><a href="#sub${count }"
 											class="nav-link">All Assignments </a></li>
 										<li><a href="#sub${count +1 }" class="nav-link">Assignments
-												OverDue <span class="badge badge-danger">${fn:length(olist)}</span>
+												OverDue <span class="badge badge-primary">${fn:length(olist)}</span>
 										</a></li>
 										<li><a href="#sub${count + 2 }" class="nav-link">Assignments
-												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
+												To Grade <span class="badge badge-primary">${fn:length(tgList)}</span>
 										</a></li>
-										<li>
-										<c:choose>
+										<li><c:choose>
 												<c:when test="${cl.role_id == 1}">
 													<button type="button" class="submissionButtons"
-														data-toggle="modal" data-target="#af${cl.class_id }">New Assignment
-													</button>
-													</c:when>
-											</c:choose>
-										
-										</li>
+														style="margin-top: 4px; margin-left: 180px;"
+														data-toggle="modal" data-target="#af${cl.class_id }">New
+														Assignment</button>
+												</c:when>
+											</c:choose></li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane fade" id="sub${count }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Status</th>
 														<th>Assignment Name</th>
@@ -169,7 +194,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count +1 }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Employee</th>
 														<th>Assignment Name</th>
@@ -187,7 +212,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count + 2 }">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Employee</th>
@@ -231,13 +256,13 @@ td, th {
 										<li><a href="#sub${count+4 }" class="nav-link">Graded
 												Assignments</a></li>
 										<li><a href="#sub${count+5}" class="nav-link">Assignments
-												To Do <span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												To Do <span class="badge badge-primary">${fn:length(todoAssignments)}</span>
 										</a></li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane fade" id="sub${count+3}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
@@ -257,7 +282,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count+4}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
@@ -281,7 +306,7 @@ td, th {
 										</div>
 										<div class="tab-pane fade" id="sub${count+5}">
 											<div>
-												<table class="table">
+												<table class="table table-striped">
 													<tr>
 														<th>Assignment Name</th>
 														<th>Due Date</th>
@@ -341,7 +366,13 @@ td, th {
 			   
 			});
 	</script>
-	<!-- Container for logout modal -->	
+	<script>
+		$(".custom-file-input").on("change", function() {
+ 			var fileName = $(this).val().split("\\").pop();
+  			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
+	</script>
+	<!-- Container for logout modal -->
 	<div id="LogoutModalDiv"></div>
 </body>
 </html>
