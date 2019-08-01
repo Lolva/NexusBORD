@@ -235,6 +235,7 @@ td, th {
 																								</c:forEach>
 																								</select>
 																								<input type="hidden" name="class_id" value="${cl.class_id }"/>
+																					<input type="hidden" name="stream_name" value = "${cl.stream_name}"/>
 																					<input type="hidden" name="stream_id" value="${cl.stream_id }" />
 																					<input type="hidden" name="assignment_id" value="${in.assignment_id}"/>
 																				<input type="file" name="fileName" value="${in.file_name}"/>
@@ -245,6 +246,8 @@ td, th {
 																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
 																			<form action="/deleteAssignments" method="POST" class="form-group">
 																				<input type="hidden" name="assignmentID" value="${in.assignment_id}"/>
+																				<input type="hidden" name="classID" value = "${cl.class_id }"/>
+																				<input type="hidden" name="stream_name" value = "${cl.stream_name}"/>
 																				<input class="dangerButtons" type="submit" value="Delete"/>
 																			</form>
 																		</div>
@@ -306,6 +309,8 @@ td, th {
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
+																	<input type ="hidden" name="class_id" value="${cl.class_id}"/>
+																	<input type ="hidden" name="stream_name" value="${cl.stream_name}"/>
 																	<input style="width:20%; margin-left:10px; margin-right: 10px;" type="text" name="grade"
 																		placeholder="${in.grade}" /><span> <input style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
 																		class="submissionButtons" type="submit" value="+" /></span>
@@ -401,6 +406,7 @@ td, th {
 																		<input type="hidden" name="stream_id" value="${cl.stream_id}" /> 
 																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
 																		<input type="hidden" name="class_id" value="${cl.class_id}" />
+																		<input type="hidden" name="stream_name" value="${cl.stream_name}" />
 																		<input type="file" id="uploadFile" name="fileName"/>
 																		<input class="btn btn-primary" type="submit" value="submit" />
 																	</form>

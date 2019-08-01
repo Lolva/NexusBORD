@@ -106,7 +106,7 @@ public class AssignmentsController {
 	}
 	
 	@RequestMapping(value = "/Assignments", params="grades")
-	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException{
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade, @RequestParam("stream_name") String stream_name, @RequestParam("class_id") String class_id) throws MessagingException{
 		System.out.println(grade.toString());
 		
 		//emailee list
@@ -119,7 +119,11 @@ public class AssignmentsController {
 		sms.send(emailee, 2);
 		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect +="#class" + class_id;
+		redirect +="#" + stream_name;
+		redirect +="#toGrade" + class_id;
+		return redirect;
 	}
 	
 	@RequestMapping(value = "/Assignments", params = "assignment")
@@ -158,12 +162,15 @@ public class AssignmentsController {
 		sms.setClassId(className);
 		sms.send(emailee, 0);
 		
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + class_id;
+		
+		return redirect;
 	}
 
 	@RequestMapping(value="/submitAssignment", method= RequestMethod.POST)
 	public String newSubmmissionFile(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
-			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+			@RequestParam("fileName") MultipartFile file,@RequestParam("stream_name") String stream_name, HttpServletRequest request,HttpSession session) throws MessagingException {
 		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
 		System.out.println("hard coded text;" + assignment.getStream_id());
 		System.out.println(modFolder.toString());
@@ -175,14 +182,18 @@ public class AssignmentsController {
 		sms.setClassId(assignment.getClass_id());
 		sms.send(emailee, 1);
 		
-		System.out.println("Sent to DB");
-		return "redirect:Assignments";
+
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + assignment.getClass_id();
+		redirect+="#" + stream_name;
+		redirect+="#toDo" + assignment.getClass_id();
+		return redirect;
 	}
 	
 	@RequestMapping(value="/editAssignmentsFile", method = RequestMethod.POST)
 	public String editAssignmentsFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
 			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id, @RequestParam("assignment_id") String assignment_id,
-			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
+			@RequestParam("fileName") MultipartFile file, @RequestParam("stream_name") String stream_name, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
 			
 		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
 		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
@@ -193,15 +204,23 @@ public class AssignmentsController {
 		String className = emailDAO.getEmailClassName(class_id);
 		sms.setClassId(className);
 		sms.send(emailee, 0);
-		
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect +="#class" + class_id;
+		redirect+="#"+stream_name;
+		redirect+="#all" + class_id;
+		return redirect;
 	}
 	
 	@RequestMapping(value="/deleteAssignments", method=RequestMethod.POST)
-	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID) {
+	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID,
+			@RequestParam("classID") String classID, @RequestParam("stream_name")String stream_name) {
 		assigndao.deleteAssignment(assignmentID);
 		System.out.println("Its getting here");
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + classID;
+		redirect+="#"+stream_name;
+		redirect+="#all" + classID;
+		return redirect;
 	}
 	
 	@ModelAttribute("modules")
