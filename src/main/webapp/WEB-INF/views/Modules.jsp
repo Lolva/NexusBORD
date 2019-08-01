@@ -327,8 +327,10 @@
 											<c:when test="${o.module_id==k.module_id}">
 												<tr>
 													<td id="${k.assignment_id}"
-														style="color: black; width: 200px"><a
-														href="/downloadAssign/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a>
+														style="color: black; width: 200px">
+														<c:choose><c:when test="${empty k.file_name}">${k.assignment_name}
+														</c:when><c:otherwise><a
+														href="/downloadAssign/${c.stream_id}/${c.class_id}/${o.module_id}/${k.file_name}/${k.file_type}">${k.assignment_name}</a></c:otherwise></c:choose>
 														<c:choose>
 															<c:when test="${c.role_id == 1}">
 																<a class=" dropdown-toggle dropdown-toggle-split "

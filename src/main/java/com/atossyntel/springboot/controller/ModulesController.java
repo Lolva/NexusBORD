@@ -185,9 +185,11 @@ public class ModulesController {
 			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id,
 			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) {
 		
-		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
+		//System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
+		if(!file.isEmpty()) {
 		storageService.store(file, "/" + stream_id + "/"  + module_id + "/assignmentFiles/");
+		}
 		return "redirect:Modules";
 
 	}

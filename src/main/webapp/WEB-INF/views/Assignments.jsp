@@ -158,10 +158,10 @@ td, th {
 											class="nav-link">All Assignments </a></li>
 
 										<li><a href="#overdue${cl.class_id}" class="nav-link">Assignments
-												OverDue <span class="badge badge-danger">${fn:length(olist)}</span>
+												OverDue <span class="badge badge-primary">${fn:length(olist)}</span>
 										</a></li>
 										<li><a href="#toGrade${cl.class_id}" class="nav-link">Assignments
-												To Grade <span class="badge badge-danger">${fn:length(tgList)}</span>
+												To Grade <span class="badge badge-primary">${fn:length(tgList)}</span>
 										</a></li>
 										<li><c:choose>
 												<c:when test="${cl.role_id == 1}">
@@ -306,9 +306,9 @@ td, th {
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
-																	<input type="text" name="grade"
-																		placeholder="${in.grade}" /> <input
-																		class="submissionButtons" type="submit" value="submit" />
+																	<input style="width:20%; margin-left:10px; margin-right: 10px;" type="text" name="grade"
+																		placeholder="${in.grade}" /><span> <input style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
+																		class="submissionButtons" type="submit" value="+" /></span>
 																</form>
 															</td>
 														</tr>
@@ -330,7 +330,7 @@ td, th {
 												Assignments</a></li>
 
 										<li><a href="#toDo${cl.class_id}" class="nav-link">Assignments
-												To Do <span class="badge badge-danger">${fn:length(todoAssignments)}</span>
+												To Do <span class="badge badge-primary">${fn:length(todoAssignments)}</span>
 										</a></li>
 									</ul>
 									<div class="tab-content">

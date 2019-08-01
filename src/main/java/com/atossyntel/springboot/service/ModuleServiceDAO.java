@@ -113,6 +113,7 @@ public class ModuleServiceDAO implements ModuleDAO {
 	@Override
 	public int newAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId,
 			String desc, String status) {
+		if(!file.isEmpty()) {
 		String fullFile = file.getOriginalFilename();
 		int index = fullFile.lastIndexOf(".");
 		String fileName = fullFile.substring(0, index);
@@ -128,6 +129,13 @@ public class ModuleServiceDAO implements ModuleDAO {
 				+ "description, due_date, status, file_name, file_type) "
 				+ "VALUES( ?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?)";
 		return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType);
+		}
+		else {
+			String sqlQuery = "INSERT INTO assignments(assignment_name, module_id, "
+					+ "description, due_date, status) "
+					+ "VALUES( ?,?,?,TO_DATE(?,'YYYY-MM-DD'),?)";
+			return jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status);
+		}
 	}
 
 	@Override

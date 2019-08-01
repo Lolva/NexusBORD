@@ -149,7 +149,7 @@ public class AssignmentsController {
 		
 		System.out.println(name + " " + file.toString() + " " + module_id + " " + class_id + " " + due_date + " " + desc + " " + status);
 		System.out.println(moduledao.newAssignment(name, file, due_date, module_id, class_id, desc, status));
-		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+		if(!file.isEmpty()) {
 			storageService.store(file, "/" + stream_id + "/" + module_id + "/assignmentFiles/");
 		}
 		

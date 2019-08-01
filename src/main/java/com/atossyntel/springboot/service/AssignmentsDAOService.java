@@ -35,12 +35,13 @@ public class AssignmentsDAOService implements AssignmentsDAO {
     public void setAssignment(String name, MultipartFile file, String dueDate, String moduleId, String classId, String desc, String status) {
 		String fileName = null;
 		String fileType = null;
-		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
+		if(!file.isEmpty()) {
+			
 			String fullFile = file.getOriginalFilename();
 	        int index = fullFile.lastIndexOf(".");
 	        fileName = fullFile.substring(0, index);
 	        fileType = fullFile.substring(index+1, fullFile.length());
-        }
+        
         
         //String assignmentIdPlaceholder = number; // change this as needed until function can be updated to match auto-increment funtionality
         
@@ -48,6 +49,13 @@ public class AssignmentsDAOService implements AssignmentsDAO {
                 + "description, due_date, status, file_name, file_type) "
                 + "VALUES(?,?,?,TO_DATE(?,'YYYY-MM-DD'),?,?,?)";
         jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status, fileName, fileType);
+		} else {
+			System.out.println("file is empty help");
+			String sqlQuery = "INSERT INTO assignments(assignment_name, module_id, "
+	                + "description, due_date, status) "
+	                + "VALUES(?,?,?,TO_DATE(?,'YYYY-MM-DD'),?)";
+	        jTemplate.update(sqlQuery, name, moduleId, desc, dueDate, status);
+		}
     } 
 
 	@Override
