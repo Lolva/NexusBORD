@@ -75,11 +75,12 @@ td, th {
 
 										<!-- Modal Header -->
 										<div class="modal-header"
-											style="padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+											style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
 											<h4 class="modal-title">
 												<font color="white"> New Assignment </font>
 											</h4>
-											<button type="button" class="close" aria-label="Close" data-dismiss="modal" style="padding-top:-14px;">
+											<button type="button" class="close" aria-label="Close"
+												data-dismiss="modal" style="padding-top: -14px;">
 												<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
 											</button>
 										</div>
@@ -93,26 +94,48 @@ td, th {
 													<tbody>
 														<tr>
 															<th scope="row"><input type="text" name="name"
-																placeholder="Enter name" /></th>
+																placeholder="Assignment Name"
+																title="Please enter an assignment name."
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></th>
 															<td><input type="text" name="desc"
-																placeholder="Enter description" /></td>
+																placeholder="Assignment Description"
+																title="Please enter an assignment description."
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></td>
 														</tr>
 														<tr>
-															<th scope="row"><select name="status">
-																	<option>active</option>
-																	<option>inactive</option>
-																	<option>completed</option>
-															</select></th>
-															<td><input type="date" name="due_date" /></td>
+															<th scope="row"><span
+																class="custom-dropdown custom-dropdown--white"> <select
+																	name="status"
+																	title="Please select an assignment status."
+																	class="custom-dropdown__select custom-dropdown__select--white"
+																	style="padding-left: 0px; padding-right: 114px;">
+																		<option>active</option>
+																		<option>inactive</option>
+																		<option>completed</option>
+																</select>
+															</span></th>
+															<td><input title="Please enter a due date."
+																type="date" name="due_date"
+																style="border-left-width: 0px; border-right-width: 0px; border-top-width: 0px;" /></td>
 														</tr>
 														<tr>
-															<th scope="row"><select name="module_id">
-																	<c:forEach items="${modules}" var="module">
-																		<option value="${module.module_id}">${module.module_name }</option>
-																	</c:forEach>
-															</select></th>
-															<td><input type="file" class="form-control-file"
-																id="fileName" name="fileName"></td>
+															<th scope="row"><span
+																class="custom-dropdown custom-dropdown--white"> <select
+																	name="module_id" title="Please select a module."
+																	class="custom-dropdown__select custom-dropdown__select--white"
+																	style="padding-left: 0px;">
+																		<c:forEach items="${modules}" var="module">
+																			<option value="${module.module_id}">${module.module_name }</option>
+																		</c:forEach>
+																</select>
+															</span></th>
+															<td><div class="custom-file">
+																	<input title="Upload an assignment file." type="file"
+																		class="custom-file-input" id="fileName"
+																		name="fileName"> <label
+																		class="custom-file-label" for="customFile">
+																		Choose file </label>
+																</div></td>
 														</tr>
 													</tbody>
 												</table>
@@ -342,6 +365,12 @@ td, th {
 			  } 
 			   
 			});
+	</script>
+	<script>
+		$(".custom-file-input").on("change", function() {
+ 			var fileName = $(this).val().split("\\").pop();
+  			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
 	</script>
 	<!-- Container for logout modal -->
 	<div id="LogoutModalDiv"></div>
