@@ -39,9 +39,7 @@ public class ClassesDAOService implements ClassesDAO {
 	@Autowired
     private SmtpMailSender sms;
     @Autowired
-    private EmailDAOService emailDAO;
-    ///////////////////////////////////////////////
-    
+    private EmailDAOService emailDAO; 
     private EnrollmentBean enroll;
     
 	
@@ -103,7 +101,6 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start, date);
 		results = jTemplate.queryForList(sql, username, start, date);
 		return results;
 	}
@@ -118,17 +115,17 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start);
 		results = jTemplate.queryForList(sql, username, start);
 		return results;
 	}
 	
 	
 	@Override
-	public List<Map<String, Object>> getAllClasses() {
-		String sqlQuery = "SELECT class_id FROM Classes";
+	public List<Map<String, Object>> getAllClasses(String empId) {
+//		String sqlQuery = "SELECT class_id FROM Classes WHERE employee_id = ?";
+		String sqlQuery = "SELECT s.class_id FROM Enrollments s, Classes c WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1";
 		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sqlQuery);
+		results = jTemplate.queryForList(sqlQuery, empId);
 		return results;
 	}
 	public void addClasses(String employee_id, String stream_Id, Date start_date, Date end_date) {
@@ -144,7 +141,6 @@ public class ClassesDAOService implements ClassesDAO {
 	              }, keyHolder);
 		String key = (String) keyHolder.getKeys().get("class_id");
 		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
-//		this.jTemplate.update(addInstructor, "II9999999", key, 1);
 		this.jTemplate.update(addInstructor, employee_id, key, 1);
 	}
 	
@@ -192,7 +188,6 @@ public class ClassesDAOService implements ClassesDAO {
 		Object results = this.jTemplate.queryForObject(checkquery, new Object[]{EmpId}, Integer.class);
 		if ( ((Number) results).intValue() > 0) {
 			if (oldId.equals(null)) {
-				System.out.println(" Changing class");
 				this.jTemplate.update(sqlUpdateQuery, classId, EmpId, oldId);
 			} else {
 				this.jTemplate.update(sqlInsertQuery, EmpId, classId, 2);

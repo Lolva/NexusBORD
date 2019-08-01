@@ -67,7 +67,7 @@ public class ClassesController {
 		List<Map<String, Object>> activeStudents = classdao.getActiveStudents();
 		model.addAttribute("activeStudents", activeStudents);
 		
-		List<Map<String, Object>> getAllClasses = classdao.getAllClasses();
+		List<Map<String, Object>> getAllClasses = classdao.getAllClasses((String) session.getAttribute("username"));
 		model.addAttribute("allClassIds", getAllClasses);
 		
 		List<Map<String, Object>> stream=classdao.getStream();

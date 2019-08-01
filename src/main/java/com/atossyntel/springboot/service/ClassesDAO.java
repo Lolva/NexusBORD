@@ -11,7 +11,7 @@ import java.sql.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ClassesDAO {
-	public List<Map<String, Object>> getAllClasses();
+	public List<Map<String, Object>> getAllClasses(String employee_id);
 	public List<Map<String, Object>> getActiveClasses();
 	public List<Map<String, Object>> getInactiveClasses();
 	public List<Map<String,Object>> getStudents(String classId);
