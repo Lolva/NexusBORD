@@ -409,6 +409,23 @@ td, th {
 														<th>Submit Assignment</th>
 													</tr>
 													<c:forEach items="${todoAssignments}" var="in">
+													<div class="modal" id="todoAssignments${cl.class_id}_${in.assignment_id}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">${in.assignment_name}</h4>
+																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		</div>
+																		<div class="modal-body">
+																			${in.description}<br><br>
+																			Filename: <a href="/downloadAssign/${cl.stream_id}/${cl.class_id}/${in.module_id}/${in.file_name}/${in.file_type}">${in.file_name}</a>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																		</div>
+																	</div>
+																</div>
+														</div>
 														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
 															<div class="modal-dialog">
 																<div class="modal-content">
@@ -437,7 +454,7 @@ td, th {
 															</div>
 														</div>
 														<tr>
-															<td>${in.assignment_name}</td>
+															<td><a data-toggle="modal" data-target="#todoAssignments${cl.class_id}_${in.assignment_id}">${in.assignment_name}</a></td>
 															<td>${in.due_date}</td>
 															<td>
 																<button type="button" class="submissionButtons" data-toggle="modal" data-target="#submit${cl.class_id}_${in.assignment_id}">Submit </button>
