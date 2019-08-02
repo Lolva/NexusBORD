@@ -44,7 +44,7 @@
 	</header>
 	<fieldset
 		style="width: 90%; margin: auto; height: 100%; background-color: white; margin-bottom: 5%; margin-top:20px;">
-		<div class="jumbotron jumbotron-fluid" style="background-color: #2E2E7F; padding: 5px;">
+		<div class="jumbotron jumbotron-fluid" style=" -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%); padding: 5px;">
 		  <div class="container">
 		    <h1 class="display-5" style="color: white; margin: 1%;">Welcome to Nexus<i><b>BORD</b></i></h1>
 		  </div>
