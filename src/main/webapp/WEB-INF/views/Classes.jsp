@@ -350,9 +350,10 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 		</div>
    		<br><br>
    		<div class="custom-file">
-   		<label class="custom-file-label" for="file">Select an Excel File</label>
-   		<input type="file" name="file" class="custom-file-input">
+   		<label class="custom-file-label" for="file">Select an Excel File (.xlsx)</label>
+   		<input type="file" name="file" class="custom-file-input" accept=".xlsx">
    		</div>
+   		${error}
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
    		</form>
@@ -534,7 +535,7 @@ $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
-<</script>
+</script>
 	<!-- JavaScript for icons -->
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
