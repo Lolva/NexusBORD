@@ -243,7 +243,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
    								   </div>
    							   <div class="modal-footer">
     					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-   	 				    <button type="submit" class="btn btn-primary">Delete</button>
+   	 				    <button type="submit" class="submissionButtons">Delete</button>
     				  </div>
    					</div>
  				</div>
@@ -296,7 +296,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 			  </select>
 			</div>
 			<br>
-			<input type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addModal" value="Add Employee"/>
+			<input type="button" class="submissionButtons btn-md" data-toggle="modal" data-target="#addModal" value="Add Employee"/>
 		 <!-- add employee Modal -->
 							<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -311,7 +311,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
     						    Are you sure you want to add this employee?
    								   </div>
    							   <div class="modal-footer">
-   	 				    <button type="submit" class="btn btn-primary">Add</button>
+   	 				    <button type="submit" class="submissionButtons">Add</button>
     						  </div>
     						  </div>
     						</div>
@@ -342,7 +342,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
    		</div>
    		${error}
    		<br><br>
-   		<input type="submit" class="btn btn-primary btn-md" value="Submit">
+   		<input type="submit" class="submissionButtons btn-md" value="Submit">
    	</form>
    	</div>
    	
@@ -361,10 +361,10 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 			  </select>
 			</div>
    		<br>
-   		<button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModalCenter" >
+   		<button type="button" class="submissionButtons btn-md" data-toggle="modal" data-target="#exampleModalCenter" >
    			Delete Class
    		</button>
-   		<input class="btn btn-primary btn-md" type="reset">
+   		<input class="submissionButtons btn-md" type="reset">
    		<!-- Button trigger modal -->
 		
 		<!-- Delete Modal -->
@@ -381,7 +381,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 		        Are you sure you want to delete this class?
 		      </div>
 		      <div class="modal-footer">
-		        <button type="submit" class="btn btn-primary" >Delete</button>
+		        <button type="submit" class="submissionButtons" >Delete</button>
 		      </div>
 		    </div>
 		  </div>
@@ -410,7 +410,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 	   		<br>
 	   		
 	   		<!-- Button trigger modal -->
-	   		<button type = "button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#classModal">Create Class</button>
+	   		<button type = "button" class="submissionButtons btn-md" data-toggle="modal" data-target="#classModal">Create Class</button>
 	   		
 	   		<!-- Modal -->
 <div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
@@ -427,7 +427,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Create Class</button>
+        <button type="submit" class="submissionButtons">Create Class</button>
       </div>
     </div>
   </div>
@@ -454,7 +454,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 	   	
 	   		<br>
 	   		<!-- Button to Open the Modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+		<button type="button" class="submissionButtons" data-toggle="modal" data-target="#editModal">
 		  Edit Class
 		</button>
 	   		
@@ -478,7 +478,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Edit</button>
+        <button type="submit" class="submissionButtons">Edit</button>
       </div>
 
     </div>
