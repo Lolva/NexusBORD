@@ -9,9 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,7 +111,7 @@ public class AssignmentsController {
 	}
 	
 	@RequestMapping(value = "/Assignments", params="grades")
-	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException{
+	public String grader(Model model, @ModelAttribute("grades") GradeBean grade, @RequestParam("stream_name") String stream_name, @RequestParam("class_id") String class_id) throws MessagingException{
 		System.out.println(grade.toString());
 		
 		//emailee list
@@ -119,7 +124,11 @@ public class AssignmentsController {
 		sms.send(emailee, 2);
 		
 		assigndao.updateGrade(grade.getEmployee_id(), grade.getAssignment_id(), grade.getGrade());
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect +="#class" + class_id;
+		redirect +="#" + stream_name;
+		redirect +="#toGrade" + class_id;
+		return redirect;
 	}
 	
 	@RequestMapping(value = "/Assignments", params = "assignment")
@@ -158,12 +167,15 @@ public class AssignmentsController {
 		sms.setClassId(className);
 		sms.send(emailee, 0);
 		
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + class_id;
+		
+		return redirect;
 	}
 
 	@RequestMapping(value="/submitAssignment", method= RequestMethod.POST)
 	public String newSubmmissionFile(Model model, @ModelAttribute("assignment") StudentSubmissionBean assignment, RedirectAttributes redirectAttributes, 
-			@RequestParam("fileName") MultipartFile file, HttpServletRequest request,HttpSession session) throws MessagingException {
+			@RequestParam("fileName") MultipartFile file,@RequestParam("stream_name") String stream_name, HttpServletRequest request,HttpSession session) throws MessagingException {
 		StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
 		System.out.println("hard coded text;" + assignment.getStream_id());
 		System.out.println(modFolder.toString());
@@ -175,14 +187,18 @@ public class AssignmentsController {
 		sms.setClassId(assignment.getClass_id());
 		sms.send(emailee, 1);
 		
-		System.out.println("Sent to DB");
-		return "redirect:Assignments";
+
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + assignment.getClass_id();
+		redirect+="#" + stream_name;
+		redirect+="#toDo" + assignment.getClass_id();
+		return redirect;
 	}
 	
 	@RequestMapping(value="/editAssignmentsFile", method = RequestMethod.POST)
 	public String editAssignmentsFile(Model model, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("module_id") String module_id,
 			@RequestParam("class_id") String class_id, @RequestParam("stream_id") int stream_id, @RequestParam("assignment_id") String assignment_id,
-			@RequestParam("fileName") MultipartFile file, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
+			@RequestParam("fileName") MultipartFile file, @RequestParam("stream_name") String stream_name, @RequestParam("due_date") String due_date, @RequestParam("desc") String desc, @RequestParam("status") String status) throws MessagingException{
 			
 		assigndao.updateAssignment(name, file, due_date, module_id, class_id, desc, status, assignment_id);
 		if(file != null && file.getOriginalFilename() !="" && file.getOriginalFilename() != null && file.getOriginalFilename().contains(".")) {
@@ -193,15 +209,51 @@ public class AssignmentsController {
 		String className = emailDAO.getEmailClassName(class_id);
 		sms.setClassId(className);
 		sms.send(emailee, 0);
-		
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect +="#class" + class_id;
+		redirect+="#"+stream_name;
+		redirect+="#all" + class_id;
+		return redirect;
 	}
 	
 	@RequestMapping(value="/deleteAssignments", method=RequestMethod.POST)
-	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID) {
+	public String deleteAssignment(Model model, HttpServletRequest request, @RequestParam("assignmentID") String assignmentID,
+			@RequestParam("classID") String classID, @RequestParam("stream_name")String stream_name) {
 		assigndao.deleteAssignment(assignmentID);
 		System.out.println("Its getting here");
-		return "redirect:Assignments";
+		String redirect = "redirect:Assignments";
+		redirect+="#class" + classID;
+		redirect+="#"+stream_name;
+		redirect+="#all" + classID;
+		return redirect;
+	}
+	
+	/*@GetMapping("/downloadAssign/{streamid}/{classid}/{moduleid}/{modulefile}/{filetype}")
+	public ResponseEntity<Resource> submitAssignment(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid + " " + classid + " " + moduleid + " " + filename);
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + moduleid + "/assignmentFiles/");
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
+	}*/
+	//StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
+	@GetMapping("/downloadSubmission/{streamid}/{moduleid}/{classid}/{assignmentid}/{submissionfile}/{filetype}")
+	public ResponseEntity<Resource> submitSubmission(Model model, @PathVariable("streamid") String streamid,@PathVariable("moduleid") String moduleid,@PathVariable("classid") String classid,@PathVariable("assignmentid") String assignmentid ,@PathVariable("submissionfile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid + " " + moduleid + " " + classid + " "+assignmentid +" "+ filename);
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + moduleid + "/submissions/"+classid+"/"+assignmentid);
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
 	}
 	
 	@ModelAttribute("modules")

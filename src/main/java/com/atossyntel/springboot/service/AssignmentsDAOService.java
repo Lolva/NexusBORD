@@ -97,7 +97,7 @@ public class AssignmentsDAOService implements AssignmentsDAO {
 	}
 	@Override
 	public List<Map<String, Object>> getStudentAssignments(String username, String class_id){
-		String sql = "SELECT DISTINCT e.employee_id, a.assignment_name, a.due_date, sub.submission_date, c.class_id\r\n" + 
+		String sql = "SELECT DISTINCT e.employee_id, a.assignment_name, a.due_date, sub.submission_date, c.class_id, a.description, a.file_name, a.file_type, a.assignment_id\r\n" + 
 				"FROM employees e, assignments a, submissions sub, lessons l, classes c, enrollments enr\r\n" + 
 				"WHERE e.employee_id = ? AND c.class_id = ? AND a.status != 'inactive' \r\n" + 
 				"    AND c.stream_id = l.stream_id AND l.module_id = a.module_id AND a.assignment_id = sub.assignment_id";

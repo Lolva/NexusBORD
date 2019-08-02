@@ -34,6 +34,9 @@ td, th {
 	padding: 8px;
 	color: black;
 }
+.assignmentName:hover{
+	background-color: teal;
+}
 </style>
 </head>
 
@@ -235,38 +238,35 @@ td, th {
 																							<option>completed</option>
 																						</c:otherwise>
 																					</c:choose>
-																				</select> <input type="date" name="due_date"
-																					value="${in.formattedDate}" /> <select
-																					name="module_id">
-																					<c:forEach items="${modules}" var="module">
-																						<c:choose>
-																							<c:when
-																								test="${in.module_id == module.module_id}">
-																								<option selected value="${module.module_id}">${module.module_name }</option>
-																							</c:when>
-																							<c:otherwise>
-																								<option value="${module.module_id}">${module.module_name }</option>
-																							</c:otherwise>
-																						</c:choose>
-																					</c:forEach>
-																				</select> <input type="hidden" name="class_id"
-																					value="${cl.class_id }" /> <input type="hidden"
-																					name="stream_id" value="${cl.stream_id }" /> <input
-																					type="hidden" name="assignment_id"
-																					value="${in.assignment_id}" /> <input type="file"
-																					name="fileName" value="${in.file_name}" /> <input
-																					class="submissionButtons" type="submit"
-																					value="submit" />
+																				</select>
+																				<input type="date" name="due_date" value="${in.formattedDate}"/>												
+																				<select name="module_id">
+																								<c:forEach items="${modules}" var ="module">
+																								<c:choose>
+																									<c:when test="${in.module_id == module.module_id}">
+																										<option selected value="${module.module_id}">${module.module_name }</option>
+																									</c:when>
+																									<c:otherwise>
+																										<option value="${module.module_id}">${module.module_name }</option>
+																									</c:otherwise>
+																								</c:choose>
+																								</c:forEach>
+																								</select>
+																								<input type="hidden" name="class_id" value="${cl.class_id }"/>
+																					<input type="hidden" name="stream_name" value = "${cl.stream_name}"/>
+																					<input type="hidden" name="stream_id" value="${cl.stream_id }" />
+																					<input type="hidden" name="assignment_id" value="${in.assignment_id}"/>
+																				<input type="file" name="fileName" value="${in.file_name}"/>
+																				<input class="submissionButtons" type="submit" value="submit" />
 																			</form>
 																		</div>
 																		<div class="modal-footer">
-																			<button type="button" class="inactiveButtons"
-																				data-dismiss="modal">Close</button>
-																			<form action="/deleteAssignments" method="POST"
-																				class="form-group">
-																				<input type="hidden" name="assignmentID"
-																					value="${in.assignment_id}" /> <input
-																					class="dangerButtons" type="submit" value="Delete" />
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																			<form action="/deleteAssignments" method="POST" class="form-group">
+																				<input type="hidden" name="assignmentID" value="${in.assignment_id}"/>
+																				<input type="hidden" name="classID" value = "${cl.class_id }"/>
+																				<input type="hidden" name="stream_name" value = "${cl.stream_name}"/>
+																				<input class="dangerButtons" type="submit" value="Delete"/>
 																			</form>
 																		</div>
 
@@ -323,26 +323,20 @@ td, th {
 													<c:forEach items="${tgList}" var="in">
 														<tr>
 															<td>${in.assignment_name}</td>
-															<td>${in.first_name } ${in.last_name }</td>
-
-															<td><fmt:formatDate pattern="yyyy-MM-dd"
-																	value="${in.due_date}" /></td>
-															<td><fmt:formatDate pattern="yyyy-MM-dd"
-																	value="${in.submission_date}" /></td>
-
-															<td>${in.file_name}</td>
+															<td>${in.employee_id}</td>
+															<td>${in.due_date}</td>
+															<td>${in.submission_date}</td>
+															<td><a href="/downloadSubmission/${cl.stream_id}/${in.module_id}/${cl.class_id}/${in.assignment_id}/${in.file_name}/${in.file_type}">${in.file_name }</a></td>
 															<td>
 																<form name="grades" action="?grades" method="POST">
 																	<input type="hidden" name="employee_id"
 																		value="${in.employee_id }" /> <input type="hidden"
 																		name="assignment_id" value="${in.assignment_id }" />
-																	<input
-																		style="width: 20%; margin-left: 10px; margin-right: 10px;"
-																		type="text" name="grade" placeholder="${in.grade}" /><span>
-																		<input
-																		style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
-																		class="submissionButtons" type="submit" value="+" />
-																	</span>
+																	<input type ="hidden" name="class_id" value="${cl.class_id}"/>
+																	<input type ="hidden" name="stream_name" value="${cl.stream_name}"/>
+																	<input style="width:20%; margin-left:10px; margin-right: 10px;" type="text" name="grade"
+																		placeholder="${in.grade}" /><span> <input style="padding: 0px 0px; font-size: 16px; width: 26px; height: 26px"
+																		class="submissionButtons" type="submit" value="+" /></span>
 																</form>
 															</td>
 														</tr>
@@ -378,12 +372,27 @@ td, th {
 													</tr>
 													<c:forEach items="${asList}" var="dl">
 														<c:forEach items="${dl}" var="in">
+															<div class="modal" id="allAssignments${cl.class_id}_${in.assignment_id}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">${in.assignment_name}</h4>
+																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		</div>
+																		<div class="modal-body">
+																			${in.description}<br><br>
+																			Filename: <a href="/downloadAssign/${cl.stream_id}/${cl.class_id}/${in.module_id}/${in.file_name}/${in.file_type}">${in.file_name}</a>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
 															<tr>
-																<td>${in.assignment_name}</td>
-																<td><fmt:formatDate pattern="yyyy-MM-dd"
-																		value="${in.due_date}" /></td>
-																<td><fmt:formatDate pattern="yyyy-MM-dd"
-																		value="${in.submission_date}" /></td>
+																<td><a data-toggle="modal" data-target="#allAssignments${cl.class_id}_${in.assignment_id}" class="assignmentName">${in.assignment_name}</a></td>
+																<td>${in.due_date}</td>
+																<td>${in.submission_date}</td>
 															</tr>
 														</c:forEach>
 													</c:forEach>
@@ -404,11 +413,9 @@ td, th {
 														<c:forEach items="${dl}" var="in">
 															<tr>
 																<td>${in.assignment_name}</td>
-																<td><fmt:formatDate pattern="yyyy-MM-dd"
-																		value="${in.due_date}" /></td>
-																<td><fmt:formatDate pattern="yyyy-MM-dd"
-																		value="${in.submission_date}" /></td>
-																<td>${in.file_name }</td>
+																<td>${in.due_date}</td>
+																<td>${in.submission_date}</td>
+																<td ><a href="/downloadSubmission/${cl.stream_id}/${in.module_id}/${cl.class_id}/${in.assignment_id}/${in.file_name}/${in.file_type}">${in.file_name }</a></td>
 																<td>${in.grade }</td>
 															</tr>
 														</c:forEach>
@@ -425,8 +432,24 @@ td, th {
 														<th>Submit Assignment</th>
 													</tr>
 													<c:forEach items="${todoAssignments}" var="in">
-														<div class="modal"
-															id="submit${cl.class_id}_${in.assignment_id}">
+													<div class="modal" id="todoAssignments${cl.class_id}_${in.assignment_id}">
+																<div class="modal-dialog">
+																	<div class="modal-content">
+																		<div class="modal-header" style="-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+																			<h4 class="modal-title">${in.assignment_name}</h4>
+																			<button type="button" class="close" data-dismiss="modal">&times;</button>
+																		</div>
+																		<div class="modal-body">
+																			${in.description}<br><br>
+																			Filename: <a href="/downloadAssign/${cl.stream_id}/${cl.class_id}/${in.module_id}/${in.file_name}/${in.file_type}">${in.file_name}</a>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="inactiveButtons" data-dismiss="modal">Close</button>
+																		</div>
+																	</div>
+																</div>
+														</div>
+														<div class="modal" id="submit${cl.class_id}_${in.assignment_id}">
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header"
@@ -441,29 +464,23 @@ td, th {
 																		</button>
 																	</div>
 																	<div class="modal-body">
-																		<form action="/submitAssignment" method="POST"
-																			class="form-group" enctype="multipart/form-data">
-																			<input type="hidden" name="employee_id"
-																				value="${in.employee_id }" /> <input type="hidden"
-																				name="assignment_id" value="${in.assignment_id }" />
-																			<input type="hidden" name="stream_id"
-																				value="${cl.stream_id}" /> <input type="hidden"
-																				name="module_id" value="${in.module_id}" /> <input
-																				type="hidden" name="class_id" value="${cl.class_id}" />
-																			<input type="file" id="uploadFile" name="fileName" />
-																			<input class="submissionButtons" type="submit"
-																				value="submit" />
-																			<button type="button" class="inactiveButtons"
-																				data-dismiss="modal">Close</button>
-																		</form>
+																	<form action="/submitAssignment" method="POST" class="form-group" enctype="multipart/form-data">
+																		<input type="hidden" name="employee_id" value="${in.employee_id }" /> 
+																		<input type="hidden" name="assignment_id" value="${in.assignment_id }" />
+																		<input type="hidden" name="stream_id" value="${cl.stream_id}" /> 
+																		<input type="hidden" name="module_id" value="${in.module_id}" /> 
+																		<input type="hidden" name="class_id" value="${cl.class_id}" />
+																		<input type="hidden" name="stream_name" value="${cl.stream_name}" />
+																		<input type="file" id="uploadFile" name="fileName"/>
+																		<input class="btn btn-primary" type="submit" value="submit" />
+																	</form>
 																	</div>
 																</div>
 															</div>
 														</div>
 														<tr>
-															<td>${in.assignment_name}</td>
-															<td><fmt:formatDate pattern="yyyy-MM-dd"
-																	value="${in.due_date}" /></td>
+															<td><a data-toggle="modal" data-target="#todoAssignments${cl.class_id}_${in.assignment_id}" class="assignmentName">${in.assignment_name}</a></td>
+															<td>${in.due_date}</td>
 															<td>
 																<button type="button" class="submissionButtons"
 																	data-toggle="modal"
