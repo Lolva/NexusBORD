@@ -33,6 +33,9 @@ td, th {
 	padding: 8px;
 	color: black;
 }
+.assignmentName:hover{
+	background-color: teal;
+}
 </style>
 </head>
 
@@ -367,7 +370,7 @@ td, th {
 																</div>
 															</div>
 															<tr>
-																<td><a data-toggle="modal" data-target="#allAssignments${cl.class_id}_${in.assignment_id}">${in.assignment_name}</a></td>
+																<td><a data-toggle="modal" data-target="#allAssignments${cl.class_id}_${in.assignment_id}" class="assignmentName">${in.assignment_name}</a></td>
 																<td>${in.due_date}</td>
 																<td>${in.submission_date}</td>
 															</tr>
@@ -454,7 +457,7 @@ td, th {
 															</div>
 														</div>
 														<tr>
-															<td><a data-toggle="modal" data-target="#todoAssignments${cl.class_id}_${in.assignment_id}">${in.assignment_name}</a></td>
+															<td><a data-toggle="modal" data-target="#todoAssignments${cl.class_id}_${in.assignment_id}" class="assignmentName">${in.assignment_name}</a></td>
 															<td>${in.due_date}</td>
 															<td>
 																<button type="button" class="submissionButtons" data-toggle="modal" data-target="#submit${cl.class_id}_${in.assignment_id}">Submit </button>
