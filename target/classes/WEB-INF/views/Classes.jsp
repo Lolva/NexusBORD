@@ -161,15 +161,12 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
 								<td>
-								<form name="deleteform" action="/deleteEmployee" method="POST">
-								<input type ="hidden" name="Class_ID" value="${j.class_id }">
-								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
 								<!-- Button trigger modal -->
-								<Button type = "button" class= "btn btn-basic btn-xs" data-toggle="modal" data-target="#deleteEmpModal">
+								<Button type = "button" class= "btn btn-basic btn-xs" data-toggle="modal" data-target="#deleteEmpModal${j.employee_id}">
 								<ion-icon name="trash"></ion-icon></Button>
 								
  								 <!-- Modal -->
-							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
+							<div class="modal fade" id="deleteEmpModal${j.employee_id}" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
 							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
@@ -183,7 +180,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
    								   </div>
    							   <div class="modal-footer">
     					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-   	 				    <button type="submit" class="btn btn-primary">Delete</button>
+   	 				    <a href="/deleteEmployee/${j.class_id }/${j.employee_id }" class="btn btn-primary">Delete</a>
     				  </div>
    					</div>
  				</div>

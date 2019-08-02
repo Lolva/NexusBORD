@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,8 +48,9 @@ public class ClassesController {
 	private SmtpMailSender sms;
 
 	
-	@RequestMapping(value = "/Classes", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/Classes", method = RequestMethod.GET)
 	public String init(Model model,  HttpSession session) {
+		System.out.println("Inside Classes Controller");
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
 		
@@ -102,7 +104,7 @@ public class ClassesController {
 	 @RequestMapping(value = "/changeClass", method = RequestMethod.POST)
 	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) throws MessagingException {
 	        if (EnrollmentBean != null) {
-//	        	System.out.println("Change Class");
+	        	System.out.println("Change Class");
 //	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
 	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID(), EnrollmentBean.getOld_Class_ID()); 
 	        	 
@@ -117,6 +119,7 @@ public class ClassesController {
 	 @RequestMapping(value = "/deleteClass", method = RequestMethod.POST)
 	 public String submit1(Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) {
 	     if (EmployeeBean != null) {
+	    	 System.out.println("About to delete class... (ClassesController)");
 	        classdao.deleteClass(EmployeeBean.getClass_id());
 	           return "redirect:Classes.html";	
 	        } else {
@@ -125,11 +128,16 @@ public class ClassesController {
 	       
 	        	
 	   }
-	 @RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
-	 public String submit2(Model model, @ModelAttribute("enrollementBean") EnrollmentBean EnrollmentBean) {
+	 @RequestMapping(value = "/deleteEmployee/{cid}/{sid}", method = RequestMethod.GET)
+	 public String submit2(Model model, @ModelAttribute("enrollementBean") EnrollmentBean EnrollmentBean,@PathVariable String cid,
+			 @PathVariable String sid) {
+		 System.out.println("Deleting employee soon...(ClassesController)");
+		 System.out.println("Class id: "+cid);
+		 System.out.println("emp id: "+sid);
 	     if (EnrollmentBean != null) {
-	        classdao.deleteEmployee(EnrollmentBean.getClass_ID(), EnrollmentBean.getEmployee_ID()); 
-	           return "redirect:Classes.html";	
+	        //classdao.deleteEmployee(EnrollmentBean.getClass_ID(), EnrollmentBean.getEmployee_ID()); 
+	        classdao.deleteEmployee(cid,sid);
+	           return "redirect:/Classes";	
 	        } else {
 	        	return "Classes";
 	        }
@@ -138,6 +146,7 @@ public class ClassesController {
 	   }
 	 @RequestMapping(value = "/addClass", method = RequestMethod.POST)
 	   public String submit(Model model, @ModelAttribute("classBean") ClassBean ClassBean,  HttpSession session) {
+		 System.out.println("Adding class soon...(ClassesController)");
 		   if (ClassBean != null) {
 			   classdao.addClasses((String) session.getAttribute("username"), ClassBean.getStream_Id(),ClassBean.getStart_date(),ClassBean.getEnd_date());
 		   return "redirect:Classes.html";
@@ -149,6 +158,7 @@ public class ClassesController {
 	 
 	 @RequestMapping(value="/editClass", method = RequestMethod.POST)
 	 public String submit1(Model model, @ModelAttribute("classBean") ClassBean ClassBean) {
+		 System.out.println("Editing classes soon...(ClassesController)");
 		 if(ClassBean != null) {
 			 classdao.editClass(ClassBean.getClass_Id(), ClassBean.getStart_date(), ClassBean.getEnd_date());
 			 return "redirect:Classes";
@@ -159,7 +169,8 @@ public class ClassesController {
 
 	 @RequestMapping(value="/upload", method = RequestMethod.POST)
 	   public String submit(@RequestParam("file") MultipartFile file, Model model, @ModelAttribute("employeeBean") EmployeeBean EmployeeBean) throws IOException, MessagingException {
-		   if(EmployeeBean != null) {
+		 System.out.println("Uploading a file soon...(ClassesController)");  
+		 if(EmployeeBean != null) {
 			  classdao.addEmployees(file, file.getName(), EmployeeBean.getClass_id());	
 				
 			  return "redirect:Classes";

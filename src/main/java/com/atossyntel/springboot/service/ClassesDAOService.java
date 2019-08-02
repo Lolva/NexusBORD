@@ -131,6 +131,7 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	
 	public void addClasses(String employee_id, String stream_Id, Date start_date, Date end_date) {
+		System.out.println("Adding a class(ClassesDAOService)");
 		String sql= "INSERT INTO CLASSES(STREAM_ID,START_DATE,END_DATE) VALUES(?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jTemplate.update(
@@ -184,6 +185,7 @@ public class ClassesDAOService implements ClassesDAO {
 
 	@Override
 	public void changeClassId(String EmpId, String classId, String oldId) {
+		System.out.println("editing class ID(ClassesDAOService)");
 		String checkquery = "SELECT Count(*) FROM Enrollments WHERE employee_id=?";
 		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=? AND class_id=?";
 		System.out.println("EI: " + EmpId + " CI: " + classId + " OI: " + oldId);
@@ -202,15 +204,15 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	@Override
 	public void deleteEmployee(String class_Id, String employee_id) {
-//		System.out.println("Deleting employee");
+		System.out.println("Deleting employee (ClassesDAOService)");
 		String sqlQuery = "Delete FROM Enrollments WHERE class_id=? AND employee_id=?";	
-//		System.out.println(class_Id + " " + employee_id);
+	System.out.println(class_Id + " " + employee_id);
 		this.jTemplate.update(sqlQuery, class_Id, employee_id);
 	}
 	
 	@Override
 	public void deleteClass(String class_Id) {
-//		System.out.println("Deleting class");
+		System.out.println("Deleting class (ClassesDAOService)");
 		String sqlQuery1 = "DELETE FROM Enrollments WHERE class_id=?";
 		String sqlQuery2 = "Delete FROM Classes WHERE class_id=?";
 		String sqlQuery3 = "SELECT Count(*) FROM Enrollments WHERE class_id=?";
@@ -225,6 +227,7 @@ public class ClassesDAOService implements ClassesDAO {
 	
 	@Override
 	public void editClass(String class_id, Date start_date, Date end_date) {
+		System.out.println("Editing class...(ClassesDAOService)");
 		String sqlQuery1 = "Update Classes SET start_Date=?, end_date=? WHERE class_id=?";
 		String sqlQuery2 = "Update Classes SET start_Date=? WHERE class_id=?";
 		String sqlQuery3 = "Update Classes SET end_date=? WHERE class_id=?";
