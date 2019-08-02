@@ -91,14 +91,16 @@
 														<form action="/updateModule" method="POST"
 															class="form-group">
 															<input type="text" required
-																placeholder="${o.module_name}" name="module_name" /> <input
+																placeholder="${o.module_name}"title="Please enter a module name." class="borderlessInput" name="module_name" /> <input
 																type="hidden" value="${o.module_id }" name="module_id" />
-															<input class="submissionButtons" type="submit"
+															
+															<br><input style="margin-top:20px" class="submissionButtons" type="submit"
 																value="Edit" />
+																<input style="margin-top:20px; margin-left:302px;"  class="inactiveButtons" type="reset" value="clear" onclick="clearfile()" />
 														</form>
 														<form action="/deleteModule" method="POST"
 															class="form-group">
-															<input type="hidden" name="module_id"
+															<input  style="margin-top:-50px"  type="hidden" name="module_id"
 																value="${o.module_id }" /> <span><input
 																class="dangerButtons" type="submit"
 																value="Delete module" /></span>
@@ -113,7 +115,6 @@
 								<div class="modal" id="mf${o.module_id }">
 									<div class="modal-dialog">
 										<div class="modal-content">
-
 											<!-- Modal Header -->
 											<div class="modal-header"
 												style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
@@ -182,7 +183,6 @@
 										<div class="modal" id="mfe${j.module_file_id }">
 											<div class="modal-dialog">
 												<div class="modal-content">
-
 													<!-- Modal Header -->
 													<div class="modal-header"
 														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
@@ -198,9 +198,9 @@
 													<div class="modal-body">
 														<form action="/editModuleFile" method="POST"
 															class="form-group" enctype="multipart/form-data">
-															Name: <input type="text" name="name" value="${j.name}" />
-															Description: <input type="text" name="desc"
-																value="${j.description}" /> <select>
+															<input class="borderlessInput" placeholder="Module File Name" title="Please enter a module file name" type="text" name="name" value="${j.name}" />
+															<input class="borderlessInput" placeholder="File Description" title="Please enter a module file description." type="text" name="desc"
+																value="${j.description}" /><br><br> <select>
 																<c:forEach items="${modulesI}" var="mo">
 																	<c:choose>
 																		<c:when test="${o.module_id eq j.module_id}">
@@ -211,13 +211,13 @@
 																		</c:otherwise>
 																	</c:choose>
 																</c:forEach>
-															</select> <input type="hidden" name="module_id"
+															</select><br><br> <input type="hidden" name="module_id"
 																value="${o.module_id }" /> <input type="hidden"
 																name="module_file_id" value="${j.module_file_id }" /> <input
 																type="hidden" name="stream_id" value="${c.stream_id }" />
-															File:<input type="file" name="file" /> <br> <br>
+															<input type="file" name="file" /> <br> <br>
 															<input class="submissionButtons" type="submit"
-																value="submit" /> <input class="submissionButtons"
+																value="submit" /> <input style="margin-left: 275px;"class="inactiveButtons"
 																type="reset" value="Reset" />
 														</form>
 													</div>
@@ -271,18 +271,23 @@
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<!-- Modal Header -->
-											<div class="modal-header">
-												<h4 class="modal-title">Add new assignment file:
-													${o.module_name}</h4>
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-											</div>
+													<div class="modal-header"
+														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+														<h4 class="modal-title">
+															<font color="white"> New Assignment </font>
+														</h4>
+														<button type="button" class="close" aria-label="Close"
+															data-dismiss="modal" style="padding-top: -14px;">
+															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+														</button>
+													</div>
 											<!-- Modal body -->
 											<div class="modal-body">
 												<form action="/addAssignmentFile" method="POST"
 													class="form-group" enctype="multipart/form-data">
-													<input type="text" name="name" placeholder="Enter name" />
-													<br> <br> <input type="text" name="desc"
-														placeholder="Enter description" /> <br> <br> <select
+													<input class="borderlessInput" type="text" title="Please enter an assignment name."  name="name" placeholder="Assignment Name" />
+													<br> <br> <input class="borderlessInput" title="" type="text" name="desc"
+														placeholder="Assignment Description" /> <br> <br> <select
 														name="status">
 														<option>active</option>
 														<option>inactive</option>
@@ -292,14 +297,11 @@
 														value="${o.module_id }" /> <input type="hidden"
 														name="class_id" value="${c.class_id }" /> <input
 														type="hidden" name="stream_id" value="${c.stream_id }" />
-													<input type="file" name="fileName" /> <span><input
-														class="submissionButtons" type="submit" value="submit" /></span>
+													<input type="file" name="fileName" /><br><br><input
+														class="submissionButtons" type="submit" value="submit" />
+														<input style="margin-left: 281px;"
+														class="inactiveButtons" type="reset" value="clear" />
 												</form>
-											</div>
-											<!-- Modal footer -->
-											<div class="modal-footer">
-												<button type="button" class="submissionButtons"
-													data-dismiss="modal">Close</button>
 											</div>
 										</div>
 									</div>
@@ -321,8 +323,11 @@
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<!-- Modal Header -->
-													<div class="modal-header">
-														<h4 class="modal-title">Edit assignment file:</h4>
+													<div class="modal-header"
+														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+														<h4 class="modal-title">
+															<font color="white"> Edit Assignment </font>
+														</h4>
 														<button type="button" class="close" aria-label="Close"
 															data-dismiss="modal" style="padding-top: -14px;">
 															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
@@ -332,18 +337,24 @@
 													<div class="modal-body">
 														<form action="/editAssignmentFile" method="POST"
 															class="form-group" enctype="multipart/form-data">
-															Assignment Name: <input type="text"
-																name="assignment_name" value="${k.assignment_name }" />
-															<br> <br> Description: <input type="text"
-																name="desc" value="${k.description }" /> <br> <br>
-															Status: <select name="status">
-																<option>active</option>
-																<option>inactive</option>
-																<option>completed</option>
-															</select> <br> <br> Due Date: <input type="date"
+															<input class="borderlessInput" type="text"
+																name="assignment_name" title="Please enter an assignment name." placeholder="Assignment Name" value="${k.assignment_name }" />
+															<input style="margin-left:60px;" class="borderlessInput" placeholder="Assignment Description" type="text"
+																name="desc" title="Please enter an assignment description." value="${k.description }" /> <br> <br>
+															 <span
+																class="custom-dropdown custom-dropdown--white"> <select
+																	name="status"
+																	title="Please select an assignment status."
+																	class="custom-dropdown__select custom-dropdown__select--white"
+																	style="padding:0px; margin-top:-15x; padding-right:40px;">
+																		<option>active</option>
+																		<option>inactive</option>
+																		<option>completed</option>
+																</select>
+															</span><input type="date"
 																value="<fmt:formatDate pattern = "yyyy-MM-dd" value = "${k.due_date}" />"
-																name="due_date" /> <br> <br> Module: <select
-																name="module_id"><c:forEach items="${modulesI}"
+																name="due_date" style="margin-left:114px;" /> <br><select
+																name="module_id " style="margin-top:20px;"><c:forEach items="${modulesI}"
 																	var="mo">
 																	<c:choose>
 																		<c:when test="${mo.module_id eq k.module_id}">
@@ -353,13 +364,14 @@
 																			<option value="${mo.module_id}">${mo.module_name}</option>
 																		</c:otherwise>
 																	</c:choose>
-																</c:forEach></select> <br> <input type="hidden" name="assignment_id"
+																</c:forEach></select> <input type="hidden" name="assignment_id"
 																value="${k.assignment_id}" /><input type="hidden"
 																name="class_id" value="${c.class_id }" /> <input
-																type="hidden" name="stream_id" value="${c.stream_id }" />
-															<br> <input type="file" name="fileName" /><br>
-															<br> <input class="submissionButtons" type="submit"
-																value="Submit" /> <input class="submissionButtons"
+																type="hidden" name="stream_id" value="${c.stream_id }" /><br>
+															 <input type="file" name="fileName" style="margin-top:20px;"/>
+															 <br>
+															 <input style="margin-top:20px" class="submissionButtons" type="submit"
+																value="Submit" /> <input style="margin-top:20px; margin-left:273px;" class="inactiveButtons"
 																type="reset" value="Reset" />
 														</form>
 													</div>
@@ -410,25 +422,28 @@
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<!-- Modal Header -->
-												<div class="modal-header">
-													<h4 class="modal-title">Add new module to class</h4>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
-												</div>
+													<div class="modal-header"
+														style="padding-bottom: 8px; padding-left: 24px; padding-top: 8px; padding-right: 15px; -webkit-gradient (linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%);">
+														<h4 class="modal-title">
+															<font color="white"> New Module </font>
+														</h4>
+														<button type="button" class="close" aria-label="Close"
+															data-dismiss="modal" style="padding-top: -14px;">
+															<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+														</button>
+													</div>
 												<!-- Modal body -->
 												<div class="modal-body">
 													<form action="/addModule" method="POST" class="form-group">
-														<label for="module_name">Enter Module Name </label> <input
+														<label for="module_name"></label> <input
 															type="text" name="module_name" placeholder="Module Name"
-															class="form-control" /> <input type="hidden"
+															class="borderlessInput" title="Please enter a module name."  /><br><br> <input type="hidden"
 															name="stream_id" value="${c.stream_id }" /> <input
 															class="submissionButtons" id="addmodulebtn" type="submit"
-															style="margin-top: 10px;" />
+															style="margin-top: 10px;" value="submit" /> <input
+															class="inactiveButtons" id="addmodulebtn" type="reset"
+															style="margin-top: 10px; margin-left:281px;" value="clear" />
 													</form>
-												</div>
-												<!-- Modal footer -->
-												<div class="modal-footer">
-													<button type="button" class="submissionButtons"
-														data-dismiss="modal">Close</button>
 												</div>
 											</div>
 										</div>
