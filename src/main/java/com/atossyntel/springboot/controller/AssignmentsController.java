@@ -9,9 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -221,6 +226,34 @@ public class AssignmentsController {
 		redirect+="#"+stream_name;
 		redirect+="#all" + classID;
 		return redirect;
+	}
+	
+	/*@GetMapping("/downloadAssign/{streamid}/{classid}/{moduleid}/{modulefile}/{filetype}")
+	public ResponseEntity<Resource> submitAssignment(Model model, @PathVariable("streamid") String streamid, @PathVariable("classid") String classid, @PathVariable("moduleid") String moduleid, @PathVariable("modulefile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid + " " + classid + " " + moduleid + " " + filename);
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + moduleid + "/assignmentFiles/");
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
+	}*/
+	//StringBuilder modFolder = new StringBuilder("/"+assignment.getStream_id()+"/"+assignment.getModule_id()+"/submissions/"+assignment.getClass_id()+"/"+ assignment.getAssignment_id() + "/");
+	@GetMapping("/downloadSubmission/{streamid}/{moduleid}/{classid}/{assignmentid}/{submissionfile}/{filetype}")
+	public ResponseEntity<Resource> submitSubmission(Model model, @PathVariable("streamid") String streamid,@PathVariable("moduleid") String moduleid,@PathVariable("classid") String classid,@PathVariable("assignmentid") String assignmentid ,@PathVariable("submissionfile") String filename, @PathVariable("filetype") String type) throws MessagingException {
+		System.out.println(streamid + " " + moduleid + " " + classid + " "+assignmentid +" "+ filename);
+		System.out.println("Download is starting...");
+		StringBuilder folder = new StringBuilder("/" + streamid + "/" + moduleid + "/submissions/"+classid+"/"+assignmentid);
+		Resource file = storageService.loadAsResource(filename + "." + type,folder.toString());
+		System.out.println("Downloading done");
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+		
+		//System.out.print("going to new page");
+		//smtpMailSender.send("umezaki.tatsuya@gmail.com,alfabenojar@yahoo.com,jacob-gp@hotmail.com", 999);
 	}
 	
 	@ModelAttribute("modules")
