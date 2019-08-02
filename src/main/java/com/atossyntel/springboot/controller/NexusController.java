@@ -21,8 +21,10 @@ public class NexusController {
 	
 	@RequestMapping(value = "/Nexus")
 	public String init(Model model, HttpSession session) {
+		System.out.println("Inside NexusController Controller");
 		String employeeId = (String)session.getAttribute("username");
 		if(employeeId != null) {
+			System.out.println("Inside if statement");
 			List<Map<String, Object>> overdue = homedao.overdueAssignments(employeeId);
 			List<Map<String, Object>> todo = homedao.toDoAssignments(employeeId);
 			List<Map<String, Object>> changelog = homedao.changelog(employeeId);
@@ -37,7 +39,7 @@ public class NexusController {
 			model.addAttribute("todoSize", todo.size());
 			model.addAttribute("changelog",changelog);
 			model.addAttribute("changelogSize", changelog.size());
-
+			System.out.println("Done with if statement");
 			return "Nexus";
 		} else {
 			return "redirect:login";

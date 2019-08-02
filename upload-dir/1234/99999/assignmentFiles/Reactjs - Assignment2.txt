@@ -1,0 +1,125 @@
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div>
+        <h1>{this.props.text}</h1>
+      </div>
+    )
+  }
+}
+
+class Footer extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  render() {
+    return <div><h3>{this.props.text}</h3></div>
+  }
+}
+
+class Input extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      inputVal: ""
+    }
+    this.changeHandler = this.changeHandler.bind(this)
+  }
+    
+  changeHandler(e) {
+    this.props.parentFunction(e.target.value)
+  }
+  
+  updateHandler(e){
+    this.clickHandler();
+  }
+  
+  render() {
+    return (
+      <div>
+        <label>{this.props.labelName}</label>
+        <input type={this.props.inputType} id={this.props.id} onChange={this.changeHandler} value = {this.props.val}/>
+      </div>
+    )
+  }
+}
+
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      num1: 0,
+      num2: 0,
+      sum: 0
+    }
+    this.clickHandler = this.clickHandler.bind(this)
+    this.setNum1 = this.setNum1.bind(this)
+    this.setNum2 = this.setNum2.bind(this)
+  }
+  
+  setNum1(num1) {
+    this.setState({num1: num1})
+    this.clickHandler()
+  }
+  
+  setNum2(num2) {
+    this.setState({num2: num2})
+    this.clickHandler()
+  }
+  
+  clickHandler() {
+    // put your own code here
+    //alert(`Username: ${this.state.username} Password: ${this.state.password}`)
+    //let num1 = Number(this.state.num1);
+    //let num2 = Number(this.state.num2);
+    //this.state.sum = num1 + num2;
+    // alert(`${this.state.num1} + ${this.state.num2} = ${num3}`)
+    this.setState((state) =>({sum: parseInt(state.num1) + parseInt(state.num2)}));
+  }
+  
+  render() {
+    return (
+      <div>
+        <Input id ="username" labelName="Number 1: " inputType="number" parentFunction={this.setNum1}  val={this.state.num1}/>
+        <Input id ="password" labelName="Number 2: " inputType="number" parentFunction={this.setNum2} val={this.state.num2}/> 
+        <button onClick={this.clickHandler}>{this.props.buttonName}</button>
+        <br/>
+        <input type="number" value={this.state.sum} readOnly/>
+        <Input id ="sum" labelName="Sum: " inputType="number" onchange={this.updateHandler} val={this.state.sum}/> 
+      </div>
+    )
+  }
+}
+
+class Content extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  render() {
+    return (
+      <div>
+        <h2>{this.props.title}</h2>
+        <LoginForm buttonName="Add"/>
+      </div>
+    )
+  }
+}
+
+class Main extends React.Component {
+  render() {
+    return (
+      <div>
+        <Header text="React Number Example"/>
+        <Content title="Enter 2 numbers"/>
+        <Footer text="Put some style on it"/>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<Main />, document.getElementById('root'))

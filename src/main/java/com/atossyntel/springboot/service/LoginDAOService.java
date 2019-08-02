@@ -1,6 +1,8 @@
 package com.atossyntel.springboot.service;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -47,5 +49,17 @@ public class LoginDAOService implements LoginDAO {
     public boolean isEnrolled(UserLogin e) {
 		String sqlQuery = "SELECT COUNT(*) FROM enrollments WHERE employee_id=?";
 		return (jTemplate.queryForObject(sqlQuery, new Object[]{e.getUsername()}, Integer.class) > 0);
+	}
+	
+	@Override
+	public String checkIfInstructor(String username) {
+		String sqlQuery = "Select role_id from enrollments where employee_id = ?";
+		List<Map<String, Object>> list = jTemplate.queryForList(sqlQuery, username);
+		for(Map<String, Object> l : list) {
+			if(l.get("role_id").equals("1")) {
+				return "1";
+			}
+		}
+		return "2";
 	}
 }

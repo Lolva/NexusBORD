@@ -19,6 +19,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		System.out.println("Inside Login Controller");
 		return "login";
 	}
 
@@ -32,6 +33,7 @@ public class LoginController {
 				// Finally, check that the user is enrolled in a class
 				if (dao.isEnrolled(login)) {
 					session.setAttribute("username", login.getUsername()); // Store the user's username in the session
+					session.setAttribute("role", dao.checkIfInstructor(login.getUsername()));
 					return "redirect:Nexus"; // Send the user to the main page
 
 				} else { // Username has no entry in the Enrollments table
