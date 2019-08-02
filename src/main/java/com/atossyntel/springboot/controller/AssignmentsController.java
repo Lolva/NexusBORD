@@ -81,7 +81,7 @@ public class AssignmentsController {
 		List<List<Map<String,Object>>> gradesS = new ArrayList<>();
 		List<List<Map<String,Object>>> todoS = new ArrayList<>();
 		for(Map<String, Object> t:classes) {
-			System.out.println("da classes " + t.toString());
+//			System.out.println("da classes " + t.toString());
 			if(t.get("role_id").equals("1")) {
 				//System.out.println("Instructor");
 				activesI.add(assigndao.getActiveAssignments(t.get("class_Id").toString(), username));
@@ -107,7 +107,7 @@ public class AssignmentsController {
 	
 	@RequestMapping(value = "/Assignments", params="grades")
 	public String grader(Model model, @ModelAttribute("grades") GradeBean grade) throws MessagingException{
-		System.out.println(grade.toString());
+//		System.out.println(grade.toString());
 		
 		//emailee list
 		String emailee = emailDAO.getEmailNewGrade(grade.getAssignment_id(), grade.getEmployee_id());

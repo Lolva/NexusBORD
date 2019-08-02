@@ -51,6 +51,13 @@ public class ClassesController {
 	public String init(Model model,  HttpSession session) {
 		List<Map<String, Object>> allStudents = classdao.getAllStudents();
 		model.addAttribute("allStudents", allStudents);
+		
+		List<Map<String, Object>> employeeIds = classdao.getEmployeeIds();
+		model.addAttribute("employeeIds", employeeIds);
+		
+		List<Map<String, Object>> allModules = classdao.getModules();
+		model.addAttribute("allModules", allModules);		
+		
 		List<Map<String,Object>> activeInstructorClasses = classdao.getActiveInstructorClasses((String) session.getAttribute("username"));	
 		model.addAttribute("activeInstructorClasses", activeInstructorClasses);
 		
@@ -60,7 +67,7 @@ public class ClassesController {
 		List<Map<String, Object>> activeStudents = classdao.getActiveStudents();
 		model.addAttribute("activeStudents", activeStudents);
 		
-		List<Map<String, Object>> getAllClasses = classdao.getAllClasses();
+		List<Map<String, Object>> getAllClasses = classdao.getAllClasses((String) session.getAttribute("username"));
 		model.addAttribute("allClassIds", getAllClasses);
 		
 		List<Map<String, Object>> stream=classdao.getStream();
@@ -84,7 +91,6 @@ public class ClassesController {
 					if(mimeType==null) {
 						mimeType = "application/octet-stream";
 					}
-					System.out.println("Heloo");
 					response.setContentType(mimeType);
 					response.setHeader("Content-Disposition",String.format("inline; filename=\""+file.getName()+ "\""));
 					response.setContentLength((int) file.length());
@@ -96,8 +102,6 @@ public class ClassesController {
 	 @RequestMapping(value = "/changeClass", method = RequestMethod.POST)
 	    public String submit(Model model, @ModelAttribute("enrollmentBean") EnrollmentBean EnrollmentBean) throws MessagingException {
 	        if (EnrollmentBean != null) {
-//	        	System.out.println("Change Class");
-//	        	System.out.println(EnrollmentBean.getEmployee_ID() + " " + EnrollmentBean.getClass_ID());
 	        	 classdao.changeClassId(EnrollmentBean.getEmployee_ID(), EnrollmentBean.getClass_ID(), EnrollmentBean.getOld_Class_ID()); 
 	        	 
 	                return "redirect:Classes.html";

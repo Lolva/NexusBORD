@@ -21,7 +21,7 @@
 </head>
 
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'assignments', 'student')">
+<body onload="navBar(this, 'assignments', '<%=session.getAttribute("role").toString()%>')">
 	<%
 	//User is not logged in
 		if (session.getAttribute("username") == null) {

@@ -5,6 +5,70 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- Style for Autocomplete -->
+<style>
+	* { box-sizing: border-box; }
+body {
+  font: 16px Arial; 
+}
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+.modal-header{
+padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:white;
+   				 -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #04abd0), color-stop(1, #0493b3)); 
+   								   background: -moz-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -webkit-linear-gradient(top, #04abd0 5%, #0493b3 100%);
+   								    background: -o-linear-gradient(top, #04abd0 5%, #0493b3 100%); background: -ms-linear-gradient(top, #04abd0 5%, #0493b3 100%); 
+   								    background: linear-gradient(to bottom, #04abd0 5%, #0493b3 100%)";
+
+}
+
+</style>
+
+
+
     <title>Classes</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,9 +103,8 @@
 	    crossorigin="anonymous"></script>
 </head>
 
-
 <!-- Dynamically create nav bar based on current page and role -->
-<body onload="navBar(this, 'classes', 'instructor')">
+<body onload="navBar(this, 'classes', '<%=session.getAttribute("role").toString()%>')">
 	<%
 	//User is not logged in
 	if (session.getAttribute("username") == null) {
@@ -51,6 +114,7 @@
 	</script>
 	<%
 		}
+				
 	%>
     <header>
         <!-- div for nav bar to be created in -->
@@ -64,9 +128,11 @@
  <ul class="nav nav-tabs">
     <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#viewclass">Home</a></li>
     <li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#AddEmployee">Add Employee</a></li>
+     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#addFile">Add Employee with File</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Delete">Delete Class</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#createclass">Create A Class</a></li>
     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#editclass">Edit Class</a></li>
+   
   </ul>
 
   <div class="tab-content">
@@ -101,7 +167,7 @@
 								<td style="color:black;padding:5px">${j.last_name}  </td>
 								<td style="color:black;padding:5px"> ${j.email}   </td>
 								<td>
-								<form name="deleteform" action="/deleteEmployee" method="POST" onsubmit="return confirm('Do you really want to delete the employee?')">
+								<form name="deleteform" action="/deleteEmployee" method="POST">
 								<input type ="hidden" name="Class_ID" value="${j.class_id }">
 								<input type ="hidden" name="Employee_ID" value="${j.employee_id}">
 								<!-- Button trigger modal -->
@@ -110,19 +176,18 @@
 								
  								 <!-- Modal -->
 							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+									 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+     								  </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to delete this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Delete</button>
     				  </div>
    					</div>
@@ -173,19 +238,18 @@
 								
  								 <!-- Modal -->
 							<div class="modal fade" id="deleteEmpModal" tabindex="-1" role="dialog" aria-labelledby="deleteEmpModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="deleteEmpModalLabel">Delete Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		 									<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+      									 </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to delete this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Delete</button>
     				  </div>
    					</div>
@@ -207,20 +271,24 @@
     </div>
     </div>
     
-    <div id="AddEmployee" class="tab-pane fade"class="row">
-	<form action="/changeClass" style="color: black;" method=POST>
+<div id="AddEmployee" class="tab-pane fade"class="row">
+
+
+
+    <input type="hidden" id="xyz" value="${employeeIds}"/>
+		
+		
+	<form autocomplete="off" action="/changeClass" style="color: black;" method=POST>
 	<br>
 		<h4>Add Employee to Class</h4>
 		<label for="Employee_Id">Choose Employee ID</label>
-		<div class="dropdown">
-			<select name="Employee_ID" class="form-control">
-				<c:forEach items="${allStudents}" var="e">
-					<option class="dropdown-item" id="Employee_ID" value="${e.employee_id}">${e.employee_id}</option>
-				</c:forEach>
-			 </select>
+		<br>
+		<div class="autocomplete">
+			<input name="Employee_ID" class="form-control" id="Employee_ID"/>
 		</div>
-			<br>
+		<br>
 			<label for="Class_id">Choose Class ID</label>
+			<br>
 		   	<div class="dropdown">
 			  <select name="Class_ID" class="form-control">
 				  <c:forEach items="${allClassIds}" var="j">
@@ -243,26 +311,27 @@
 			<input type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addModal" value="Add Employee"/>
 		 <!-- add employee Modal -->
 							<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="addModalLabel">Add Employee</h5>
    								     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		 								<span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+     								  </button>
       								</div>
      							 <div class="modal-body">
     						    Are you sure you want to add this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Add</button>
     						  </div>
     						  </div>
     						</div>
-    		</div>
-		</form>
-		<hr>
+    						</div>
+    						</form>
+    						</div>
+    	<div id="addFile" class="tab-pane fade">
+		<br>
 		<h4>Add Employees with a File</h4>
 		<br><br>
    		<form action="/giveFile" method="GET">
@@ -279,15 +348,20 @@
 			  </select>
 		</div>
    		<br><br>
-   		<label for="file">Select an Excel File</label>
-   		<input type="file" name="file" class="btn btn-default btn-md">
+   		<div class="custom-file">
+   		<label class="custom-file-label" for="file">Select an Excel File (.xlsx)</label>
+   		<input type="file" name="file" class="custom-file-input" accept=".xlsx">
+   		</div>
+   		${error}
    		<br><br>
    		<input type="submit" class="btn btn-primary btn-md" value="Submit">
-   	</form>
-   	</div>
+   		</form>
+   		</div>
+   		
+   	
    	
     <div id="Delete" class="tab-pane fade">
-
+<br>
       <h3>Delete Class</h3>
       <br>
  		<form action="/deleteClass" method="POST">
@@ -308,19 +382,18 @@
 		
 		<!-- Delete Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		 <div class="modal-dialog" role="document">
+		 <div class="modal-dialog modal-dialog-centered" role="document">
    			<div class="modal-content">
    		     <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLongTitle">Confirm Delete</h5>
-		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		   						     <span aria-hidden="true">&times;</span>
-		        					 </button>
+		   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
 		        					 </div>
 		      <div class="modal-body" style="border: none;">
 		        Are you sure you want to delete this class?
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		        <button type="submit" class="btn btn-primary" >Delete</button>
 		      </div>
 		    </div>
@@ -354,19 +427,18 @@
 	   		
 	   		<!-- Modal -->
 <div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="classModalLabel">Create Class</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
       </div>
       <div class="modal-body">
         Are you sure you want to create a new class?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Create Class</button>
       </div>
     </div>
@@ -376,6 +448,7 @@
 	   	</form>
     </div>
     <div id="editclass" class="tab-pane fade">
+    <br>
     	<h4> Edit Classes</h4>
 	    <form action="/editClass" method="POST">
 	    <label for="class_id" >Choose Class ID</label>
@@ -399,14 +472,16 @@
 		</button>
 	   		
 	   		<!-- The Modal -->
-		<div class="modal" id="editModal">
-  		<div class="modal-dialog">
+		<div class="modal fade" id="editModal">
+  		<div class="modal-dialog modal-dialog-centered">
     	<div class="modal-content">
 	   		
 	   		<!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Edit Class</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		 <span style="text-shadow: 0 0px 0 #fff; color: #fff;">&times;</span>
+       </button>
       </div>
       
       <!-- Modal body -->
@@ -416,7 +491,6 @@
       
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Edit</button>
       </div>
 
@@ -455,11 +529,127 @@
  		 });
 	}
 	</script>
+	<script>
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
 	<!-- JavaScript for icons -->
 	<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 
 	<!-- Container for logout modal -->	
 	<div id="LogoutModalDiv"></div>
+	<script type="text/javascript">
+	function autocomplete(inp, arr) {
+		  /*the autocomplete function takes two arguments,
+		  the text field element and an array of possible autocompleted values:*/
+		  var currentFocus;
+		  /*execute a function when someone writes in the text field:*/
+		  inp.addEventListener("input", function(e) {
+		      var a, b, i, val = this.value;
+		      /*close any already open lists of autocompleted values*/
+		      closeAllLists();
+		      if (!val) { return false;}
+		      currentFocus = -1;
+		      /*create a DIV element that will contain the items (values):*/
+		      a = document.createElement("DIV");
+		      a.setAttribute("id", this.id + "autocomplete-list");
+		      a.setAttribute("class", "autocomplete-items");
+		      /*append the DIV element as a child of the autocomplete container:*/
+		      this.parentNode.appendChild(a);
+		      /*for each item in the array...*/
+		      for (i = 0; i < arr.length; i++) {
+		        /*check if the item starts with the same letters as the text field value:*/
+		        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+		          /*create a DIV element for each matching element:*/
+		          b = document.createElement("DIV");
+		          /*make the matching letters bold:*/
+		          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+		          b.innerHTML += arr[i].substr(val.length);
+		          /*insert a input field that will hold the current array item's value:*/
+		          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+		          /*execute a function when someone clicks on the item value (DIV element):*/
+		              b.addEventListener("click", function(e) {
+		              /*insert the value for the autocomplete text field:*/
+		              inp.value = this.getElementsByTagName("input")[0].value;
+		              /*close the list of autocompleted values,
+		              (or any other open lists of autocompleted values:*/
+		              closeAllLists();
+		          });
+		          a.appendChild(b);
+		        }
+		      }
+		  });
+		  /*execute a function presses a key on the keyboard:*/
+		  inp.addEventListener("keydown", function(e) {
+		      var x = document.getElementById(this.id + "autocomplete-list");
+		      if (x) x = x.getElementsByTagName("div");
+		      if (e.keyCode == 40) {
+		        /*If the arrow DOWN key is pressed,
+		        increase the currentFocus variable:*/
+		        currentFocus++;
+		        /*and and make the current item more visible:*/
+		        addActive(x);
+		      } else if (e.keyCode == 38) { //up
+		        /*If the arrow UP key is pressed,
+		        decrease the currentFocus variable:*/
+		        currentFocus--;
+		        /*and and make the current item more visible:*/
+		        addActive(x);
+		      } else if (e.keyCode == 13) {
+		        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+		        e.preventDefault();
+		        if (currentFocus > -1) {
+		          /*and simulate a click on the "active" item:*/
+		          if (x) x[currentFocus].click();
+		        }
+		      }
+		  });
+		  function addActive(x) {
+		    /*a function to classify an item as "active":*/
+		    if (!x) return false;
+		    /*start by removing the "active" class on all items:*/
+		    removeActive(x);
+		    if (currentFocus >= x.length) currentFocus = 0;
+		    if (currentFocus < 0) currentFocus = (x.length - 1);
+		    /*add class "autocomplete-active":*/
+		    x[currentFocus].classList.add("autocomplete-active");
+		  }
+		  function removeActive(x) {
+		    /*a function to remove the "active" class from all autocomplete items:*/
+		    for (var i = 0; i < x.length; i++) {
+		      x[i].classList.remove("autocomplete-active");
+		    }
+		  }
+		  function closeAllLists(elmnt) {
+		    /*close all autocomplete lists in the document,
+		    except the one passed as an argument:*/
+		    var x = document.getElementsByClassName("autocomplete-items");
+		    for (var i = 0; i < x.length; i++) {
+		      if (elmnt != x[i] && elmnt != inp) {
+		      x[i].parentNode.removeChild(x[i]);
+		    }
+		  }
+		}
+		/*execute a function when someone clicks in the document:*/
+		document.addEventListener("click", function (e) {
+		    closeAllLists(e.target);
+		});
+		}
+	var countries = ["Zambia", "Madagascar", "Albania"];
+	//for(int i=0; i<10; i++;) {
+	//	document.getElementById("xyz").value = ${allStudents[i].employee_id};
+	//}
+ 	var data = document.getElementById("xyz").value;
+ 	var lbracket = data.replace(new RegExp('{', 'g'),'');
+ 	var rbracket = lbracket.replace(new RegExp('}', 'g'),'');
+ 	var lsb = rbracket.replace('[','');
+ 	var rsb = lsb.replace(']','');
+ 	var name = rsb.replace(new RegExp('EMPLOYEE_ID=', 'g'),'');
+ 	var arr = name.split(', ');
+	autocomplete(document.getElementById("Employee_ID"), arr);
+	</script>
 
 </body>
 </html>

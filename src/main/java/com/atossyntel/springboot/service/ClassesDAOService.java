@@ -39,9 +39,7 @@ public class ClassesDAOService implements ClassesDAO {
 	@Autowired
     private SmtpMailSender sms;
     @Autowired
-    private EmailDAOService emailDAO;
-    ///////////////////////////////////////////////
-    
+    private EmailDAOService emailDAO; 
     private EnrollmentBean enroll;
     
 	
@@ -52,6 +50,16 @@ public class ClassesDAOService implements ClassesDAO {
 
 		List<Map<String,Object>> results;
 		results = jTemplate.queryForList(sql, classId);
+		 return results;
+		
+	}
+	
+	@Override
+	public List<Map<String,Object>> getEmployeeIds() {
+		String sql = "Select employee_id From Employees";
+
+		List<Map<String,Object>> results;
+		results = jTemplate.queryForList(sql);
 		 return results;
 		
 	}
@@ -93,8 +101,7 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date<=? AND c.end_date>=?";
 		List<Map<String, Object>> results;
-		results = jTemplate.queryForList(sql, "II9999999", start, date);
-//		results = jTemplate.queryForList(sql, username, start, date);
+		results = jTemplate.queryForList(sql, username, start, date);
 		return results;
 	}
 	
@@ -108,17 +115,17 @@ public class ClassesDAOService implements ClassesDAO {
 				+ "FROM enrollments s, Classes c "
 				+ "WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1 AND c.start_date>?";
 		List<Map<String, Object>> results;
-//		results = jTemplate.queryForList(sql, "II9999999", start);
 		results = jTemplate.queryForList(sql, username, start);
 		return results;
 	}
 	
 	
 	@Override
-	public List<Map<String, Object>> getAllClasses() {
-		String sqlQuery = "SELECT class_id FROM Classes";
+	public List<Map<String, Object>> getAllClasses(String empId) {
+//		String sqlQuery = "SELECT class_id FROM Classes WHERE employee_id = ?";
+		String sqlQuery = "SELECT s.class_id FROM Enrollments s, Classes c WHERE s.class_id = c.class_id AND s.employee_id = ? AND s.role_id = 1";
 		List<Map<String,Object>> results;
-		results = jTemplate.queryForList(sqlQuery);
+		results = jTemplate.queryForList(sqlQuery, empId);
 		return results;
 	}
 	public void addClasses(String employee_id, String stream_Id, Date start_date, Date end_date) {
@@ -134,19 +141,26 @@ public class ClassesDAOService implements ClassesDAO {
 	              }, keyHolder);
 		String key = (String) keyHolder.getKeys().get("class_id");
 		String addInstructor = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
-//		this.jTemplate.update(addInstructor, "II9999999", key, 1);
 		this.jTemplate.update(addInstructor, employee_id, key, 1);
 	}
 	
 	@Override
 	public List<Map<String, Object>> getStream(){
-		String sql = "Select Stream_id From Streams";
+		String sql = "Select stream_name, stream_id From Streams";
 		List<Map<String, Object>> results;
 		results = jTemplate.queryForList(sql);
 		return results;
 		
 	}
 	
+	@Override
+	public List<Map<String, Object>> getModules(){
+		String sql = "SELECT m.module_name, l.module_id, l.stream_id FROM Lessons l, Modules m WHERE l.module_id = m.module_id";
+		List<Map<String, Object>> results;
+		results = jTemplate.queryForList(sql);
+		return results;
+		
+	}
 
 	@Override
 	public List<Map<String, Object>> getActiveStudents() {
@@ -173,8 +187,7 @@ public class ClassesDAOService implements ClassesDAO {
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
 		Object results = this.jTemplate.queryForObject(checkquery, new Object[]{EmpId}, Integer.class);
 		if ( ((Number) results).intValue() > 0) {
-			if (oldId != null) {
-				System.out.println(" Changing class");
+			if (oldId.equals(null)) {
 				this.jTemplate.update(sqlUpdateQuery, classId, EmpId, oldId);
 			} else {
 				this.jTemplate.update(sqlInsertQuery, EmpId, classId, 2);
@@ -186,15 +199,12 @@ public class ClassesDAOService implements ClassesDAO {
 	}
 	@Override
 	public void deleteEmployee(String class_Id, String employee_id) {
-//		System.out.println("Deleting employee");
 		String sqlQuery = "Delete FROM Enrollments WHERE class_id=? AND employee_id=?";	
-//		System.out.println(class_Id + " " + employee_id);
 		this.jTemplate.update(sqlQuery, class_Id, employee_id);
 	}
 	
 	@Override
 	public void deleteClass(String class_Id) {
-//		System.out.println("Deleting class");
 		String sqlQuery1 = "DELETE FROM Enrollments WHERE class_id=?";
 		String sqlQuery2 = "Delete FROM Classes WHERE class_id=?";
 		String sqlQuery3 = "SELECT Count(*) FROM Enrollments WHERE class_id=?";
@@ -242,6 +252,7 @@ public class ClassesDAOService implements ClassesDAO {
 		String sqlUpdateQuery = "UPDATE Enrollments SET class_id=? WHERE employee_id=?";
 		String sqlInsertQuery = "INSERT INTO Enrollments(employee_id, class_id, role_id) VALUES(?,?,?)";
 		String emailQuery= "SELECT email FROM employees WHERE employee_id=?";
+		String checkClassquery = "SELECT COUNT(*) FROM Enrollments WHERE employee_id=? AND class_id=?";
         
         // Traversing over each row of XLSX file
         while (rowIterator.hasNext()) {
@@ -257,31 +268,41 @@ public class ClassesDAOService implements ClassesDAO {
                 case Cell.CELL_TYPE_STRING:
                     String employee_id = cell.getStringCellValue();
                     Object results = this.jTemplate.queryForObject(checkquery, new Object[]{employee_id}, Integer.class);
-            		if ( ((Number) results).intValue() == 1) {
-//            			System.out.println(((Number) results).intValue());
-            			this.jTemplate.update(sqlUpdateQuery, class_id, employee_id);
-            			
-            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
-            			String className = emailDAO.getEmailClassName(class_id);
-            			String fullName = emailDAO.getEmailEmpName(employee_id);
-            			
-            			sms.setEmpId(fullName);
-            			sms.setClassId(className);
-            			
-            			sms.send(emailee, 3);
-            			
-            		} else {
-            			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);
-            			
-            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
-            			String className = emailDAO.getEmailClassName(class_id);
-            			String fullName = emailDAO.getEmailEmpName(employee_id);
-            			
-            			sms.setEmpId(fullName);
-            			sms.setClassId(className);
-            			sms.send(emailee, 3);
-
-            		}
+                    Object inClass = this.jTemplate.queryForObject(checkClassquery, new Object[]{employee_id, class_id}, Integer.class);
+                    if (((Number) inClass).intValue() < 1) {
+	                    if ( ((Number) results).intValue() == 1) {
+	            			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);
+	            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+	            			String className = emailDAO.getEmailClassName(class_id);
+	            			String fullName = emailDAO.getEmailEmpName(employee_id);
+	            			
+	            			sms.setEmpId(fullName);
+	            			sms.setClassId(className);
+	            			sms.send(emailee, 3);
+	            			
+	            		} else if (((Number) results).intValue() == 1) {
+	            			this.jTemplate.update(sqlUpdateQuery, class_id, employee_id);           			
+	            			
+	            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+	            			String className = emailDAO.getEmailClassName(class_id);
+	            			String fullName = emailDAO.getEmailEmpName(employee_id);
+	            			
+	            			sms.setEmpId(fullName);
+	            			sms.setClassId(className);
+	            			sms.send(emailee, 3);
+	            		} else {
+	            			this.jTemplate.update(sqlInsertQuery, employee_id, class_id, 2);
+	            			
+	            			String emailee = emailDAO.getEmailEnrollments(employee_id, class_id);
+	            			String className = emailDAO.getEmailClassName(class_id);
+	            			String fullName = emailDAO.getEmailEmpName(employee_id);
+	            			
+	            			sms.setEmpId(fullName);
+	            			sms.setClassId(className);
+	            			sms.send(emailee, 3);
+	
+	            		}
+        			}
                     break;
                 default :
              
