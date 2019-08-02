@@ -311,7 +311,7 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
 			<input type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#addModal" value="Add Employee"/>
 		 <!-- add employee Modal -->
 							<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
+							  <div class="modal-dialog modal-dialog-centered" role="document">
    								 <div class="modal-content">
    								   <div class="modal-header">
     							    <h5 class="modal-title" id="addModalLabel">Add Employee</h5>
@@ -323,7 +323,6 @@ padding-bottom:8px;padding-left:24px;padding-top:8px;padding-right:15px; color:w
     						    Are you sure you want to add this employee?
    								   </div>
    							   <div class="modal-footer">
-    					    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
    	 				    <button type="submit" class="btn btn-primary">Add</button>
     						  </div>
     						  </div>
